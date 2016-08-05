@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!--[if IE]>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="baseUrl" content="${ctxPath}">
+<meta name="author" content="">
+
+<title>{{ system_para.page_title }}</title>
+
+<!-- Mobile Specific -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<!-- CSS Style -->
+{% load staticfiles %}
+<link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="{% static "classic/css/font-awesome.css" %}" media="all">
+<link rel="stylesheet" type="text/css" href="{% static "classic/css/style.css"  %}" media="all">
+<link rel="stylesheet" type="text/css" href="{% static "classic/css/animate.css"  %}" media="all">
+<link rel="stylesheet" type="text/css" href="{% static "classic/css/revslider.css"  %}" >
+<link rel="stylesheet" type="text/css" href="{% static "classic/css/owl.carousel.css"  %}">
+<link rel="stylesheet" type="text/css" href="{% static "classic/css/owl.theme.css"  %}">
+<link rel="stylesheet" type="text/css" href="{% static "classic/css/flexslider.css"  %}">
+<link rel="stylesheet" type="text/css" href="{% static "classic/css/jquery.mobile-menu.css"  %}">
+<link rel="stylesheet" type="text/css" href="{% static "classic/css/jquery.bxslider.css"  %}">
+</head>
+
+<body class="cms-index-index cms-home-page">
+<div id="page"> 
+	<!--header 头部! -->
+	{% include 'classic/header.html' %}
+	<!-- Breadcrumbs -->
+	{% block breadcrumbs %}
+	{% endblock %}
+	<!-- Breadcrumbs End --> 
+	<!-- Main Container -->
+	{% block main%}
+	{% endblock %}
+	<!-- Main Container End --> 
+
+	<!-- 底部 Footer!-->
+	{% include 'classic/footer.html' %}
+	<!-- 动态加载模态窗口模板!-->
+	{% include 'classic/modal_win.html' %}
+	<!-- JavaScript --> 
+</div>
+<script type="text/javascript" src="{% static 'classic/js/jquery.min.js' %}"></script> 
+<script type="text/javascript" src="{% static 'classic/js/bootstrap.min.js' %}"></script> 
+<script type="text/javascript" src="{% static 'classic/js/parallax.js' %}"></script> 
+<script type="text/javascript" src="{% static 'classic/js/common.js' %}"></script> 
+<script type="text/javascript" src="{% static 'classic/js/owl.carousel.min.js' %}"></script> 
+<script type="text/javascript" src="{% static 'classic/js/jquery.flexslider.js' %}"></script> 
+<script type="text/javascript" src="{% static 'classic/js/jquery.mobile-menu.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'classic/js/jquery.json.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'classic/js/jquery.cookie.js' %}"></script>
+<script type="text/javascript" src="{% static 'classic/js/jquery.json.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'classic/js/cloud-zoom.js' %}"></script>
+<script type="text/javascript" src="{% static 'classic/js/imycart.js' %}"></script>
+{% block scripts %}
+{% endblock %}
+</body>
+</html>

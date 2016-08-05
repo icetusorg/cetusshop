@@ -1,0 +1,48 @@
+{% extends "client/cassie/base.html" %}
+{%block head_extra%}
+	{% load staticfiles %}
+	<link rel="stylesheet" href="{% static 'client/cassie/css/cart.css'%}" type="text/css"/>
+{%endblock%}
+{% block main %}
+{% load i18n %}
+    <div class="order address main">
+        <div class="container">
+            <div class="row">
+                <div class="row">
+                    <div class="col-md-3 col-xy-12">
+                       {% include 'client/cassie/side_nav.html' %}
+                    </div>
+                    <div class="col-md-9 col-xs-12">
+                        <div class="row">
+                            <div class="address-main">
+                               <h3><span class="color">Address Book</span><a href="/user/address/opration/add/">Add New Address</a></h3>
+							   {% for address in address_list%}
+                               <div class="address-item col-md-6 col-xs-12">
+                                   <ul class="{{address.is_default|yesno:'default,,'}}">
+                                      <li>{{address.first_name}}</li>
+                                      <li>{{address.last_name}}</li>
+                                      <li>{{address.address_line_1}}</li>
+                                      <li>{{address.zipcode}}</li>
+                                      <li>{{address.city}}</li>
+                                      <li>{{address.tel}}</li>
+                                      <li>
+										<a href="/user/address/opration/delete/{{address.id}}">Delete</a>
+										<a href="/user/address/opration/modify/{{address.id}}">Edit</a>
+										{% if not address.is_default %}
+											<a href="/user/address/opration/default/{{address.id}}">Default</a>
+										{%endif%}
+									  </li>
+                                   </ul>
+                               </div>
+							   {%endfor%}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+	{% load staticfiles %}
+{% endblock %}

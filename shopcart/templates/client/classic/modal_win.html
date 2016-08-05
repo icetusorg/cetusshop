@@ -1,0 +1,65 @@
+		<!-- Modal，一个模态窗口 -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Information</h4>
+		      </div>
+		      <div id="infoMessage" class="modal-body">
+		        	Info
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
+		<!-- 登陆模态窗口，Modal -->
+			<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" id="myModalLabel">Please Login</h4>
+			      </div>
+			      <div class="modal-body">
+				     <div class="content">
+				     	  <p id="loginModalMessage"></p>
+			              <ul class="form-list">
+			                <li>
+			                  <label for="email">Email Address <span class="required">*</span></label>
+			                  <br>
+			                  <input type="text" title="Email Address" class="input-text" id="loginModalUserIdentify" value="" name="userIdentify">
+			                </li>
+			                <li>
+			                  <label for="pass">Password <span class="required">*</span></label>
+			                  <br>
+			                  <input type="password" title="Password" id="loginModalPassword" class="input-text" name="loginModalPassword">
+			                </li>
+			                <li>
+								<div id="verifyCodeDiv">
+									<div class="control-group">
+											<div class="controls">
+													<label for="pass">Verify Code <span class="required">*</span></label>
+													<br>
+													<input type="input-text"  id="validateCode" name="captcha_1" class="form-control form-control-captcha fl" placeholder="Enter the code below">
+													<span class="v5-yzm fr"><a href="#" class="next-captcha"><img src="{{ imgage_url }}" class="captcha" alt="captcha">换一张</a></span>
+													<input id="id_reg_captcha_0" name="captcha_0" type="hidden" value="{{ hashkey }}"> 
+													 <p class="help-block required"></p>
+											</div>
+									</div>
+								</div>
+			                </li>
+			              </ul>
+			              <div class="buttons-set">
+			              	<a class="forgot-word" href="../User/ForgetPassword.htm">Forgot Your Password?</a> </div>
+		            </div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" id="loginModalSubmit">Login</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>

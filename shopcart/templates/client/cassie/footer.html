@@ -1,0 +1,62 @@
+<!--底部-->
+{% load staticfiles %}
+<div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="footer-item">
+                    <h5>Customer Service</h5>
+                    <ul>
+                        <li><i class="list-allow-left"></i><a href="/contact/show/">Contact us</a></li>
+                        <li><i class="list-allow-left"></i><a href="/about_us/privacy-policy.html">Delivery</a></li>
+                        <li><i class="list-allow-left"></i>Warranty Info</li>
+                        <li><i class="list-allow-left"></i><a href="/about_us/privacy-policy.html">Privacy Policy</a></li>
+                        <li><i class="list-allow-left"></i>Sitemap</li>
+                    </ul>
+                </div>
+                <div class="footer-item footer-contact">
+                    <h5>Contact Information</h5>
+                    <ul>
+                        <li><i class="glyphicon glyphicon-map-marker"></i>Address</li>
+                        <li class="footer-ico-empty">{{system_para.contact_address}}</li>
+                        <li><i class="glyphicon glyphicon-earphone"></i>Phone:</li>
+                        <li class="footer-ico-empty">{{system_para.office_phone}}</li>
+                        <li><i class="glyphicon glyphicon-envelope"></i>Email:</li>
+                        <li class="footer-ico-empty"><a href="mailto:{{system_para.service_email}}"></a>{{system_para.service_email}}
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer-item footer-letter">
+                    <h5>Be the First to Know</h5>
+
+                    <p>Get all the latest information on Events,Sales and Offers. Sign up for newsletter today.</p>
+                    <label>Enter your e-mail Address</label>
+
+                    <div class="footer-form">
+                        <input type="text" id="newsletter-email" name="email">
+                        <button class="add-to-emaillist" type="submit">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="copy">
+        <div class="container">
+            <div class="row">
+                <div class="copy-media">
+					<a href="http://www.cassiehairbrush.com/"><img src="{% static "client/cassie/images/logo.jpg"%}"></a>
+                    <a href="https://www.facebook.com/CassieHairBrush"><img src="{% static "client/cassie/images/ico/facebook-footer.png"%}"></a>
+                    <a href="https://twitter.com/CassieHairbrush"><img src="{% static "client/cassie/images/ico/twitter-footer.png"%}"></a>
+                    <a href="#"><img src="{% static "client/cassie/images/ico/linkin-footer.png"%}"></a>
+                </div>
+                <div class="copy-pay">
+                    <img src="{% static "client/cassie/images/ico/icon_visa.jpg"%}">
+                    <img src="{% static "client/cassie/images/ico/icon_paypal.jpg"%}">
+                    <img src="{% static "client/cassie/images/ico/icon_discover.jpg"%}">
+                    <img src="{% static "client/cassie/images/ico/icon_master.jpg"%}">
+                    <img src="{% static "client/cassie/images/ico/icon_master2.jpg"%}">
+                    <img src="{% static "client/cassie/images/ico/icon_ae.jpg"%}">
+                </div>
+                <p>{{system_para.copyright|safe}}</p>
+            </div>
+        </div>
+    </div>

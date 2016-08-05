@@ -1,0 +1,66 @@
+﻿{% extends "classic/base.html" %}
+{% block main %}
+<!-- Main Container -->
+<div class="main-container col2-right-layout wow bounceInUp animated">
+  <div class="main container">
+    <div class="row">
+      <div class="col-main col-sm-9">
+        <div class="my-account">
+          <div class="page-title"> <h2>Personal Info</h2> </div>
+          <div class="person-info">
+            <fieldset class="person-info-set">
+	             <!--  <p id="successChange">Your person information has been successfully updated.</p> -->
+	             <!-- <p id="successChange"></p> -->
+	              <ul class="person-info-ul">
+	                <li>
+	                  <label for="email">E-mail:</label>
+	                  <p>{{user.email}}</p>
+	                  <input title="Id" value="{{user.id}}" id="id" class="input-text form-control" name="id" type="hidden">
+	                  <input title="Name" value="{{user.email}}" id="email" class="input-text form-control" name="email" type="hidden">
+	                </li>
+	                <li>
+	                  <label for="name">Name:</label>
+	                  <input title="Name" value="{{user.username}}" id="name" class="input-text form-control" name="name" type="text">
+	                </li>
+	                <li>
+	                  <label for="birthday">Birthday:</label>
+	                  <input title="Birthday" id="birthday" value="{{user.birthday}}" class="input-text form-control" name="birthday" type="text">
+	                </li>
+                    <li>
+	                  <label for="gender">Gender:</label>
+	                  {{user.get_human_gender}}
+	                </li>
+			     <li>
+			     	<label for="name">Old Password:</label>
+				    <input type="password" title="Old Password" id="oldPassword" name="oldPassword" class="input-text form-control" />
+				</li>
+			    <li>
+			    	<label for="name">New Password:</label>
+				    <input type="password" title="Password" id="password" class="input-text form-control" name="password" />
+				</li>
+			    <li>
+			    	<label for="pass">ConfirmPassword:</label>
+				    <input type="password" title="Password" id="confirmPassword" class="input-text form-control" name="confirmPassword" />
+			    </li>
+			    <li>
+			    	<span class="person-info-btn"><button id="submit" name="submit" type="button" class="button login"><span>Submit</span></button></span>
+			    </li>
+			 </ul>       
+</fieldset>
+
+  </div>
+ </div>
+</div>
+
+<!--后台右侧菜单-->
+    {% include 'classic/side_bar.html' %}      
+    </div>
+  </div>
+</div>
+<!-- Main Container End -->
+{%  endblock %}
+{% block scripts %}
+
+{% endblock %}
+
+

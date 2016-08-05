@@ -1,0 +1,29 @@
+{% extends "admin/base_site.html" %}
+{% block title %}CKEditor Sample{% endblock %}
+{% block extrahead %}
+	{% load staticfiles %}
+	<script type="text/javascript" src="{% static 'classic/js/jquery.min.js' %}"></script> 
+{% endblock %}
+{% block content %}
+	<div id="content-main">
+	  <h1>CKEditor:</h1>
+		<div>
+			<form action='/admin/product/add/0/' method='POST'>
+				{% csrf_token %}
+				商品名称：<input type="text" id='name' name="name"></input><br>
+				商品编码：<input type="text" id='item_number' name="item_number"></input><br>			
+				<input type="submit" value="保存"></input>
+			</form>
+			
+			<a href="{{image_upload_url}}" target="_blank">上传图片</a><br>
+			<a href="{{edit_url}}" target="_blank">编辑</a>
+		</div>
+	</div>
+	{% block admin_change_form_document_ready %}
+		<script type="text/javascript">
+			$(document).ready(function() {
+			
+			});
+		</script>
+	{% endblock %}
+{% endblock %}

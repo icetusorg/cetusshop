@@ -1,0 +1,10 @@
+更新代码的命令：
+cd sites/stagingsite/source/
+git fetch origin
+git merge origin/master
+sudo stop gunicorn-ubuntu.imycart.com
+sudo start gunicorn-ubuntu.imycart.com
+
+
+source ../virtualenv/bin/activate
+python manage.py collectstatic

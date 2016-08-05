@@ -1,0 +1,38 @@
+{% extends "admin/base_site.html" %}
+{% block title %}CKEditor Sample{% endblock %}
+{% block extrahead %}
+	{% load staticfiles %}
+	<script src="{% static "admin/js/ckeditor.js" %}"></script>
+	<script type="text/javascript" src="{% static 'classic/js/jquery.min.js' %}"></script> 
+{% endblock %}
+{% block content %}
+	<div id="content-main">
+	  <h1>CKEditor:</h1>
+		<div>
+			<form action='/product/edit/{{id}}' method='POST'>
+				{% csrf_token %}
+				<textarea id='editor' name="editor">{{article_content}}</textarea> 
+				<button type='button' id='showData'>显示编辑器内容</button>
+				<input type="submit" value="提交"></input>
+			</form>
+		</div>
+	</div>
+	{% block admin_change_form_document_ready %}
+		<script type="text/javascript">
+			$(document).ready(function() {
+					$("#showData").click(function(event) {
+						event.preventDefault();//阻止A标签跳转
+						var data = CKEDITOR.instances.editor.getData();
+						alert(data);
+					});
+					
+					CKEDITOR.replace('editor',{
+						filebrowserUploadUrl: '{{upload_url}}'
+					});
+					//CKEDITOR.instances['txt_editor_tc'].getData();
+					
+
+			});
+		</script>
+	{% endblock %}
+{% endblock %}

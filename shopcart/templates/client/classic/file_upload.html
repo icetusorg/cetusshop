@@ -1,0 +1,23 @@
+<html>
+	<head>
+	</head>
+	<body>
+		<p>文件上传</p>
+		<form enctype="multipart/form-data" method="POST" action="{{action_url}}"> 
+			{% csrf_token %}
+			<input type="file" name="upload" />
+			<br /> 
+			<input type="submit" value="上传文件" /> 
+		</form>
+		
+		<div>
+			<ul>
+				{% for image in image_list %}
+					<li style='float:left;'><a href='{{image.image}}'> <img width='128px' src='{{image.thumb}}' alt='{{item.name}}'/></a> | <a href='{{file_delete_url}}/{{image.id}}/{{host_item_id}}/'>删除</a></li>
+				{% empty %}
+					<li>There is no image at all.
+				{% endfor %}
+			</ul>
+		</div>
+	</body>
+</html>

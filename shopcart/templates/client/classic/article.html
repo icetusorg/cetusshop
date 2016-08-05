@@ -1,0 +1,18 @@
+﻿{% extends "classic/base.html" %}
+<!-- Main Container -->
+{% block main %}
+<div class="main-container col2-right-layout wow bounceInUp animated">
+  <div class="main container">
+      <div class="col-main">
+        <div class="single">
+          <div class="crumb">{{article.breadcrumbs|safe}} - {{article.title|safe}}</div>
+          <h1>{{article.title|safe}}</h1>
+		  <div class="content">
+		  	{{article.content|safe}}
+		  </div>
+        </div>
+      </div>
+  </div>
+</div>
+{% endblock %}
+<!-- Main Container End -->

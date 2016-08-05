@@ -1,0 +1,56 @@
+DIY a nice hair brush
+
+DIY-a-nice-hair-brush.html
+<a href='/'>Home</a>
+
+<div class="blog-content">
+   <p>There are plenty of hair brushes sold on the market which you can just bring back home. Why not make an ordinary hair brush into a nice one with a nice lace bow by doing some DIY?</p>
+   <p>Actually doing handwork is more about attitudes, you will have a pair of clever hands and good senses if you have the right attitude and love for life. Exquisite and beautiful small handcrafts bring the feelings of freshness and simplicity. By some casual patching and easy steps many beautiful handicrafts can be made. Who doesn’t like this?
+   </p><p>Today our fabric art lesson is about a pretty little thing which is quite simple, we will learn how to make a girls’ hair brush with ribbons, with very normally seen materials such as laces and ribbons, together with some glue and a normal metal hair brush. A bow can be made from a simple knot, and by gluing some layers together a pink and delicate flower is done. You must look pretty and charming wearing it.
+   </p><p>Materials: a normal black hair brush, ribbons, laces, plush balls, non woven Fabric, scissors, glue.</p>
+	<b>Steps</b>
+	<ul>
+	<li>Glue the plush ball onto one side of the ribbon and glue a layer of non woven fabric on the other side of the ribbon to add some thickness.</li>
+	<li>Cut down some laces and fold them into a half flower like shown in the picture.</li>
+	<li>Tie a bow with other half of the ribbon and glue it under the half flower.</li>
+	<li>Glue all the above decorations onto the brush, then a beautiful hair brush is done!</li>
+	</ul>
+</div>
+<h3>related BLOG</h3>
+<div class="row blog-list">
+     <div class="blog-main col-md-4">
+       <a href="blog.html"><img src="/media/article/2/bimg1.jpg"></a>
+       <h2><a href="blog.html">How to brush wet hair</a></h2>
+     </div>
+     <div class="blog-main col-md-4">
+       <a href="blog.html"><img src="/media/article/2/bimg2.jpg"></a>
+       <h2><a href="blog.html">How to brush wet hair & Some brushes to recommend</a></h2>
+     </div>
+     <div class="blog-main col-md-4">
+       <a href="blog.html"><img src="/media/article/2/bimg3.jpg"></a>
+       <h2><a href="blog.html">How to brush wet hair</a></h2>
+     </div>
+</div> 
+
+
+About CASSIE
+About-CASSIE.html
+<img src="/media/article/3/about-img.jpg" class="empty-banner">   
+<div class="about-content">
+ What sets our brushes apart from others？ That is the lovely price！
+ Being original equipment manufacture partners of various international comb enterprises for more than twenty years, Cassie starts own brand with the superior of factory. Experience accumulation and Quality satisfaction are the main confidence the strategic target of Cassie to enter comb market to provide combs with top qualities at factory price.
+</div>
+
+
+
+商品详情
+<div class="content-des">
+     <p>Fashion has always been so temporary and uncertain. You can’t keep up with it.  This social phenomenon is very whimsical, thus we as the consumers always try to stay in touch with all the latest fashion tendencies. Obviously there is nothing wrong about it because fashion satisfies our willingness to be attractive. And also fashion is the detector of prosperity and social rank. So, our natural desire to wear fashionable clothes has many reasons such as historical, social and others. Therefore being fashionable costs a lot of money. But nowadays fashion is not such unavailable as it was a couple of centuries ago. We are lucky to have an opportunity to buy qualitative, fashionable and affordable clothes.
+      </p>
+      <p>
+		So, with the great pleasure we are offering you our goods, and we are sure that only our choices of garments will suit you best. Our product is universal because it suits different customers with different demands. We assure you it is really important, it shows that our good has such capacity as flexibility. And it is good for you because as we all know people change their claims with the course of time, and our good will be actual for a long time. The main reason of buying our clothes is the unique combination of fair price, extraordinary style and perfect quality.  Here you can find garments of all sizes, colors, styles and fabrics.
+		 </p>
+		 <p>
+		It will suit you best of all. Because we all live in the time of total consuming of uncountable goods and services, and this has become the main reason for the rapid growth of a so-called culture of consumption in our society. So, this circumstance forced all leading successful companies to explore all needs and wishes of different groups of potential clients very deeply. And that is why we are offering you the result of great market and technological research – our magnificent product. Our employees put in great efforts to make this commodity. Our good was made up by best experts with the help of most advanced technologies, and it gives us right to consider this product to be a premium one.
+		</p>
+</div>

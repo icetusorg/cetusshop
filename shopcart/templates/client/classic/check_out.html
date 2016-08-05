@@ -1,0 +1,152 @@
+﻿{% extends "classic/base.html" %}
+{% block main %}
+<!-- Main Container -->
+{% load staticfiles %}
+{% load i18n %}
+<div class="main-container col2-right-layout bounceInUp animated">
+  <div class="main container">
+    <div class="row">
+        <div class="page-title">
+          <h2>Checkout</h2>
+        </div>
+		
+		<form id="place_order_form" method="post" action="/cart/place-order">
+		{% csrf_token %}
+		
+        <ol class="one-page-checkout" id="checkoutSteps">
+          <li id="opc-billing" class="section allow active">
+            <div class="step-title"> <span class="number">1</span>
+              <h3>{% trans 'Select your shipping information' %}</h3>
+              <!--<a href="#">Edit</a> --> 
+            </div>
+            <div id="checkout-step-billing" class="step a-item">
+              <section class="section--white">
+				 <div id="showAddress">
+
+				 </div>
+	             <div class="btn add-address" data-target="#AddressModal" data-toggle="modal">[ + ] Add new</div>
+              </section>
+			  <input type="hidden" name="address_id" value="{{default_address_id}}" />
+            </div>
+          </li>
+          <div class="clearfix"></div>
+          <li id="opc-shipping" class="section">
+            <div class="step-title"> <span class="number">2</span>
+              <h3 class="one_page_heading"> {% trans 'Shopping Method' %}</h3>
+              <!--<a href="#">Edit</a>--> 
+            </div>
+            <div id="checkout-step-shipping" class="step a-item">
+			   {%for express in express_list%}
+					<input name="express" type = "radio" value = "{{express.id}}">{{express.name}}(${{express.price_fixed|floatformat:"2"}}) <br />
+			   {%endfor%}
+            </div>
+          </li>
+          <li id="opc-shipping_method" class="section">
+            <div class="step-title"> <span class="number">3</span>
+              <h3 class="one_page_heading"> {% trans 'Payment Information' %}</h3>
+            </div>
+            <div id="checkout-step-shipping_method" class="step a-item">
+               <label for="shipping:save_in_address_book"><img src="{% static 'classic/images/check-paypal.jpg' %}" class="check-payment-img"></label>
+            </div>
+          </li>
+         <li id="opc-review" class="section">
+	          <div class="step-title"> <span class="number">4</span>
+	              <h3 class="one_page_heading">{% trans 'Order Review' %}</h3>
+	            </div>
+	          <div class="table-responsive checkout-order-list">
+                <table class="data-table cart-table shopping-cart-table" id="shopping-cart-table">
+                  <tbody id="productList">
+                     <tr class="first odd check-order-header">
+                      <td class="image"></td>
+                      <td><strong>{% trans 'Product Name' %}</strong></td>
+                      <td class="a-center"><strong>{% trans 'Unit Price' %}</strong></td>
+                      <td class="a-center"><strong>{% trans 'Quantity' %}</strong></td>
+                      <td class="a-center"><strong>{% trans 'Total' %}</strong></td>
+                    </tr>
+				{% for cart_product in product_list %}	
+					<tr>
+						<td class='image'>
+							<a class='product-image' title='{{cart_product.product.name}}' href='/product/{{cart_product.product.id}}'>
+								<img width='75' alt='{{cart_product.product.name}}' src='{{cart_product.product.thumb}}'>
+							</a>
+							<input name="cart_product_id" type="hidden" value="{{cart_product.id}}">
+						</td>
+						<td class='a-left hidden-table check-product-name'><a href='/product/{{cart_product.product.id}}'>{{cart_product.product.name}} {{cart_product.get_short_product_attr}}</a></td>
+						<td class='a-center hidden-table'>
+							<span class='cart-price'>${{cart_product.get_product_price|floatformat:"2"}}</span>
+						</td>
+						<td class='a-center movewishlist'><input maxlength='12' readonly='readonly' name="{{cart_product.product.id}}_qty" class='input-text qty' title='Qty' size='4' value="{{cart_product.quantity}}"></td>
+						<td class='a-center movewishlist'><span class='cart-price'>${{cart_product.get_total|floatformat:"2"}}</span></td>
+					</tr>
+				{% endfor %}
+                  </tbody>
+                </table>
+	          	<hr><hr>
+          </div>
+	          <div class="check-return col-xs-9">
+	            <div class="row">
+	              <button class="button btn-return return-to-cart"  type="button"><span>{% trans 'Return to Cart' %}</span></button>
+	            </div>
+	          </div>
+	          <div class="totals col-xs-3">
+	          <div class="row">
+              <div class="inner check-inner">
+                <table class="table shopping-cart-table-total" id="shopping-cart-totals-table">
+                    <tr>
+                      <td colspan="1" class="a-left">{% trans 'Subtotal' %}</td>
+                      <td class="a-right">
+						<span class="price" id="checkOutSubTotal">$<span id="sub_total_amount">{{sub_total|floatformat:"2"}}</span></span>
+						<input name="sub_total" type="hidden" value="{{sub_total}}" />
+					  </td>
+                    </tr>
+                    <tr>
+                      <td colspan="1" class="a-left">{% trans 'Shipping Fee' %}</td>
+                      <td class="a-right">
+							<span id="checkOutShippingFee" class="price">$<span id="shipping_amount">{{shipping|floatformat:"2"}}</span></span>
+							<input name="shipping" type="hidden" value="{{shipping}}" />
+					  </td>
+                    </tr>
+                    <tr>
+                      <td colspan="1" class="a-left">- US</td>
+                      <td class="a-right">
+							<span class="price">$<span id="discount_amount">{{discount|floatformat:"2"}}</span></span>
+							<input name="discount" type="hidden" value="{{discount}}" />
+					  </td>
+                    </tr>
+                    <tr>
+                      <td colspan="1" class="a-left"><strong>{% trans 'All Total' %}:</strong></td>
+                      <td class="a-right">
+						<span class="price" id = "checkOutAllTotal">$<span id="total_amount">{{total|floatformat:"2"}}</span></span>
+						<input name="total" type="hidden" value="{{total}}" />
+					  </td>
+                    </tr>
+                </table>
+                <ul class="checkout"> 
+				  <li>
+	                	<div class="control-group">
+				             	<div class="controls">
+				                		<label for="remark">{%trans 'Remark'%}</label>
+				                  		<br>
+				                  		<input type="text" title="remark" 
+				                  		 class="input-text" id="remark" value="" name="remark" 
+				                  		 placeholder="To seller:"
+				                  		 />
+				                  		 <p class="help-block required"></p>
+				              	</div>
+			            </div>
+	                </li>
+                  <li><input class="button btn-proceed-checkout" title="Place Order" id="placeOrder" type="submit" value="Place Order">
+                  </li>
+                </ul>
+              </div>
+              <!--inner--> 
+             </div> 
+            </div>
+          </li>
+        </ol>
+		</form>
+      </div>
+  </div>
+ </div>
+<!-- Main Container End -->
+{% endblock %}

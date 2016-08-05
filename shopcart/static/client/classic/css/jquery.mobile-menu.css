@@ -1,0 +1,289 @@
+/************************
+*************************
+    Mobile Menu v1.0
+    (c) 2015 Magik Commerce
+ ************************
+************************/
+html {
+	overflow-x: hidden;
+}
+#page {
+	position: relative;
+	left: 0;
+}
+.mmPushBody {
+	width: 100%;
+	height: 100%;
+	overflow-x: hidden;
+}
+#mobile-menu {
+	position: absolute;
+	top: 0;
+	background: #f9f9f9;
+	z-index: 99999;
+	-webkit-box-shadow: 0 1px 8px #555555;
+	-moz-box-shadow: 0 1px 8px #555555;
+	-o-box-shadow: 0 1px 8px #555555;
+	box-shadow: 0 1px 8px #555555;
+	display: none;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 13px;
+	border-right: 1px solid #cccccc;
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	-o-box-sizing: content-box;
+	box-sizing: content-box;
+	line-height: 1.42857;
+	text-transform: uppercase;
+}
+.mobile-menu {
+	list-style-type: none;
+	margin: 0;
+	width: 100%;
+	float: left;
+	margin-left: 0;
+	padding-left: 0;
+	position: relative;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.mobile-menu ul {
+	margin-left: 0;
+	padding-left: 0;
+}
+.mobile-menu ul .expand {
+	background: #eeeeee;
+}
+.mobile-menu .mm-search {
+	height: 60px;
+	background-color: #222;
+	color: #555555;
+	padding: 10px 15px;
+	box-sizing: border-box;
+}
+.mobile-menu .input-group {
+	position: relative;
+	display: table;
+	border-collapse: separate;
+}
+.mobile-menu .input-group .form-control:last-child {
+	border-bottom-left-radius: 0;
+	border-top-left-radius: 0;
+}
+.mobile-menu .input-group .form-control {
+	display: table-cell;
+	position: relative;
+	z-index: 2;
+	float: left;
+	width: 100%;
+	margin-bottom: 0px;
+	height: 30px;
+}
+.mobile-menu .input-group-btn {
+	position: relative;
+	font-size: 0;
+	white-space: nowrap;
+	width: 1%;
+	vertical-align: middle;
+	display: table-cell;
+}
+.mobile-menu .input-group-btn:first-child > .btn {
+	border-bottom-right-radius: 0;
+	border-top-right-radius: 0;
+}
+.mobile-menu .input-group-btn > .btn {
+	position: relative;
+	height: 30px; background-color:#fff;
+}
+.mobile-menu .btn {
+	display: inline-block;
+	margin-bottom: 0;
+	font-weight: normal;
+	text-align: center;
+	vertical-align: middle;
+	cursor: pointer;
+	background-image: none;
+	white-space: nowrap;
+	font-size: 15px;
+	line-height: 1.42857;
+	border-radius: 0px;
+}
+
+.mobile-menu .form-control {
+	height: 18px;
+	padding: 6px 0;
+	font-size: 15px;
+	color: #555555;
+	background-color: #FFF;
+	border-radius: 0px;
+	border: 0;
+}
+.mobile-menu .btn-default {
+	height: 30px;
+	border: 0;
+	padding: 4px 5px;
+	background-color: white;
+}
+.mobile-menu .btn-default:hover {
+	color: #2ecc71;
+}
+.mm-search #search {
+	width: 200px;
+}
+.mobile-menu .btn-default:focus {
+	background-color: white;
+}
+.mobile-menu .btn-default:active {
+	background-color: white;
+}
+.mobile-menu .home {
+	background-color: #2ecc71;
+	color: white;
+	height: 40px;
+	overflow: hidden;
+}
+.mobile-menu .home i {
+	padding-right: 5px;
+}
+.mobile-menu .home a.active {
+	color: #fff !important;
+}
+.mobile-menu .expand {
+	right: 0;
+	position: absolute;
+	border-left: 1px solid #cccccc;
+	padding: 0 10px;
+	color: #2ecc71;
+	margin-left: 100px;
+}
+.mobile-menu .expand:hover {
+	cursor: pointer;
+}
+.mobile-menu li {
+	display: block;
+	border-top: 1px solid #cccccc;
+	width: 100%;
+	float: left;
+	margin-left: 0;
+	padding-left: 0;
+	position: relative;
+}
+.mobile-menu li .home a {
+	color: #fff;
+}
+.mobile-menu li a {
+	display: block;
+	overflow: hidden;
+	white-space: normal;
+	color: #222222;
+	text-decoration: none;
+	padding: 10px;
+	padding-left: 15px;
+}
+.mobile-menu li a.active {
+	color: #2ecc71;
+}
+.mobile-menu li li {
+	background: #eeeeee;
+}
+.mobile-menu li li a {
+	padding-left: 25px;
+}
+.mobile-menu li li li {
+	background: #dddddd;
+}
+.mobile-menu li li li a {
+	padding-left: 35px;
+}
+.mobile-menu .social a {
+	float: left;
+	padding: 0;
+	margin: 10px 0 10px 15px;
+}
+.mobile-menu .social i {
+	font-size: 22px;
+	color: #2ecc71;
+}
+.mobile-menu input.simple:focus {
+	border: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	-o-box-shadow: none;
+	box-shadow: none;
+	-webkit-transition: none;
+	-moz-transition: none;
+	-o-transition: none;
+	transition: none;
+}
+.mobile-menu [class^="icon-"]:before {
+	margin-right: 0;
+	margin-left: 0;
+}
+.mobile-menu [class*=" icon-"]:before {
+	margin-right: 0;
+	margin-left: 0;
+}
+.mm-toggle-wrap {
+	color: white;
+	width: 40px;
+	height: 47px;
+	background: #2ecc71;
+	line-height: 1;
+	overflow: hidden;
+}
+#mobile-menu .mm-search {
+    background-color: #222;
+    color: #555555;
+    padding: 10px 15px;
+    box-sizing: border-box;
+}
+#mobile-menu .btn-default {
+    height: 30px;
+    border: 0;
+    padding: 4px 5px;
+    background-color: white;
+}
+#mobile-menu .input-group .form-control {
+    display: table-cell;
+    position: relative;
+    z-index: 2;
+    float: left;
+    width: 100%;
+    height: 30px;
+    margin: auto;
+}
+#mobile-menu .form-control {
+    height: 18px;
+    padding: 6px 0;
+    font-size: 15px;
+    color: #555555;
+    background-color: #FFF;
+    border-radius: 0px;
+    border: 0;
+}
+.mm-toggle {
+	cursor: pointer;
+	font-size: 20px;
+	display: none;
+	padding: 12px 10px;
+	width: auto;
+	float: left;
+	background: #2ecc71;
+	height: 47px;
+}
+ @media (max-width: 767px) {
+.mm-toggle {
+	display: block;
+}
+.mm-toggle .mm-label {
+	margin-left: 3px;
+	display: none;
+}
+}
+ @media (max-width: 480px) {
+.mm-toggle .mm-label {
+	display: none;
+}
+}

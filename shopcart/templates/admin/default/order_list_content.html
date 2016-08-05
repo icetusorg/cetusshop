@@ -1,0 +1,141 @@
+{% extends "admin/default/content_base.html" %}
+{% block breadcrumbs %}
+<section class="content-header">
+    <h1>{{page_name}}</h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+        <li class="active"><a href="#">订单管理</a></li>
+    </ol>
+</section>
+{% endblock %}
+
+{% block main %}
+{% load i18n %}
+<section class="content">
+    <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box xy-search">
+                <div class="box-header with-border">
+                    <h3 class="box-title">订单查询</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div>
+                                <form method="GET">
+                                    <div class="form-group">
+                                        <label>订单号 :</label>
+                                        <input name="order_number" type="text" class="form-control" value={{order_number}}>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>下单用户 :</label>
+                                        <input name="user_email" type="text" class="form-control" value={{user_email}}>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">查询</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="box xy-list">
+                <div class="box-body no-padding">
+					<form id="order_oper_form" method="POST" action="/admin/order-oper/">
+						<input type="hidden" value="" id="oper-ids" name="oper-ids"/>
+						<table id="main-content-table" class="table table-striped">
+							<tbody>
+							<!--多余th为了调整表格色块-->
+							<tr><th></th></tr>
+							<tr>
+								<th>选择</th>
+								<th>订单号</th>
+								<th>下单时间</th>
+								<th>收货人#</th>
+								<th>订单状态</th>
+								<th>金额</th>
+								<th>操作</th>
+							</tr>
+							
+							
+								{% csrf_token %}
+								{% for order in order_list%}
+									<tr>
+										<td><input name="is_oper" data-order-id="{{order.id}}" type="checkbox"></td>
+										<td><a href="#">{{order.order_number}}</a></td>
+										<td>{{order.create_time|date:"M/d/Y"}}</td>
+										<td>{{order.first_name}} &nbsp; {{order.last_name}}</td>
+										<td>
+											{% if order.status == '0' %}
+													<span>待付款</span> 
+											{% elif order.status == '10' %}
+													<span>待发货</span>
+											{% elif order.status == '20'%}
+													<span>已发货</span>
+											{% elif order.status == '30'%}
+													<span>已完成</span>
+											{% elif order.status == '90'%}
+													<span>异常</span>
+											{% elif order.status == '99'%}
+													<span>已关闭</span>
+											{% else %}
+													<span>order.get_human_status</span>
+											{% endif %}
+										</td>
+										<td>${{order.order_amount|floatformat:"2"}}</td>
+										<td><a href="/order/show/{{order.id}}/">查看</a> | <a href="#">备注</a></td>
+									</tr>
+								{% endfor %}
+							
+							</tbody>
+						</table>
+					</form>
+                </div>
+                <div class="box-footer clearfix">
+                    <div class="xy-box-select">
+                        <input id="main-content-checkbox-all" type="checkbox">
+                        <a id="main-content-btn-all" href="#">全选</a>
+                        <button id="order_batch_delete" type="button" class="btn btn-danger">删除</button>
+                    </div>
+                    <div class="xy-pages-jump">
+                        <button type="submit" class="btn btn-primary">跳转</button>
+                        <input type="text" class="form-control">
+                        <p>跳转到：</p>
+
+                        <ul class="pagination pagination-sm no-margin pull-right">
+								{% if order_list.has_previous %}
+									<li><a name="pageChange" href="#" data-tag="Previous" class="pageChage prev" data-page="{{ order_list.previous_page_number }}">&lt;</a></li>
+								{% else %}
+									<li><a class="prev">&lt;</a></li>
+								{% endif %}
+								
+								
+								 {% for p in page_range %}
+									{% ifequal p objects.number %}
+										<li><span>{{p}}</span></li>
+									{% else %}
+									  <li><a class="pageChage"  data-page = "{{p}}" href="#" title="{{p}}">{{p}}</a></li>
+									{% endifequal %}
+								 {% endfor %}
+								 {% if order_list.has_next %}
+									<li><a name="pageChange" class="pageChage next" href="#" data-page = "{{p}}" data-page-range="{{page_range}}" data-tag="Next">&gt;</a></li>
+								 {% else %}
+									<li><a class="next">&gt;</a></li>
+								 {% endif %}
+                        </ul>
+                        <p>共{{order_count}}条记录 , 共{{page_range|last}}页，每页显示：{{page_size}}条</p>
+                    </div>
+                </div>
+            </div><!-- /.box -->
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+	{% load staticfiles %}
+{% endblock %}

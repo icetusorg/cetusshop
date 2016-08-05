@@ -1,0 +1,348 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-05-23 15:21+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: .\article.py:42 .\product.py:69
+msgid "File already generated."
+msgstr "文件生成成功"
+
+#: .\article.py:46 .\product.py:73
+msgid "File generate failed."
+msgstr "文件生成失败"
+
+#: .\cart.py:64
+msgid "Please choose a kind"
+msgstr "请选择一种商品"
+
+#: .\cart.py:75
+#, python-format
+msgid "The minimun order quantity of the product is %(value)s"
+msgstr "最小起订量是：%(value)s"
+
+#: .\cart.py:84 .\cart.py:115 .\cart.py:154 .\order.py:25 .\wishlist.py:29
+#: .\wishlist.py:64
+msgid "Opration successful."
+msgstr "操作成功"
+
+#: .\cart.py:88 .\cart.py:236
+msgid "Unknown Exception"
+msgstr "异常错误"
+
+#: .\emaillist.py:20
+msgid "Add email to email list success"
+msgstr "加入邮件列表成功"
+
+#: .\emaillist.py:24
+msgid "Add email to email list failed"
+msgstr "加入邮件列表失败"
+
+#: .\index.py:28
+#, python-format
+msgid "You are resetting you password in %(sitename)s ."
+msgstr "您正在重置您在%(sitename)s的密码"
+
+#: .\index.py:29
+#, python-format
+msgid "Today is %(sitename)s."
+msgstr "今天的网站名称：%(sitename)s"
+
+#: .\index.py:30
+#, python-format
+msgid "Today is %(month)s."
+msgstr "今天是%(month)s月"
+
+#: .\index.py:31
+#, python-format
+msgid "Today is %(month)s %(day)s."
+msgstr "今天是%(month)s月%(day)s号"
+
+#: .\myuser.py:41
+msgid "Registration faild."
+msgstr "注册失败"
+
+#: .\myuser.py:87
+msgid "Your account name or password is incorrect."
+msgstr "您输入的账号和密码不正确"
+
+#: .\myuser.py:157 .\views.py:108
+#, python-format
+msgid "You are resetting you password in %(site_name)s ."
+msgstr "您正在重置您在%(site_name)s的密码"
+
+#: .\myuser.py:158
+msgid "Your password reset apply is succeed.Please check your mail box."
+msgstr "您的密码重置申请已经生效。请检查您的邮箱。"
+
+#: .\myuser.py:160
+msgid "Please check your verify code."
+msgstr "请检查您输入的验证码"
+
+#: .\myuser.py:187
+msgid "The password has been reseted."
+msgstr "密码重置成功。"
+
+#: .\myuser.py:190
+msgid "Opration faild."
+msgstr "操作失败"
+
+#: .\myuser.py:221
+msgid "Address successfully saved."
+msgstr "地址保存成功。"
+
+#: .\order.py:30
+msgid "Parameter Error."
+msgstr "参数错误"
+
+#: .\order.py:45
+msgid "Address is not correct"
+msgstr "地址不正确"
+
+#: .\templates\cassie\cart_detail.html:17
+#: .\templates\classic\cart_detail.html:20
+#: .\templates\classic\check_out.html:61 .\templates\classic\orders.html:19
+msgid "Product Name"
+msgstr "商品"
+
+#: .\templates\cassie\cart_detail.html:18
+#: .\templates\classic\cart_detail.html:21
+#: .\templates\classic\check_out.html:62 .\templates\classic\orders.html:20
+msgid "Unit Price"
+msgstr "单价"
+
+#: .\templates\cassie\cart_detail.html:19
+#: .\templates\classic\cart_detail.html:22
+#: .\templates\classic\check_out.html:63 .\templates\classic\orders.html:21
+#: .\templates\classic\product_detail.html:70
+msgid "Quantity"
+msgstr "数量"
+
+#: .\templates\cassie\cart_detail.html:20
+msgid "SubTotal"
+msgstr "小计"
+
+#: .\templates\cassie\cart_detail.html:53
+#: .\templates\classic\cart_detail.html:29
+msgid "Continue Shopping"
+msgstr "继续购物"
+
+#: .\templates\cassie\cart_detail.html:54
+#: .\templates\classic\cart_detail.html:30
+msgid "Clear Cart"
+msgstr "清空购物车"
+
+#: .\templates\cassie\cart_detail.html:69
+msgid "Proceed to Checkout"
+msgstr "立即下单"
+
+#: .\templates\cassie\header.html:57
+msgid "MY ACCOUNT"
+msgstr "我的账户"
+
+#: .\templates\cassie\header.html:58
+msgid " My WISHLIST"
+msgstr "我的愿望"
+
+#: .\templates\cassie\header.html:61
+msgid "LOG OUT"
+msgstr "注销"
+
+#: .\templates\cassie\header.html:63
+msgid "LOG IN"
+msgstr "登陆"
+
+#: .\templates\cassie\login.html:11 .\templates\classic\login.html.py:14
+msgid "New Customers"
+msgstr "新的客户"
+
+#: .\templates\cassie\login.html:17
+msgid "Create an Account"
+msgstr "注册"
+
+#: .\templates\cassie\login.html:20 .\templates\classic\login.html.py:22
+msgid "Registered Customers"
+msgstr "老客户"
+
+#: .\templates\cassie\login.html:33 .\templates\classic\forget_password.html:9
+#: .\templates\classic\login.html:56
+msgid "Forgot Your Password"
+msgstr "忘记密码"
+
+#: .\templates\cassie\login.html:35 .\templates\classic\login.html.py:55
+msgid "Login"
+msgstr "登陆"
+
+#: .\templates\classic\cart_detail.html:10
+msgid "Shopping Cart"
+msgstr ""
+
+#: .\templates\classic\cart_detail.html:23
+#: .\templates\classic\cart_detail.html:67
+#: .\templates\classic\check_out.html:64 .\templates\classic\orders.html:22
+#: .\templates\classic\orders.html.py:83
+msgid "Total"
+msgstr "总计"
+
+#: .\templates\classic\cart_detail.html:43
+msgid "Remove item"
+msgstr "删除"
+
+#: .\templates\classic\cart_detail.html:81
+msgid "Checkout"
+msgstr "下单"
+
+#: .\templates\classic\check_out.html:19
+msgid "Select your shipping information"
+msgstr "送货信息"
+
+#: .\templates\classic\check_out.html:35
+msgid "Shopping Method"
+msgstr "送货方式"
+
+#: .\templates\classic\check_out.html:46
+msgid "Payment Information"
+msgstr "付款信息"
+
+#: .\templates\classic\check_out.html:54
+msgid "Order Review"
+msgstr "订单确认"
+
+#: .\templates\classic\check_out.html:88
+msgid "Return to Cart"
+msgstr "返回购物车"
+
+#: .\templates\classic\check_out.html:96
+msgid "Subtotal"
+msgstr "小计"
+
+#: .\templates\classic\check_out.html:103
+msgid "Shipping Fee"
+msgstr "运费"
+
+#: .\templates\classic\check_out.html:117
+msgid "All Total"
+msgstr "总计"
+
+#: .\templates\classic\check_out.html:128
+msgid "Remark"
+msgstr "备注"
+
+#: .\templates\classic\forget_password.html:52
+msgid "SUBMIT"
+msgstr "提交"
+
+#: .\templates\classic\header.html:18
+msgid "My Cart"
+msgstr "我的购物车"
+
+#: .\templates\classic\header.html:19
+msgid " My Wishlist"
+msgstr "我的愿望"
+
+#: .\templates\classic\header.html:20
+msgid "My Orders"
+msgstr "我的订单"
+
+#: .\templates\classic\header.html:36
+msgid "Log Out"
+msgstr "注销"
+
+#: .\templates\classic\header.html:38
+msgid "Log In"
+msgstr "登陆"
+
+#: .\templates\classic\index.html:39
+msgid "Translate in template."
+msgstr ""
+
+#: .\templates\classic\index.html:40
+#, python-format
+msgid "This string will have %(value)s inside."
+msgstr ""
+
+#: .\templates\classic\login.html:9 .\templates\classic\login.html.py:13
+msgid "Login or Create an Account"
+msgstr "登陆或注册"
+
+#: .\templates\classic\login.html:27
+msgid "Please log in with your e-mail and password"
+msgstr "请使用e-mail和密码登陆"
+
+#: .\templates\classic\orders.html:31
+msgid "Order number"
+msgstr ""
+
+#: .\templates\classic\orders.html:31
+msgid "View Details"
+msgstr "查看详情"
+
+#: .\templates\classic\orders.html:32
+msgid "Order Status"
+msgstr "订单状态"
+
+#: .\templates\classic\orders.html:41
+msgid "Cancel"
+msgstr "取消"
+
+#: .\templates\classic\orders.html:54
+msgid "Waitting Shipping"
+msgstr "等待发货"
+
+#: .\templates\classic\orders.html:81
+msgid "Order Placed Time"
+msgstr "下单时间"
+
+#: .\templates\classic\product_detail.html:56
+msgid "Market Price"
+msgstr "市场价"
+
+#: .\templates\classic\product_detail.html:57
+msgid "Price"
+msgstr "价格"
+
+#: .\templates\classic\product_detail.html:67
+msgid "In Stock"
+msgstr "在售"
+
+#: .\templates\classic\product_detail.html:80
+msgid "Add to Cart"
+msgstr "加入购物车"
+
+#: .\templates\classic\product_detail.html:85
+msgid "Add to Wishlist"
+msgstr "加入愿望清单"
+
+#: .\templates\classic\product_detail.html:120
+msgid "Product Description"
+msgstr "商品描述"
+
+#: .\validate.py:37 .\validate.py:47
+msgid "The email has been registered!"
+msgstr "邮箱已经被注册"
+
+#: .\validate.py:41 .\validate.py:51
+msgid "The email has not been registered!"
+msgstr "邮箱还没有注册"
+
+#: .\validate.py:61
+msgid "Varify code is correct."
+msgstr "验证码正确"
+
+#: .\validate.py:65
+msgid "Varify code is not correct."
+msgstr "验证码不正确"

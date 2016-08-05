@@ -1,0 +1,120 @@
+{% extends "client/cassie/base.html" %}	
+{% block breadcrumbs %}
+<div class="crumb main">
+    <div class="container">
+        <div class="row">
+           <a href="/">Home</a> &gt; {{product.name}}
+        </div>
+    </div>
+</div>
+{% endblock%}
+{% block main %}
+{% load i18n %}
+
+<!--产品幻灯开始-->
+
+<div class="detail">
+  <div class="detail-main">
+  <h1>这是一个另外的模板，现在演示的时候，是本商品指定的</h1>
+   <div id="preview" class="spec-preview">
+      <span class="jqzoom">
+        <img id="product-big-image" jqimg="{{product.image}}" alt="" src="{{product.image}}" class="cart-move-img"/>      </span>
+   </div>
+   <div class="spec-scroll">
+          <div class="items">
+              <ul>
+				 {% for image in product.get_product_detail_images %}
+					<li><img alt="" bimg="{{image.image}}" src="{{image.image}}" onMouseMove="preview(this);"></li>
+				{% endfor %}
+              </ul>
+          </div>
+   </div>
+  </div>
+  <div class="detail-attr">
+     <h1>{{product.name}}</h1>
+     <p class="detail-attr-des">{{product.short_desc}}</p>
+     <div class="detail-price">
+		<span>
+				${{product.market_price|floatformat:"2"}}
+		</span>
+		<span id="product-price-main" class="price">
+			{% if has_price_range %}
+				${{price_min|floatformat:"2"}} - ${{price_max|floatformat:"2"}}
+			{% else %}
+				${{product.price|floatformat:"2"}}
+			{% endif %}
+		</span>
+	 </div>
+	<div class="product-attributes">
+		<!-- 先找出商品关联的所有的attributes，然后找出分组 -->
+		<input type="hidden" id="product-attribute-id" value="" />
+		{% for group in product.get_attributes %}
+			{% for attr in group.attr_list %}
+				{% if group.group_type == 'text' %}
+					{% if forloop.first %}
+						<div>
+							<input type='hidden' class="product-attribute-group-selected" title="{{group.code}}" value="" />
+							<ul>
+					{% endif %}
+								<li><input class="product-attribute-item" data-attribute-id="{{attr.id}}" data-group-code="{{group.code}}" data-product-id="{{product.id}}" type="radio" name="{{group.code}}" value="{{attr.id}}" />{{attr.name}}</li>
+					{% if forloop.last %}
+							</ul>
+						</div>
+					{% endif %}
+				{% elif group.group_type == 'image' %}
+					{% if forloop.first %}
+						<div>
+							<input type='hidden' class="product-attribute-group-selected" title="{{group.code}}" value="" />
+							<ul class="detail-color">
+								<li>{{group.name}}:</li>
+					{% endif %}
+								<li class="product-color{{forloop.counter}}" onclick="redborder(this);">
+									<img class="product-attribute-item" data-attribute-id="{{attr.id}}" data-group-code="{{group.code}}" data-product-id="{{product.id}}" src='{{attr.thumb}}' alt='{{attr.name}}' title='{{attr.name}}'/>
+								</li>
+					{% if forloop.last %}
+							</ul>
+						</div>
+					{% endif %}
+				{% else%}
+					<p>{{attr.name}}</p>
+				{% endif %}
+			{% endfor %}
+		{% endfor %}
+	</div>
+
+      <img src="{{product.thumb}}" class="cart-move" title="Fly Image">
+      <div class="detail-quality">
+        <input type="text" class="small-quality" id="qty" name="qty" placeholder="1" value="1">
+        <a id="addToCartBtn" data-product-id="{{product.id}}" class="detail-add-btn delay">add to cart</a>
+        <a class="glyphicon glyphicon-heart detail-heart delay  {{is_my_wish|yesno:"detail-heart-click,,"}}" id="addToWishList" data-product-id="{{product.id}}"></a>
+        <p id="min_order_quantity_tips" class="min-purchase-tips">
+				Minimun Order Quantity : <span id="min_order_quantity">{{product.min_order_quantity}}</span>
+		</p>
+      </div>
+      <p class="detail-attr-social"></p>
+  </div>
+  <div class="container">
+    <div class="row">
+    <div class="detail-des">
+        <h5 class="detail-des-title">Description</h5><h5 class="detail-des-line"></h5>
+        <div class="detail-des-main">
+            {{product.description|safe}}
+        </div>
+    </div>
+</div>
+</div>
+</div>
+{% endblock %}
+{% block scripts %}
+	{% load staticfiles %}
+	<script type="text/javascript" src="{% static 'client/cassie/js/base.js' %}"></script>
+	<script type="text/javascript" src="{% static 'client/cassie/js/jquery.jqzoom.js' %}"></script>
+	
+	<script>
+		$("#test").click(function(e){
+			$("#product-big-image").attr("jqimg","http://i.imycart.com/media/product/2/Plastic-Wet-Green-Hair-Brush-Back-View.jpg");
+			$("#product-big-image").attr("src","http://i.imycart.com/media/product/2/Plastic-Wet-Green-Hair-Brush-Back-View.jpg");
+		});
+	</script>
+{% endblock %}
+

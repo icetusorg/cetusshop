@@ -1,0 +1,14 @@
+{% extends "admin/base_site.html" %}
+
+{% block title %}List of books by publisher{% endblock %}
+
+{% block content %}
+<div id="content-main">
+  <h1>List of books by publisher:</h1>
+  <ul>
+	{% for product in product_list %}
+		<li>{{product.name}}</li>
+	{% endfor %}
+  </ul>
+</div>
+{% endblock %}

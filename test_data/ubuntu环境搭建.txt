@@ -1,0 +1,174 @@
+﻿0、调整secureCRT终端的字符集，防止乱码
+Options - Session Options - Appearance
+在Character Encoding下拉框中选择UTF-8
+
+1、安装语言包
+$ sudo apt-get install language-pack-zh-hans
+$ sudo apt-get install language-pack-zh-hant
+
+2、安装nginx
+$ sudo apt-get update
+$ sudo apt-get install nginx
+$ sudo service nginx start
+#访问一下，看是否能访问到nginx的欢迎页面，可以的话，就可以关了
+$ sudo serivce nginx stop
+
+3、安装git 和 虚拟环境
+$ sudo apt-get install git python3 python3-pip
+$ sudo apt-get install virtualenv
+#虚拟环境可以隔离各个python环境，使得各个环境互不影响，尤其是后面要安装一些类库，强烈建议安装
+
+4、部署代码
+4.1、推荐按照以下目录结构组织代码
+	/home/ubuntu
+		sites
+			livesite
+				source
+				static
+				virtualenv
+			stagingsite
+				source
+				static
+				virtualenv
+4.2、建目录
+$ cd /home/ubuntu
+$ mkdir sites
+$ cd sites
+$ mkdir livesite
+$ mkdir stagingsite
+
+4.3、拿代码
+$ cd stagingsite
+$ git clone https://github.com/imycart/imycart.git source
+
+4.4、创建虚拟环境
+$ cd /home/ubuntu/stagingsite/source
+$ virtualenv --python=python3 ../virtualenv
+$ ls ../virtualenv
+#用来检验一下虚拟环境是否创建成功，成功应该显示下面几个目录
+bin include lib
+
+$ which python3
+#查看主环境用的是那个python3，应该显示下面的
+/usr/bin/python3
+$ source ../virtualenv/bin/activate
+#激活虚拟环境
+(virtualenv)$ which python
+#注意，前面的$符号前面会多一个virtualenv，检查用了那个python，会显示下面的
+/workspace/virtualenv/bin/python
+
+5、在虚拟环境中安装django
+(virtualenv)$ pip install django==1.8
+#版本号不是必须的，可以指定，也可以不指定
+[...]
+Successfully installed django
+Cleaning up...
+
+(virtualenv)$ls ../virtualenv/lib/python3.4/site-packages/
+django  pip  setuptools [...]
+#应该能看到django成功安装了
+
+6、安装pillow
+6.1 pillow依赖第三方库，需要先安装第三方库，另开一个终端窗口
+$ sudo apt-get sudo apt-get install libtiff4-dev libjpeg8-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.5-dev tk8.5-dev python-tk
+6.2 检查/usr/lib下是否存在libjpeg.so 和 libz.so
+$ ls -l /usr/lib/libjpeg.so
+#存在，则会显示
+lrwxrwxrwx 1 root root 36 Apr 27 05:09 /usr/lib/libjpeg.so -> /usr/lib/x86_64-linux-gnu/libjpeg.so
+$ ls -l /usr/lib/libz.so
+#存在，则会显示
+lrwxrwxrwx 1 root root 33 Apr 27 05:09 /usr/lib/libz.so -> /usr/lib/x86_64-linux-gnu/libz.so
+
+如果不存在，则创建软连接
+$ sudo ln -s /usr/lib/x86_64-linux-gnu/libjpeg.so /usr/lib/libjpeg.so
+$ sudo ln -s /usr/lib/x86_64-linux-gnu/libz.so /usr/lib/libz.so
+
+6.3、安装pillow
+这里，强烈建议切换到虚拟环境中，要不然很容易和别的冲突
+$ cd /home/ubuntu/stagingsite/source
+$ source ../virtualenv/bin/activate
+(virtualenv)$pip install pillow
+#如果不能安装最新版，可以尝试制定版本，比如 pip install pillow==2.9.0
+
+7、安装mysql
+#新开一个终端窗口
+$ sudo apt-get install mysql-server mysql-client
+#根据提示，输入root用户的密码
+$ netstat -ant
+可以看到有一个监听127.0.0.1：3306的端口，这说明mysql当前监听的是本机3306，外面的机器无法访问
+tcp        0      127.0.0.1:3306            0.0.0.0:*               LISTEN
+
+#修改MySql监听
+$ cd /etc/mysql
+$ sudo vi my.cnf
+#把“bind-address  =127.0.0.1”注释掉
+$ sudo service mysql restart
+#重启mysql之后，用netstat -ant可以看到，说明mysql已经可以远程连接了
+tcp        0      0 0.0.0.0:3306            0.0.0.0:*               LISTEN
+#root用户，默认是无法远程登陆的，还需要给root用户赋予远程登陆的权限
+$ mysql -u root -p
+mysql>> use mysql;
+mysql>> select host,user from user;
+mysql>> update user set host = '%' where host='127.0.0.1' and user = 'root';
+mysql>> quit;
+$ sudo service mysql restart
+#好了，到这里，mysql搞定了
+
+8、建库，建议使用windows客户端连管理，安装一个mysql workbrench
+在图形界面中创建一个schema，命名为imycartpy，字符集选择“utf-8 default collection”
+创建一个用户叫imycartpy，在权限菜单中，选择schema，下拉框中选择imycartpy，然后权限全选
+
+9、安装别的依赖库
+#再次进入虚拟环境
+这里，强烈建议切换到虚拟环境中，要不然很容易和别的冲突
+$ cd /home/ubuntu/stagingsite/source
+$ source ../virtualenv/bin/activate
+(virtualenv)$pip install PyMySQL
+#python使用这个连接器连接mysq
+(virtualenv)$pip install django-simple-captcha
+(virtualenv)$pip install django-paypal
+(virtualenv)$pip install django-contrib-comments
+
+10、安装容器gunicorn
+(virtualenv)$pip install gunicorn
+
+11、启动前准备
+(virtualenv)$ cd /home/ubuntu/stagingsite/source
+(virtualenv)$ vi imycart/settings.py
+#编辑一下setting文件，将数据库指向本机
+(virtualenv)$ python manage.py makemigrations shopcart
+(virtualenv)$ python manage.py makemigrations captcha
+(virtualenv)$ python manage.py migrate
+#建表
+(virtualenv)$ python manage.py collectstatic
+#归集静态文件
+(virtualenv)$ gunicorn --bind unix:/tmp/aws.imycart.com.socket imycart.wsgi:application
+#启动，并且将输出定向到unix管道
+
+12、配置nginx
+#将nignx配置文件ubuntu.imycart.com上传到tmp目录
+$ cd /etc/nginx/sites-available
+$ sudo cp /tmp/ubuntu.imycart.com .
+$ cd /etc/nginx/sites-enabled
+$ sudo ln -s /etc/nginx/sites-available/ubuntu.imycart.com /etc/nginx/sites-enabled/ubuntu.imycart.com
+$ sudo rm default
+$ sudo service nginx reload
+
+#修改nginx默认的上传文件大小
+$ cd /etc/nginx/
+$ vi ngixn.conf
+
+#在http{}段中加入下面这句：
+ client_max_body_size 10m;
+#保存后重启nginx
+$ sudo service nginx reload
+
+13、初始化数据
+打开浏览器，输入网址http://aws.imycart.com/initdb/
+成功的话，会显示 尝试产生三条流水。。。。之类的
+
+OK，大功告成了
+
+
+
+

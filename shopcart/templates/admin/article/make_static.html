@@ -1,0 +1,47 @@
+{% load staticfiles %}
+<html>
+<head></head>
+<body>
+<div id="content-main">
+  <h1>List of books by publisher:</h1>
+  <ul>
+	{% for article in article_list %}
+		<li>{{article.title}}  | <a href="#" class="make-static" data-article-id="{{article.id}}">生成静态文件</a> | <span class="static-url" id="span-url-{{article.id}}"></span></li>
+	{% endfor %}
+  </ul>
+</div>
+</body>
+	<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+	<script type="text/javascript" src="{% static 'cassie/js/bootstrap.min.js' %}"></script> 
+	<script type="text/javascript" src="{% static 'cassie/js/imycart.js' %}"></script>
+	<script type="text/javascript" src="{% static 'cassie/js/jquery.json.min.js' %}"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$(".make-static").click(function(e){
+			var p_id = $(this).data("article-id");
+			var url = "/article/" + p_id + "/";
+
+			
+			$.ajax({
+				type : 'POST',
+				contentType : 'application/json',
+				dataType : 'json',
+				url : url,
+				data : null,
+				success : function(result) {
+					if(result.success==true){
+						$("#span-url-" + p_id).html("<a href='/" + result.static_url +"'>查看</a>");
+					}else{
+						alert(result.message);
+					}
+				},
+				error : function(result) {
+					alert(result.success);
+				}
+			});
+			
+ 		});
+	});
+	</script>
+</html>
+

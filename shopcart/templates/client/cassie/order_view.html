@@ -1,0 +1,98 @@
+{% extends "client/cassie/base.html" %}
+{%block head_extra%}
+	{% load staticfiles %}
+	<link rel="stylesheet" href="{% static 'client/cassie/css/cart.css'%}" type="text/css"/>
+{%endblock%}
+{% block main %}
+{% load i18n %}
+    <div class="carts main">
+        <div class="container">
+            <div class="row">
+                <div class="row">
+                    <div class="col-md-3 col-xs-12">
+						{% include 'client/cassie/side_nav.html' %}
+                    </div>
+                    <div class="col-md-9 col-xs-12 order-view">
+                       <h2>My Order</h2>
+                       <div class="order-info">
+                           <h3>Order Information</h3>
+                           <ul>
+                               <li>Order Number: {{order.order_number}}</li>
+                               <li>
+									Order Status: 
+										{% if order.status == '0' %}
+												<a href="/cart/payment/{{order.id}}">Pay Now</a> 
+										{% elif order.status == '10' %}
+												<span>Pending</span>
+										{% elif order.status == '20'%}
+												<span>Delivery</span>
+										{% elif order.status == '30'%}
+												<span>Done</span>
+										{% elif order.status == '99'%}
+												<span>Closed</span>
+										{% else %}
+												<span>order.get_human_status</span>
+										{% endif %}
+								</li>
+                               <li>Order Date: {{order.create_time|date:"M/d/Y"}}</li>
+                           </ul>
+                           <h3>Ship To</h3>
+                           <ul>
+                               <li>{{order.first_name}}</li>
+                               <li>{{order.last_name}}</li>
+                               <li>{{order.address_line_1}}</li>
+							   <li>{{order.address_line_2}}</li>
+                               <li>{{order.zipcode}}</li>
+                               <li>{{order.city}}</li>
+                           </ul>
+                           <h3>Products</h3>
+                       </div>
+                       <div class="carts-main">
+                          <div class="carts-title">
+                            <div class="carts-goods-img"></div>
+                            <div class="carts-goods-name">Product Name</div>
+                            <div class="carts-goods-pricet">Unit Price</div>
+                            <div class="carts-goods-qty">Qty</div>
+                            <div class="carts-goods-subt">Subtotal</div>
+                         </div>
+                         <!--购物车产品列表，“carts-item”为每一个产品-->
+                         <div class="carts-list">
+                             <!-- 商品一 -->
+                             
+							 {% for op in order.order_products.all%}
+								<div class="carts-item">
+									<div class="carts-goods-img">
+										<a href="/product/{{op.product_id}}/">
+										    {% if op.product_attribute %}
+												<img src="{{op.product_attribute.image.thumb}}" alt="{{op.name}}">
+											{% else %}
+												<img src="{{op.thumb}}" alt="{{op.name}}">
+											{% endif %}
+										</a>
+									</div>
+									<div class="carts-goods-name"><div><a href="/product/{{op.product_id}}/">{{op.name}}</a><br>{{op.get_short_product_attr}}</div></div>
+									<div class="carts-goods-price">${{op.price|floatformat:"2"}}</div>
+									<div class="carts-goods-qty">
+										<div class="quy-item">{{op.quantity}}</div>
+									</div>
+									<div class="carts-goods-sub">${{op.get_total|floatformat:"2"}}</div>
+								</div>
+							 {% endfor %}
+							 
+                         </div>
+                       </div>
+                       <div class="carts-end">
+                           <h4><span>Subtotal</span><span>${{order.products_amount|floatformat:"2"}}</span></h4>
+                           <h4><span>Shipping & Handling</span><span>${{order.shipping_fee|floatformat:"2"}}</span></h4>
+                           <h3><span>Grand Total</span><span>${{order.order_amount|floatformat:"2"}}</span></h3>
+                       </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ {% endblock %}
+{% block scripts %}
+	{% load staticfiles %}
+{% endblock %}

@@ -1,0 +1,124 @@
+﻿{% extends "classic/base.html" %}
+{% block main %}
+{% load i18n %}
+  <!-- Main Container -->
+  <section class="main-container col1-layout wow bounceInUp animated">
+    <div class="main container">
+      <div class="col-main">
+        <div class="cart">
+          <div class="page-title">
+            <h2>{%trans 'Shopping Cart'%}</h2>
+          </div>
+			 <form id="cart_to_order_form" method="post" action="/cart/check-out">
+				{% csrf_token %}
+				<div class="table-responsive">
+				  <fieldset>
+					<table class="data-table cart-table" id="shopping-cart-table">
+					  <thead>
+						<tr class="first last">
+						  <th rowspan="1">&nbsp;</th>
+						  <th rowspan="1"><span class="nobr">{% trans 'Product Name' %}</span></th>
+						  <th colspan="1" class="a-center"><span class="nobr">{% trans 'Unit Price' %}</span></th>
+						  <th class="a-center " rowspan="1">{% trans 'Quantity' %}</th>
+						  <th colspan="1" class="a-center">{% trans 'Total' %}</th>
+						  <th class="a-center" rowspan="1">&nbsp;</th>
+						</tr>
+					  </thead>
+					  <tfoot>
+						<tr class="first last">
+						  <td class="a-right last" colspan="8"><a href="/product/" class="button btn-continue" title="Continue Shopping" type="button"><span>{% trans 'Continue Shopping'%}</span></a>
+							<button id="empty_cart_button" data-cartid='{{cart.id}}' class="button" title="Clear Cart" value="empty_cart" name="update_cart_action" type="button"><span>{%trans 'Clear Cart'%}</span></button></td>
+						</tr>
+					  </tfoot>
+					  <tbody>
+						
+							{% for cart_product in cart.cart_products.all %}
+							<tr>
+								<td class="image"><a class="product-image" title="{{cart_product.product.name}}" href="/product/{{cart_product.product.id}}"><img width="75" alt="{{cart_product.product.name}}" src="{{cart_product.product.thumb}}"></a></td>
+								<td><h2 class="product-name"> <a href="/product/{{cart_product.product.id}}">{{cart_product.product.name}}</a> {{cart_product.get_short_product_attr}}</h2></td>
+								<td class="a-center hidden-table"><span class="cart-price"> <span class="price">${{cart_product.get_product_price|floatformat:"2"}}</span> </span></td>
+								<td class="a-center movewishlist"><input maxlength="12" class="input-text qty" title="Qty" size="4" value="{{cart_product.quantity}}" name="quantity" data-cartid="{{cart_product.id}}" /></td>
+								<td class="a-center movewishlist" name="subTotalTd"> <span class="cart-price price" name="subTotal">${{cart_product.get_total|floatformat:"2"}}</span></td>
+								<td class="a-center last">
+									<a class="button remove-item" title="Delete" data-cartid="{{cart_product.id}}" href="#"><span><span>{%trans 'Remove item'%}</span></span></a>
+									<input  name="cart_product_id" type="hidden" value="{{cart_product.id}}" />									
+								</td>
+							</tr>
+							{% empty %}
+							<tr>
+								<td class="a-center"><span><span>Your shopping cart is empty!</span></span></td>
+							</tr>
+							{% endfor %}
+					  </tbody>
+					</table>
+				  </fieldset>
+				</div>
+				<!-- BEGIN CART COLLATERALS -->
+				<div class="cart-collaterals row">
+					<div class="col-sm-8 pull-right">
+						<div class="col-sm-6">
+						</div>
+						<div class="totals col-sm-6">
+						  <h3>Shopping Cart Total</h3>
+						  <div class="inner">
+							<table class="table shopping-cart-table-total" id="shopping-cart-totals-table">
+							  <tfoot>
+								<tr>
+								  <td colspan="1" class="a-left"><strong>{% trans 'Total' %}</strong></td>
+								  <td class="a-right"><strong><span class="price" id="totalAmount">${{cart.get_sub_total|floatformat:"2"}}</span></strong></td>
+								</tr>
+							  </tfoot>
+							  <tbody>
+								<tr>
+								  <td colspan="1" class="a-left"> Subtotal </td>
+								  <td class="a-right"><span class="price" id="totalPrice">${{cart.get_sub_total|floatformat:"2"}}</span></td>
+								</tr>
+							  </tbody>
+							</table>
+							<ul class="checkout">
+							  <li>
+								<input name="products_to_buy" type="hidden" value="{}" />
+								<button class="button btn-proceed-checkout" title="Proceed to Checkout" id="checkOutBtn" type="submit"><span>{%trans 'Checkout'%}</span></button>
+							  </li>                 
+							</ul>
+						  </div>
+						</div>
+						<!--inner--> 
+					</div>
+				</div>
+          	</form>
+          <!--cart-collaterals--> 
+          
+        </div>
+      </div>
+    </div>
+  </section>
+<!-- 底部 Footer!-->
+{%  endblock %}
+{% block scripts %}
+<script type="text/javascript">
+    	$(document).ready(function() {    	
+			$("[title^=Qty]").blur(function(event) {
+				var cartid = $(this).attr("data-cartid");
+				var quantity = $(this).val();
+				if( quantity == 0){
+					quantity = 1;
+					$(this).val(1);
+				}
+				imycartModifyCart('set',cartid,quantity,$(this));
+			});
+			
+			$("[title^=Delete]").click(function(event) {
+				event.preventDefault();
+				var cartid = $(this).attr("data-cartid");
+				imycartModifyCart('del',cartid,0,$(this));
+			});
+			
+			$("#empty_cart_button").click(function(event) {
+				var cartid = $(this).attr("data-cartid");
+				imycartModifyCart('clear',cartid,0,$(this));
+			});
+			
+		});
+</script>
+{% endblock %}

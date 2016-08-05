@@ -1,0 +1,187 @@
+﻿{% extends "classic/base.html" %}
+{% block main %}
+<!-- Main Container -->
+<div class="main-container col2-right-layout wow bounceInUp animated">
+  <div class="main container">
+    <div class="row">
+      <div class="col-main col-sm-9">
+        <div class="my-account">
+          <div class="page-title">
+            <h2>My Wishlist</h2>
+          </div>
+          <!-- 翻页区开始 -->
+			<div class="pages">
+				<label>Page:</label>
+				<ul class="pagination">
+						{% if wish_list.has_previous %}
+						<li><a name="pageChange" data-tag="Previous" class="pageChage" data-page="{{ wish_list.previous_page_number }}" href="#">&laquo;</a></li>
+						{% else %}
+						<li class="active"><a>&laquo;</a></li>
+						{% endif %}
+
+						{% for p in page_range %}
+						  {% ifequal p objects.number %}
+						  <li class="active"><a>{{p}}</a></li>
+						  {% else %}
+						  <li><a class="pageChage"  data-page = "{{p}}" href="#" title="{{p}}">{{p}}</a><li>
+						  {% endifequal %}
+						{% endfor %}
+
+						{% if wish_list.has_next %}
+						<li><a name="pageChange" class="pageChage" data-page = "{{p}}" data-page-range="{{page_range}}" data-tag="Next" href="#">&raquo;</a></li>
+						{% else %}
+						<li class="active"> <a>&raquo;</a></li>
+						{% endif %}
+				</ul>
+			</div>
+		  
+          <!-- 翻页区开始 -->
+          <div class="my-wishlist">
+            <div class="table-responsive">
+                  <table id="wishlist-table" class="clean-table linearize-table data-table">
+                    <thead>
+                      <tr class="first last">
+                        <th class="customer-wishlist-item-image"></th>
+                        <th class="customer-wishlist-item-info">Product Name</th>
+                        <th class="customer-wishlist-item-price">Unit Price</th>
+                        <th class="customer-wishlist-item-quantity">Qty</th>                        
+                        <th class="customer-wishlist-item-cart"></th>
+                        <th class="customer-wishlist-item-remove"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% 	for wish in wish_list %}
+                      <tr id="tr_{{wish.id}}" class="">
+                        <td class="wishlist-cell0 customer-wishlist-item-image"><a title="{{wish.product.name}}" href="/product/{{wish.product.id}}" class="product-image"> <img width="150" height="150" alt="{{wish.product.name}}" src="{{wish.product.thumb}}"> </a></td>
+                        <td class="wishlist-cell1 customer-wishlist-item-info"><h3 class="product-name"><a title="{{wish.product.name}}" href="/product/{{wish.product.id}}">{{wish.product.name}}</a></h3>
+                          <div class="description std">
+                            <div class="inner"></div>
+                          </div>
+                          </td>
+                        
+                        <td data-rwd-label="Price" class="wishlist-cell3 customer-wishlist-item-price"><div class="cart-cell">
+                            <div class="price-box"> <span class="regular-price"> <span class="price">${{wish.product.price}}</span> </span> </div>
+                          </div></td>
+                        <td data-rwd-label="Quantity" class="wishlist-cell2 customer-wishlist-item-quantity"><div class="cart-cell">
+                            <div class="add-to-cart-alt">
+							<!--
+								<input type="text" value="1" id="qty_{{wish.product.id}}" name="quantity" class="input-text qty validate-not-negative-number" pattern="\d*">
+								-->
+                            </div>
+                          </div></td>
+                        <td class="wishlist-cell4 customer-wishlist-item-cart">
+						<!--
+                        <button class="button btn-add" name="add-to-cart" type="button" data-wishlistid="{{wish.id}}" data-productid="{{wish.product.id}}"><span><span>Add to Cart</span></span></button>
+						-->
+                      </td>
+                      <td class="wishlist-cell5 customer-wishlist-item-remove last"><a class="remove-item" data-wishlistid="{{wish.id}}" name="remove-wishlist" href="#"><span><span></span></span></a></td>                     </tr>
+                     {% endfor %}
+                    </tbody>
+                  </table>
+                  <div class="toolbar">
+					  <div class="pages order-pages">                
+							<ul class="pagination">
+								{% if wish_list.has_previous %}
+								<li><a name="pageChange" data-tag="Previous" href="?page={{ wish_list.previous_page_number }}">&laquo;</a></li>
+								{% else %}
+								<li class="active"><a>&laquo;</a></li>
+								{% endif %}
+
+								{% for p in page_range %}
+								  {% ifequal p objects.number %}
+								  <li class="active"><a>{{p}}</a></li>
+								  {% else %}
+								  <li><a href="?page={{p}}" title="第{{p}}页">{{p}}</a><li>
+								  {% endifequal %}
+								{% endfor %}
+
+								{% if wish_list.has_next %}
+								<li><a name="pageChange" data-tag="Next" href="?page={{ wish_list.next_page_number }}">&raquo;</a></li>
+								{% else %}
+								<li class="active"> <a>&raquo;</a></li>
+								{% endif %}
+							</ul>
+					  </div>
+            </div>
+            </div>
+          </div>
+          <div class="buttons-set">
+            <p class="back-link"><a href="#"><small>« </small>Back</a></p>
+          </div>
+        </div>
+      </div>
+	<!--后台右侧菜单-->
+    {% include 'classic/side_bar.html' %}  
+    </div>
+  </div>
+</div>
+</div>
+<!-- Main Container End -->
+{%  endblock %}
+
+{% block scripts %}
+	<script type="text/javascript">
+		function removeFromWishList(wish){
+			var url = "/wishlist/remove";
+			var encodedata = $.toJSON(wish);
+			$.ajax({
+				type : 'POST',
+				contentType : 'application/json',
+				dataType : 'json',
+				url : url,
+				data : encodedata,
+				success : function(result) {
+					if(result.success==true){
+						//将这一行删除
+						$("#tr_" + wish.id).remove();
+					}
+				},
+				error : function(result) {
+					alert(result.success);
+				}
+			});
+		};
+
+		$(document).ready(function() {
+			$("[name=add-to-cart]").click(
+				function(event) {
+					event.preventDefault();//阻止A标签跳转
+					var wish = new Object();
+					wish.id = $(this).attr("data-wishlistid");
+					//先加入购物车
+					var productId = $(this).attr("data-productid");
+					var url = "/cart/add";
+					var cart = new Object();
+					cart.product_id = productId;
+					cart.quantity = $("#qty_" + productId).val();
+					var encodedata = $.toJSON(cart);
+						$.ajax({
+							type : 'POST',
+							contentType : 'application/json',
+							dataType : 'json',
+							url : url,
+							data : encodedata,
+							success : function(result) {
+								if(result.success==true){
+									removeFromWishList(wish);
+								}else{
+									$("#infoMessage").html("Add product to cart failed!</br>" + result.data);
+									$("#myModal").modal('toggle');
+								}
+							},
+							error : function(result) {
+								alert(result.success);
+							}
+					}	);
+				});
+
+				$("[name=remove-wishlist]").click(
+					function(event) {
+						event.preventDefault();//阻止A标签跳转
+						var wish = new Object();
+						wish.id = $(this).attr("data-wishlistid");
+						removeFromWishList(wish);
+				});
+		});
+	</script>
+{% endblock %}

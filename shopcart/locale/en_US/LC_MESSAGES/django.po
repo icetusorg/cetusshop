@@ -1,0 +1,350 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-05-23 14:43+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: .\article.py:42 .\product.py:69
+msgid "File already generated."
+msgstr ""
+
+#: .\article.py:46 .\product.py:73
+msgid "File generate failed."
+msgstr ""
+
+#: .\cart.py:64
+msgid "Please choose a kind"
+msgstr ""
+
+#: .\cart.py:75
+#, python-format
+msgid "This product must order more than %s."
+msgstr ""
+
+#: .\cart.py:84
+msgid "Opration successsul."
+msgstr ""
+
+#: .\cart.py:88
+msgid "Unknown Exception."
+msgstr ""
+
+#: .\cart.py:115 .\cart.py:154 .\order.py:25 .\wishlist.py:29 .\wishlist.py:64
+msgid "Opration successful."
+msgstr ""
+
+#: .\cart.py:236
+msgid "Unknown Exception"
+msgstr ""
+
+#: .\emaillist.py:20
+msgid "Add email to email list success"
+msgstr ""
+
+#: .\emaillist.py:24
+msgid "Add email to email list failed"
+msgstr ""
+
+#: .\index.py:28
+#, python-format
+msgid "You are resetting you password in %(sitename)s ."
+msgstr ""
+
+#: .\index.py:29
+#, python-format
+msgid "Today is %(sitename)s."
+msgstr ""
+
+#: .\index.py:30
+#, python-format
+msgid "Today is %(month)s."
+msgstr ""
+
+#: .\index.py:31
+#, python-format
+msgid "Today is %(month)s %(day)s."
+msgstr ""
+
+#: .\myuser.py:41
+msgid "Registration faild."
+msgstr ""
+
+#: .\myuser.py:87
+msgid "Your account name or password is incorrect."
+msgstr ""
+
+#: .\myuser.py:157 .\views.py:108
+#, python-format
+msgid "You are resetting you password in %(site_name)s ."
+msgstr ""
+
+#: .\myuser.py:158
+msgid "Your password reset apply is succeed.Please check your mail box."
+msgstr ""
+
+#: .\myuser.py:160
+msgid "Please check your verify code."
+msgstr ""
+
+#: .\myuser.py:187
+msgid "The password has been reseted."
+msgstr ""
+
+#: .\myuser.py:190
+msgid "Opration faild."
+msgstr ""
+
+#: .\myuser.py:221
+msgid "Address successfully saved."
+msgstr ""
+
+#: .\order.py:30
+msgid "Parameter Error."
+msgstr ""
+
+#: .\order.py:45
+msgid "Address is not correct"
+msgstr ""
+
+#: .\templates\cassie\cart_detail.html:17
+#: .\templates\classic\cart_detail.html:20
+#: .\templates\classic\check_out.html:61 .\templates\classic\orders.html:19
+msgid "Product Name"
+msgstr ""
+
+#: .\templates\cassie\cart_detail.html:18
+#: .\templates\classic\cart_detail.html:21
+#: .\templates\classic\check_out.html:62 .\templates\classic\orders.html:20
+msgid "Unit Price"
+msgstr ""
+
+#: .\templates\cassie\cart_detail.html:19
+#: .\templates\classic\cart_detail.html:22
+#: .\templates\classic\check_out.html:63 .\templates\classic\orders.html:21
+#: .\templates\classic\product_detail.html:70
+msgid "Quantity"
+msgstr ""
+
+#: .\templates\cassie\cart_detail.html:20
+msgid "SubTotal"
+msgstr ""
+
+#: .\templates\cassie\cart_detail.html:53
+#: .\templates\classic\cart_detail.html:29
+msgid "Continue Shopping"
+msgstr ""
+
+#: .\templates\cassie\cart_detail.html:54
+#: .\templates\classic\cart_detail.html:30
+msgid "Clear Cart"
+msgstr ""
+
+#: .\templates\cassie\cart_detail.html:69
+msgid "Proceed to Checkout"
+msgstr ""
+
+#: .\templates\cassie\header.html:57
+msgid "MY ACCOUNT"
+msgstr ""
+
+#: .\templates\cassie\header.html:58
+msgid " My WISHLIST"
+msgstr ""
+
+#: .\templates\cassie\header.html:61
+msgid "LOG OUT"
+msgstr ""
+
+#: .\templates\cassie\header.html:63
+msgid "LOG IN"
+msgstr ""
+
+#: .\templates\cassie\login.html:33 .\templates\classic\forget_password.html:9
+#: .\templates\classic\login.html:56
+msgid "Forgot Your Password"
+msgstr ""
+
+#: .\templates\cassie\login.html:35 .\templates\classic\login.html.py:55
+msgid "Login"
+msgstr ""
+
+#: .\templates\classic\cart_detail.html:10
+msgid "Shopping Cart"
+msgstr ""
+
+#: .\templates\classic\cart_detail.html:23
+#: .\templates\classic\cart_detail.html:67
+#: .\templates\classic\check_out.html:64 .\templates\classic\orders.html:22
+#: .\templates\classic\orders.html.py:83
+msgid "Total"
+msgstr ""
+
+#: .\templates\classic\cart_detail.html:43
+msgid "Remove item"
+msgstr ""
+
+#: .\templates\classic\cart_detail.html:81
+msgid "Checkout"
+msgstr ""
+
+#: .\templates\classic\check_out.html:19
+msgid "Select your shipping information"
+msgstr ""
+
+#: .\templates\classic\check_out.html:35
+msgid "Shopping Method"
+msgstr ""
+
+#: .\templates\classic\check_out.html:46
+msgid "Payment Information"
+msgstr ""
+
+#: .\templates\classic\check_out.html:54
+msgid "Order Review"
+msgstr ""
+
+#: .\templates\classic\check_out.html:88
+msgid "Return to Cart"
+msgstr ""
+
+#: .\templates\classic\check_out.html:96
+msgid "Subtotal"
+msgstr ""
+
+#: .\templates\classic\check_out.html:103
+msgid "Shipping Fee"
+msgstr ""
+
+#: .\templates\classic\check_out.html:117
+msgid "All Total"
+msgstr ""
+
+#: .\templates\classic\check_out.html:128
+msgid "Remark"
+msgstr ""
+
+#: .\templates\classic\forget_password.html:52
+msgid "SUBMIT"
+msgstr ""
+
+#: .\templates\classic\header.html:18
+msgid "My Cart"
+msgstr ""
+
+#: .\templates\classic\header.html:19
+msgid " My Wishlist"
+msgstr ""
+
+#: .\templates\classic\header.html:20
+msgid "My Orders"
+msgstr ""
+
+#: .\templates\classic\header.html:36
+msgid "Log Out"
+msgstr ""
+
+#: .\templates\classic\header.html:38
+msgid "Log In"
+msgstr ""
+
+#: .\templates\classic\index.html:39
+msgid "Translate in template."
+msgstr ""
+
+#: .\templates\classic\index.html:40
+#, python-format
+msgid "This string will have %(value)s inside."
+msgstr ""
+
+#: .\templates\classic\login.html:9 .\templates\classic\login.html.py:13
+msgid "Login or Create an Account"
+msgstr ""
+
+#: .\templates\classic\login.html:14
+msgid "New Customers"
+msgstr ""
+
+#: .\templates\classic\login.html:22
+msgid "Registered Customers"
+msgstr ""
+
+#: .\templates\classic\login.html:27
+msgid "Please log in with your e-mail and password"
+msgstr ""
+
+#: .\templates\classic\orders.html:31
+msgid "Order number"
+msgstr ""
+
+#: .\templates\classic\orders.html:31
+msgid "View Details"
+msgstr ""
+
+#: .\templates\classic\orders.html:32
+msgid "Order Status"
+msgstr ""
+
+#: .\templates\classic\orders.html:41
+msgid "Cancel"
+msgstr ""
+
+#: .\templates\classic\orders.html:54
+msgid "Waitting Shipping"
+msgstr ""
+
+#: .\templates\classic\orders.html:81
+msgid "Order Placed Time"
+msgstr ""
+
+#: .\templates\classic\product_detail.html:56
+msgid "Market Price"
+msgstr ""
+
+#: .\templates\classic\product_detail.html:57
+msgid "Price"
+msgstr ""
+
+#: .\templates\classic\product_detail.html:67
+msgid "In Stock"
+msgstr ""
+
+#: .\templates\classic\product_detail.html:80
+msgid "Add to Cart"
+msgstr ""
+
+#: .\templates\classic\product_detail.html:85
+msgid "Add to Wishlist"
+msgstr ""
+
+#: .\templates\classic\product_detail.html:120
+msgid "Product Description"
+msgstr ""
+
+#: .\validate.py:37 .\validate.py:47
+msgid "The email has been registered!"
+msgstr ""
+
+#: .\validate.py:41 .\validate.py:51
+msgid "The email has not been registered!"
+msgstr ""
+
+#: .\validate.py:61
+msgid "Varify code is correct."
+msgstr ""
+
+#: .\validate.py:65
+msgid "Varify code is not correct."
+msgstr ""

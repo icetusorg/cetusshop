@@ -1,0 +1,121 @@
+<!--头部-->
+{% load staticfiles %}
+{% load i18n %}
+<div class="menu-phone">
+    <ul class="menu-phone-main">
+        <li><a href="/">home</a></li>
+        <li><a href="/about_us/about-us.html">about us</a></li>
+        <li><a href="/product/">products</a>
+            <span class="glyphicon glyphicon-plus menu-phone-plus" data="phone-plus1" status="close"></span>
+            <ul class="menu-low-one" id="phone-plus1">
+				{% for product in menu_products%}
+					<li><a href="{{product.get_url}}"><i></i>&gt;{{product.name}}</a></li>
+				{% endfor %}
+            </ul>
+        </li>
+		<li><a href="#">Customize</a></li>
+        <li><a href="/contact/show/">Contact Us</a></li>
+    </ul>
+</div>
+<!--头部-->
+<div class="wapper">
+    <div class="wapper-rgb"></div>
+    <div class="top">
+        <div class="container">
+            <div class="row">
+                <div class="top-language">
+					<form id="changeLocaleForm" action="{% url 'set_language' %}" method="post">
+						{% csrf_token %}
+						<input name="next" type="hidden" value="{{ redirect_to }}" />
+						
+						{% get_current_language as LANGUAGE_CODE %}
+						
+						{% if 'zh-hans' == LANGUAGE_CODE %}
+							<input name="language" value="en" type="hidden" />
+							<ul>
+								<li>
+									<a href="#" class="change_locale_btn"><img src="{% static "client/cassie/images/ico/Chinese.jpg"%}">简体中文<span class="ico-down"></span></a>
+									<ul>
+										<li><a href="#" class="change_locale_btn"><img src="{% static "client/cassie/images/ico/America.jpg"%}">English</a></li>
+									</ul>
+								</li>
+							</ul>
+						{% else %}
+							<input name="language" value="zh-hans" type="hidden" />
+		                    <ul>
+								<li>
+									<a href="#" class="change_locale_btn"><img src="{% static "client/cassie/images/ico/America.jpg"%}">English<span class="ico-down"></span></a>
+									<ul>
+										<li><a href="#" class="change_locale_btn"><img src="{% static "client/cassie/images/ico/Chinese.jpg"%}">简体中文</a></li>
+									</ul>
+								</li>
+							</ul>
+						{% endif %}
+					</form>
+                </div>
+                <div class="top-link">
+                    <ul>
+                        <li>{{user.get_short_name|default:"^_^"}} Welcome!</li>
+                        <li><a href="/order/show">{% trans 'MY ACCOUNT' %}</a></li>					
+                        <li><a href="/wishlist">{% trans ' My WISHLIST' %}</a></li>
+                        <li>
+							{%	if user.is_authenticated %}          
+								<div class="login"><a href="/user/logout/"><span class="hidden-xs">{%trans 'LOG OUT' %}</span></a></div>    
+							{% else %}
+								<div class="logout"><a href="/user/login/" class="loginModalLink"><span class="hidden-xs">{% trans 'LOG IN' %}</span></a></div>
+							{% endif %}
+						</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="top-middle">
+        <div class="container">
+            <div class="row">
+                <div class="top-search">
+					<form method="GET" action="/query/product/">
+						<input class="form-control" placeholder="Search..." name="query" id="q" value="" type="text">
+						<button class="glyphicon glyphicon-search" type="submit"></button>
+					</form>
+                </div>
+                <div class="menu-phone-ico">
+                    <button type="button" class="navbar-toggle" id="menu-ico">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="top-logo">
+                    <a href="#"><img src="{% static "client/cassie/images/logo.jpg"%}" class="logo"></a>
+                </div>
+                <div class="top-middle-right">
+                    <div class="top-phone"><span class="glyphicon glyphicon-earphone"></span><span>{{system_para.hot_line}}</span></div>
+                    <div class="top-cart">
+                        <span class="top-cart-num"><a class="top-cart-num-link" href="/cart/show/">0</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 菜单 -->
+    <div class="menu">
+        <div class="container">
+            <div class="row">
+                <ul>
+                    <li><a href="/">home</a></li>
+                    <li><a href="/about_us/about-us.html">about us</a></li>
+                    <li><a href="/product/">products <img src="{% static "client/cassie/images/ico/menu-arrow.jpg"%}"></a>
+							<ul class="menu-low-one" id="phone-plus1">
+								{% for product in menu_products%}
+									<li><a href="{{product.get_url}}"><i></i>{{product.name}}</a></li>
+								{% endfor %}
+							</ul>
+                    </li>
+					<li><a href="#">Customize</a></li>
+                    <li><a href="/contact/show/">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>

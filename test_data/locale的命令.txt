@@ -1,0 +1,9 @@
+#locale命令
+#生成po文件
+E:\python\imycart\shopcart>django-admin makemessages -l zh_CN
+E:\python\imycart\shopcart>django-admin makemessages -l en
+
+#生成mo文件
+#要进入app的目录执行
+E:\python\imycart\shopcart>django-admin compilemessages --locale zh_CN
+E:\python\imycart\shopcart>django-admin compilemessages --locale en

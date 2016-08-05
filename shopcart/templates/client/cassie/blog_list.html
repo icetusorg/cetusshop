@@ -1,0 +1,72 @@
+{% extends "client/cassie/base.html" %}
+{%block head_extra%}
+	{% load staticfiles %}
+	<link rel="stylesheet" href="{% static 'client/cassie/css/cart.css'%}" type="text/css"/>
+{%endblock%}	
+{% block breadcrumbs %}
+<div class="crumb main">
+    <div class="container">
+        <div class="row">
+           <a href="/">Home</a> &gt; Blogs
+        </div>
+    </div>
+</div>
+{% endblock%}
+{% block main %}
+{% load i18n %}
+{% load staticfiles %}
+<div class="artical main">
+   <div class="container">
+       <div class="row">
+           <div class="artical-list col-md-9">
+              <div class="row">
+
+				{% for article in article_list %}
+				 <div class="artical-item">
+                    <a href="{{article.get_url}}"><img src="{{article.image}}"></a>
+                    <h2><a href="{{article.get_url}}">{{article.title}}</a></h2>
+                    <p>{{article.abstract}}</p>
+                    <p class="artical-list-date">Date:{{article.create_time|date:"Y-m-d"}}</p>
+                 </div>
+				
+				{% endfor %}
+				<div class="artical-pages">
+					{% if artical_list.has_previous %}
+						<a name="pageChange" data-tag="Previous" class="pageChage prev" data-page="{{ artical.previous_page_number }}"></a>
+					{% else %}
+						<a class="prev"></a>
+					{% endif %}
+					
+					
+					{% for p in page_range %}
+						{% ifequal p objects.number %}
+							<span>{{p}}</span>
+						{% else %}
+						<a class="pageChage"  data-page = "{{p}}" href="#" title="{{p}}">{{p}}</a>
+						{% endifequal %}
+					{% endfor %}
+					{% if artical.has_next %}
+						<a name="pageChange" class="pageChage next" data-page = "{{p}}" data-page-range="{{page_range}}" data-tag="Next"></a>
+					{% else %}
+						<a class="next"></a>
+					{% endif %}
+				</div>
+              </div>
+           </div>
+           <div class="artical-sidbar col-md-3">
+               <div class="row">
+                  <h3>Follow Us</h3>
+                  <div class="artical-media">
+                     <a hre="#"><img src="{% static 'client/cassie/images/ico/facebook-footer.png' %}"></a>
+                     <a hre="#"><img src="{% static 'client/cassie/images/ico/twitter-footer.png' %}"></a>
+                     <a hre="#"><img src="{% static 'client/cassie/images/ico/linkin-footer.png' %}"></a>
+                  </div>
+               </div>
+           </div>
+       </div>
+	</div>
+</div>
+{% endblock %}
+{% block scripts %}
+	{% load staticfiles %}
+{% endblock %}

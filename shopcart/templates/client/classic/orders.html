@@ -1,0 +1,176 @@
+﻿{% extends "classic/base.html" %}
+{% block main %}
+{% load i18n %}
+<!-- Main Container -->
+<div class="main-container col2-right-layout wow bounceInUp animated">
+  <div class="main container">
+    <div class="row">
+      <div class="col-main col-sm-9">
+        <div class="my-account">
+          <div class="page-title">
+            <h2>My Orders</h2>
+          </div>
+          <div class="my-wishlist">
+            <div class="table-responsive">
+                <table class="data-table cart-table order-title-th">
+                  <tbody>
+                    <tr class="first last">
+                      <th>&nbsp;</th>
+                      <th>{% trans 'Product Name' %}</th>
+                      <th class="a-center">{% trans 'Unit Price' %}</th>
+                      <th class="a-center">{% trans 'Quantity' %}</th>
+                      <th class="a-center">{% trans 'Total' %}</th>
+                    </tr>
+                  </tbody>
+                 </table>
+
+				<!--Show Orders Start  -->
+				{% for order in order_list %}
+                 <table class="data-table cart-table order-title-info" title="container_order_{{order.id}}">
+                   <tr>
+                      <td><span class="myorder-number">{% trans 'Order number' %}: <span>{{order.order_number}}</span><a href="ViewOrder.htm?Id=${order.id}" class="view-order-detail">{% trans 'View Details' %}</a></span>
+                          <span class="myorder-status"> {% trans 'Order Status' %}: {{order.get_human_status}}</span>
+                      </td>
+					{% if order.status == '0' %}
+                      <td rowspan="2">
+                        <button class="button order-cancel-button" 
+                        		title="Cancel Order" 
+                        		name="cancel_order"
+                        		data-id="{{order.id}}"
+                        		data-action="cancel">
+                        	<span>{% trans 'Cancel' %}</span>
+                        </button>                        
+                        <button class="button order-pay-button"  
+                        		title="Pay Now" 
+                        		name="pay_order" 
+                   		        data-id="{{order.id}}"
+                        		data-action="pay">
+                        	<span>Pay Now</span>
+                        </button>
+                      </td> 
+					{% elif order.status == '10' %}
+                      <td rowspan="2">
+                        <button class="button order-waitting-button" title="Order Waitting" value="orderWaitting" name="order_waitting" type="submit">
+                        	<span>{%trans 'Waitting Shipping'%}</span>
+                        </button>                    
+                      </td>
+					{% elif order.status == '20' or order.status == '40' or order.status == '99' %}
+                      <td rowspan="2">
+                        <button class="button order-buyagain-button" 
+                        		title="Order Buyagain" 
+                        		name="order_buyagain"
+               		            data-id="{{order.id}}"
+                        		data-action="buyagain">
+                        	<span>Buy Again</span>
+                        </button>                        
+                      </td>
+					{% else %}
+                      <td rowspan="2">
+                        <button class="button add-to-cart-button" 
+                        		title="Add to Cart" 
+                        		name="add_to_cart" 
+               		            data-id="{{order.id}}"
+                        		data-action="addToCart">
+                        	<span>Add to Cart</span>
+                        </button>                        
+                      </td>
+					{% endif %}
+                   </tr>
+                   <tr>
+                      <td>
+                         <span class="myorder-placed"> {%trans 'Order Placed Time'%}:  {{order.create_time}}</span>
+                         <span class="myorder-total">
+                         	{%trans 'Total'%}: <span class="myorder-money">${{order.order_amount|floatformat:"2"}}</span>
+                         	<span class="myorder-shipping">Shipping: ${{order.shipping_fee|floatformat:"2"}}</span>
+                         </span>
+                      </td>
+                   </tr>
+ 
+                  </tbody>
+                 </table>
+                 <table class="data-table cart-table" title="container_order_{{order.id}}">
+                  <tbody class="myorder-list">
+					{% for product in order.order_products.all %}
+						<tr class="${rowStyle}">
+						   <td class="image">
+							<a class="product-image" title="{{product.name}}" href="/product/{{product.product_id}}">
+								<img alt="{{product.name}}" src="{{product.image}}" width="75">
+							</a>
+						  </td>
+						  <td>
+							<span class="product-name">
+								<a href="/product/{{product.product_id}}">{{product.name}}</a>
+							</span>
+						  </td>
+						  <td class="a-center hidden-table">
+							<span class="cart-price">
+								<span class="price">${{product.price|floatformat:"2"}}</span> 
+							</span>
+						  </td>
+						  <td class="a-center">{{product.quantity}}</td>
+						  <td class="a-center movewishlist">
+							<span class="cart-price">
+								<span class="price">${{product.get_total|floatformat:"2"}}</span> 
+							</span>
+						  </td>
+						</tr>
+					{% endfor %}
+
+                  </tbody>
+                 </table>
+				{% empty %}
+                 <table class="data-table cart-table">
+                  <tbody class="myorder-list">
+                    <tr class="first odd">
+                      <td class="a-center">No Orders !</td>
+                    </tr>
+                  </tbody>
+                 </table>
+				{% endfor %}
+<!-- Show Orders End  -->                 
+                 
+               
+
+     <!-- 翻页区开始 -->
+          <div class="pages">
+               <div class="toolbar">
+					<div class="pages order-pages">                
+						<ul class="pagination">
+							{% if order_list.has_previous %}
+							<li><a name="pageChange" data-tag="Previous" class="pageChage" data-page="{{ order_list.previous_page_number }}" href="#">&laquo;</a></li>
+							{% else %}
+							<li class="active"><a>&laquo;</a></li>
+							{% endif %}
+	
+							{% for p in page_range %}
+							{% ifequal p objects.number %}
+							<li class="active"><a>{{p}}</a></li>
+							{% else %}
+							<li><a class="pageChage"  data-page = "{{p}}" href="#" title="{{p}}">{{p}}</a><li>
+							{% endifequal %}
+							{% endfor %}
+	
+							{% if order_list.has_next %}
+							<li><a name="pageChange" class="pageChage" data-page = "{{p}}" data-page-range="{{page_range}}" data-tag="Next" href="#">&raquo;</a></li>
+							{% else %}
+							<li class="active"> <a>&raquo;</a></li>
+							{% endif %}
+						</ul>
+					</div>
+				</div>
+          </div>
+          <!-- 翻页区结束 -->         
+          
+            </div>
+          </div>
+
+        </div>
+      </div>
+<!--后台右侧菜单-->
+    {% include 'classic/side_bar.html' %}      
+    </div>
+  </div>
+</div>
+<!-- Main Container End -->
+{%  endblock %}
+

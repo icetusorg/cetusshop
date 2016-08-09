@@ -167,6 +167,39 @@ jQuery("#order_batch_delete").click(function(e){
 });
 
 
+//商品管理界面
+jQuery("#product-batch-delete").click(function(e){
+	var id_list = [];
+	 $("input[name='is_oper']").each(function(){
+		if($(this).is(':checked')){
+			id_list.push($(this).data("order-id"));
+		}
+	});
+	var oper_ids = id_list.join(',');
+	$("#oper-ids").val(oper_ids);
+	$("#oper-method").val('delete');
+	$("#product_oper_form").submit();
+});
+
+jQuery(".product-batch-publish").click(function(e){
+	var id_list = [];
+	 $("input[name='is_oper']").each(function(){
+		if($(this).is(':checked')){
+			id_list.push($(this).data("order-id"));
+		}
+	});
+	var oper_ids = id_list.join(',');
+	$("#oper-ids").val(oper_ids);
+	if($(this).data("method")=="on"){
+		$("#oper-method").val('onpublish');
+	}else{
+		$("#oper-method").val('offpublish');
+	}
+	
+	$("#product_oper_form").submit();
+});
+
+
 
 
 //通用函数

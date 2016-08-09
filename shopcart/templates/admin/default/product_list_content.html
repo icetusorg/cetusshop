@@ -26,11 +26,11 @@
                                 <form>
                                     <div class="form-group">
                                         <label>货号 :</label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" name="item_number" value="{{query_item_number}}" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label>名称 :</label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" name="name" value="{{query_name}}" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary">查询</button>
@@ -48,57 +48,71 @@
                 <div class="box-body no-padding">
                     <ul class="xy-list-all">
                         <li class="list-all"><input type="checkbox"> <a>全选</a></li>
-                        <li><a>新增</a></li>
-                        <li><a>删除</a></li>
-                        <li><a>上架</a></li>
-                        <li><a>下架</a></li>
-                        <li><a>刷新</a></li>
+                        <li><a id="product-add-new">新增</a></li>
+                        <li><a id="product-batch-delete">删除</a></li>
+                        <li><a class="product-batch-publish" data-method="on">上架</a></li>
+                        <li><a class="product-batch-publish" data-method="off">下架</a></li>
+                        <li><a id="product-batch-refresh">刷新</a></li>
                     </ul>
-                    <table class="table table-striped">
-                        <tbody>
-                        <!--多余th为了调整表格色块-->
-                        <tr><th></th></tr>
-                        <tr>
-                            <th></th>
-                            <th>商品图片</th>
-                            <th>货号</th>
-                            <th>名称</th>
-                            <th>售价</th>
-                            <th>原价</th>
-                            <th>库存</th>
-                            <th>操作</th>
-                            <th>上架</th>
-                        </tr>
-						{% for product in product_list %}
+					<form id="product_oper_form" method="POST" action="/admin/product-oper/">
+						{% csrf_token %}
+						<input type="hidden" value="" id="oper-ids" name="oper-ids"/>
+						<input type="hidden" value="" id="oper-method" name="oper-method"/>
+						<table class="table table-striped">
+							<tbody>
+							<!--多余th为了调整表格色块-->
+							<tr><th></th></tr>
 							<tr>
-								<td><input type="checkbox"></td>
-								<td><a href="#"><img src={{product.thumb}}></a></td>
-								<td>{{product.item_number}}</td>
-								<td>{{product.name}}</td>
-								<td>${{product.price}}</td>
-								<td>${{product.market_price}}</td>
-								<td>{{product.quantity}}</td>
-								<td><a>编辑</a> | <a href="{{product.get_url}}" target="_blank">预览</a></td>
-								<td>{{product.is_publish|yesno:"是,否,未定义"}}</td>
+								<th></th>
+								<th>商品图片</th>
+								<th>货号</th>
+								<th>名称</th>
+								<th>售价</th>
+								<th>原价</th>
+								<th>库存</th>
+								<th>操作</th>
+								<th>上架</th>
 							</tr>
-						{% endfor %}
-                        </tbody>
-                    </table>
+							{% for product in product_list %}
+								<tr>
+									<td><input name="is_oper" data-order-id="{{product.id}}" type="checkbox"></td>
+									<td><a href="#"><img src={{product.thumb}}></a></td>
+									<td>{{product.item_number}}</td>
+									<td>{{product.name}}</td>
+									<td>${{product.price}}</td>
+									<td>${{product.market_price}}</td>
+									<td>{{product.quantity}}</td>
+									<td><a>编辑</a> | <a href="{{product.get_url}}" target="_blank">预览</a></td>
+									<td>{{product.is_publish|yesno:"是,否,未定义"}}</td>
+								</tr>
+							{% endfor %}
+							</tbody>
+						</table>
+					</form>
                 </div>
                 <div class="box-footer clearfix">
                     <div class="xy-pages-jump">
-                        <button type="submit" class="btn btn-primary">跳转</button>
-                        <input type="text" class="form-control">
-                        <p>跳转到：</p>
-
                         <ul class="pagination pagination-sm no-margin pull-right">
-                            <li><a href="#">&lt;</a></li>
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">&gt;</a></li>
+							{% if product_list.has_previous %}
+								<li><a name="pageChange" data-tag="Previous" class="pageChage prev" data-page="{{ product_list.previous_page_number }}">&lt;</a></li>
+							{% else %}
+								<li><a>&lt;</a></li>
+							{% endif %}	
+							
+							{% for p in page_range %}
+								{% ifequal p objects.number %}
+									<li class="active">{{p}}</li>
+								{% else %}
+									<li><a class="pageChage"  data-page = "{{p}}" href="#" title="{{p}}">{{p}}</a></li>
+								{% endifequal %}
+							{% endfor %}
+                            {% if product_list.has_next %}
+								<li><a name="pageChange" class="pageChage next" data-page = "{{p}}" data-page-range="{{page_range}}" data-tag="Next">&gt;</a></li>
+							{% else %}
+								<li><a>&gt;</a></li>
+							{% endif %}
                         </ul>
-                        <p>共7条记录 , 共3页，每页显示：15条</p>
+                        <p>共{{item_count}}条记录 , 共{{page_range|last}}页，每页显示：{{page_size}}条</p>
                     </div>
                 </div>
             </div><!-- /.box -->

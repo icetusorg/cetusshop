@@ -66,6 +66,8 @@ urlpatterns = patterns("",
 	url(r'^inquiry/add/$', 'shopcart.inquiry.add',name='inquiry.add'),
 	url('^admin/ckediter/(.+)/(.+)/$', 'shopcart.myadmin.file.ckediter',name='admin_ckediter'),
 	url('^admin/product/make-static/$', 'shopcart.myadmin.product.product_make_static',name='admin_product_make_static'),
+	
+	url('^admin/product-oper/$', 'shopcart.myadmin.product.oper',name='admin_product_oper'),
 	url('^admin/product/$', 'shopcart.myadmin.product.product_list',name='admin_product_list'),
 	url('^admin/product/(.+)/(\d+)/$', 'shopcart.myadmin.product.product_opration',name='admin_product_opration'),
 	url('^admin/article/make-static/$', 'shopcart.myadmin.article.article_make_static',name='admin_article_make_static'),

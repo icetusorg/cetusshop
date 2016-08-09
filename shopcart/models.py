@@ -109,7 +109,7 @@ class System_Config(models.Model):
 			return prefix + sys_conf.val
 		elif type.lower() == 'admin':
 			prefix = 'admin/'
-			admin_template = ''
+			admin_template = 'default'
 			try:
 				admin_template = System_Config.objects.get(name='admin_template_name').val
 			except Exception as err:
@@ -117,7 +117,7 @@ class System_Config(models.Model):
 			return prefix + admin_template
 		elif type.lower() == 'email':
 			prefix = 'email/'
-			email_template = ''
+			email_template = 'defalut'
 			try:
 				email_template = System_Config.objects.get(name='email_template_name').val
 			except Exception as err:

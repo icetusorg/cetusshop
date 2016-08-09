@@ -127,7 +127,7 @@ def view_list(request):
 			page_size = request.GET['page_size']
 		else:
 			try:
-				page_size = int(System_Config.objects.get(name='product_page_size'))
+				page_size = int(System_Config.objects.get(name='product_page_size').val)
 			except:
 				page_size = 12
 		

@@ -1,4 +1,7 @@
-{% extends "client/cassie/base.html" %}	
+{% extends "client/cassie/base.html" %}
+{%block head_extra%}
+	<link rel="stylesheet" href="{% static "client/cassie/css/single.css"%}" type="text/css"/>
+{%endblock%}
 {% block breadcrumbs %}
 <div class="crumb main">
     <div class="container">

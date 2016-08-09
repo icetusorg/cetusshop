@@ -13,7 +13,7 @@ from shopcart.functions.product_util_func import get_menu_products
 # import the logging library
 import logging
 # Get an instance of a logger
-logger = logging.getLogger('imycart.shopcart')
+logger = logging.getLogger('icetus.shopcart')
 
 
 def contact_page(request):

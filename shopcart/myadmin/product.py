@@ -34,6 +34,20 @@ def product_opration(request,opration,id):
 	else:
 		raise Http404
 
+
+@staff_member_required
+def product_list(request):
+	ctx = {}
+	ctx['system_para'] = System_Para.get_default_system_parameters()
+	if request.method == 'GET':
+		product_list = Product.objects.all()
+		ctx['product_list'] = product_list
+		return render(request,System_Config.get_template_name('admin') + '/product_list_content.html',ctx)
+	else:
+			raise Http404
+	
+		
+		
 @staff_member_required
 def product_make_static(request):
 	ctx = {}

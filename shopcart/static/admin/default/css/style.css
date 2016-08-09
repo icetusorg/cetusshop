@@ -1,17 +1,21 @@
+ul,li,dl,ol{list-style-type: none;margin:0; padding:0}
+*{margin:0; padding:0}
 .xy-search .form-group{float:left; display: inline-block; margin-right:10px;}
 .xy-search label{padding:0 12px; float:left; line-height: 34px; margin:0; font-weight: normal;}
 .xy-search input{width:190px; float:left;}
-.xy-search .btn{padding: 6px 20px;margin-left:5px;}
-.xy-list .btn{font-size: 12px;line-height: 15px;}
-.xy-list.box{border-top:none; box-shadow: none; }
-.xy-list .box-footer p{float: right;line-height: 30px;margin-left:15px;margin-right:3px;}
+.xy-search .btn{padding: 7px 20px 8px 20px;margin-left:5px;font-size: 12px;}
+
 .xy-pages-jump{font-size: 12px;}
 .xy-pages-jump input{width:40px; float:right; height:29px;}
 .xy-pages-jump p{float:right;}
 .xy-pages-jump button{float:right;margin:0 30px 0 15px;}
-.xy-list .table-striped th{border-top: none;}
-.xy-list .table-striped tr:first-child{ background: #ffffff;}
+.xy-list .table-striped th,.xy-list-product .table-striped th{border-top: none;}
+.xy-list .table-striped tr:first-child,.xy-list-product .table-striped tr:first-child{ background: #ffffff;}
+.xy-list .btn,.xy-list-product .btn{font-size: 12px;line-height: 15px;}
+.xy-list.box,.xy-list-product.box{border-top:none; box-shadow: none; }
+.xy-list .box-footer p,.xy-list-product .box-footer p{float: right;line-height: 30px;margin-left:15px;margin-right:3px;}
 .xy-pages-jump .pagination li:first-child a{margin-left:12px;}
+/*订单管理列表各项宽带*/
 .xy-list .table-striped th,.xy-list .table-striped td{ text-align: center; font-size: 12px;}
 .xy-list .table-striped th:nth-child(1),.xy-list .table-striped tr td:nth-child(1){width:6%;}
 .xy-list .table-striped th:nth-child(2),.xy-list .table-striped tr td:nth-child(2){width:16%}
@@ -23,13 +27,90 @@
 .xy-box-select{ font-size: 12px; float:left;width:30%}
 .xy-box-select a{ line-height: 29px; display: block; float:left;margin-right:15px;}
 .xy-box-select input{ float:left; margin:8px 8px 0 7%;}
+/*商品管理列表各项宽度*/
+.xy-list-product .table-striped th{text-align: center; font-size: 12px; line-height: 20px;padding-top:0;padding-bottom:15px;}
+.xy-list-product .table-striped td{ text-align: center; font-size: 12px; line-height: 60px;}
+.xy-list-product .table-striped th:nth-child(1),.xy-list-product .table-striped tr td:nth-child(1){width:6%;}
+.xy-list-product .table-striped th:nth-child(2),.xy-list-product .table-striped tr td:nth-child(2){width:10%}
+.xy-list-product .table-striped th:nth-child(3),.xy-list-product .table-striped tr td:nth-child(3){width:10%}
+.xy-list-product .table-striped th:nth-child(4),.xy-list-product .table-striped tr td:nth-child(4){width:16%}
+.xy-list-product .table-striped th:nth-child(5),.xy-list-product .table-striped tr td:nth-child(5){width:10%}
+.xy-list-product .table-striped th:nth-child(6),.xy-list-product .table-striped tr td:nth-child(6){width:10%}
+.xy-list-product .table-striped th:nth-child(7),.xy-list-product .table-striped tr td:nth-child(7){width:10%}
+.xy-list-product .table-striped th:nth-child(8),.xy-list-product .table-striped tr td:nth-child(8){width:10%}
+.xy-list-product .table-striped th:nth-child(9),.xy-list-product .table-striped tr td:nth-child(9){width:14%}
+.xy-list-product .table-striped th:nth-child(10),.xy-list-product .table-striped tr td:nth-child(10){width:12%}
+.xy-list img,.xy-list-product img{width:60px; height:60px;}
+.table-striped th,.table-striped td{overflow: hidden;}
+.table-striped td a{cursor: pointer;}
+.xy-list-product .table-striped tr td:nth-child(1) input{margin-top:24px;}
+.xy-list-all{height: 50px; line-height: 30px;    border-bottom: 1px solid #f4f4f4;width: 100%;}
+.xy-list-all .list-all{margin-left: 2.2%;}
+.xy-list-all .list-all a{ background: #fff; color:#333333;padding-left:16px;}
+.xy-list-all li{float:left;}
+.xy-list-all li a{
+    cursor: pointer;
+    background-color: #367fa9;
+    padding:7px 20px;
+    margin-left: 10px;
+    border-radius: 4px;
+    color:#fff;
+}
+/*添加商品*/
+
+.add-content{ display:none;width:60%;margin-right:40%;}
+.add-content.active{ display: block;}
+.add-content button{background-color: #367fa9;color:#fff; font-size: 12px;padding: 7px 12px;}
+.add-product{
+    background: #fff;
+    border-radius: 3px;
+    border-top: 3px solid #d2d6de;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}
+.tag{
+    border-bottom: 1px solid #f4f4f4;
+    height:42px;
+}
+.tag li{float:left; padding:0 20px; border-right:1px solid #999; line-height: 14px; margin:14px 0; font-size: 14px;cursor: pointer}
+.tag li:first-child{padding-left:0;}
+.tag .active{color:#3c8dbc;}
+.add-product .item{float:left;width:100%;color:#333333;font-size: 12px;height:30px; line-height: 30px; margin-top:20px;}
+.add-product .item label{font-weight: normal;padding-right:35px; float:left;width:108px;}
+.add-product .item input,.add-product .item textarea{width:75%; float:left;}
+.add-product .item textarea{min-height: 180px;}
+.add-product .half-item{width:50%;}
+.add-product .half-item input{width:50%;}
+.add-product .item-area{height:auto;}
+.add-product .btn-item input{width:60%;}
+.add-product .btn-item button{float:left;width:10%;margin-left:5%;}
+.add-product .submit-item{    float: left; margin-top:30px;margin-bottom: 30px;}
+.add-product .next-steep{margin-left:108px;padding:7px 20px;}
+.btn-primary {
+    background-color: #3c8dbc;
+}
+/*bootstrap修改*/
+.modal-dialog{border-top:3px solid #3c8dbc;}
+.btn-group>.btn{height:34px;}
 iframe{border:none;}
 .content-wrapper{position:relative;margin-left:230px;}
 .content-wrapper iframe{width: 100%;height:100%;position:absolute;left:0;top:0;}
 .main-sidebar iframe{width:100%;min-height:600px;background-color: #222d32;}
-.sidebar-menu li a,.user-panel{ background-color: #222d32;}
+.sidebar-menu li a,.user-panel{ background-color: #222d32;cursor: pointer;}
+.selectModal .selectInput{min-width:150px; text-align:left;}
+.selectModal .selectBtn{background:#3c8dbc; color:#fff;}
+.selectModal{text-align:center;}
+.modal-footer{text-align:center;}
+.modal-footer .btn:nth-child(1){margin-right:12px;}
+.modal-footer .btn:nth-child(2){margin-left:12px;}
+.selectModal .dropdown-menu li{padding:3 12px; cursor:pointer;}
+@media (min-width:1600px) {
+    .xy-list-all .list-all {
+        margin-left: 2.5%;
+    }
+}
 @media (max-width:1600px){
     .xy-box-select input{ margin-left:6%;}
+
 }
 @media (min-width:1200px){
 
@@ -44,10 +125,10 @@ iframe{border:none;}
     .xy-box-select input{ margin-left:3%;}
 }
 @media (min-width:769px){
-
+	.modal-dialog{width:400px;}
 }
 @media (max-width:768px){
-    .xy-box-select{width:100%;}
+    .add-content,.add-product .half-item,.xy-box-select{width:100%;}
     .xy-pages-jump{width: 100%;display: inline-block; float: right;}
     .xy-pages-jump button{margin:0 5px 0 15px;}
     .xy-box-select input{ margin-left:1%;}

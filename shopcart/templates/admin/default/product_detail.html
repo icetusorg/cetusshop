@@ -1,0 +1,128 @@
+{% extends "admin/default/content_base.html" %}
+{% block breadcrumbs %}
+<section class="content-header">
+    <h1>商品管理</h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+        <li class="active"><a href="#">商品管理</a></li>
+    </ol>
+</section>
+{% endblock %}
+
+{% block main %}
+{% load i18n %}
+<section class="content">
+    <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+        <div class="col-md-12 add-product">
+            <ul class="tag">
+                <li class="active" data="tag1">基本信息</li>
+                <li data="tag2">属性</li>
+                <li data="tag3">相册</li>
+            </ul>
+            <div class="add-content base-info active" id="tag1">
+				<form id="product-basic-info-form">
+					<div class="item"><label>名称：</label><input type="text" name="name" class="form-control"></div>
+					<div class="item"><label>编号：</label><input type="text" name="item_number" class="form-control"></div>
+					<div class="item half-item"><label>售价：</label><input type="text" name="price" class="form-control"></div>
+					<div class="item half-item"><label>市场价：</label><input type="text" name="market_price" class="form-control"></div>
+					<div class="item half-item"><label>库存：</label><input type="text" name="quantity" class="form-control"></div>
+					<div class="item half-item"><label>最小下单量：</label><input type="text" name="min_order_quantity" class="form-control"></div>
+					<div class="item"><label>上架：</label><input type="checkbox" name="is_publish"></div>
+					<div class="submit-item">
+						<input type="hidden" name="id" value="{{product.id}}">
+						<button id="product-basic-info-submit-btn" type="button" class="btn btn-primary next-steep">下一步</button>
+					</div>
+				</form>
+            </div>
+            <div class="add-content attr" id="tag2">
+                <div class="item-free attr-first-array">
+                    <label>属性组：</label>
+                    <div class="btn-group normal">
+                        <button type="button" class="btn btn-default inputBtn">Action</button>
+                        <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" id="selectOption">
+                            <li>Action</li>
+                            <li>Another action</li>
+                            <li>Something </li>
+                            <li>Separated link</li>
+                        </ul>
+                    </div>
+                    <button type="button" class="btn btn-primary left30">添加</button>
+                    <button type="button" class="btn btn-primary left30">生成SKU</button>
+                </div>
+                <div class="item-free attr-array">
+                    <div class="attr-array-title">Color组</div>
+                    <div class="attr-array-item">
+                        <input type="checkbox"> <label>Red</label>
+                        <input type="checkbox"> <label>Green</label>
+                        <input type="checkbox"> <label>Black</label>
+                    </div>
+                </div>
+                <div class="item-free attr-array border-bottom">
+                    <div class="attr-array-title">Metria</div>
+                    <div class="attr-array-item">
+                        <input type="checkbox"> <label>Metal</label>
+                        <input type="checkbox"> <label>Plastic</label>
+                    </div>
+                </div>
+                <div class="item-list attr-array">
+                    <p class="title">SKU列表</p>
+                    <div class="item-list-dl">
+                        <dl>
+                           <dt class="text-left">SKU编码</dt><dt class="text-left">属性组合</dt><dt class="text-center">库存</dt><dt class="text-center">价格调整</dt><dt class="text-center">最小下单数</dt>
+                        </dl>
+                        <dl>
+                            <dd class="text-left">0001</dd>
+                            <dd class="text-left">[ Color: Red ] [ Mtria: Metal ]</dd>
+                            <dd class="text-center"><input type="text"></dd>
+                            <dd class="text-center"><input type="text"></dd>
+                            <dd class="text-center"><input type="text"></dd>
+                        </dl>
+                        <dl>
+                            <dd class="text-left">0002</dd>
+                            <dd class="text-left">[ Color: Red ] [ Mtria: Metal ]</dd>
+                            <dd class="text-center"><input type="text"></dd>
+                            <dd class="text-center"><input type="text"></dd>
+                            <dd class="text-center"><input type="text"></dd>
+                        </dl>
+                        <dl>
+                            <dd class="text-left">0003</dd>
+                            <dd class="text-left">[ Color: Red ] [ Mtria: Metal ]</dd>
+                            <dd class="text-center"><input type="text"></dd>
+                            <dd class="text-center"><input type="text"></dd>
+                            <dd class="text-center"><input type="text"></dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="submit-item"><button type="button" class="btn btn-primary next-steep">下一步</button></div>
+            </div>
+            <div class="add-content photo" id="tag3">
+                <p>相册</p>
+            </div>
+
+        </div>
+</section>
+{% endblock %}
+{% block scripts %}
+	{% load staticfiles %}
+	<link href="{% static 'admin/default/js/main.js' %}" rel="stylesheet" type="text/javascript" />
+	<script>
+    //添加商品，页签（基本信息-属性-相册）点击事件
+    $(".tag li").on("click",function(){
+        var contentId=$(this).attr("data");
+        $(".tag li,.add-content").removeClass("active");
+        $(this).addClass("active");
+        $("#"+contentId).addClass("active");
+    })
+    //添加商品点击下一步
+    //$(".next-steep").on("click",function(){
+     //   var idNum=parseInt($(".tag").find(".active").attr("data").split("tag")[1])+1;
+     //   $(".tag").find(".active").removeClass("active").next("li").addClass("active");
+     //   $(".add-content").removeClass("active");
+     //   $("#tag"+idNum).addClass("active");
+    //})
+	</script>
+{% endblock %}

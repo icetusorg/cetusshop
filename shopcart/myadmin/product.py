@@ -1,9 +1,9 @@
 #coding=utf-8
 from django.shortcuts import render,redirect
 from shopcart.models import Product,System_Config
-from shopcart.forms import product_add_form
+from shopcart.forms import product_add_form,product_basic_info_form
 from shopcart.utils import System_Para,handle_uploaded_file,my_pagination
-from django.http import Http404,HttpResponse
+from django.http import Http404,HttpResponse,JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.admin.views.decorators import staff_member_required
 import logging
@@ -33,6 +33,43 @@ def product_opration(request,opration,id):
 				logger.error('form is not valid')
 	else:
 		raise Http404
+		
+
+@staff_member_required
+def product_add(request):
+	ctx = {}
+	ctx['system_para'] = System_Para.get_default_system_parameters()
+	
+	result = {}
+	result['success'] = False
+	result['message'] = ''
+	result['data'] = ''
+	
+	if request.method == 'GET':
+			return render(request,System_Config.get_template_name('admin') + '/product_detail.html',ctx)
+	elif request.method == 'POST':
+		try:
+			product = Product.objects.get(id=request.POST['id'])
+			form = product_basic_info_form(request.POST,instance=product)
+		except:
+			form = product_basic_info_form(request.POST)
+			logger.info('New product to store.')
+		
+		if form.is_valid():
+			product = form.save()
+			result['success'] = True
+			result['message'] = '商品保存成功'
+			data = {}
+			data['product_id'] = product.id
+			result['data'] = data
+		else:
+			result['message'] = '商品保存失败，请重试。'
+			result['data'] = ''
+			logger.error('form is not valid')
+		return JsonResponse(result)
+	else:
+		raise Http404	
+		
 
 @staff_member_required
 def oper(request):	

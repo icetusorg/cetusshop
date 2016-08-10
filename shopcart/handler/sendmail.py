@@ -102,7 +102,20 @@ def order_was_complete_send_mail(sender,**kwargs):
 	logger.info('Enter order_was_complete_send_mail hanlder!')
 	email = kwargs['email']
 	mail_ctx = {}
-	sendmail('user_registration_success_send_mail',email,mail_ctx,'')	
+	sendmail('user_registration_success_send_mail',email,mail_ctx,'')
+	
+@receiver(signals.inquiry_received)
+def inquiry_received_send_mail(sender,**kwargs):
+	logger.info('Enter inquiry_received_send_mail hanlder!')
+	inquiry = kwargs['inquiry']
+
+	mail_ctx = {}
+	from shopcart.utils import get_system_parameters
+	mail_ctx['system_para'] = get_system_parameters()
+	mail_ctx['name'] = inquiry.name
+	sendmail('inquiry_received_send_mail',inquiry.email,mail_ctx,title=None,useage='inquiry_received')		
+
+	
 
 #发送邮件	
 def sendmail(type,email,mail_ctx,title,useage=type):

@@ -199,6 +199,26 @@ jQuery(".product-batch-publish").click(function(e){
 	$("#product_oper_form").submit();
 });
 
+jQuery("#product-basic-info-submit-btn").click(function(e){
+	var url = "/admin/product-add/";
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#product-basic-info-form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			if(data.success==true){
+				alert(data.message + " " + data.data.product_id);
+				$("input[name=id]").val(data.data.product_id);
+			}
+		}
+	});
+});
+
 
 
 

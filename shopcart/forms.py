@@ -39,6 +39,11 @@ class product_add_form(forms.ModelForm):
 		model = Product
 		fields = ('item_number','name')
 		
+class product_basic_info_form(forms.ModelForm):
+	class Meta:
+		model = Product
+		fields = ('item_number','name','is_publish','price','market_price','quantity','min_order_quantity')
+		
 class inquiry_form(forms.ModelForm):
 	company = forms.CharField(required=False)
 	class Meta:

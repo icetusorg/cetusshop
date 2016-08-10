@@ -27,7 +27,7 @@ def add_to_wishlist(request):
 			product = Product.objects.get(id=product_to_be_add['product_id'])
 			wish,created = Wish.objects.get_or_create(user=request.user,product=product)
 			result_dict['success'] = True
-			result_dict['message'] = _('Collected successfully,please check in your wishlist.')
+			result_dict['message'] = _('Collected successfully , please check in your wishlist.')
 		else:
 			#还没登陆
 			result_dict['success'] = False

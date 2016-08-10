@@ -23,3 +23,6 @@ order_was_canceled = Signal(providing_args=['order'])
 order_was_shipped = Signal(providing_args=['order'])
 order_was_complete = Signal(providing_args=['order'])
 
+#询盘
+inquiry_received = Signal(providing_args=['inquiry'])
+

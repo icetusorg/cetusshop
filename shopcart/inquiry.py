@@ -7,6 +7,7 @@ from shopcart.forms import inquiry_form
 from django.http import HttpResponse,JsonResponse
 from django.utils.translation import ugettext as _
 from django.http import Http404
+from shopcart import signals
 # import the logging library
 import logging
 # Get an instance of a logger
@@ -24,9 +25,12 @@ def add(request):
 	if request.method == 'POST':
 		form = inquiry_form(request.POST) # 获取Post表单数据
 		if form.is_valid():# 验证表单
-			form.save()
+			inquiry = form.save()
 			result_dict['success'] = True
 			result_dict['message'] = _('Your inquiry was submitted and will be responded to as soon as possible. Thank you for contacting us.')
+			
+			#触发用户注册成功的事件
+			signals.inquiry_received.send(sender='Inquiry',inquiry=inquiry)
 		else:
 			result_dict['success'] = False
 			result_dict['message'] = _('Opration faild.')

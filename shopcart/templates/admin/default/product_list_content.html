@@ -47,7 +47,7 @@
             <div class="box xy-list-product">
                 <div class="box-body no-padding">
                     <ul class="xy-list-all">
-                        <li class="list-all"><input type="checkbox"> <a>全选</a></li>
+                        <li class="list-all"><input type="checkbox" id="main-content-checkbox-all"> <a id="main-content-btn-all" href="#">全选</a></li>
                         <li><a id="product-add-new">新增</a></li>
                         <li><a id="product-batch-delete">删除</a></li>
                         <li><a class="product-batch-publish" data-method="on">上架</a></li>
@@ -58,7 +58,7 @@
 						{% csrf_token %}
 						<input type="hidden" value="" id="oper-ids" name="oper-ids"/>
 						<input type="hidden" value="" id="oper-method" name="oper-method"/>
-						<table class="table table-striped">
+						<table id="main-content-table" class="table table-striped">
 							<tbody>
 							<!--多余th为了调整表格色块-->
 							<tr><th></th></tr>

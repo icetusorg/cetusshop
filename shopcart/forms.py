@@ -44,6 +44,18 @@ class product_basic_info_form(forms.ModelForm):
 		model = Product
 		fields = ('item_number','name','is_publish','price','market_price','quantity','min_order_quantity')
 		
+class product_detail_info_form(forms.ModelForm):
+	keywords = forms.CharField(required=False)
+	static_file_name = forms.CharField(required=False)
+	detail_template = forms.CharField(required=False)
+	short_desc = forms.CharField(required=False)
+	description = forms.CharField(required=False)
+	class Meta:
+		model = Product
+		fields = ('keywords','static_file_name','detail_template','short_desc','description')
+		
+
+		
 class inquiry_form(forms.ModelForm):
 	company = forms.CharField(required=False)
 	class Meta:

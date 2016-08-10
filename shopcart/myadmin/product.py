@@ -1,7 +1,7 @@
 #coding=utf-8
 from django.shortcuts import render,redirect
 from shopcart.models import Product,System_Config
-from shopcart.forms import product_add_form,product_basic_info_form
+from shopcart.forms import product_add_form,product_basic_info_form,product_detail_info_form
 from shopcart.utils import System_Para,handle_uploaded_file,my_pagination
 from django.http import Http404,HttpResponse,JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -36,7 +36,7 @@ def product_opration(request,opration,id):
 		
 
 @staff_member_required
-def product_add(request):
+def product_basic_edit(request):
 	ctx = {}
 	ctx['system_para'] = System_Para.get_default_system_parameters()
 	
@@ -46,7 +46,14 @@ def product_add(request):
 	result['data'] = ''
 	
 	if request.method == 'GET':
-			return render(request,System_Config.get_template_name('admin') + '/product_detail.html',ctx)
+		id = request.GET.get('id','')
+		if id != '':
+			try:
+				product = Product.objects.get(id=id)
+				ctx['product'] = product
+			except:
+				logger.error('Can not find product which id is %s' % id)
+		return render(request,System_Config.get_template_name('admin') + '/product_detail.html',ctx)
 	elif request.method == 'POST':
 		try:
 			product = Product.objects.get(id=request.POST['id'])
@@ -57,18 +64,38 @@ def product_add(request):
 		
 		if form.is_valid():
 			product = form.save()
-			result['success'] = True
-			result['message'] = '商品保存成功'
-			data = {}
-			data['product_id'] = product.id
-			result['data'] = data
+			return redirect('/admin/product-edit/?id=%s' % product.id)
 		else:
-			result['message'] = '商品保存失败，请重试。'
-			result['data'] = ''
-			logger.error('form is not valid')
-		return JsonResponse(result)
+			return HttpResponse('商品保存失败，请重试。') 
 	else:
 		raise Http404	
+
+		
+@staff_member_required
+def product_detail_info_manage(request):
+	result = {}
+	result['success'] = False
+	result['message'] = ''
+	if request.method == 'POST':
+		try:
+			product = Product.objects.get(id=request.POST['id'])
+			form = product_detail_info_form(request.POST,instance=product)
+		except Exception as err:
+			logger.error('Error: %s' % err)
+			raise Http404
+		
+		if form.is_valid():
+			product = form.save()
+			result['success'] = True
+			result['message'] = '商品详细信息保存成功'
+		else:
+			result['message'] = '商品详细信息保存失败'
+		return JsonResponse(result) 
+	elif request.method == 'GET':
+		raise Http404
+	else:
+		raise Http404		
+		
 		
 
 @staff_member_required

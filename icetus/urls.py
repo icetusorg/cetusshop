@@ -69,7 +69,9 @@ urlpatterns = patterns("",
 	
 	url('^admin/product-oper/$', 'shopcart.myadmin.product.oper',name='admin_product_oper'),
 	url('^admin/product/$', 'shopcart.myadmin.product.product_list',name='admin_product_list'),
-	url('^admin/product-add/$', 'shopcart.myadmin.product.product_add',name='admin_product_add'),
+	url('^admin/product-edit/$', 'shopcart.myadmin.product.product_basic_edit',name='admin_product_basic_edit'),
+	url('^admin/product-detail-manage/$', 'shopcart.myadmin.product.product_detail_info_manage',name='admin_product_detail_info_manage'),
+	
 	url('^admin/product/(.+)/(\d+)/$', 'shopcart.myadmin.product.product_opration',name='admin_product_opration'),
 	url('^admin/article/make-static/$', 'shopcart.myadmin.article.article_make_static',name='admin_article_make_static'),
     url(r'^admin/', include(admin.site.urls)),

@@ -82,7 +82,7 @@
 									<td>${{product.price}}</td>
 									<td>${{product.market_price}}</td>
 									<td>{{product.quantity}}</td>
-									<td><a>编辑</a> | <a href="{{product.get_url}}" target="_blank">预览</a></td>
+									<td><a href="/admin/product-edit/?id={{product.id}}">编辑</a> | <a href="{{product.get_url}}" target="_blank">预览</a></td>
 									<td>{{product.is_publish|yesno:"是,否,未定义"}}</td>
 								</tr>
 							{% endfor %}

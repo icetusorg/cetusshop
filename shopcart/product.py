@@ -61,14 +61,14 @@ def detail(request,id):
 		if product.categorys.count() > 0:
 			cat = product.categorys.all()[0]
 			if cat.detail_template != '':
-				template = '/custmize/' + cat.detail_template
+				template = '/custmize/product/' + cat.detail_template
 		
 		if product.detail_template != '':
 			if product.detail_template.upper() == 'USE_DEFAULT':
 				#强行指定用默认模板
 				template = '/product_detail.html'
 			else:
-				template = '/custmize/' + product.detail_template
+				template = '/custmize/product/' + product.detail_template
 		
 		return render(request,System_Config.get_template_name() + template, ctx)
 	elif request.method == 'POST':#通过ajax访问，生成静态文件

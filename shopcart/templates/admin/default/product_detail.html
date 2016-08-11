@@ -14,9 +14,9 @@
 <section class="content">
     <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
         <div class="col-md-12 add-product">
-            <ul class="tag">
+            <ul class="tag product-info-tag">
                 <li class="active" data="tag_basic_info">基本信息</li>
-				<li data="tag_detail_info">详细信息</li>
+				<li data="tag_detail_info" data-validType="control_not_null" data-validObject="[name=id]">详细信息</li>
                 <li data="tag_attribute">属性</li>
                 <li data="tag_picture">相册</li>
             </ul>
@@ -28,11 +28,13 @@
 					<div class="item half-item"><label>售价：</label><input type="text" name="price" class="form-control" value="{{product.price}}"></div>
 					<div class="item half-item"><label>市场价：</label><input type="text" name="market_price" class="form-control" value="{{product.market_price}}"></div>
 					<div class="item half-item"><label>库存：</label><input type="text" name="quantity" class="form-control" value="{{product.quantity}}"></div>
-					<div class="item half-item"><label>最小下单量：</label><input type="text" name="min_order_quantity" class="form-control" value="{{product.min_order_quantity}}"></div>
+					<div class="item half-item"><label>最小下单量：</label>
+						<input type="text" name="min_order_quantity" class="form-control" value="{{product.min_order_quantity}}">
+					</div>
 					<div class="item"><label>上架：</label><input type="checkbox" name="is_publish" {{product.is_publish|yesno:"checked,,"}}></div>
 					<div class="submit-item">
 						<input type="hidden" name="id" value="{{product.id}}">
-						<button type="submit" class="btn btn-primary next-steep">保存</button>
+						<button type="button" id="product-basic-info-submit-btn" class="btn btn-primary next-steep">保存</button>
 					</div>
 				</form>
             </div>
@@ -43,8 +45,24 @@
 					<div class="item"><label>分类：</label><input type="text" name="category" class="form-control"></div>
 					<div class="item"><label>SEO关键字：</label><input type="text" name="keywords" class="form-control" value="{{product.keywords}}"></div>
 					<div class="item"><label>自定义URL：</label><input type="text" name="static_file_name" class="form-control" value="{{product.static_file_name}}"></div>
-					<div class="item"><label>自定义模板：</label><input type="text" name="detail_template" class="form-control" value="{{product.detail_template}}"></div>
-					<div class="item"><label>简要描述：</label><input type="text" name="short_desc" class="form-control" value="{{product.short_desc}}"></div>
+					<div class="item">
+						<label>自定义模板：</label>
+						<select name="detail_template">
+							<option value="">无需自定义</option>
+							{% for t in custmize_template %}
+								{% if product.detail_template == t %}
+									<option value ="{{t}}" selected>{{t}}</option>
+								{% else %}
+									<option value ="{{t}}">{{t}}</option>
+								{% endif %}
+							{% endfor %}
+						</select>
+
+					</div>
+					<div class="item item-area">
+						<label>简要描述：</label>
+						<textarea type="text" name="short_desc" class="form-control" value="{{product.short_desc}}"></textarea>
+					</div>
 					<div class="item">
 						<label>详细描述：</label>
 					</div>
@@ -135,27 +153,11 @@
 	<script src="{% static 'admin/default/js/main.js' %}" type="text/javascript"></script>
 	<script src="{% static 'admin/default/js/ckeditor.js' %}" type="text/javascript"></script>
 	
-	<script>
-    //添加商品，页签（基本信息-属性-相册）点击事件
-    $(".tag li").on("click",function(){
-        var contentId=$(this).attr("data");
-        $(".tag li,.add-content").removeClass("active");
-        $(this).addClass("active");
-        $("#"+contentId).addClass("active");
-    });
-	
+	<script>	
 	$(document).ready(function() {
-			CKEDITOR.replace('product_desc_editor',{
-				filebrowserUploadUrl: '{{upload_url}}'
-			});
+		CKEDITOR.replace('product_desc_editor',{
+			filebrowserUploadUrl: '{{upload_url}}'
+		});
 	});
-	
-    //添加商品点击下一步
-    //$(".next-steep").on("click",function(){
-     //   var idNum=parseInt($(".tag").find(".active").attr("data").split("tag")[1])+1;
-     //   $(".tag").find(".active").removeClass("active").next("li").addClass("active");
-     //   $(".add-content").removeClass("active");
-     //   $("#tag"+idNum).addClass("active");
-    //})
 	</script>
 {% endblock %}

@@ -168,6 +168,21 @@ jQuery("#order_batch_delete").click(function(e){
 
 
 //商品管理界面
+//Tab页切换方法
+//添加商品，页签（基本信息-属性-相册）点击事件
+$(".product-info-tag li").on("click",function(){
+	if($("input[name=id]").val()!=''){
+		var contentId=$(this).attr("data");
+		$(".product-info-tag li,.add-content").removeClass("active");
+		$(this).addClass("active");
+		$("#"+contentId).addClass("active");
+	}else{
+		$("#infoMessage").html("请先保存商品基本信息。");
+		$("#myModal").modal('toggle');
+	}
+});
+
+
 jQuery("#product-batch-delete").click(function(e){
 	var id_list = [];
 	 $("input[name='is_oper']").each(function(){
@@ -199,10 +214,38 @@ jQuery(".product-batch-publish").click(function(e){
 	$("#product_oper_form").submit();
 });
 
+
+jQuery("#product-basic-info-submit-btn").click(function(e){
+	var url = "/admin/product-edit/";
+	//由于使用了ckeditor，直接获取文本域的值，会丢失修改部分的信息，因此要先用api获取修改以后的值填到文本域中
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#product-basic-info-form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			if(data.success==true){
+				$('#myModal').on('hidden.bs.modal', function (e) {
+					location.href = url + "?id=" + data.data.product_id;
+				})
+			}
+			$("#myModal").modal('toggle');
+		}
+	});
+});
+
+
+
 jQuery("#product-detail-info-submit-btn").click(function(e){
 	var url = "/admin/product-detail-manage/";
-	
 	//由于使用了ckeditor，直接获取文本域的值，会丢失修改部分的信息，因此要先用api获取修改以后的值填到文本域中
+	
 	var data = CKEDITOR.instances.product_desc_editor.getData();
 	$("#product_desc_editor").val(data);
 	//alert($("#editor").val())
@@ -217,12 +260,13 @@ jQuery("#product-detail-info-submit-btn").click(function(e){
 			alert("System error");
 		},
 		success: function(data) {
+			$("#infoMessage").html(data.message);
+			$("#myModal").modal('toggle');
 			if(data.success==true){
-				alert(data.message);
+				;
 			}
 		}
 	});
-	
 });
 
 

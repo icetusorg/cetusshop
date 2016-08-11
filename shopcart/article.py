@@ -30,7 +30,7 @@ def detail(request,id):
 		
 	if article.detail_template != '':
 		if article.detail_template != 'USE_DEFAULT':
-			template = '/custmize/' + article.detail_template	
+			template = '/custmize/article/' + article.detail_template	
 	
 	logger.info('The template name is %s' % template)
 	

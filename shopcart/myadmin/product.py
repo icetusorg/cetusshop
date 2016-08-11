@@ -43,7 +43,12 @@ def product_basic_edit(request):
 	result = {}
 	result['success'] = False
 	result['message'] = ''
-	result['data'] = ''
+	result['data'] = {}
+	
+	from .file import file_list
+	template_list = file_list(System_Config.get_template_name('client') + '/custmize/','custmize_template_product')
+	logger.debug('custome_templates: %s' % template_list)
+	ctx['custmize_template'] = template_list
 	
 	if request.method == 'GET':
 		id = request.GET.get('id','')
@@ -64,9 +69,18 @@ def product_basic_edit(request):
 		
 		if form.is_valid():
 			product = form.save()
-			return redirect('/admin/product-edit/?id=%s' % product.id)
+			result['success'] = True
+			result['message'] = '商品保存成功'
+			data = {}
+			data['product_id'] = product.id
+			result['data'] = data
+			#return redirect('/admin/product-edit/?id=%s' % product.id)
 		else:
-			return HttpResponse('商品保存失败，请重试。') 
+			#return HttpResponse('商品保存失败，请重试。') 
+			result['success'] = False
+			result['message'] = '商品保存失败'
+			result['data'] = {}
+		return JsonResponse(result)
 	else:
 		raise Http404	
 

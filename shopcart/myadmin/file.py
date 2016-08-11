@@ -110,6 +110,24 @@ def file_delete(request,item_type,item_id,host_item_id):
 			raise Http404
 		return redirect('/admin/file-upload/' + item_type + '/' + host_item_id + "/")
 		
+
+def file_list(path,filetype):
+	import os
+	if filetype == 'custmize_template_product':
+		path = 'shopcart/templates/' + path + 'product/'
+	elif filetype == 'custmize_template_article':
+		path = 'shopcart/templates/' + path + 'article/'
+	else:
+		pass
+	
+	logger.debug('Looking path: %s' % path)
+	if os.path.exists(path):
+		if os.path.isdir(path):
+			return os.listdir(path)
+	
+	return []
+		
+		
 @staff_member_required
 def ckediter(request,item_type,item_id):
 	ctx = {}

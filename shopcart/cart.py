@@ -43,6 +43,9 @@ def add_to_cart(request):
 		product_attribute = None
 		add_result_flag = True
 		min_order_quantity = product.min_order_quantity #最小下单数量
+		
+		quantity_can_be_sold = product.quantity#库存
+		
 		logger.debug('The min_order_quantity of this product is :%s' % (min_order_quantity))
 		try:
 			product_attribute_id_to_be_add = int(product_to_be_add['product_attribute_id'])
@@ -57,6 +60,7 @@ def add_to_cart(request):
 					if pa.id == product_attribute_id_to_be_add:
 						product_attribute = pa
 						min_order_quantity = pa.min_order_quantity
+						quantity_can_be_sold = pa.quantity
 						logger.debug('The min_order_quantity of this product has been changed to :%s' % (min_order_quantity))
 						add_result_flag = True
 						break
@@ -68,13 +72,25 @@ def add_to_cart(request):
 			add_result_flag = True
 				
 		
-		#判断加入购物车的数量数量否达到了最小下单数量
+		#判断加入购物车的数量数量否达到了最小下单数量，并且库存足够
 		if add_result_flag:
 			quantity = int(product_to_be_add['quantity'])
 			if quantity < min_order_quantity:
 				result_dict['success'] = False
 				result_dict['message'] = _('The minimun order quantity of the product is %(value)s') % {'value': min_order_quantity}
 				add_result_flag = False
+			if quantity > quantity_can_be_sold:
+				result_dict['success'] = False
+				result_dict['message'] = _('Sorry, %(value)s pieces are in the stock only.') % {'value': quantity_can_be_sold}
+				add_result_flag = False
+				
+		#判断商品是否已经上架
+		if add_result_flag:
+			if not product.is_publish:
+				result_dict['success'] = False
+				result_dict['message'] = _('Sorry , this item is not ready for sale !')
+				add_result_flag = False
+				
 		
 		if add_result_flag:
 			cart_product,create = Cart_Products.objects.get_or_create(cart=cart,product=product,product_attribute=product_attribute)

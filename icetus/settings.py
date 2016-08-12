@@ -92,10 +92,11 @@ WSGI_APPLICATION = 'icetus.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'imycartpy',
-        'USER': 'imycartpy',
-        'PASSWORD': 'imycartpy',
+        'NAME': 'cassie',
+        'USER': 'cassie',
+        'PASSWORD': 'cassie',
         'HOST':'192.168.137.129',
+		#'HOST':'localhost',
 		#'HOST':'www.imycart.com',
         'PORT':'3306',
     }

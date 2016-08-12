@@ -1,7 +1,7 @@
 #coding=utf-8
 from django.shortcuts import render
 from django.template.loader import render_to_string
-from shopcart.models import System_Config,Product,Product_Images
+from shopcart.models import System_Config,Product,Product_Images,Category
 from shopcart.utils import System_Para,my_pagination,get_system_parameters
 import json,os
 from django.http import JsonResponse
@@ -100,11 +100,17 @@ def detail(request,id):
 				f.close()
 		return JsonResponse(result_dict)
 		
-def view_list(request):
+def category(request,category_id):
+	return view_list(request,category_id = category_id)
+
+		
+def view_list(request,category_id=None):
 	ctx = {}
 	ctx['system_para'] = get_system_parameters()
 	ctx['menu_products'] = get_menu_products()
 	ctx['page_name'] = 'Product'
+	
+	template = '/product_list.html'
 	
 	if request.method =='GET':
 		product_list = None
@@ -122,6 +128,17 @@ def view_list(request):
 			logger.debug("all products")
 			product_list = Product.objects.filter(is_publish=True)
 		
+		#按分类筛选
+		if category_id:
+			#查找该分类是否设置了自定义的分类模板
+			try:
+				category = Category.objects.get(id=category_id)
+				if category.category_template:
+					template = '/custmize/product/' + category.category_template
+				product_list = product_list.filter(categorys__id=category_id)
+			except Exception as err:
+				logger.error('Can not find category which id is %s. Error message is %s ' % (category_id,err))
+			
 		logger.debug("no sort_by")
 		if 'page_size' in request.GET:
 			page_size = request.GET['page_size']
@@ -135,7 +152,7 @@ def view_list(request):
 		
 		ctx['product_list'] = product_list
 		ctx['page_range'] = page_range
-		return render(request,System_Config.get_template_name() + '/product_list.html',ctx)
+		return render(request,System_Config.get_template_name() + template,ctx)
 
 
 def query_product_show(request):

@@ -38,11 +38,20 @@ def url_dispatch(request,url):
 		#301跳转模式
 		#return redirect('/product/'+str(product.id))
 	except Exception as err:
-		logger.error('Can not find url [%s] in products.' % (url))
+		logger.error('Can not find url [%s] in products. Error message is %s' % (url,err))
 	
 	
 	#优先级 2 ：解析分类路径
 	#暂未实现
+	try:
+		cate = Category.objects.get(static_file_name=url)
+		#mvc解析
+		from shopcart.product import category
+		return category(request,cate.id)
+		
+	except Exception as err:
+		logger.error('Can not find url [%s] in Category.Error message is %s' % (url,err))
+	
 	
 	#优先级 3 ：解析文章路径
 	try:
@@ -50,7 +59,7 @@ def url_dispatch(request,url):
 		from shopcart.article import detail
 		return detail(request,article.id)
 	except Exception as err:
-		logger.error('Can not find url [%s] in artilces.' % (url))
+		logger.error('Can not find url [%s] in artilces.Error message is %s' % (url,err))
 		
 	raise Http404
 	

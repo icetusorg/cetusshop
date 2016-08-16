@@ -137,6 +137,8 @@ def view_list(request,category_id=None):
 			#查找该分类是否设置了自定义的分类模板
 			try:
 				category = Category.objects.get(id=category_id)
+				ctx['page_key_words'] = category.keywords
+				ctx['page_description'] = category.short_desc
 				if category.page_title:
 					ctx['page_name'] = category.page_title
 				else:

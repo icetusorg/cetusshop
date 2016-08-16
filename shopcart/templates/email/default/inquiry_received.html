@@ -1,8 +1,8 @@
-<html>
-	<head>
-	</head>
-	<body>
-		<h1>Hi {{name}}:</h1>
+{% extends "email/default/base.html" %}
+{% block main %}
+{% load i18n %}
+    <div class="email-content">
+        Hi {{name}},<br/>
 		<p>Thanks for your inquiry! It has been received and we will handle and respond within 24 work hours!</p>
 		
 		<p>{{system_para.site_name}} values every inquiry from our possible customers!</p>
@@ -11,5 +11,8 @@
 		
 		<p>Regards，</p>		
 		<p>{{system_para.site_name}}.</p>
-	</body>
-</html>
+    </div>
+{% endblock %}
+{% block scripts %}
+	{% load staticfiles %}
+{% endblock %}

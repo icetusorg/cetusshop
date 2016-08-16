@@ -7,9 +7,33 @@
     <meta name="description" content="">
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
-    <link rel="stylesheet" href="{{system_para.base_url}}/static/email/default/css/style.css" type="text/css"/>
-    <link rel="stylesheet" href="{{system_para.base_url}}/static/email/default/css/single.css" type="text/css"/>
-    <link rel="stylesheet" href="{{system_para.base_url}}/static/email/default/css/bootstrap.min.css" type="text/css"/>
+	<style type="text/css">
+	@font-face {
+		font-family: opensan;  /*名称自定义*/
+		src: url("../fonts/opensan.ttf")   /*字体文件上传放进网站对应目录*/
+	}
+	body {font-family: opensan, Arial, Helvetica;font-size: 14px;line-height: 24px;color: #666;overflow-x:hidden;}
+	a:hover,a,a:focus{text-decoration: none;cursor: pointer;}
+	*{margin:0; padding:0;outline: none !important;}
+	label i{color:#ff0000;}
+	label{margin-bottom: 0!important;}
+	li, ul{ list-style-type:none;}
+	.color{color:#f7931d !important;}
+	.none{display: none;}
+	input[type="text"],textarea{ -webkit-appearance: none;}
+	button{border-radius:0;border-bottom-left-radius:0;border-bottom-right-radius:0; border-top-left-radius:0; border-top-right-radius:0;-webkit-transition:0.4s; -moz-transition: 0.4s;-o-transition: 0.4s;transition: 0.4s;}
+	button:hover{border-radius:0;border-bottom-left-radius:0;border-bottom-right-radius:0; border-top-left-radius:0; border-top-right-radius:0;-webkit-transition:0.4s; -moz-transition: 0.4s;-o-transition: 0.4s;transition: 0.4s;}
+	.delay,.delay:hover{-webkit-transition:0.4s; -moz-transition: 0.4s;-o-transition: 0.4s;transition: 0.4s;}
+	.ico-down{width:10px; height:10px; background: url("../images/ico/down.jpg"); display: inline-block;}
+	/*Email邮件页面*/
+	.email-wapper{width:640px; margin:40px auto; border: 1px solid #eee;}
+	.email-wapper a{color:#F7931D}
+	.email-logo{width:640px; margin:0 auto; border-top:5px solid #F7931D; text-align: center;padding-top: 10px; padding-bottom: 20px;}
+	.email-content{padding:0 20px; height:500px;}
+	.email-footer{width:600px; margin:0 auto; height:60px; line-height:60px; text-align: center; border-top:1px solid #ccc;}
+	.email-buttom{margin-top: 20px;}
+	.email-buttom a{padding:10px; background-color: #F7931D; color:#fff;}
+	</style>
 	{%block head_extra%}
 	{%endblock%}
 

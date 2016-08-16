@@ -29,6 +29,10 @@ def detail(request,id):
 	ctx['product'] = product
 	ctx['page_key_words'] = product.keywords
 	ctx['page_description'] = product.short_desc
+	if product.page_title:
+		ctx['page_name'] = product.page_title
+	else:
+		ctx['page_name'] = product.name
 	
 	price_min = product.price
 	price_max = product.price
@@ -133,6 +137,10 @@ def view_list(request,category_id=None):
 			#查找该分类是否设置了自定义的分类模板
 			try:
 				category = Category.objects.get(id=category_id)
+				if category.page_title:
+					ctx['page_name'] = category.page_title
+				else:
+					ctx['page_name'] = category.name
 				if category.category_template:
 					template = '/custmize/product/' + category.category_template
 				product_list = product_list.filter(categorys__id=category_id)

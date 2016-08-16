@@ -25,6 +25,12 @@ def detail(request,id):
 		raise Http404
 		
 	ctx['article'] = article
+	if article.page_title:
+		ctx['page_name'] = article.page_title
+	else:
+		ctx['page_name'] = article.title
+	ctx['page_key_words'] = article.keywords
+	ctx['page_description'] = article.short_desc
 		
 	template = '/article.html'
 		

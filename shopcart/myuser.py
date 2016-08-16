@@ -42,7 +42,11 @@ def register(request):
 			
 			#触发用户注册成功的事件
 			signals.user_registration_success.send(sender='MyUser',user=myuser)
-			return redirect('/user/login')
+			#return redirect('/user/login')
+			
+			#准备登陆
+			myuser.password = form.cleaned_data['password']
+			return login(request,myuser)
 		else:
 			logger.error('form is not valid')
 			ctx['reg_result'] = _('Registration faild.')
@@ -79,7 +83,7 @@ def info(request):
 		myuser.save()
 		return redirect('/user/info/?success=true')
 
-def login(request):
+def login(request,login_user=None):
 	ctx = {}
 	ctx['system_para'] = get_system_parameters()
 	ctx['menu_products'] = get_menu_products()
@@ -91,15 +95,17 @@ def login(request):
 			ctx['next'] = request.GET['next']
 		return render(request,System_Config.get_template_name() + '/login.html',ctx)
 	else:
-				
-		ctx.update(csrf(request))
-		form = captcha_form(request.POST) # 获取Post表单数据
-		if 'next' in request.POST:
-			next = request.POST['next']
-			ctx['next'] = next
-		
-		#if form.is_valid():# 验证表单,会自动验证验证码，（新版不要验证码了）
-		myuser = auth.authenticate(username = request.POST['email'].lower(), password = request.POST['password'])
+		if login_user:
+			myuser = auth.authenticate(username = login_user.email, password = login_user.password)
+		else:		
+			ctx.update(csrf(request))
+			form = captcha_form(request.POST) # 获取Post表单数据
+			if 'next' in request.POST:
+				next = request.POST['next']
+				ctx['next'] = next
+			
+			#if form.is_valid():# 验证表单,会自动验证验证码，（新版不要验证码了）
+			myuser = auth.authenticate(username = request.POST['email'].lower(), password = request.POST['password'])
 		if myuser is not None:
 			auth.login(request,myuser)
 			mycart = merge_cart(request)

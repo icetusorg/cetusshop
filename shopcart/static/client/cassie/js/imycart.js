@@ -73,7 +73,7 @@ function imycartAjaxCall(url,object,is_show_message_box,message){
 				$("#myModal").modal('toggle');
 			},
 			error : function(result) {
-				alert(result.success);
+				alert('Sorry.An error occured.Please try again.');
 			}
 	});
 };
@@ -90,7 +90,7 @@ function imycartAjaxCallWithCallback(url,object,callback,triggerControl,extraInf
 				callback(result,triggerControl,extraInfo);
 			},
 			error : function(result) {
-				alert(result.success);
+				alert('Sorry.An error occured.Please try again.');
 			}
 	});
 };
@@ -127,7 +127,7 @@ jQuery("#inquiry-submit").click(function(e){
 		data:$('#inquiryForm').serialize(),
 		async: false,
 		error: function(request) {
-			alert("System error");
+			alert('Sorry.An error occured.Please try again.');
 		},
 		success: function(result){
 			$("#infoMessage").html(result.message);
@@ -166,7 +166,7 @@ jQuery(":radio[name='express']").click(function(){
 		data:$("#place_order_form").serialize(),
 		async: false,
 		error: function(request) {
-			alert("System error");
+			alert('Sorry.An error occured.Please try again.');
 		},
 		success: function(data) {
 			if(data.success==true){
@@ -191,7 +191,7 @@ jQuery(".try-promotion-code").click(function(e){
 		data:$("#place_order_form").serialize(),
 		async: false,
 		error: function(request) {
-			alert("System error");
+			alert('Sorry.An error occured.Please try again.');
 		},
 		success: function(data) {
 			if(data.success==true){
@@ -490,7 +490,7 @@ jQuery(".btn-address-submit").click(function(){
 		data:$('#address-form').serialize(),
 		async: false,
 		error: function(request) {
-			alert("System error");
+			alert('Sorry.An error occured.Please try again.');
 		},
 		success: function(data) {
 			if(data.success==true){
@@ -564,7 +564,7 @@ $.updateAddressForm = function(address_id){
 			data:null,
 			async: false,
 			error: function(request) {
-				alert("System error");
+				alert('Sorry.An error occured.Please try again.');
 			},
 			success: function(data) {
 				if(data.success==true){
@@ -766,7 +766,7 @@ jQuery(".product-attribute-item").click(function(){
 						//alert('pa_id:' + $("input[name=product-attribute-id]").val());
 				},
 				error : function(result) {
-					alert(result.success);
+					alert('Sorry.An error occured.Please try again.');
 				}
 		});
 });

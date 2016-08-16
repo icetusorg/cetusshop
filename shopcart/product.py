@@ -133,10 +133,14 @@ def view_list(request,category_id=None):
 			product_list = Product.objects.filter(is_publish=True)
 		
 		#按分类筛选
+		logger.debug('category_id : %s ' % category_id)
 		if category_id:
 			#查找该分类是否设置了自定义的分类模板
 			try:
 				category = Category.objects.get(id=category_id)
+				from .category import get_all_children
+				cat_list = get_all_children(category,[])
+				logger.debug('cat_list: %s' % cat_list)
 				ctx['page_key_words'] = category.keywords
 				ctx['page_description'] = category.short_desc
 				if category.page_title:
@@ -145,7 +149,7 @@ def view_list(request,category_id=None):
 					ctx['page_name'] = category.name
 				if category.category_template:
 					template = '/custmize/product/' + category.category_template
-				product_list = product_list.filter(categorys__id=category_id)
+				product_list = product_list.filter(categorys__in = cat_list)
 			except Exception as err:
 				logger.error('Can not find category which id is %s. Error message is %s ' % (category_id,err))
 			

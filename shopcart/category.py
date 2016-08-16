@@ -43,6 +43,13 @@ def find_top_category(cat,levle):
 		tmp = find_top_category(cat.parent,levle)
 		return tmp
 	
+def get_all_children(category,cat_list):
+	cat_list.append(category)
+	for cat in category.childrens.all():
+		get_all_children(cat,cat_list)
+	return cat_list
+	
+	
 def deal_category(category):
 	logger.debug('I am %s' % category)
 	for cat in category.childrens.all():

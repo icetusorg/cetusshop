@@ -2,15 +2,14 @@
 {% block main %}
 {% load i18n %}
     <div class="email-content">
-        Hi {{name}},<br/>
-		<p>Thanks for your inquiry! It has been received and we will handle and respond within 24 work hours!</p>
-		
-		<p>{{system_para.site_name}} values every inquiry from our possible customers!</p>
-		<p>Any questions,  please feel free to contact us at anytime.</p>
-		
-		
-		<p>Regards，</p>		
-		<p>{{system_para.site_name}}.</p>
+        Hi {{name}},<br/><br/>
+        <p>
+            Thanks for your inquiry! It has been received and we will handle and respond within 24 work hours! {{system_para.site_name}} values every inquiry from our possible customers! Any questions,  please feel free to contact us at anytime.
+        </p>
+        <br/><br/>
+        <p>Regards，<br/>
+            <a href="{{system_para.base_url}}">{{system_para.site_name}}</a>
+        </p>
     </div>
 {% endblock %}
 {% block scripts %}

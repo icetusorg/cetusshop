@@ -47,7 +47,7 @@ urlpatterns = patterns("",
 	url(r'^wishlist/$', 'shopcart.wishlist.view_wishlist',name='wishlist_view_wishlist'),
 	url(r'^wishlist/add$', 'shopcart.wishlist.add_to_wishlist',name='wishlist_add_to_wishlist'),
 	url(r'^wishlist/remove$', 'shopcart.wishlist.remove_from_wishlist',name='wishlist_remove_from_wishlist'),
-	url(r'^category/$', 'shopcart.category.category_list',name='category_list'),
+	url(r'^category-list/(\d+)/$', 'shopcart.category.category_list',name='category_list'),
 	
 	url(r'^product/(\d+)/$', 'shopcart.product.detail',name='product_detail'),
 	url(r'^category/(\d+)/$', 'shopcart.product.category',name='product_category'),

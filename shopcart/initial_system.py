@@ -146,16 +146,16 @@ def init_email():
 	password = 'iCetus2016'
 	
 	email = Email.objects.create(useage='user_registration_success',email_address=email_address,smtp_host=smtp_host,username=username,password=password,template='default',template_file='user_registration_success.html')
-	emial_sys = System_Config.objects.create(name='user_registration_success_send_mail','true')
+	emial_sys = System_Config.objects.create(name='user_registration_success_send_mail',val='true')
 	
 	email = Email.objects.create(useage='user_password_modify_applied',email_address=email_address,smtp_host=smtp_host,username=username,password=password,template='default',template_file='user_password_modify_applied.html')
-	emial_sys = System_Config.objects.create(name='user_password_modify_applied_send_mail','true')
+	emial_sys = System_Config.objects.create(name='user_password_modify_applied_send_mail',val='true')
 	
 	email = Email.objects.create(useage='user_password_modify_success',email_address=email_address,smtp_host=smtp_host,username=username,password=password,template='default',template_file='user_password_modify_success.html')
-	emial_sys = System_Config.objects.create(name='user_password_modify_success_send_mail','true')
+	emial_sys = System_Config.objects.create(name='user_password_modify_success_send_mail',val='true')
 	
 	email = Email.objects.create(useage='order_was_payed',email_address=email_address,smtp_host=smtp_host,username=username,password=password,template='default',template_file='order_was_payed.html')
-	emial_sys = System_Config.objects.create(name='order_was_payed_send_mail','true')
+	emial_sys = System_Config.objects.create(name='order_was_payed_send_mail',val='true')
 
 
 	

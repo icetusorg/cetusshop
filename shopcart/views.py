@@ -74,6 +74,7 @@ def init_database(request):
 		initial_system = importlib.import_module(module)
 	except Exception as err:
 		logger.error('Can not load module:[%s]' % (module))
+		logger.error('Error Message: %s' % err)
 		raise Http404
 		
 		

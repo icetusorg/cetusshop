@@ -5,7 +5,7 @@
     <ul class="menu-phone-main">
         <li><a href="/">home</a></li>
         <li><a href="/about_us/about-us.html">about us</a></li>
-        <li><a href="/product/">products</a>
+        <li><a href="/brushes-combs.html">products</a>
             <span class="glyphicon glyphicon-plus menu-phone-plus" data="phone-plus1" status="close"></span>
             <ul class="menu-low-one" id="phone-plus1">
 				{% for product in menu_products%}
@@ -106,7 +106,7 @@
                 <ul>
                     <li><a href="/">home</a></li>
                     <li><a href="/about_us/about-us.html">about us</a></li>
-                    <li><a href="/product/">products <img src="{% static "client/cassie/images/ico/menu-arrow.jpg"%}"></a>
+                    <li><a href="/brushes-combs.html">products <img src="{% static "client/cassie/images/ico/menu-arrow.jpg"%}"></a>
 							<ul class="menu-low-one" id="phone-plus1">
 								{% for product in menu_products%}
 									<li><a href="{{product.get_url}}"><i></i>{{product.name}}</a></li>

@@ -21,6 +21,16 @@ def view_index(request):
 	ctx['system_para'] = get_system_parameters()
 	ctx['menu_products'] = get_menu_products()
 	ctx['page_name'] = 'Home'
+	ctx['page_key_words'] = ''
+	ctx['page_description'] = ''
+	
+	try:
+		ctx['page_name'] = System_Config.objects.get(name='index_page_title').val
+		ctx['page_key_words'] = System_Config.objects.get(name='index_keywords').val
+		ctx['page_description'] = System_Config.objects.get(name='index_description').val
+	except Exception as err:
+		logger.info('The system parameter page_name,page_key_words,page_description maybe has not setted.')
+	
 	return render(request,System_Config.get_template_name() + '/index.html',ctx)
 	
 	

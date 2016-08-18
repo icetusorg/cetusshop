@@ -70,28 +70,28 @@ urlpatterns = patterns("",
 	url('^admin/ckediter/(.+)/(.+)/$', 'shopcart.myadmin.file.ckediter',name='admin_ckediter'),
 	url('^admin/product/make-static/$', 'shopcart.myadmin.product.product_make_static',name='admin_product_make_static'),
 	
-	url('^admin/product-oper/$', 'shopcart.myadmin.product.oper',name='admin_product_oper'),
-	url('^admin/product/$', 'shopcart.myadmin.product.product_list',name='admin_product_list'),
-	url('^admin/product-edit/$', 'shopcart.myadmin.product.product_basic_edit',name='admin_product_basic_edit'),
-	url('^admin/product-detail-manage/$', 'shopcart.myadmin.product.product_detail_info_manage',name='admin_product_detail_info_manage'),
-	
 	url('^admin/product/(.+)/(\d+)/$', 'shopcart.myadmin.product.product_opration',name='admin_product_opration'),
 	url('^admin/article/make-static/$', 'shopcart.myadmin.article.article_make_static',name='admin_article_make_static'),
     url(r'^admin/', include(admin.site.urls)),
 	url(r'^i18n/', include('django.conf.urls.i18n')),
 	
-	#一下是正式的admin url
+	#以下是正式的admin url
 	url('^admin/menu/$', 'shopcart.myadmin.index.menu_view',name='admin_index_menu_view'),
 	url('^admin/order/$', 'shopcart.myadmin.order.view',name='admin_order_view'),
 	url('^admin/order-list/$', 'shopcart.myadmin.order.list_view',name='admin_order_list_view'),
 	url('^admin/order-oper/$', 'shopcart.myadmin.order.oper',name='admin_order_oper'),
 	url('^admin/no-permission/$', 'shopcart.myadmin.index.no_permission',name='admin_no_permission'),
+	url('^admin/product-oper/$', 'shopcart.myadmin.product.oper',name='admin_product_oper'),
+	url('^admin/product/$', 'shopcart.myadmin.product.product_list',name='admin_product_list'),
+	url('^admin/product-edit/$', 'shopcart.myadmin.product.product_basic_edit',name='admin_product_basic_edit'),
+	url('^admin/product-detail-manage/$', 'shopcart.myadmin.product.product_detail_info_manage',name='admin_product_detail_info_manage'),
+	
 	
 	#下面是初始化方法
 	url(r'^initdb/$', 'shopcart.views.init_database',name='init_database'),
 	
+	#优惠码
 	url(r'^promotion/$', 'shopcart.promotion.calculate',name='promotion_calculate'),
-	
 	#URL解析器
 	url(r'(.*\.html)$','shopcart.views.url_dispatch',name='url_dispatch'),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

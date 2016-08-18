@@ -1,13 +1,16 @@
-<html>
-	<head>
-	</head>
-	<body>
-		<h1>Hi {{first_name}} {{last_name}}:</h1>
-		<p>Here we are confirming your payment for Order {{order.number}}.</p>
-		
-		<p>We are preparing for the delivery now. </p>
-		<p>The Tracking No. will be sent to you when your order is sent.</p>
-	
-		<p>Thanks. </p>
-	</body>
-</html>
+{% extends "email/default/base.html" %}
+{% block main %}
+{% load i18n %}
+    <div class="email-content">
+        Hi {{first_name}} {{last_name}},<br/>
+		<p>
+            Here we are confirming your payment for Order <a href="{{system_para.base_url}}/order/show/{{order.number}}/">{{order.number}}</a>.
+            We are preparing for the delivery now.
+            The Tracking No. will be sent to you when your order is sent.
+            Thanks.
+        </p>
+    </div>
+{% endblock %}
+{% block scripts %}
+	{% load staticfiles %}
+{% endblock %}

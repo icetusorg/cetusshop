@@ -80,7 +80,7 @@ def order_was_payed_send_mail(sender,	**kwargs):
 	mail_ctx['system_para'] = get_system_parameters()
 	mail_ctx['first_name'] = user.first_name
 	mail_ctx['last_name'] = user.last_name
-	
+	mail_ctx['order'] = order
 	sendmail('order_was_payed_send_mail',user.email,mail_ctx,title=None,useage='order_was_payed')	
 	
 @receiver(signals.order_was_canceled)

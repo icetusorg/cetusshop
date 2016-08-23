@@ -271,7 +271,7 @@ class Attribute(models.Model):
 	name = models.CharField(max_length = 100,default='',verbose_name='外部名称')
 	code = models.CharField(max_length = 100,default='',verbose_name='内部代码')
 	position = models.IntegerField(default=0)
-	thumb = models.URLField(null=True,default=None)
+	thumb = models.URLField(null=True,default=None,blank=True)
 	create_time = models.DateTimeField(auto_now_add = True)
 	update_time = models.DateTimeField(auto_now = True)
 	
@@ -288,7 +288,7 @@ class Product_Attribute(models.Model):
 	sub_item_number = models.CharField(max_length = 100,default='',db_index=True)
 	quantity = models.IntegerField(default=0)
 	price_adjusment = models.FloatField()
-	image = models.ForeignKey(Product_Images,null=True)
+	image = models.ForeignKey(Product_Images,null=True,blank=True)
 	name = models.CharField(max_length = 254,default='')
 	attribute = models.ManyToManyField(Attribute,null=True)
 	min_order_quantity = models.IntegerField(default=0,verbose_name='最小下单数量')

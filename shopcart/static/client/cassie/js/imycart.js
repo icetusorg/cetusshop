@@ -645,7 +645,20 @@ jQuery("#addToCartBtn").click(
 	function() {
 		var productId = $(this).data("product-id");
 		var product_attribute_id = $("#product-attribute-id").val();
-		imycartAddProductToCart(productId,product_attribute_id,$("#qty").val(),imycartAddProductToCartCallBack,this,null);
+		//如果没有将商品属性选择全面，则不允许提交
+		
+		if (product_attribute_id){
+			imycartAddProductToCart(productId,product_attribute_id,$("#qty").val(),imycartAddProductToCartCallBack,this,null);
+		}else{
+			$(".product-attribute-group-div").each(function(index,div){
+				if (!($(div).find(".product-attribute-group-selected").val())){
+					$("#infoMessage").html("Please select " + $(div).data("attribute-group-name") + ".");
+					//break;
+					return false;
+				}		
+			});
+			$("#myModal").modal('toggle');
+		}
 	}
 );
 

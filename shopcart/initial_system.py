@@ -82,6 +82,8 @@ def init_system_configs():
 	sys_con = System_Config.objects.create(name='admin_template_name',val='default')
 	sys_con = System_Config.objects.create(name='admin_order_list_page_size',val=12)
 	
+	sys_con = System_Config.objects.create(name='email_template_name',val='default')
+	
 	
 	
 

@@ -50,9 +50,10 @@
 			{% for attr in group.attr_list %}
 				{% if group.group_type == 'text' %}
 					{% if forloop.first %}
-						<div>
+						<div class="product-attribute-group-div" data-attribute-group-name="{{group.name}}">
 							<input type='hidden' class="product-attribute-group-selected" title="{{group.code}}" value="" />
-							<ul>
+							<ul class="detail-color">
+								<li>{{group.name}}:</li>
 					{% endif %}
 								<li><input class="product-attribute-item" data-attribute-id="{{attr.id}}" data-group-code="{{group.code}}" data-product-id="{{product.id}}" type="radio" name="{{group.code}}" value="{{attr.id}}" />{{attr.name}}</li>
 					{% if forloop.last %}
@@ -61,7 +62,7 @@
 					{% endif %}
 				{% elif group.group_type == 'image' %}
 					{% if forloop.first %}
-						<div>
+						<div class="product-attribute-group-div" data-attribute-group-name="{{group.name}}">
 							<input type='hidden' class="product-attribute-group-selected" title="{{group.code}}" value="" />
 							<ul class="detail-color">
 								<li>{{group.name}}:</li>

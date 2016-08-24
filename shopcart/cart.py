@@ -66,7 +66,7 @@ def add_to_cart(request):
 						break
 			else:
 				#没选特定属性
-				result_dict['message'] = _('Please choose a kind')
+				result_dict['message'] = _('Please select the product attributes!')
 		else:
 			#该商品没有多种属性，可以添加
 			add_result_flag = True

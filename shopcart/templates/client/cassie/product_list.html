@@ -13,14 +13,18 @@
 <div class="products main">
     <div class="container">
         <div class="row">
-          <h1>Better Hairbrush</h1>
-          <p class="products-des">Make a chance for your hair as well as your pocket</p>
+		  <h1>Better Hairbrush</h1>
+		  <p class="products-des">Make a chance for your hair as well as your pocket</p>
           <div class="row products-main">
-			{% for product in product_list %}
+			{% for product in product_list %}			
 				<div class="col-md-3 col-xs-6">
 					<a href="{{product.get_url}}"><img src="{{product.image}}" alt="{{product.name}}"></a>
 						<h2><a href="{{product.get_url}}">{{product.name}}</a></h2>
 						<p>${{product.price}}</p>
+				</div>
+			{% empty %}
+				<div>
+					Your search returns no results.
 				</div>
 			{% endfor %}
 

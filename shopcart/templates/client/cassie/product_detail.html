@@ -94,14 +94,28 @@
   </div>
   <div class="container">
     <div class="row">
-    <div class="detail-des">
-        <h5 class="detail-des-title">Description</h5><h5 class="detail-des-line"></h5>
-        <div class="detail-des-main">
-            {{product.description|safe}}
-        </div>
-    </div>
-</div>
-</div>
+		<div class="detail-des">
+			<h5 class="detail-des-title">Description</h5><h5 class="detail-des-line"></h5>
+			<div class="detail-des-main">
+				{{product.description|safe}}
+			</div>
+		</div>
+	</div>
+  </div>
+  <!-- 关联商品 -->
+  <!--
+  <div class="container">
+    <div class="row">
+		<div class="detail-des">
+			{% for related_product in product.related_products.all%}
+				<div>{{related_product.name}}</div>
+			{% endfor %}
+		</div>
+	</div>
+  </div>
+  -->
+  <!--关联商品结束-->
+  
 </div>
 {% endblock %}
 {% block scripts %}

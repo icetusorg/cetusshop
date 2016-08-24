@@ -201,6 +201,7 @@ class Product(models.Model):
 	min_order_quantity = models.IntegerField(default=0,verbose_name='最小下单数量')
 	is_publish = models.BooleanField(default=False,verbose_name='上架')
 	detail_template = models.CharField(max_length = 254,default='',blank=True,verbose_name='详情页指定模板')
+	related_products = models.ManyToManyField('self',null=True,blank=True,related_name='parent_product',verbose_name='关联商品')
 	create_time = models.DateTimeField(auto_now_add = True)
 	update_time = models.DateTimeField(auto_now = True)
 

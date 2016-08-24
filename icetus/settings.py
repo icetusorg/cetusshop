@@ -121,6 +121,7 @@ USE_TZ = True
 AUTH_USER_MODEL = 'shopcart.MyUser'
 
 
+
 LOGGING = {
 	'version': 1,
 	'disable_existing_loggers': True,
@@ -158,6 +159,11 @@ LOGGING = {
 		},
 	},
 	'loggers': {
+		#'django.db.backends': {
+        #    'handlers': ['console'],
+        #    'propagate': True,
+        #    'level':'DEBUG',
+        #},
 		'django': {
 			'handlers': ['console'],
 			'propagate': True,

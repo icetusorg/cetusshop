@@ -644,20 +644,25 @@ function imycartChangeOrderCallBack(result,triggerControl,extraInfo){
 jQuery("#addToCartBtn").click(
 	function() {
 		var productId = $(this).data("product-id");
+		
 		var product_attribute_id = $("#product-attribute-id").val();
 		//如果没有将商品属性选择全面，则不允许提交
 		
-		if (product_attribute_id){
-			imycartAddProductToCart(productId,product_attribute_id,$("#qty").val(),imycartAddProductToCartCallBack,this,null);
+		if($(".product-attribute-group-div").length > 0){
+			if (product_attribute_id){
+				imycartAddProductToCart(productId,product_attribute_id,$("#qty").val(),imycartAddProductToCartCallBack,this,null);
+			}else{
+				$(".product-attribute-group-div").each(function(index,div){
+					if (!($(div).find(".product-attribute-group-selected").val())){
+						$("#infoMessage").html("Please select " + $(div).data("attribute-group-name") + ".");
+						//break;
+						return false;
+					}		
+				});
+				$("#myModal").modal('toggle');
+			}
 		}else{
-			$(".product-attribute-group-div").each(function(index,div){
-				if (!($(div).find(".product-attribute-group-selected").val())){
-					$("#infoMessage").html("Please select " + $(div).data("attribute-group-name") + ".");
-					//break;
-					return false;
-				}		
-			});
-			$("#myModal").modal('toggle');
+			imycartAddProductToCart(productId,product_attribute_id,$("#qty").val(),imycartAddProductToCartCallBack,this,null);
 		}
 	}
 );

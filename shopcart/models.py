@@ -249,6 +249,70 @@ class Product_Images(models.Model):
 		verbose_name = '商品相册'
 		verbose_name_plural = '商品相册'
 
+
+@python_2_unicode_compatible
+class ParameterGroup(models.Model):
+	name = models.CharField(max_length = 100,default='')
+	code = models.CharField(max_length = 100,default='') #用于html中用的name属性的
+	position = models.IntegerField(default=0)
+	create_time = models.DateTimeField(auto_now_add = True)
+	update_time = models.DateTimeField(auto_now = True)
+	
+	def __str__(self):
+		return self.name
+	
+	class Meta:
+		verbose_name = '参数组合定义'
+		verbose_name_plural = '参数组合定义'		
+		
+@python_2_unicode_compatible
+class Parameter(models.Model):
+	name = models.CharField(max_length = 100,default='')
+	code = models.CharField(max_length = 100,default='') #用于html中用的name属性的
+	group = models.ForeignKey(ParameterGroup,null=True,verbose_name='归属的参数组')
+	type = models.CharField(max_length = 100,default='',verbose_name='参数类型') #分为text,select两种，一种自己填，一种下拉框选择
+	position = models.IntegerField(default=0)
+	create_time = models.DateTimeField(auto_now_add = True)
+	update_time = models.DateTimeField(auto_now = True)
+	
+	def __str__(self):
+		return self.name
+	
+	class Meta:
+		verbose_name = '参数定义'
+		verbose_name_plural = '参数定义'
+		
+@python_2_unicode_compatible
+class ParameterValue(models.Model):
+	name = models.CharField(max_length = 100,default='',verbose_name='参数值显示名称')
+	code = models.CharField(max_length = 100,default='',verbose_name='参数值')
+	parameter = models.ForeignKey(Parameter,related_name='values',verbose_name='归属的参数')
+	position = models.IntegerField(default=0)
+	create_time = models.DateTimeField(auto_now_add = True)
+	update_time = models.DateTimeField(auto_now = True)
+	
+	def __str__(self):
+		return self.name
+	
+	class Meta:
+		verbose_name = '参数值定义'
+		verbose_name_plural = '参数值定义'
+		
+@python_2_unicode_compatible
+class ProductParameter(models.Model):
+	product = models.ForeignKey(Product,null=True,related_name='parameters')
+	parameter = models.ForeignKey(Parameter,related_name='related_products',verbose_name='参数')
+	value_name = models.CharField(max_length=200,null=True,blank=True,verbose_name='参数值')#用于手工填入的值，对应于parameter类型是text类型的
+	value = models.ForeignKey(ParameterValue,related_name='related_products',verbose_name='参数值',null=True,blank=True)
+	create_time = models.DateTimeField(auto_now_add = True)
+	update_time = models.DateTimeField(auto_now = True)
+	
+	def __str__(self):
+		return self.value_name
+	
+	class Meta:
+		verbose_name = '具体的商品参数'
+		verbose_name_plural = '具体的商品参数'
 	
 @python_2_unicode_compatible
 class Attribute_Group(models.Model):

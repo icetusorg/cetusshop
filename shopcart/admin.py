@@ -1,7 +1,29 @@
 from django.contrib import admin
 from django.contrib.auth.models import Permission
 
-from shopcart.models import Product,Order,Order_Products,Category,System_Config,Attribute,Attribute_Group,Article,Email_List,Product_Attribute,Express,ExpressType,Inquiry,Product_Images,Promotion,OrderRemark,MyUser,Email
+from shopcart.models import Product,Order,Order_Products,Category,System_Config,Attribute,Attribute_Group,Article,Email_List,Product_Attribute,Express,ExpressType,Inquiry,Product_Images,Promotion,OrderRemark,MyUser,Email,ProductParameter,ParameterValue,Parameter,ParameterGroup
+# Register your models here.
+class ProductParameterAdmin(admin.ModelAdmin):
+	list_display = ('product', 'parameter','value_name','value','create_time','update_time') 
+admin.site.register(ProductParameter,ProductParameterAdmin)
+
+# Register your models here.
+class ParameterValueAdmin(admin.ModelAdmin):
+	list_display = ('name','code','parameter','create_time','update_time')
+admin.site.register(ParameterValue,ParameterValueAdmin)
+
+# Register your models here.
+class ParameterAdmin(admin.ModelAdmin):
+	list_display = ('name', 'code','group','type','create_time','update_time')
+admin.site.register(Parameter,ParameterAdmin)
+
+# Register your models here.
+class ParameterGroupAdmin(admin.ModelAdmin):
+	list_display = ('name', 'code', 'create_time','update_time')
+admin.site.register(ParameterGroup,ParameterGroupAdmin)
+
+
+
 # Register your models here.
 class EmailAdmin(admin.ModelAdmin):
 	list_display = ('useage', 'email_address', 'smtp_host','template','create_time','update_time') 

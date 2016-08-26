@@ -11,153 +11,386 @@
 
 {% block main %}
 {% load i18n %}
+
+
+{% load shopcart_extras %}
 <section class="content">
     <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
-        <div class="col-md-12 add-product">
-            <ul class="tag product-info-tag">
-                <li class="active" data="tag_basic_info">基本信息</li>
-				<li data="tag_detail_info" data-validType="control_not_null" data-validObject="[name=id]">详细信息</li>
-                <li data="tag_attribute">属性</li>
-                <li data="tag_picture">相册</li>
-            </ul>
-            <div class="add-content base-info active" id="tag_basic_info">
-				<form id="product-basic-info-form" method="POST">
-					{% csrf_token %}
-					<div class="item"><label>名称：</label><input type="text" name="name" class="form-control" value="{{product.name}}"></div>
-					<div class="item"><label>编号：</label><input type="text" name="item_number" class="form-control" value="{{product.item_number}}"></div>
-					<div class="item half-item"><label>售价：</label><input type="text" name="price" class="form-control" value="{{product.price}}"></div>
-					<div class="item half-item"><label>市场价：</label><input type="text" name="market_price" class="form-control" value="{{product.market_price}}"></div>
-					<div class="item half-item"><label>库存：</label><input type="text" name="quantity" class="form-control" value="{{product.quantity}}"></div>
-					<div class="item half-item"><label>最小下单量：</label>
-						<input type="text" name="min_order_quantity" class="form-control" value="{{product.min_order_quantity}}">
-					</div>
-					<div class="item"><label>上架：</label><input type="checkbox" name="is_publish" {{product.is_publish|yesno:"checked,,"}}></div>
-					<div class="submit-item">
-						<input type="hidden" name="id" value="{{product.id}}">
-						<button type="button" id="product-basic-info-submit-btn" class="btn btn-primary next-steep">保存</button>
-					</div>
-				</form>
-            </div>
-			
-			<div class="add-content base-info" id="tag_detail_info">
-				<form id="product-detail-info-form">
-					{% csrf_token %}
-					<div class="item"><label>分类：</label><input type="text" name="category" class="form-control"></div>
-					<div class="item"><label>SEO关键字：</label><input type="text" name="keywords" class="form-control" value="{{product.keywords}}"></div>
-					<div class="item"><label>自定义URL：</label><input type="text" name="static_file_name" class="form-control" value="{{product.static_file_name}}"></div>
-					<div class="item">
-						<label>自定义模板：</label>
-						<select name="detail_template">
-							<option value="">无需自定义</option>
-							{% for t in custmize_template %}
-								{% if product.detail_template == t %}
-									<option value ="{{t}}" selected>{{t}}</option>
-								{% else %}
-									<option value ="{{t}}">{{t}}</option>
-								{% endif %}
-							{% endfor %}
-						</select>
+    <div class="col-md-12 add-product">
 
-					</div>
-					<div class="item item-area">
-						<label>简要描述：</label>
-						<textarea type="text" name="short_desc" class="form-control" value="{{product.short_desc}}"></textarea>
-					</div>
-					<div class="item">
-						<label>详细描述：</label>
-					</div>
-					
-					<div class="item item-area"><textarea id='product_desc_editor' name="description">{{product.description}}</textarea><div> 
-					
-					<div class="submit-item">
-						<input type="hidden" name="id" value="{{product.id}}">
-						<button id="product-detail-info-submit-btn" type="button" class="btn btn-primary next-steep">保存</button>
-					</div>
-				</form>
-            </div>
-			
-            <div class="add-content attr" id="tag_attribute">
-                <div class="item-free attr-first-array">
-                    <label>属性组：</label>
-                    <div class="btn-group normal">
-                        <button type="button" class="btn btn-default inputBtn">Action</button>
-                        <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
-                            <span class="caret"></span>
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu" id="selectOption">
-                            <li>Action</li>
-                            <li>Another action</li>
-                            <li>Something </li>
-                            <li>Separated link</li>
-                        </ul>
-                    </div>
-                    <button type="button" class="btn btn-primary left30">添加</button>
-                    <button type="button" class="btn btn-primary left30">生成SKU</button>
-                </div>
-                <div class="item-free attr-array">
-                    <div class="attr-array-title">Color组</div>
-                    <div class="attr-array-item">
-                        <input type="checkbox"> <label>Red</label>
-                        <input type="checkbox"> <label>Green</label>
-                        <input type="checkbox"> <label>Black</label>
-                    </div>
-                </div>
-                <div class="item-free attr-array border-bottom">
-                    <div class="attr-array-title">Metria</div>
-                    <div class="attr-array-item">
-                        <input type="checkbox"> <label>Metal</label>
-                        <input type="checkbox"> <label>Plastic</label>
-                    </div>
-                </div>
-                <div class="item-list attr-array">
-                    <p class="title">SKU列表</p>
-                    <div class="item-list-dl">
-                        <dl>
-                           <dt class="text-left">SKU编码</dt><dt class="text-left">属性组合</dt><dt class="text-center">库存</dt><dt class="text-center">价格调整</dt><dt class="text-center">最小下单数</dt>
-                        </dl>
-                        <dl>
-                            <dd class="text-left">0001</dd>
-                            <dd class="text-left">[ Color: Red ] [ Mtria: Metal ]</dd>
-                            <dd class="text-center"><input type="text"></dd>
-                            <dd class="text-center"><input type="text"></dd>
-                            <dd class="text-center"><input type="text"></dd>
-                        </dl>
-                        <dl>
-                            <dd class="text-left">0002</dd>
-                            <dd class="text-left">[ Color: Red ] [ Mtria: Metal ]</dd>
-                            <dd class="text-center"><input type="text"></dd>
-                            <dd class="text-center"><input type="text"></dd>
-                            <dd class="text-center"><input type="text"></dd>
-                        </dl>
-                        <dl>
-                            <dd class="text-left">0003</dd>
-                            <dd class="text-left">[ Color: Red ] [ Mtria: Metal ]</dd>
-                            <dd class="text-center"><input type="text"></dd>
-                            <dd class="text-center"><input type="text"></dd>
-                            <dd class="text-center"><input type="text"></dd>
-                        </dl>
-                    </div>
-                </div>
-                <div class="submit-item"><button type="button" class="btn btn-primary next-steep">下一步</button></div>
-            </div>
-            <div class="add-content photo" id="tag_picture">
-                <p>相册</p>
-            </div>
-
+        <ul class="tag product-info-tag">
+            <li class="active" data="tag_basic_info">基本信息</li>
+            <li data="tag_detail_info">详细信息</li>
+            <li data="tag_attribute">属性</li>
+            <li data="tag_picture">相册</li>
+        </ul>
+        <div class="add-content detail-info active" id="tag_basic_info">
+			<form id="product-basic-info-form" method="POST">
+			{% csrf_token %}
+				<div class="item"><label>名称：</label><input type="text" name="name" class="form-control" value="{{product.name}}"></div>
+				<div class="item"><label>编号：</label><input type="text" name="item_number" class="form-control" value="{{product.item_number}}"></div>
+				<div class="item half-item"><label>售价：</label><input type="text" name="price" class="form-control" value="{{product.price}}"></div>
+				<div class="item half-item"><label>市场价：</label><input type="text" name="market_price" class="form-control" value="{{product.market_price}}"></div>
+				<div class="item half-item"><label>库存：</label><input type="text" name="quantity" class="form-control" value="{{product.quantity}}"></div>
+				<div class="item half-item"><label>最小下单量：</label>
+					<input type="text" name="min_order_quantity" class="form-control" value="{{product.min_order_quantity}}">
+				</div>
+				<div class="item"><label>上架：</label><input type="checkbox" class="normal-check" name="is_publish" {{product.is_publish|yesno:"checked,,"}}></div>
+				<div class="submit-item">
+					<input type="hidden" name="id" value="{{product.id}}">
+					<button type="button" id="product-basic-info-submit-btn" class="btn btn-primary next-steep">保存</button>
+				</div>
+			</form>
         </div>
+        <div class="add-content attr" id="tag_detail_info">
+			<form id="product-detail-info-form" method="POST">
+			{% csrf_token %}
+				<div class="item add-product-tree">
+					<label>分类：（<a href="#">新增分类</a>）</label>
+					<div class="trees" id="product_category_selection">
+						<ul>
+							{% for cat in top_cat_list%}
+								<li class="tree1">
+									<input name="category_check" data-cat-id="{{cat.id}}" type="checkbox" class="three-check category-selection-checkbox" {{product_category_id_list|check_if_in_categorys:cat.id}}>
+									<p>{{cat.name}}</p>
+								</li>
+								{% for cat2 in cat.childrens.all%}
+									<li class="tree2">
+										<input name="category_check" data-cat-id="{{cat2.id}}" type="checkbox" class="three-check category-selection-checkbox" {{product_category_id_list|check_if_in_categorys:cat2.id}}>
+										<p>{{cat2.name}}</p>
+									</li>
+									{% for cat3 in cat2.childrens.all%}
+										<li class="tree3">
+											<input name="category_check" data-cat-id="{{cat3.id}}" type="checkbox" class="three-check category-selection-checkbox" {{product_category_id_list|check_if_in_categorys:cat3.id}}>
+											<p>{{cat3.name}}</p>
+										</li>
+										{% for cat4 in cat3.childrens.all%}
+											<li class="tree4">
+												<input name="category_check" data-cat-id="{{cat4.id}}" type="checkbox" class="three-check category-selection-checkbox" {{product_category_id_list|check_if_in_categorys:cat4.id}}>
+												<p>{{cat4.name}}</p>
+											</li>
+										{% endfor %}
+									{% endfor %}
+								{% endfor %}
+							{% endfor %}
+						</ul>
+						<input type="hidden" name="product_category_list" value="{{product_category_id_list|join:","}}"/>
+					</div>
+				</div>
+	
+				<div class="item"><label>SEO关键字：</label><input type="text" name="keywords" class="form-control" value="{{product.keywords}}"></div>
+				<div class="item btn-item">
+					<label>自定义URL：</label>
+					<input type="text" name="static_file_name" class="form-control" value="{{product.static_file_name|default_if_none:""}}">
+					<button type="button" class="btn btn-primary url_advise_btn">推荐</button>
+				</div>
+				<div class="item">
+					<label>自定义模板：</label>
+					<div class="btn-group normal">
+						<button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{product.detail_template|default:"无需自定义"}}</span></button>
+						<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
+							<span class="caret"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+						</button>
+						<ul class="dropdown-menu" role="menu" id="detail_template-selection">
+							<li class="dropdown-item" data-value="">无需自定义</li>
+							{% for t in custmize_template %}
+									<li class="dropdown-item" data-value ="{{t}}">{{t}}</li>
+							{% endfor %}
+						</ul>
+						<input class="dropdown-item-input" type="hidden" name="detail_template" value=""/>
+					</div>
+				</div>
+				
+	
+				<div class="item item-area">
+					<label>简要描述：</label>
+					<textarea type="text" name="short_desc" class="form-control" value="{{product.short_desc}}"></textarea>
+				</div>
+				
+				<div class="item">
+					<label>详细描述：</label>
+				</div>
+				
+				<div class="item item-area">
+					<textarea type="text" id="product_desc_editor"  name="description" class="form-control">{{product.description}}</textarea>
+				</div>
+				
+				<div class="submit-item">
+					<input type="hidden" name="id" value="{{product.id}}">
+					<button id="product-detail-info-submit-btn" type="button" class="btn btn-primary next-steep">保存</button>
+				</div>
+			</form>
+        </div>
+        <div class="add-content attr" id="tag_attribute">
+            <div class="item-free attr-first-array">
+                <label>属性组：</label>
+
+                <div class="btn-group normal">
+                    <button type="button" class="btn btn-default inputBtn"><span class="selected-text">请选择一个属性组</span></button>
+                    <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" id="category-selection">
+						<li class="dropdown-item" data-value="">请选择一个属性组</li>
+						{% for group in attribute_group_list %}
+						    <li class="dropdown-item" data-value ="{{group.id}}">{{group.name}} - {{group.code}}</li>
+						{% endfor %}                        
+                    </ul>
+					<input class="dropdown-item-input" type="hidden" name="attribute-group" value=""/>
+                </div>
+                <button type="button" class="btn btn-primary left30 add-attribute-group">添加</button>
+                <button type="button" class="btn btn-primary left30 make-sku-list">生成SKU</button>
+            </div>
+			
+			<div id="attribute_group_show">
+			</div>
+			
+            <div id="sku_show">
+				<div class="item-list attr-array">
+					<p class="title">SKU列表</p>
+	
+					<div class="item-list-dl">
+						<dl>
+							<dt class="text-left">SKU编码</dt>
+							<dt class="text-left">属性组合</dt>
+							<dt class="text-center">库存</dt>
+							<dt class="text-center">价格调整</dt>
+							<dt class="text-center">最小下单数</dt>
+						</dl>
+						<dl>
+							<dd class="text-left">0001</dd>
+							<dd class="text-left">[ Color: Red ] [ Mtria: Metal ]</dd>
+							<dd class="text-center"><input type="text"></dd>
+							<dd class="text-center"><input type="text"></dd>
+							<dd class="text-center"><input type="text"></dd>
+						</dl>
+					</div>
+				</div>
+			</div>
+
+            <div class="submit-item">
+                <button type="button" class="btn btn-primary next-steep">保存</button>
+            </div>
+        </div>
+        <div class="add-content photo" id="tag_picture">
+            <div class="item inputAndBtn btn-item">
+                <label>选择文件：</label>
+                <input type="file" class="form-control file">                
+            </div>
+            <div class="item">
+                <label>文件名生成方式：</label>
+                <div class="btn-group normal">
+                    <button type="button" class="btn btn-default inputBtn"><span class="selected-text">Action</span></button>
+                    <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" id="selectOption">
+                        <li>Action</li>
+                        <li>Another action</li>
+                        <li>Something</li>
+                        <li>Separated link</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="item"><label>自定义文件名：</label><input type="text" class="form-control"></div>
+            <div class="item">
+                <label>重名文件处理：</label>
+                <div class="btn-group normal">
+                    <button type="button" class="btn btn-default inputBtn">Action</button>
+                    <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" id="selectOption">
+                        <li>Action</li>
+                        <li>Another action</li>
+                        <li>Something</li>
+                        <li>Separated link</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="item"><label>排序号：</label><input type="text" class="form-control"></div>
+            <div class="item"><label>是否显示在详情中：</label><input class="normal-check" type="checkbox"></div>
+            <div class="submit-item">
+               	<button type="button" class="btn btn-primary">上传</button>
+            </div>
+           
+    <div class="item product-images">
+    	<div class="images">
+           <a href="images/product.jpg" target="new"><img src="images/product.jpg"></a>           
+        </div>
+        <div class="images">
+           <a href="images/product.jpg" target="new"><img src="images/product.jpg"></a>           
+        </div>
+        <div class="images">
+           <a href="images/product.jpg" target="new"><img src="images/product.jpg"></a>           
+        </div>
+        <div class="images">
+           <a href="images/product.jpg" target="new"><img src="images/product.jpg"></a>           
+        </div>
+        <div class="images">
+           <a href="images/product.jpg" target="new"><img src="images/product.jpg"></a>           
+        </div>
+        <div class="images">
+           <a href="images/product.jpg" target="new"><img src="images/product.jpg"></a>           
+        </div>
+        <div class="images">
+           <a href="images/product.jpg" target="new"><img src="images/product.jpg"></a>           
+        </div>
+        <div class="images">
+           <a href="images/product.jpg" target="new"><img src="images/product.jpg"></a>           
+        </div>
+    </div>    
+    <div class="item thumb"><label>主图：</label><input type="text" class="form-control"><div class="image"><img src="images/product.jpg"></div></div>
+    <div class="item thumb margin"><label>缩略图：</label><input type="text" class="form-control"><div class="image"><img src="images/product.jpg"></div></div>
+    <div class="item-list attr-array">
+                <p class="title">SKU图：</p>
+
+                <div class="item-list-dl">
+                    <dl>
+                        <dt>SKU编码</dt>
+                        <dt>属性组合</dt>
+                             <dt class="select">选择图片</dt>
+                        <dt>图片</dt>
+                    </dl>
+                    <dl>
+                        <dd>0001</dd>
+                        <dd>[ Color: Red ] [ Mtria: Metal ]</dd>
+                        <dd class="select">
+                        	<div class="btn-group normal">
+                    			<button type="button" class="btn btn-default inputBtn">Action</button>
+                    			<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
+                        			<span class="caret"></span>
+                        			<span class="sr-only">Toggle Dropdown</span>
+                    			</button>
+                   				<ul class="dropdown-menu" role="menu" id="selectOption">
+                       			  <li>Action</li>
+                        		  <li>Another action</li>
+                        		  <li>Something</li>
+                        		  <li>Separated link</li>
+                   				</ul>
+                			</div>
+                            
+                        </dd>
+                        <dd>
+                        	<div class="images">
+           						<a href="images/product.jpg" target="new"><img src="images/product.jpg"></a>           
+        					</div>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dd>0002</dd>
+                        <dd>[ Color: Red ] [ Mtria: Metal ]</dd>
+                        <dd class="select">
+                        	<div class="btn-group normal">
+                    			<button type="button" class="btn btn-default inputBtn">Action</button>
+                    			<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
+                        			<span class="caret"></span>
+                        			<span class="sr-only">Toggle Dropdown</span>
+                    			</button>
+                   				<ul class="dropdown-menu" role="menu" id="selectOption">
+                       			  <li>Action</li>
+                        		  <li>Another action</li>
+                        		  <li>Something</li>
+                        		  <li>Separated link</li>
+                   				</ul>
+                			</div>
+                        </dd>
+                        <dd>
+                        	<div class="images">
+           						<a href="images/product.jpg" target="new"><img src="images/product.jpg"></a>           
+        					</div>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dd>0003</dd>
+                        <dd>[ Color: Red ] [ Mtria: Metal ]</dd>
+                        <dd class="select">
+                        	<div class="btn-group normal">
+                    			<button type="button" class="btn btn-default inputBtn">Action</button>
+                    			<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
+                        			<span class="caret"></span>
+                        			<span class="sr-only">Toggle Dropdown</span>
+                    			</button>
+                   				<ul class="dropdown-menu" role="menu" id="selectOption">
+                       			  <li>Action</li>
+                        		  <li>Another action</li>
+                        		  <li>Something</li>
+                        		  <li>Separated link</li>
+                   				</ul>
+                			</div>
+                        </dd>
+                        <dd>
+                        	<div class="images">
+           						<a href="images/product.jpg" target="new"><img src="images/product.jpg"></a>           
+        					</div>
+                        </dd>
+                    </dl>
+                </div>
+              </div>
+              <div class="submit-item">
+                <button type="button" class="btn btn-primary addPSubmit">提交</button>
+              </div>              
+   		 </div> 
+    </div>
 </section>
 {% endblock %}
 {% block scripts %}
 	{% load staticfiles %}
 	<script src="{% static 'admin/default/js/main.js' %}" type="text/javascript"></script>
 	<script src="{% static 'admin/default/js/ckeditor.js' %}" type="text/javascript"></script>
-	
 	<script>	
 	$(document).ready(function() {
 		CKEDITOR.replace('product_desc_editor',{
 			filebrowserUploadUrl: '{{upload_url}}'
 		});
+		$(".url_advise_btn").click(function(){
+			title = $("input[name=name]").val();
+			arr = new Array();
+			arr = title.split(" ");
+			url = "";
+			
+			$.each(arr, function(idx, item) {
+				if(item.trim()!=""){
+					url = url + item + "-";
+				}
+			});
+			if(url.endWith("-")){
+				url = url.substring(0,url.length-1);
+				url = url + ".html";
+			}
+			$("input[name=static_file_name]").val(url);
+		});	
+		
+		$(".add-attribute-group").click(function(){
+			var $pdiv = $("<div>",{
+				id:'group_div_parent',
+				//text:'this is a test',
+				"class":"item-free attr-array",
+				}).appendTo($("#attribute_group_show"));
+			
+			var $title = $("<div>",{
+				id:'title',
+				text:'Color 组',
+				"class":"attr-array-title",
+				}).appendTo($pdiv);
+			
+			var $item = $("<div>",{
+				id:'items',
+				//text:'Color 组',
+				"class":"attr-array-item",
+				}).appendTo($pdiv);
+			
+			$('<input type="checkbox" /><label>Red</label>').appendTo($item);
+			$('<input type="checkbox" /><label>Blue</label>').appendTo($item);
+			$('<input type="checkbox" /><label>Black</label>').appendTo($item);
+		
+		});
+		
 	});
 	</script>
+	
 {% endblock %}

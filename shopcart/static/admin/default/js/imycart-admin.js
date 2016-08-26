@@ -97,6 +97,15 @@ function imycartAjaxCallWithCallback(url,object,callback,triggerControl,extraInf
 
 //公共方法
 
+//下拉菜单选项切换
+jQuery(".dropdown-item").click(function(){
+	text = $(this).text();
+	value = $(this).data("value");
+	$(this).parent().parent().find(".inputBtn").find(".selected-text").text(text);
+	$(this).parent().parent().find(".dropdown-item-input").val(value); // 将选中的值放入隐藏的input
+});
+
+
 //全选复选框选择
 jQuery("#main-content-checkbox-all").change(function(){
 	if($("#main-content-checkbox-all").is(":checked")){
@@ -180,6 +189,17 @@ $(".product-info-tag li").on("click",function(){
 		$("#infoMessage").html("请先保存商品基本信息。");
 		$("#myModal").modal('toggle');
 	}
+});
+
+//商品分类选择
+jQuery(".category-selection-checkbox").click(function(){
+	var category_id_list = new Array();
+	$("#product_category_selection").find("input[type='checkbox']").each(function(){
+		if ($(this).prop("checked")){
+			category_id_list.push($(this).data("cat-id"));
+		}
+	});
+	$("input[name='product_category_list']").val(category_id_list.join(","));
 });
 
 

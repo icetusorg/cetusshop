@@ -95,8 +95,8 @@ DATABASES = {
         'NAME': 'cassie',
         'USER': 'cassie',
         'PASSWORD': 'cassie',
-        'HOST':'192.168.137.129',
-		#'HOST':'localhost',
+        #'HOST':'192.168.137.129',
+		'HOST':'localhost',
 		#'HOST':'www.imycart.com',
         'PORT':'3306',
     }

@@ -33,6 +33,10 @@ def category_list(request,id=None):
 	ctx['level'] = levle
 	logger.debug('Top Categorys : %s' % top_category_list)
 	return JsonResponse({'success':'OK'})
+
+def get_all_top_categorys():
+	top_category_list = Category.objects.filter(parent=None)
+	return top_category_list
 	
 
 def find_top_category(cat,levle):

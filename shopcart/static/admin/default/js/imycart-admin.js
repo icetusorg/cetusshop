@@ -202,6 +202,125 @@ jQuery(".category-selection-checkbox").click(function(){
 	$("input[name='product_category_list']").val(category_id_list.join(","));
 });
 
+//生成SKU页面，选择某个分类后的处理
+jQuery(".add-attribute-group").click(function(){
+	var selected_group_id = $("input[name=attribute-group]").val();
+	
+	//判断是否已经选择了属性组
+	if (selected_group_id.trim()==""){
+		$("#infoMessage").html("请选择一个属性组");
+		$("#myModal").modal('toggle');
+		return;
+	}
+	//判断选择的属性组是否已经在界面上了
+	var terget_id = "group_div_parent_" + selected_group_id;
+	if( $("#" + terget_id).size() ){
+		$("#infoMessage").html("属性组已经添加了");
+		$("#myModal").modal('toggle');
+		return;
+	}else{
+		// 不存在
+		var url = "/attribute/group/info/" + selected_group_id + "/";
+		$.ajax({
+			cache: false,
+			type: "POST",
+			url:url,
+			data:null,
+			async: false,
+			error: function(request) {
+				alert("System error");
+			},
+			success: function(data) {
+				
+				var $pdiv = $("<div>",{
+					id:'group_div_parent_' + selected_group_id,
+					//text:'this is a test',
+					"class":"item-free attr-array",
+					}).appendTo($("#attribute_group_show"));
+				
+				var $title = $("<div>",{
+					id:'title_div_' + selected_group_id,
+					text:"删除 | " + data.data.group.name + " - " + data.data.group.code,
+					"class":"attr-array-title",
+					}).appendTo($pdiv);
+				
+				var $item = $("<div>",{
+					id:'items_' + selected_group_id,
+					//text:'Color 组',
+					"class":"attr-array-item",
+					}).appendTo($pdiv);
+				
+				//为了排序，先整理成数组
+				var itemArray = new Array();
+				$.each(data.data.items,function(index,attr){
+					itemArray.push(attr);
+				});
+				itemArray.sort();
+				
+				$.each(itemArray,function(index,attr){
+					$('<input type="checkbox" value="'+ attr.id +'" name="attribute-id" class="attribute-to-sku" data-attr-id="' + attr.id + '" /><label>' + attr.name + '</label>').appendTo($item);
+				});
+			}
+		});
+	} 
+});
+
+//生成SKU按钮
+jQuery(".make-sku-list").click(function(){
+	var product_id = $("input[name=id]").val();
+	var url = "/admin/product-sku-manage/" + product_id + "/";
+
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#arrtibute_to_make_sku").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			$('#myModal').on('hidden.bs.modal', function (e) {
+				var url = location.href;
+				var newurl = changeURLArg(url,"tab_name","tag_attribute");
+				location.href = newurl;//跳转到对应的页面
+			});
+			
+			$("#myModal").modal('toggle');
+			
+		}
+	});
+});
+
+//保存SKU属性
+jQuery("#product-attribute-submit-btn").click(function(){
+	var url = "/admin/product-sku-attribute-manage/";
+
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#sku_attribute_form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			$('#myModal').on('hidden.bs.modal', function (e) {
+				var url = location.href;
+				var newurl = changeURLArg(url,"tab_name","tag_attribute");
+				location.href = newurl;//跳转到对应的页面
+			});
+			
+			$("#myModal").modal('toggle');
+			
+		}
+	});
+	
+});
+
 
 jQuery("#product-batch-delete").click(function(e){
 	var id_list = [];

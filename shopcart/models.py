@@ -280,6 +280,7 @@ class Attribute(models.Model):
 		return self.code
 	
 	class Meta:
+		#ordering = ['name']
 		verbose_name = '商品属性定义'
 		verbose_name_plural = '商品属性定义'
 
@@ -291,13 +292,28 @@ class Product_Attribute(models.Model):
 	price_adjusment = models.FloatField()
 	image = models.ForeignKey(Product_Images,null=True,blank=True)
 	name = models.CharField(max_length = 254,default='')
-	attribute = models.ManyToManyField(Attribute,null=True)
+	attribute = models.ManyToManyField(Attribute,null=True,related_name='product_attribute')
 	min_order_quantity = models.IntegerField(default=0,verbose_name='最小下单数量')
 	create_time = models.DateTimeField(auto_now_add = True)
 	update_time = models.DateTimeField(auto_now = True)
 	
 	def __str__(self):
 		return self.name
+	
+	def get_grouped_attribute_desc(self):
+		attr_list = []
+		attr_list = Attribute.objects.filter(product_attribute=self).distinct()
+		ret_str = ''
+		for attr in attr_list:
+			ret_str = ret_str + ' [' + attr.group.name + ':' + attr.name + ']'
+		return ret_str
+	
+	def get_attribute_groups(self):
+		attr_list = Attribute.objects.filter(product_attribute=self).distinct()
+		group_list = []
+		for attr in attr_list:
+			group_list.append(attr.group)
+		return group_list
 	
 	class Meta:
 		verbose_name = '商品属性'
@@ -330,11 +346,13 @@ class Cart_Products(models.Model):
 		logger.debug('product_attribute: %s' % self.product_attribute)
 		attr_list = []
 		if self.product_attribute:
-			attr_list = Attribute.objects.filter(product_attribute=self.product_attribute).distinct()
-		ret_str = ''
-		for attr in attr_list:
-			ret_str = ret_str + ' [' + attr.group.name + ':' + attr.name + ']'
-		return ret_str
+			return self.product_attribute.get_grouped_attribute_desc()
+		else:
+		#	attr_list = Attribute.objects.filter(product_attribute=self.product_attribute).distinct()
+			ret_str = ''
+		#for attr in attr_list:
+		#	ret_str = ret_str + ' [' + attr.group.name + ':' + attr.name + ']'
+			return ret_str
 	
 	def get_product_price(self):
 		if self.product_attribute is None:

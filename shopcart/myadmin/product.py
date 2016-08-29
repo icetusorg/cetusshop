@@ -1,6 +1,6 @@
 #coding=utf-8
 from django.shortcuts import render,redirect
-from shopcart.models import Product,System_Config,Category
+from shopcart.models import Product,System_Config,Category,Attribute,Attribute_Group,Product_Attribute
 from shopcart.forms import product_add_form,product_basic_info_form,product_detail_info_form
 from shopcart.utils import System_Para,handle_uploaded_file,my_pagination
 from django.http import Http404,HttpResponse,JsonResponse
@@ -70,6 +70,7 @@ def product_basic_edit(request):
 		if id != '':
 			try:
 				product = Product.objects.get(id=id)
+				#product.attribute.all().order_by('id')
 				ctx['product'] = product
 				
 				pcl=[]
@@ -77,6 +78,9 @@ def product_basic_edit(request):
 					pcl.append(cat.id)
 				
 				ctx['product_category_id_list'] = pcl
+				
+				if product.attributes:
+					ctx['attribute_group_belong'] = product.attributes.all()[0].get_attribute_groups()
 				
 			except Exception as err:
 				logger.error('Can not find product which id is %s. The error message is %s' % (id,err))
@@ -143,9 +147,119 @@ def product_detail_info_manage(request):
 		raise Http404
 	else:
 		raise Http404		
+
+@staff_member_required
+@transaction.atomic()	
+def product_sku_manage(request,id=None):
+	result = {}
+	result['success'] = False
+	result['message'] = ''
+	
+	#先找出商品
+	try:
+		product = Product.objects.get(id=id)
+	except Exception as err:
+		logger.error('Can not find product which id is %s.' % id)
+		result['message'] = _('商品找不到，可能商品已经被删除了，请重试。')
+		return JsonResponse(result)
+	
+	if request.method == 'POST':
+		attribute_id_list = request.POST.getlist("attribute-id")
+		logger.debug("attribute_id_list:%s"  % attribute_id_list)
+		#获取分组情况
+		group_id_list = Attribute.objects.filter(id__in=attribute_id_list).values("group").distinct()
+		
+		logger.debug("group_id_list:%s" % group_id_list)
+		#group_id_list = list(set(group_id_list))
+		#按照分组，将属性分组形成多个list
+		group = []
+		for group_id in group_id_list:
+			group.append(Attribute.objects.filter(id__in=attribute_id_list).filter(group__id=group_id['group'])) 
+		
+		#生成全量的sku
+		sku = []
+		list_before = []
+		deal_attribute(list_before,group,0,len(group_id_list),sku)
+		logger.debug("sku%s"%sku)
+		#生成product_attribute
+		
+		#先取得已经有的product_attribute
+		try:
+			pa_list = Product_Attribute.objects.filter(product=product)
+		except Exception as err:
+			logger.error("error:%s" % err)
+			pa_list = []
+		
+		logger.debug("pa_list:" + str(pa_list))
+		
+		sub_item_number = 0
+		for sku_item in sku:
+			sub_item_number += 1
+			
+			is_exist = False
+			for pa in pa_list:
+				#logger.debug("1:" + str(set(pa.attribute.all())))
+				#logger.debug("2:" + str(set(sku_item)))
+			
+				delta = set(pa.attribute.all()) - set(sku_item)
+				if len(delta)==0:
+					is_exist = True
+					break;
+			
+			if not is_exist:
+				pa = Product_Attribute.objects.create(product=product,sub_item_number=str(sub_item_number),quantity=0,price_adjusment=0.0,image=None,min_order_quantity=1)
+				pa.attribute = sku_item
+				pa.save()
+		
+		result['success'] = True
+		result['message'] = '成功'
+		
+		return JsonResponse(result)
+		
+@staff_member_required
+@transaction.atomic()	
+def product_sku_attribute_manage(request):		
+	result_dict = {}
+	result_dict['success'] = False
+	result_dict['message'] = ''
+	
+	if request.method == 'POST':
+		pa_id_list = request.POST.getlist("pa_id")
+		logger.debug("ids:%s" % pa_id_list)
+		
+		for pa_id in pa_id_list:
+			pa = Product_Attribute.objects.get(id=pa_id)
+			pa.sub_item_number = request.POST.get('pa-sub_item_number-%s' % pa_id)
+			pa.quantity = request.POST.get('pa-quantity-%s' % pa_id)
+			pa.price_adjusment = request.POST.get('pa-price_adjusment-%s' % pa_id)
+			pa.min_order_quantity = request.POST.get('pa-min_order_quantity-%s' % pa_id)
+			pa.save()
+			logger.debug("pa.quantity:%s" % pa.quantity)
+	
+	result_dict['success'] = True
+	result_dict['message'] = '成功'
+	return JsonResponse(result_dict)
 		
 		
 
+#递归进行sku的计算		
+def deal_attribute(list_before,group,level,all_level,sku):
+	#logger.debug("进入函数，现在的情况，level：%s,\n sku:%s" % (level,sku))
+	for item in group[level]:
+		logger.debug("level:%s  item:%s  all_level:%s" % (level,item,all_level))
+		tmp_list = [item]
+		tmp_list += list_before
+
+		if level < all_level - 1:
+			#list_before.append(item)
+			level_t = level + 1
+			logger.debug("level:%s" % level_t)
+			deal_attribute(tmp_list,group,level_t,all_level,sku)
+		else:
+			logger.debug("tmp_list%s"%tmp_list)
+			sku.append(tmp_list)
+		#logger.debug("sku%s"%sku)
+		
 @staff_member_required
 def oper(request):	
 	if request.method == 'POST':

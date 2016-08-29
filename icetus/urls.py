@@ -43,6 +43,7 @@ urlpatterns = patterns("",
 	url(r'^order/show/(\d+)/$', 'shopcart.order.order_detail',name='order_order_detail'),
 	url(r'^order/cancel$', 'shopcart.order.ajax_cancel_order',name='order_ajax_cancel_order'),
 	url(r'^order-remark/list/(\d+)/$', 'shopcart.order.list_order_remark',name='order_list_order_remark'),
+	url(r'^attribute/group/info/(\d+)/$', 'shopcart.attribute.get_group_info',name='attribute_get_group_info'),
 	
 	url(r'^wishlist/$', 'shopcart.wishlist.view_wishlist',name='wishlist_view_wishlist'),
 	url(r'^wishlist/add$', 'shopcart.wishlist.add_to_wishlist',name='wishlist_add_to_wishlist'),
@@ -85,6 +86,8 @@ urlpatterns = patterns("",
 	url('^admin/product/$', 'shopcart.myadmin.product.product_list',name='admin_product_list'),
 	url('^admin/product-edit/$', 'shopcart.myadmin.product.product_basic_edit',name='admin_product_basic_edit'),
 	url('^admin/product-detail-manage/$', 'shopcart.myadmin.product.product_detail_info_manage',name='admin_product_detail_info_manage'),
+	url('^admin/product-sku-manage/(\d+)/$', 'shopcart.myadmin.product.product_sku_manage',name='admin_product_sku_manage'),
+	url('^admin/product-sku-attribute-manage/$', 'shopcart.myadmin.product.product_sku_attribute_manage',name='admin_product_sku_attribute_manage'),
 	
 	
 	#下面是初始化方法

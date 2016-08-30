@@ -99,12 +99,23 @@ function imycartAjaxCallWithCallback(url,object,callback,triggerControl,extraInf
 
 //下拉菜单选项切换
 jQuery(".dropdown-item").click(function(){
-	text = $(this).text();
-	value = $(this).data("value");
-	$(this).parent().parent().find(".inputBtn").find(".selected-text").text(text);
+	var select_text = $(this).text();	
+	var value = $(this).data("value");
+	$(this).parent().parent().find(".inputBtn").find(".selected-text").text(select_text);
 	$(this).parent().parent().find(".dropdown-item-input").val(value); // 将选中的值放入隐藏的input
 });
 
+
+jQuery(".dropdown-item-sku-img").click(function(){
+	var value = $(this).data("value");
+	var select_text = $(this).data("select-text");
+	$(this).parent().parent().find(".inputBtn").find(".selected-text").text(select_text);
+	$(this).parent().parent().find(".dropdown-item-input").val(value); // 将选中的值放入隐藏的input	
+	
+	var sku_id = $(this).data("sku-id");
+	var thumb = $(this).find(".sku-thumb").attr("src");
+	$("#sku_img_" + sku_id).attr("src",thumb);
+});
 
 //全选复选框选择
 jQuery("#main-content-checkbox-all").change(function(){
@@ -322,12 +333,41 @@ jQuery("#product-attribute-submit-btn").click(function(){
 });
 
 //商品图片管理
+
+//设为主图
 jQuery(".set-to-main-picture-link").click(function(){
 	event.preventDefault();
 	var img_url = $(this).data("image-url");
 	$("input[name=product_image]").val(img_url);
 	$("#product_main_image").attr("src",img_url);
 });
+
+//保存主图设置和SKU图设置
+jQuery("#product-picture-manage-submit-btn").click(function(){
+	var url = "/admin/product-picture-manage/";
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#product_picture_manage_form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			if(data.success==true){
+				//$('#myModal').on('hidden.bs.modal', function (e) {
+				//	location.href = url + "?id=" + data.data.product_id;
+				//})
+			}
+			$("#myModal").modal('toggle');
+		}
+	});
+	
+});
+
 
 
 jQuery("#product-batch-delete").click(function(e){

@@ -86,6 +86,7 @@ urlpatterns = patterns("",
 	url('^admin/product/$', 'shopcart.myadmin.product.product_list',name='admin_product_list'),
 	url('^admin/product-edit/$', 'shopcart.myadmin.product.product_basic_edit',name='admin_product_basic_edit'),
 	url('^admin/product-detail-manage/$', 'shopcart.myadmin.product.product_detail_info_manage',name='admin_product_detail_info_manage'),
+	url('^admin/product-picture-manage/$', 'shopcart.myadmin.product.product_picture_manage',name='admin_product_picture_manage'),
 	url('^admin/product-sku-manage/(\d+)/$', 'shopcart.myadmin.product.product_sku_manage',name='admin_product_sku_manage'),
 	url('^admin/product-sku-attribute-manage/$', 'shopcart.myadmin.product.product_sku_attribute_manage',name='admin_product_sku_attribute_manage'),
 	

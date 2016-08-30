@@ -273,6 +273,19 @@ def deal_attribute(list_before,group,level,all_level,sku):
 			logger.debug("tmp_list%s"%tmp_list)
 			sku.append(tmp_list)
 		#logger.debug("sku%s"%sku)
+
+def product_picture_manage(request):
+	result_dict = {}
+	result_dict['success'] = False
+	result_dict['message'] = ''
+	
+	if request.method == 'POST':
+		logger.debug("request:%s" %request.POST)
+		result_dict['success'] = True
+		result_dict['message'] = '成功'
+	
+	return JsonResponse(result_dict)
+		
 		
 @staff_member_required
 def oper(request):	

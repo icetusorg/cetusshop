@@ -241,92 +241,76 @@
 				</div>
 			</form>
 		   
-			<div class="item product-images">
-				{% for image in image_list %}
-					<div class="images">
-						<a href='{{image.image}}' target="_blank"><img src='{{image.thumb}}' alt='{{item.name}}'></a> 
-						<div class="image-operaion">
-							<a href='{{image.image}}' target="_blank">预览</a> | 
-							<a href='{{file_delete_url}}/{{image.id}}/{{product.id}}/?return_url=/admin/product-edit/%3fid={{product.id}}%26tab_name=tag_picture'> 删除 </a> | 
-							<a href="#" class="set-to-main-picture-link" data-image-url="{{image.image}}" >主图 </a>
+		   <form id="product_picture_manage_form">
+				{% csrf_token %}
+				<div class="item product-images">
+					{% for image in image_list %}
+						<div class="images">
+							<a href='{{image.image}}' target="_blank"><img src='{{image.thumb}}' alt='{{product.name}}'></a> 
+							<div class="image-operaion">
+								<a href='{{image.image}}' target="_blank">预览</a> | 
+								<a href='{{file_delete_url}}/{{image.id}}/{{product.id}}/?return_url=/admin/product-edit/%3fid={{product.id}}%26tab_name=tag_picture'> 删除 </a> | 
+								<a href="#" class="set-to-main-picture-link" data-image-url="{{image.image}}" >主图 </a>
+							</div>
 						</div>
-					</div>
-				{% empty %}
-					<li>There is no image at all.
-				{% endfor %}
-			</div>    
-			<div class="item thumb">
-				<label>主图：</label>
-				<input type="text" class="form-control" name="product_image" value="{{product.image}}">
-				<input type="hidden" class="form-control" name="product_thumb" value="{{product.thumb}}">
-				<div class="image"><img id="product_main_image" src="{{product.image|default:"images/product.jpg"}}"></div>
-			</div>
-			<div class="item-list attr-array">
-						<p class="title">SKU图：</p>
-
-						<div class="item-list-dl">
-							<dl>
-								<dt>SKU编码</dt>
-								<dt>属性组合</dt>
-									 <dt class="select">选择图片</dt>
-								<dt>图片</dt>
-							</dl>
-							<dl>
-								<dd>0001</dd>
-								<dd>[ Color: Red ] [ Mtria: Metal ]</dd>
-								<dd class="select">
-									<div class="btn-group normal">
-										<button type="button" class="btn btn-default inputBtn">Action</button>
-										<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
-											<span class="caret"></span>
-											<span class="sr-only">Toggle Dropdown</span>
-										</button>
-										<ul class="dropdown-menu" role="menu" id="selectOption">
-										  <li>Action</li>
-										  <li>Another action</li>
-										  <li>Something</li>
-										  <li>Separated link</li>
-										</ul>
-									</div>
-									
-								</dd>
-								<dd>
-									<div class="images">
-										<a href="admin/default/images/products-example.jpg" target="new"><img src="{% static 'admin/default/images/products-example.jpg' %}"></a>           
-									</div>
-								</dd>
-							</dl>
-							
-							<dl>
-								<dd>0002</dd>
-								<dd>[ Color: Red ] [ Mtria: Metal ]</dd>
-								<dd class="select">
-									<div class="btn-group normal">
-										<button type="button" class="btn btn-default inputBtn">Action</button>
-										<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
-											<span class="caret"></span>
-											<span class="sr-only">Toggle Dropdown</span>
-										</button>
-										<ul class="dropdown-menu" role="menu" id="selectOption">
-										<li>Action</li>
-										<li>Another action</li>
-										<li>Something</li>
-										<li>Separated link</li>
-										</ul>
-									</div>
-								</dd>
-								<dd>
-									<div class="images">
-										<a href="admin/default/images/products-example.jpg" target="new"><img src="{% static 'admin/default/images/products-example.jpg' %}"></a>           
-									</div>
-								</dd>
-							</dl>
+					{% empty %}
+						There is no image at all.
+					{% endfor %}
+				</div>    
+				<div class="item thumb">
+					<label>主图：</label>
+					<input type="text" class="form-control" name="product_image" value="{{product.image}}">
+					<input type="hidden" class="form-control" name="product_thumb" value="{{product.thumb}}">
+					<div class="image"><img id="product_main_image" src="{{product.image|default:"images/product.jpg"}}"></div>
+				</div>
+				<div class="item-list attr-array">
+							<p class="title">SKU图：</p>
+	
+							<div class="item-list-dl">
+								<dl>
+									<dt>SKU编码</dt>
+									<dt>属性组合</dt>
+										<dt class="select">选择图片</dt>
+									<dt>图片</dt>
+								</dl>
+								{% for pa in product.attributes.all %}
+									<dl>
+										<dd>{{pa.sub_item_number}}</dd>
+										<dd>{{pa.get_grouped_attribute_desc}}</dd>
+										<dd class="select">
+											<div class="btn-group normal">
+												<button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{pa.image.image}}</span></button>
+												<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
+													<span class="caret"></span>
+													<span class="sr-only">Toggle Dropdown</span>
+												</button>
+												<ul class="dropdown-menu" role="menu" id="selectOption">
+													{% for image in image_list %}
+														<li class="dropdown-item-sku-img" data-sku-id="{{pa.id}}" data-select-text="{{image.image}}" data-value="{{image.id}}"><img class="sku-thumb" src="{{image.thumb}}" alt='{{product.name}}'></li>													
+													{% empty %}
+														<li>There is no image at all.</li>
+													{% endfor %}
+												</ul>
+												<input class="dropdown-item-input" type="hidden" name="sku_image_{{pa.id}}" value="{{pa.image.id}}"/>
+											</div>
+											
+										</dd>
+										<dd>
+											<div class="images">
+												<img id="sku_img_{{pa.id}}" src="{{pa.image.thumb}}">       
+											</div>
+										</dd>
+									</dl>
+								{% endfor %}
+							</div>
 						</div>
-					  </div>
-					  <div class="submit-item">
-						<button type="button" class="btn btn-primary addPSubmit">提交</button>
-					  </div>              
-				 </div> 
+						<div class="submit-item">
+							<input type="hidden" name="id" value="{{product.id}}">
+							<button type="button" id="product-picture-manage-submit-btn" class="btn btn-primary addPSubmit">提交</button>
+						</div>              
+				</div> 
+		   
+		   </form>
     </div>
 </section>
 {% endblock %}

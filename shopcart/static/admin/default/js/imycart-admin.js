@@ -321,6 +321,14 @@ jQuery("#product-attribute-submit-btn").click(function(){
 	
 });
 
+//商品图片管理
+jQuery(".set-to-main-picture-link").click(function(){
+	event.preventDefault();
+	var img_url = $(this).data("image-url");
+	$("input[name=product_image]").val(img_url);
+	$("#product_main_image").attr("src",img_url);
+});
+
 
 jQuery("#product-batch-delete").click(function(e){
 	var id_list = [];

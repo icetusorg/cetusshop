@@ -55,7 +55,9 @@ def file_upload(request,item_type,item_id):
 				item = Product.objects.get(id=item_id)
 			except:
 				raise Http404
-						
+			
+
+			logger.debug("filename_type:%s" % request.POST['filename_type'])
 			filenames = handle_uploaded_file(request.FILES['upload'],item_type,item_id,request.POST['filename_type'],manual_name,same_name_handle)
 			if filenames['upload_result'] == False:
 				return HttpResponse(filenames['upload_error_msg'])
@@ -86,7 +88,11 @@ def file_upload(request,item_type,item_id):
 			script = '<script type=\"text/javascript\">window.parent.CKEDITOR.tools.callFunction("' + request.GET['CKEditorFuncNum'] + '","' + filenames['image_url'] + '");</script>';
 			logger.debug('返回的script： %s' % [script])
 			return HttpResponse(script,content_type='text/html;charset=UTF-8')
-		return redirect('/admin/file-upload/' + item_type + '/' + item_id + "/")
+			
+		return_url = '/admin/file-upload/' + item_type + '/' + item_id + "/"
+		if 'return_url' in request.POST:
+			return_url = request.POST.get('return_url')
+		return redirect(return_url)
 		
 @staff_member_required
 def file_delete(request,item_type,item_id,host_item_id):
@@ -108,7 +114,12 @@ def file_delete(request,item_type,item_id,host_item_id):
 				raise Http404
 		except:
 			raise Http404
-		return redirect('/admin/file-upload/' + item_type + '/' + host_item_id + "/")
+		
+		redirect_url = '/admin/file-upload/' + item_type + '/' + host_item_id + "/"
+		if 'return_url' in request.GET:
+			redirect_url = request.GET.get('return_url')
+		
+		return redirect(redirect_url)
 		
 
 def file_list(path,filetype):

@@ -12,7 +12,7 @@
 {% block main %}
 {% load i18n %}
 
-
+{% load staticfiles %}
 {% load shopcart_extras %}
 <section class="content">
     <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
@@ -56,17 +56,17 @@
 								</li>
 								{% for cat2 in cat.childrens.all%}
 									<li class="tree2">
-										<input name="category_check" data-cat-id="{{cat2.id}}" type="checkbox" class="three-check category-selection-checkbox" {{product_category_id_list|check_if_in_categorys:cat2.id}}>
+										<input name="category_check" data-cat-id="{{cat2.id}}" type="checkbox" class="three-check category-selection-checkbox" {{product_category_id_list|check_if_in_categorys:cat2}}>
 										<p>{{cat2.name}}</p>
 									</li>
 									{% for cat3 in cat2.childrens.all%}
 										<li class="tree3">
-											<input name="category_check" data-cat-id="{{cat3.id}}" type="checkbox" class="three-check category-selection-checkbox" {{product_category_id_list|check_if_in_categorys:cat3.id}}>
+											<input name="category_check" data-cat-id="{{cat3.id}}" type="checkbox" class="three-check category-selection-checkbox" {{product_category_id_list|check_if_in_categorys:cat3}}>
 											<p>{{cat3.name}}</p>
 										</li>
 										{% for cat4 in cat3.childrens.all%}
 											<li class="tree4">
-												<input name="category_check" data-cat-id="{{cat4.id}}" type="checkbox" class="three-check category-selection-checkbox" {{product_category_id_list|check_if_in_categorys:cat4.id}}>
+												<input name="category_check" data-cat-id="{{cat4.id}}" type="checkbox" class="three-check category-selection-checkbox" {{product_category_id_list|check_if_in_categorys:cat4}}>
 												<p>{{cat4.name}}</p>
 											</li>
 										{% endfor %}
@@ -195,166 +195,138 @@
             </div>
         </div>
         <div class="add-content photo" id="tag_picture">
-            <div class="item inputAndBtn btn-item">
-                <label>选择文件：</label>
-                <input type="file" class="form-control file">                
-            </div>
-            <div class="item">
-                <label>文件名生成方式：</label>
-                <div class="btn-group normal">
-                    <button type="button" class="btn btn-default inputBtn"><span class="selected-text">Action</span></button>
-                    <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
-                        <span class="caret"></span>
-                        <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu" id="selectOption">
-                        <li>Action</li>
-                        <li>Another action</li>
-                        <li>Something</li>
-                        <li>Separated link</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="item"><label>自定义文件名：</label><input type="text" class="form-control"></div>
-            <div class="item">
-                <label>重名文件处理：</label>
-                <div class="btn-group normal">
-                    <button type="button" class="btn btn-default inputBtn">Action</button>
-                    <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
-                        <span class="caret"></span>
-                        <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu" id="selectOption">
-                        <li>Action</li>
-                        <li>Another action</li>
-                        <li>Something</li>
-                        <li>Separated link</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="item"><label>排序号：</label><input type="text" class="form-control"></div>
-            <div class="item"><label>是否显示在详情中：</label><input class="normal-check" type="checkbox"></div>
-            <div class="submit-item">
-               	<button type="button" class="btn btn-primary">上传</button>
-            </div>
-           
-    <div class="item product-images">
-    	<div class="images">
-           <a href="images/product.jpg" target="new"><img src="images/product.jpg"></a>           
-        </div>
-        <div class="images">
-           <a href="images/product.jpg" target="new"><img src="images/product.jpg"></a>           
-        </div>
-        <div class="images">
-           <a href="images/product.jpg" target="new"><img src="images/product.jpg"></a>           
-        </div>
-        <div class="images">
-           <a href="images/product.jpg" target="new"><img src="images/product.jpg"></a>           
-        </div>
-        <div class="images">
-           <a href="images/product.jpg" target="new"><img src="images/product.jpg"></a>           
-        </div>
-        <div class="images">
-           <a href="images/product.jpg" target="new"><img src="images/product.jpg"></a>           
-        </div>
-        <div class="images">
-           <a href="images/product.jpg" target="new"><img src="images/product.jpg"></a>           
-        </div>
-        <div class="images">
-           <a href="images/product.jpg" target="new"><img src="images/product.jpg"></a>           
-        </div>
-    </div>    
-    <div class="item thumb"><label>主图：</label><input type="text" class="form-control"><div class="image"><img src="images/product.jpg"></div></div>
-    <div class="item thumb margin"><label>缩略图：</label><input type="text" class="form-control"><div class="image"><img src="images/product.jpg"></div></div>
-    <div class="item-list attr-array">
-                <p class="title">SKU图：</p>
+			<form enctype="multipart/form-data" method="POST" action="{{action_url}}"> 
+				{% csrf_token %}
+				<div class="item inputAndBtn btn-item">
+					<label>选择文件：</label>
+					<input type="file" name="upload" class="form-control file">                
+				</div>
+				<div class="item">
+					<label>文件名生成方式：</label>
+					<div class="btn-group normal">
+						<button type="button" class="btn btn-default inputBtn"><span class="selected-text">原文件名</span></button>
+						<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
+							<span class="caret"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+						</button>
+						<ul class="dropdown-menu" role="menu" id="selectOption">
+							<li class="dropdown-item" data-value="origin">原文件名</li>
+							<li class="dropdown-item" data-value="random">随机生成</li>
+							<li class="dropdown-item" data-value="manual">自由输入</li>
+						</ul>
+						<input class="dropdown-item-input" type="hidden" name="filename_type" value="origin"/>
+					</div>
+				</div>
+				<div class="item"><label>自定义文件名（不要后缀）：</label><input type="text" name="manual_name" class="form-control"></div>
+				<div class="item">
+					<label>重名文件处理：</label>
+					<div class="btn-group normal">
+						<button type="button" class="btn btn-default inputBtn"><span class="selected-text">拒绝</span></button>
+						<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
+							<span class="caret"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+						</button>
+						<ul class="dropdown-menu" role="menu" id="selectOption">
+							<li class="dropdown-item" data-value="reject">拒绝</li>
+							<li class="dropdown-item" data-value="rewrite">覆盖</li>
+						</ul>
+						<input class="dropdown-item-input" type="hidden" name="same_name_handle" value="reject"/>
+					</div>
+				</div>
+				<div class="item"><label>排序序号（越大越靠前）：</label><input type="text" class="form-control" name="sort" value="0"></div>
+				<div class="item"><label>是否显示在详情中：</label><input name="is_show_in_product_detail" class="normal-check" type="checkbox" checked></div>
+				<div class="submit-item">
+					<input type="hidden" name="return_url" value="/admin/product-edit/?id={{product.id}}&tab_name=tag_picture" />
+					<button type="submit" class="btn btn-primary">上传</button>
+				</div>
+			</form>
+		   
+			<div class="item product-images">
+				{% for image in image_list %}
+					<div class="images">
+						<a href='{{image.image}}' target="_blank"><img src='{{image.thumb}}' alt='{{item.name}}'></a> 
+						<div class="image-operaion">
+							<a href='{{image.image}}' target="_blank">预览</a> | 
+							<a href='{{file_delete_url}}/{{image.id}}/{{product.id}}/?return_url=/admin/product-edit/%3fid={{product.id}}%26tab_name=tag_picture'> 删除 </a> | 
+							<a href="#" class="set-to-main-picture-link" data-image-url="{{image.image}}" >主图 </a>
+						</div>
+					</div>
+				{% empty %}
+					<li>There is no image at all.
+				{% endfor %}
+			</div>    
+			<div class="item thumb">
+				<label>主图：</label>
+				<input type="text" class="form-control" name="product_image" value="{{product.image}}">
+				<input type="hidden" class="form-control" name="product_thumb" value="{{product.thumb}}">
+				<div class="image"><img id="product_main_image" src="{{product.image|default:"images/product.jpg"}}"></div>
+			</div>
+			<div class="item-list attr-array">
+						<p class="title">SKU图：</p>
 
-                <div class="item-list-dl">
-                    <dl>
-                        <dt>SKU编码</dt>
-                        <dt>属性组合</dt>
-                             <dt class="select">选择图片</dt>
-                        <dt>图片</dt>
-                    </dl>
-                    <dl>
-                        <dd>0001</dd>
-                        <dd>[ Color: Red ] [ Mtria: Metal ]</dd>
-                        <dd class="select">
-                        	<div class="btn-group normal">
-                    			<button type="button" class="btn btn-default inputBtn">Action</button>
-                    			<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
-                        			<span class="caret"></span>
-                        			<span class="sr-only">Toggle Dropdown</span>
-                    			</button>
-                   				<ul class="dropdown-menu" role="menu" id="selectOption">
-                       			  <li>Action</li>
-                        		  <li>Another action</li>
-                        		  <li>Something</li>
-                        		  <li>Separated link</li>
-                   				</ul>
-                			</div>
-                            
-                        </dd>
-                        <dd>
-                        	<div class="images">
-           						<a href="images/product.jpg" target="new"><img src="images/product.jpg"></a>           
-        					</div>
-                        </dd>
-                    </dl>
-                    <dl>
-                        <dd>0002</dd>
-                        <dd>[ Color: Red ] [ Mtria: Metal ]</dd>
-                        <dd class="select">
-                        	<div class="btn-group normal">
-                    			<button type="button" class="btn btn-default inputBtn">Action</button>
-                    			<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
-                        			<span class="caret"></span>
-                        			<span class="sr-only">Toggle Dropdown</span>
-                    			</button>
-                   				<ul class="dropdown-menu" role="menu" id="selectOption">
-                       			  <li>Action</li>
-                        		  <li>Another action</li>
-                        		  <li>Something</li>
-                        		  <li>Separated link</li>
-                   				</ul>
-                			</div>
-                        </dd>
-                        <dd>
-                        	<div class="images">
-           						<a href="images/product.jpg" target="new"><img src="images/product.jpg"></a>           
-        					</div>
-                        </dd>
-                    </dl>
-                    <dl>
-                        <dd>0003</dd>
-                        <dd>[ Color: Red ] [ Mtria: Metal ]</dd>
-                        <dd class="select">
-                        	<div class="btn-group normal">
-                    			<button type="button" class="btn btn-default inputBtn">Action</button>
-                    			<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
-                        			<span class="caret"></span>
-                        			<span class="sr-only">Toggle Dropdown</span>
-                    			</button>
-                   				<ul class="dropdown-menu" role="menu" id="selectOption">
-                       			  <li>Action</li>
-                        		  <li>Another action</li>
-                        		  <li>Something</li>
-                        		  <li>Separated link</li>
-                   				</ul>
-                			</div>
-                        </dd>
-                        <dd>
-                        	<div class="images">
-           						<a href="images/product.jpg" target="new"><img src="images/product.jpg"></a>           
-        					</div>
-                        </dd>
-                    </dl>
-                </div>
-              </div>
-              <div class="submit-item">
-                <button type="button" class="btn btn-primary addPSubmit">提交</button>
-              </div>              
-   		 </div> 
+						<div class="item-list-dl">
+							<dl>
+								<dt>SKU编码</dt>
+								<dt>属性组合</dt>
+									 <dt class="select">选择图片</dt>
+								<dt>图片</dt>
+							</dl>
+							<dl>
+								<dd>0001</dd>
+								<dd>[ Color: Red ] [ Mtria: Metal ]</dd>
+								<dd class="select">
+									<div class="btn-group normal">
+										<button type="button" class="btn btn-default inputBtn">Action</button>
+										<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
+											<span class="caret"></span>
+											<span class="sr-only">Toggle Dropdown</span>
+										</button>
+										<ul class="dropdown-menu" role="menu" id="selectOption">
+										  <li>Action</li>
+										  <li>Another action</li>
+										  <li>Something</li>
+										  <li>Separated link</li>
+										</ul>
+									</div>
+									
+								</dd>
+								<dd>
+									<div class="images">
+										<a href="admin/default/images/products-example.jpg" target="new"><img src="{% static 'admin/default/images/products-example.jpg' %}"></a>           
+									</div>
+								</dd>
+							</dl>
+							
+							<dl>
+								<dd>0002</dd>
+								<dd>[ Color: Red ] [ Mtria: Metal ]</dd>
+								<dd class="select">
+									<div class="btn-group normal">
+										<button type="button" class="btn btn-default inputBtn">Action</button>
+										<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
+											<span class="caret"></span>
+											<span class="sr-only">Toggle Dropdown</span>
+										</button>
+										<ul class="dropdown-menu" role="menu" id="selectOption">
+										<li>Action</li>
+										<li>Another action</li>
+										<li>Something</li>
+										<li>Separated link</li>
+										</ul>
+									</div>
+								</dd>
+								<dd>
+									<div class="images">
+										<a href="admin/default/images/products-example.jpg" target="new"><img src="{% static 'admin/default/images/products-example.jpg' %}"></a>           
+									</div>
+								</dd>
+							</dl>
+						</div>
+					  </div>
+					  <div class="submit-item">
+						<button type="button" class="btn btn-primary addPSubmit">提交</button>
+					  </div>              
+				 </div> 
     </div>
 </section>
 {% endblock %}

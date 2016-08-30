@@ -181,23 +181,25 @@ def handle_uploaded_file(f,type='other',product_sn='-1',file_name_type='random',
 		ext = f.name.split('.')[-1]
 		logger.debug('filename origin:' + str(f.name))
 		logger.debug(str(ext))
-		
+		logger.debug("11111" + str(file_name_type))
 		#允许上传的类型
 		file_allow = ['JPG','JPEG','PNG','GIF']
 		if ext.upper() not in file_allow:
 			raise Exception('%s File type is not allowed to upload.' % [ext])
-		
+		logger.debug("22222")
 		#20160616,koala加入对文件名生成的生成规则
 		if file_name_type == 'random':
 			random_name = str(uuid.uuid1())
 			file_name = path + random_name + '.' + ext
 			file_thumb_name = path + random_name + '-thumb' + '.' + ext
 		elif file_name_type == 'origin':
+			logger.debug("33333")
 			file_name = path + f.name
 			name_list_tmp = f.name.split('.')
 			length = len(name_list_tmp)
 			name_list_tmp[length-2] = name_list_tmp[length-2] + '-thumb'
 			file_thumb_name = path + '.'.join(name_list_tmp)
+			logger.debug("44444")
 		elif file_name_type == 'manual':
 			file_name = path + manual_name + '.' + ext
 			file_thumb_name = path + manual_name + '-thumb' + '.' + ext

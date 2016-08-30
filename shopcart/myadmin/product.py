@@ -1,6 +1,6 @@
 #coding=utf-8
 from django.shortcuts import render,redirect
-from shopcart.models import Product,System_Config,Category,Attribute,Attribute_Group,Product_Attribute
+from shopcart.models import Product,System_Config,Category,Attribute,Attribute_Group,Product_Attribute,Product_Images
 from shopcart.forms import product_add_form,product_basic_info_form,product_detail_info_form
 from shopcart.utils import System_Para,handle_uploaded_file,my_pagination
 from django.http import Http404,HttpResponse,JsonResponse
@@ -68,6 +68,7 @@ def product_basic_edit(request):
 		id = request.GET.get('id','')
 		
 		if id != '':
+	
 			try:
 				product = Product.objects.get(id=id)
 				#product.attribute.all().order_by('id')
@@ -81,6 +82,19 @@ def product_basic_edit(request):
 				
 				if product.attributes:
 					ctx['attribute_group_belong'] = product.attributes.all()[0].get_attribute_groups()
+					
+					
+				#图片处理URL
+				ctx['action_url'] = '/admin/file-upload/product/%s/' % id 
+				ctx['file_delete_url'] = '/file-delete/product'
+					
+				
+				try:
+					ctx['image_list'] = Product_Images.objects.filter(product=product).order_by('create_time').reverse()
+					logger.debug("ctx['image_list']:%s" % ctx['image_list'])
+				except Exception as err:
+					logger.error("Error:%s" % err)
+					ctx['image_list'] = []
 				
 			except Exception as err:
 				logger.error('Can not find product which id is %s. The error message is %s' % (id,err))

@@ -175,7 +175,7 @@
 							{% for pa in product.attributes.all %}
 								<dl class="sku_show_list_content">
 									<dd class="text-left">
-										<a href="#">删除</a> 
+										<a href="#" class="sku_delete_link" data-sku-id="{{pa.id}}">删除</a> 
 										<input type="text" name="pa-sub_item_number-{{pa.id}}" value="{{pa.sub_item_number}}">
 										<input type="hidden" name="pa_id" value="{{pa.id}}" />
 									</dd>
@@ -260,7 +260,6 @@
 				<div class="item thumb">
 					<label>主图：</label>
 					<input type="text" class="form-control" name="product_image" value="{{product.image}}">
-					<input type="hidden" class="form-control" name="product_thumb" value="{{product.thumb}}">
 					<div class="image"><img id="product_main_image" src="{{product.image|default:"images/product.jpg"}}"></div>
 				</div>
 				<div class="item-list attr-array">
@@ -293,7 +292,6 @@
 												</ul>
 												<input class="dropdown-item-input" type="hidden" name="sku_image_{{pa.id}}" value="{{pa.image.id}}"/>
 											</div>
-											
 										</dd>
 										<dd>
 											<div class="images">

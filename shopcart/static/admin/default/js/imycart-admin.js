@@ -332,6 +332,36 @@ jQuery("#product-attribute-submit-btn").click(function(){
 	
 });
 
+//删除SKU
+jQuery(".sku_delete_link").click(function(){
+	event.preventDefault();//阻止A标签跳转
+	
+	var url = "/admin/product-sku-delete/" + $(this).data("sku-id") + "/";
+
+	$.ajax({
+		cache: false,
+		type: "GET",
+		url:url,
+		data:null,
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			$('#myModal').on('hidden.bs.modal', function (e) {
+				var url = location.href;
+				var newurl = changeURLArg(url,"tab_name","tag_attribute");
+				location.href = newurl;//跳转到对应的页面
+			});
+			
+			$("#myModal").modal('toggle');
+			
+		}
+	});
+});
+
+
 //商品图片管理
 
 //设为主图

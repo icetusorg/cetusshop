@@ -230,6 +230,28 @@ def product_sku_manage(request,id=None):
 		
 		return JsonResponse(result)
 		
+		
+@staff_member_required
+@transaction.atomic()	
+def product_sku_delete(request,id=None):
+	result = {}
+	result['success'] = False
+	result['message'] = ''
+	
+	if request.method == 'GET':
+		try:
+			sku = Product_Attribute.objects.get(id=id)
+			sku.delete()
+			
+			result['success'] = True
+			result['message'] = 'SKU删除成功'
+			
+		except Exception as err:
+			logger.error("Delete sku failed. \n Error message:%s" % err)
+			result['message'] = 'SKU删除失败，请重试。'
+		
+		return JsonResponse(result)		
+		
 @staff_member_required
 @transaction.atomic()	
 def product_sku_attribute_manage(request):		
@@ -274,13 +296,46 @@ def deal_attribute(list_before,group,level,all_level,sku):
 			sku.append(tmp_list)
 		#logger.debug("sku%s"%sku)
 
+		
+@staff_member_required
+@transaction.atomic()		
 def product_picture_manage(request):
 	result_dict = {}
 	result_dict['success'] = False
 	result_dict['message'] = ''
 	
 	if request.method == 'POST':
-		logger.debug("request:%s" %request.POST)
+		#先找出商品
+		try:
+			product = Product.objects.get(id=request.POST.get('id'))
+		except Exception as err:
+			logger.error('Can not find product which id is %s.' % id)
+			result['message'] = _('商品找不到，可能商品已经被删除了，请重试。')
+			return JsonResponse(result)
+		
+		
+		#保存主图和缩略图
+		image_url = request.POST.get('product_image')
+		product.image = image_url
+		dot_index = image_url.rfind('.')
+		thumb_url = image_url[:dot_index] + "-thumb" + image_url[dot_index:]
+		logger.debug("thumb_url:%s" % thumb_url)
+		product.thumb = thumb_url
+		product.save()
+		
+		#保存sku图
+		#找出所有SKU
+		sku_list = product.attributes.all()
+		for sku in sku_list:
+			sku_image_id = request.POST.get('sku_image_%s' % sku.id,'')
+			if sku_image_id:
+				try:
+					image = Product_Images.objects.get(id=sku_image_id)
+					sku.image = image
+					sku.save()
+				except Exception as err:
+					logger.error('Can not find sku_image in product_images. \n Error message:%s'%err)
+		
 		result_dict['success'] = True
 		result_dict['message'] = '成功'
 	

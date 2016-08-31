@@ -652,13 +652,19 @@ jQuery("#addToCartBtn").click(
 			if (product_attribute_id){
 				imycartAddProductToCart(productId,product_attribute_id,$("#qty").val(),imycartAddProductToCartCallBack,this,null);
 			}else{
+				//有一种情况，客户也选了但是后台这种SKU没有（这种情况出现在比如2种颜色、2中材质组合，本来应该有4种组合，但是后台删除了一种）
+				var select_all_group = true;
 				$(".product-attribute-group-div").each(function(index,div){
 					if (!($(div).find(".product-attribute-group-selected").val())){
 						$("#infoMessage").html("Please select " + $(div).data("attribute-group-name") + ".");
+						select_all_group = false;
 						//break;
 						return false;
 					}		
 				});
+				if (select_all_group){
+					$("#infoMessage").html("This sku is nolonger on sale.");
+				}
 				$("#myModal").modal('toggle');
 			}
 		}else{

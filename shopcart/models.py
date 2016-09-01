@@ -458,6 +458,24 @@ class Order(models.Model):
 		verbose_name = '订单'
 		verbose_name_plural = '订单'
 
+		
+@python_2_unicode_compatible		
+class OrderShippment(models.Model):
+	order = models.ForeignKey(Order,null=True,related_name='shippments')
+	shipper_name = models.CharField(max_length=254,null=True,blank=True,verbose_name="快递公司")
+	ship_no = models.CharField(max_length=254,null=True,blank=True,verbose_name="快递单号")
+	shipping_cost = models.FloatField(default=0.00,verbose_name="快递成本")
+	shipping_time = models.DateTimeField(null=True,verbose_name="发货时间")
+	create_time = models.DateTimeField(auto_now_add = True)
+	update_time = models.DateTimeField(auto_now = True)
+	
+	def __str__(self):
+		return self.content
+	
+	class Meta:
+		verbose_name = '发货记录'
+		verbose_name_plural = '发货记录'	
+		
 @python_2_unicode_compatible		
 class OrderRemark(models.Model):
 	order = models.ForeignKey(Order,null=True,related_name='order_remarks')

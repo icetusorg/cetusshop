@@ -46,13 +46,14 @@ class product_basic_info_form(forms.ModelForm):
 		
 class product_detail_info_form(forms.ModelForm):
 	keywords = forms.CharField(required=False)
+	page_title = forms.CharField(required=False)
 	static_file_name = forms.CharField(required=False)
 	detail_template = forms.CharField(required=False)
 	short_desc = forms.CharField(required=False)
 	description = forms.CharField(required=False)
 	class Meta:
 		model = Product
-		fields = ('keywords','static_file_name','detail_template','short_desc','description')
+		fields = ('keywords','page_title','static_file_name','detail_template','short_desc','description')
 		
 
 		

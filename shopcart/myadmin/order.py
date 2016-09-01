@@ -26,6 +26,26 @@ def get_page_size():
 	return size
 
 @staff_member_required
+def detail(request,id=None):
+	ctx = {}
+	ctx['system_para'] = get_system_parameters()
+	ctx['page_name'] = 'Order Detail'
+	try:
+		order = Order.objects.get(id=id)
+	except Exception as err:
+		logger.error("Can not find order which id is %s" % id)
+		raise Http404
+	
+	#快递列表
+	express_list = Express.objects.all()
+	ctx['express_list'] = express_list
+	
+	ctx['order'] = order
+	return render(request,System_Config.get_template_name('admin') + '/order_detail.html',ctx)
+	
+	
+	
+@staff_member_required
 def view(request):
 	ctx = {}
 	ctx['system_para'] = get_system_parameters()

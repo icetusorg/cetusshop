@@ -18,3 +18,15 @@ def check_if_in_product_attribute(value,arg):
 			return 'checked'
 	else:
 		return ''
+
+@register.filter		
+def express_first_value(value,arg):
+	express_list = value
+	if express_list:
+		item = express_list[0]
+		if arg == 'name':
+			return item.name
+		if arg == 'id':
+			return item.id
+	
+	return ''

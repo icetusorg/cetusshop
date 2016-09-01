@@ -1,0 +1,231 @@
+{% extends "admin/default/content_base.html" %}
+{% block breadcrumbs %}
+<section class="content-header">
+    <h1>订单管理</h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+        <li class="active"><a href="order_list.html">订单管理</a></li>
+    </ol>
+</section>
+{% endblock %}
+
+{% block main %}
+{% load i18n %}
+
+{% load staticfiles %}
+{% load shopcart_extras %}
+<section class="content">
+    <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+    <div class="col-md-12 add-product order-detail">
+        <div class="order-header">
+            <ul class="order-num">
+                <li>订单信息</li>
+                <li>单号：{{order.order_number}}</li>
+                <li>状态：<span class="yellow">等待发货</span></li>
+            </ul>
+            <ul class="operating">
+                <li><span>操作：</span></li>
+                <li><a href="#">支付</a></li>
+                <li><a href="#">备货</a></li>
+                <li><a href="#">发货</a></li>
+                <li><a href="#">退款</a></li>
+                <li><a href="#">退货</a></li>
+                <li><a href="#">关闭</a></li>
+                <li><a href="#" class="disabled">完成</a></li>
+                <li><a href="#" class="disabled">编辑</a></li>
+            </ul>
+        </div>
+        <div class="order-base-info">
+            <div class="item-block">
+                <ul>
+                    <li>总价：<span>${{order.order_amount|floatformat:"2"}}</span></li>
+                    <li>运费：<span>${{order.shipping_fee|floatformat:"2"}}</span></li>
+                    <li class="strong">实付：<span>${{order.money_paid|floatformat:"2"}}</span></li>
+                </ul>
+            </div>
+            <div class="item-block">
+                <ul>
+                    <li>用户名：<span>{{order.user.email}}</span></li>
+                    <li>下单日期：<span>{{order.create_time|date:"M/d/Y"}}</span></li>
+                </ul>
+            </div>
+            <div class="item-block">
+                <ul>
+                    <li>收货人：<span>{{order.first_name}} {{order.last_name}}</span></li>
+                    <li>国家：<span>{{order.country}}</span></li>
+                    <li>省/州：<span>{{order.province}}</span></li>
+                    <li>城市：<span>{{order.city}}</span></li>
+                    <li>地址1：<span>{{order.address_line_1}}</span></li>
+                    <li>地址2：<span>{{order.address_line_2}}</span></li>
+                    <li>邮编：<span>{{order.zipcode}}</span></li>
+                    <li>电话：<span>{{order.tel}}</span></li>
+                </ul>				
+            </div>
+            <p class="message">留言：<span>暂不支持该功能</span></p>
+        </div>
+
+
+        <ul class="tag">
+            <li class="active" data="tag1">商品信息</li>
+            <li data="tag2">收发货</li>
+            <li data="tag3">优惠</li>
+            <li data="tag4">备注</li>
+        </ul>
+        <!--页签-->
+        <div class="add-content order-infos active" id="tag1">
+            <div class="item-list-dl">
+                <dl>
+                    <dt>商品图片</dt>
+                    <dt>商品名称</dt>
+                    <dt>属性</dt>
+                    <dt>货号</dt>
+                    <dt class="text-center">数量</dt>
+                </dl>
+				{% for op in order.order_products.all%}
+					<dl>
+						<dd>
+							<a href="/product/{{op.product_id}}/">
+							    {% if op.product_attribute %}
+									<img src="{{op.product_attribute.image.thumb}}" alt="{{op.name}}">
+								{% else %}
+									<img src="{{op.thumb}}" alt="{{op.name}}">
+								{% endif %}
+							</a>
+						</dd>
+						<dd><a href="/product/{{op.product_id}}/">{{op.name}}</a></dd>
+						<dd>{{op.get_short_product_attr}}</dd>
+						<dd>{{op.item_number}}</dd>
+						<dd class="text-center">{{op.quantity}}</dd>
+					</dl>
+				{% endfor %}
+            </div>
+        </div>
+
+        <div class="add-content ship" id="tag2">
+            <p class="title">发货单</p>
+
+            <div class="item-free attr-array">
+                <div class="attr-array-list title">
+                    <dl>
+                        <dd>单号</dd>
+                        <dd>日期</dd>
+                        <dd>物流公司</dd>
+                        <dd>收货人</dd>
+                        <dd>成本</dd>
+                    </dl>
+                </div>
+                <div class="attr-array-list">
+                    <dl>
+                        <dd>{{op.shpping_no|default:"未录入"}}</dd>
+                        <dd>{{op.shipping_time|date:"M/d/Y"}}</dd>
+                        <dd>{{op.shipper_name|default:"未录入"}}</dd>
+                        <dd>{{op.first_name}} {{op.last_name}}</dd>
+                        <dd>¥ {{op.shipping_fee|default:"未录入"}}</dd>
+                    </dl>
+                </div>
+            </div>
+            <p class="title">退货单</p>
+
+            <div class="item-free attr-array">
+                <div class="attr-array-list title">
+                    <dl>
+                        <dd>单号</dd>
+                        <dd>日期</dd>
+                        <dd>物流公司</dd>
+                        <dd>收货人</dd>
+                        <dd>成本</dd>
+                    </dl>
+                </div>
+                <div class="attr-array-list">
+                    <dl>
+                        <dd>暂不支持该功能</dd>
+                        <dd>暂不支持该功能</dd>
+                        <dd>暂不支持该功能</dd>
+                        <dd>暂不支持该功能</dd>
+                        <dd>暂不支持该功能</dd>
+                    </dl>
+                </div>
+            </div>
+            <p class="title">发货</p>
+
+            <div class="item-free attr-array">
+                <div class="item half-item-left"><label>日期：</label><input class="form-control" type="text"></div>
+                <div class="item half-item-right"><label>单号：</label><input class="form-control" type="text"></div>
+                <div class="item half-item-left"><label>物流公司：</label>
+                    <div class="btn-group normal">
+                        <button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{express_list|express_first_value:"name"}}</span></button>
+                        <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn"
+                                data-toggle="dropdown">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" id="selectOption">
+							{% for express in express_list %}
+								<li class="dropdown-item" data-value ="{{express.id}}">{{express.name}}</li>
+							{% endfor %}
+                        </ul>
+						<input class="dropdown-item-input" type="hidden" name="express-id" value="{{express_list|express_first_value:"id"}}"/>
+                    </div>
+                </div>
+                <div class="item half-item-right"><label>物流成本：</label><input class="form-control" type="text"></div>
+                <div class="item half-item-left"><label>收货人姓：</label><input class="form-control" type="text"></div>
+                <div class="item half-item-right"><label>收货人名：</label><input class="form-control" type="text"></div>
+                <div class="item item-all"><label>地址：</label><input class="form-control" type="text"></div>
+                <div class="item half-item-left"><label>电话：</label><input class="form-control" type="text"></div>
+                <div class="item half-item-left"><label>邮箱：</label><input class="form-control" type="text"></div>
+            </div>
+            <div class="submit-item">
+                <button type="button" class="btn btn-primary">提交</button>
+            </div>
+        </div>
+        <div class="add-content discount" id="tag3">
+           <p>优惠</p>
+        </div>
+        <div class="add-content remark" id="tag4">
+            <div class="item-free attr-array">
+                <div class="attr-array-list title">
+                    <dl>
+                        <dd>操作人</dd>
+                        <dd>备注内容</dd>
+                        <dd>时间</dd>
+                    </dl>
+                </div>
+				{% for remark in order.order_remarks.all %}
+					<div class="attr-array-list">
+						<dl>
+							<dd>{{remark.user.email}}</dd>
+							<dd>{{remark.content}}</dd>
+							<dd>{{remark.create_time}}</dd>
+						</dl>
+					</div>
+				{% endfor %}
+            </div>
+            <div class="item btn-item">
+                <label>新增备注：</label><input class="form-control" type="text">
+                <button type="button" class="btn btn-primary">提交</button>
+            </div>
+        </div>
+        <!--页签结束-->
+    </div>
+</section>
+
+{% endblock %}
+{% block scripts %}
+	{% load staticfiles %}
+<script>
+    //添加商品，页签（基本信息-属性-相册）点击事件
+    $(".tag li").on("click", function () {
+        var contentId = $(this).attr("data");
+        $(".tag li,.add-content").removeClass("active");
+        $(this).addClass("active");
+        $("#" + contentId).addClass("active");
+    })
+    //添加商品点击下一步
+    $(".next-steep").on("click", function () {
+        var idNum = parseInt($(".tag").find(".active").attr("data").split("tag")[1]) + 1;
+        $(".tag").find(".active").removeClass("active").next("li").addClass("active");
+        $(".add-content").removeClass("active");
+        $("#tag" + idNum).addClass("active");
+    })
+</script>
+{% endblock %}

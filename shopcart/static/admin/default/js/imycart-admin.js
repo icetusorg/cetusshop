@@ -186,6 +186,41 @@ jQuery("#order_batch_delete").click(function(e){
 	$("#order_oper_form").submit();
 });
 
+//订单备注添加
+jQuery("#order-remark-add-submit-btn").click(function(){
+	var url = "/admin/order-remark-add/";
+
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#order-remark-add-form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			$('#myModal').on('hidden.bs.modal', function (e) {
+				var url = location.href;
+				var newurl = changeURLArg(url,"tab_name","tag4");
+				location.href = newurl;//跳转到对应的页面
+			});
+			
+			$("#myModal").modal('toggle');
+			
+		}
+	});
+});
+
+//订单详情tab页切换
+$(".tag li").on("click", function () {
+    var contentId = $(this).attr("data");
+    $(".tag li,.add-content").removeClass("active");
+    $(this).addClass("active");
+    $("#" + contentId).addClass("active");
+})
+
 
 //商品管理界面
 //Tab页切换方法

@@ -1,7 +1,7 @@
 #coding=utf-8
 from django.shortcuts import render,redirect,render_to_response
 from django.core.urlresolvers import reverse
-from shopcart.models import System_Config,Express,Order
+from shopcart.models import System_Config,Express,Order,OrderRemark
 from shopcart.utils import System_Para,my_pagination,get_serial_number,get_system_parameters
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse,JsonResponse,Http404
@@ -42,7 +42,6 @@ def detail(request,id=None):
 	
 	ctx['order'] = order
 	return render(request,System_Config.get_template_name('admin') + '/order_detail.html',ctx)
-	
 	
 	
 @staff_member_required
@@ -116,6 +115,23 @@ def ship(request):
 	else:
 		raise Http404		
 		
+
+def remark_add(request):
+	result_dict = {}
+	if request.method == 'POST':
+		try:
+			order_id = request.POST.get('order_id','')
+			order = Order.objects.get(id=order_id)
+			content = request.POST.get('content','')
+			user = request.user
+			order_remark = OrderRemark.objects.create(order=order,content=content,user=user)
+			result_dict['success'] = True
+			result_dict['message'] = '订单备注保存成功'
+		except Exception as err:
+			logger.error('Save OrderRemark which id is [%s] faild. \n Error Message:%s' %(order_id,err))
+			result_dict['success'] = False
+			result_dict['message'] = '订单备注保存失败'
+		return JsonResponse(result_dict)
 		
 		
 @staff_member_required

@@ -66,12 +66,9 @@ def product_basic_edit(request):
 	
 	if request.method == 'GET':
 		id = request.GET.get('id','')
-		
 		if id != '':
-	
 			try:
 				product = Product.objects.get(id=id)
-				#product.attribute.all().order_by('id')
 				ctx['product'] = product
 				
 				pcl=[]
@@ -80,12 +77,14 @@ def product_basic_edit(request):
 				
 				ctx['product_category_id_list'] = pcl
 				
-				if product.attributes:
+				if product.attributes.all():
 					ctx['attribute_group_belong'] = product.attributes.all()[0].get_attribute_groups()
 					
 					
 				#图片处理URL
-				ctx['action_url'] = '/admin/file-upload/product/%s/' % id 
+				ctx['action_url'] = '/admin/file-upload/product/%s/' % id
+				logger.debug('action_url:%s' % ctx['action_url'])
+				
 				ctx['file_delete_url'] = '/file-delete/product'
 					
 				

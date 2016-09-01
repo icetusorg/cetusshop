@@ -66,13 +66,13 @@
 
 
         <ul class="tag">
-            <li class="active" data="tag1">商品信息</li>
-            <li data="tag2">收发货</li>
-            <li data="tag3">优惠</li>
-            <li data="tag4">备注</li>
+            <li class="active" data="tag_products">商品信息</li>
+            <li data="tag_shippment">收发货</li>
+            <li data="tag_discount">优惠</li>
+            <li data="tag_remark">备注</li>
         </ul>
         <!--页签-->
-        <div class="add-content order-infos active" id="tag1">
+        <div class="add-content order-infos active" id="tag_products">
             <div class="item-list-dl">
                 <dl>
                     <dt>商品图片</dt>
@@ -101,7 +101,7 @@
             </div>
         </div>
 
-        <div class="add-content ship" id="tag2">
+        <div class="add-content ship" id="tag_shippment">
             <p class="title">发货单</p>
 
             <div class="item-free attr-array">
@@ -178,10 +178,10 @@
                 <button type="button" class="btn btn-primary">提交</button>
             </div>
         </div>
-        <div class="add-content discount" id="tag3">
+        <div class="add-content discount" id="tag_discount">
            <p>优惠</p>
         </div>
-        <div class="add-content remark" id="tag4">
+        <div class="add-content remark" id="tag_remark">
             <div class="item-free attr-array">
                 <div class="attr-array-list title">
                     <dl>
@@ -200,10 +200,14 @@
 					</div>
 				{% endfor %}
             </div>
-            <div class="item btn-item">
-                <label>新增备注：</label><input class="form-control" type="text">
-                <button type="button" class="btn btn-primary">提交</button>
-            </div>
+			<form id="order-remark-add-form">
+				<div class="item btn-item">
+					<label>新增备注：</label>
+					<input class="form-control" type="text" name="content">
+					<input class="form-control" type="hidden" name="order_id" value="{{order.id}}">
+					<button type="button" id="order-remark-add-submit-btn" class="btn btn-primary">提交</button>
+				</div>
+			</form>
         </div>
         <!--页签结束-->
     </div>
@@ -213,19 +217,12 @@
 {% block scripts %}
 	{% load staticfiles %}
 <script>
-    //添加商品，页签（基本信息-属性-相册）点击事件
-    $(".tag li").on("click", function () {
-        var contentId = $(this).attr("data");
-        $(".tag li,.add-content").removeClass("active");
-        $(this).addClass("active");
-        $("#" + contentId).addClass("active");
-    })
-    //添加商品点击下一步
-    $(".next-steep").on("click", function () {
-        var idNum = parseInt($(".tag").find(".active").attr("data").split("tag")[1]) + 1;
-        $(".tag").find(".active").removeClass("active").next("li").addClass("active");
-        $(".add-content").removeClass("active");
-        $("#tag" + idNum).addClass("active");
-    })
+	$(document).ready(function() {
+		var tab_name = $.getUrlParam('tab_name');
+		if (tab_name){
+			$(".tag li,.add-content").removeClass("active");
+			$("#" + tab_name).addClass("active");
+		}		
+	});
 </script>
 {% endblock %}

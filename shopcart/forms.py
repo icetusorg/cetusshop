@@ -54,8 +54,8 @@ class product_detail_info_form(forms.ModelForm):
 	class Meta:
 		model = Product
 		fields = ('keywords','page_title','static_file_name','detail_template','short_desc','description')
-		
 
+		
 		
 class inquiry_form(forms.ModelForm):
 	company = forms.CharField(required=False)

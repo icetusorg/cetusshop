@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from django import forms
-from shopcart.models import MyUser,Address,Product,Inquiry
+from shopcart.models import MyUser,Address,Product,Inquiry,OrderShippment
 from captcha.fields import CaptchaField
 from django.utils.translation import ugettext as _
 from django.core.exceptions import ValidationError 	
@@ -55,6 +55,27 @@ class product_detail_info_form(forms.ModelForm):
 		model = Product
 		fields = ('keywords','page_title','static_file_name','detail_template','short_desc','description')
 
+class order_shippment_form(forms.ModelForm):		
+	shipper_name = forms.CharField(required=False)
+	ship_no = forms.CharField(required=False)
+	shipping_cost = forms.CharField(required=False)
+	shipping_time = forms.CharField(required=False)
+	remark = forms.CharField(required=False)
+	country = forms.CharField(required=False)
+	province = forms.CharField(required=False)
+	city = forms.CharField(required=False)
+	district = forms.CharField(required=False)
+	address_line_1 = forms.CharField(required=False)
+	address_line_2 = forms.CharField(required=False)
+	first_name = forms.CharField(required=False)
+	last_name = forms.CharField(required=False)
+	zipcode = forms.CharField(required=False)
+	tel = forms.CharField(required=False)
+	class Meta:
+		model = OrderShippment
+		fields = ('shipper_name','ship_no','shipping_cost','shipping_time','remark','country','province','city','district','address_line_1','address_line_2','first_name','last_name','zipcode','tel')
+	
+		
 		
 		
 class inquiry_form(forms.ModelForm):

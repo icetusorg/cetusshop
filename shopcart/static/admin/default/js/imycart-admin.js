@@ -203,7 +203,7 @@ jQuery("#order-remark-add-submit-btn").click(function(){
 			$("#infoMessage").html(data.message);
 			$('#myModal').on('hidden.bs.modal', function (e) {
 				var url = location.href;
-				var newurl = changeURLArg(url,"tab_name","tag4");
+				var newurl = changeURLArg(url,"tab_name","tag_remark");
 				location.href = newurl;//跳转到对应的页面
 			});
 			
@@ -214,12 +214,40 @@ jQuery("#order-remark-add-submit-btn").click(function(){
 });
 
 //订单详情tab页切换
-$(".tag li").on("click", function () {
+jQuery(".tag li").on("click", function () {
     var contentId = $(this).attr("data");
     $(".tag li,.add-content").removeClass("active");
     $(this).addClass("active");
     $("#" + contentId).addClass("active");
-})
+});
+
+//发货
+jQuery("#shippment_submit_btn").click(function(){
+	var url = "/admin/order-shippment-manage/";
+
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#shippment_form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			$('#myModal').on('hidden.bs.modal', function (e) {
+				var url = location.href;
+				var newurl = changeURLArg(url,"tab_name","tag_shippment");
+				location.href = newurl;//跳转到对应的页面
+			});
+			
+			$("#myModal").modal('toggle');
+			
+		}
+	});	
+});
+
 
 
 //商品管理界面

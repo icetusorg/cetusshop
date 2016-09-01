@@ -123,6 +123,9 @@ def get_system_parameters():
 	dict = {}
 	for parameter in parameter_list:
 		dict[parameter.name] = parameter.val
+		
+	#当前时间
+	dict['current_date'] = datetime.datetime.now()
 	return dict
 	
 	

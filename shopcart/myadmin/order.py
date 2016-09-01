@@ -115,7 +115,8 @@ def ship(request):
 	else:
 		raise Http404		
 		
-
+@staff_member_required
+@transaction.atomic()
 def remark_add(request):
 	result_dict = {}
 	if request.method == 'POST':
@@ -132,6 +133,35 @@ def remark_add(request):
 			result_dict['success'] = False
 			result_dict['message'] = '订单备注保存失败'
 		return JsonResponse(result_dict)
+		
+@staff_member_required
+@transaction.atomic()		
+def ship_out(request):
+	result_dict = {}
+	if request.method == 'POST':
+		try:
+			order_id = request.POST.get('order_id','')
+			order = Order.objects.get(id=order_id)
+		except Exception as err:
+			logger.error('Save OrderRemark which id is [%s] faild. \n Error Message:%s' %(order_id,err))
+			result_dict['success'] = False
+			result_dict['message'] = '订单号为%s的订单找不到！' % order_id
+			return JsonResponse(result_dict)
+		
+		from shopcart.forms import order_shippment_form
+		form = order_shippment_form(request.POST)
+		if form.is_valid():
+			order_shippment = form.save()
+			order_shippment.order = order
+			order_shippment.save()
+			result_dict['success'] = True
+			result_dict['message'] = '发货成功'
+			return JsonResponse(result_dict)
+		else:
+			result_dict['success'] = False
+			result_dict['message'] = '表单填写的内容不合法，请检查。'
+			return JsonResponse(result_dict)
+		
 		
 		
 @staff_member_required

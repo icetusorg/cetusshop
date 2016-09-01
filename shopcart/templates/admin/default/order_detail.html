@@ -110,19 +110,21 @@
                         <dd>单号</dd>
                         <dd>日期</dd>
                         <dd>物流公司</dd>
-                        <dd>收货人</dd>
+                        <dd>备注</dd>
                         <dd>成本</dd>
                     </dl>
                 </div>
-                <div class="attr-array-list">
-                    <dl>
-                        <dd>{{op.shpping_no|default:"未录入"}}</dd>
-                        <dd>{{op.shipping_time|date:"M/d/Y"}}</dd>
-                        <dd>{{op.shipper_name|default:"未录入"}}</dd>
-                        <dd>{{op.first_name}} {{op.last_name}}</dd>
-                        <dd>¥ {{op.shipping_fee|default:"未录入"}}</dd>
-                    </dl>
-                </div>
+				{% for ship in order.shippments.all %}
+					<div class="attr-array-list">
+						<dl>
+							<dd>{{ship.ship_no|default:"未录入"}}</dd>
+							<dd>{{ship.shipping_time|date:"y/m/d"}}</dd>
+							<dd>{{ship.shipper_name|default:"未录入"}}</dd>
+							<dd>{{ship.remark}}</dd>
+							<dd>¥ {{ship.shipping_cost|default:"未录入"}}</dd>
+						</dl>
+					</div>
+				{% endfor %}
             </div>
             <p class="title">退货单</p>
 
@@ -147,36 +149,45 @@
                 </div>
             </div>
             <p class="title">发货</p>
-
-            <div class="item-free attr-array">
-                <div class="item half-item-left"><label>日期：</label><input class="form-control" type="text"></div>
-                <div class="item half-item-right"><label>单号：</label><input class="form-control" type="text"></div>
-                <div class="item half-item-left"><label>物流公司：</label>
-                    <div class="btn-group normal">
-                        <button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{express_list|express_first_value:"name"}}</span></button>
-                        <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn"
-                                data-toggle="dropdown">
-                            <span class="caret"></span>
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu" id="selectOption">
-							{% for express in express_list %}
-								<li class="dropdown-item" data-value ="{{express.id}}">{{express.name}}</li>
-							{% endfor %}
-                        </ul>
-						<input class="dropdown-item-input" type="hidden" name="express-id" value="{{express_list|express_first_value:"id"}}"/>
-                    </div>
-                </div>
-                <div class="item half-item-right"><label>物流成本：</label><input class="form-control" type="text"></div>
-                <div class="item half-item-left"><label>收货人姓：</label><input class="form-control" type="text"></div>
-                <div class="item half-item-right"><label>收货人名：</label><input class="form-control" type="text"></div>
-                <div class="item item-all"><label>地址：</label><input class="form-control" type="text"></div>
-                <div class="item half-item-left"><label>电话：</label><input class="form-control" type="text"></div>
-                <div class="item half-item-left"><label>邮箱：</label><input class="form-control" type="text"></div>
-            </div>
-            <div class="submit-item">
-                <button type="button" class="btn btn-primary">提交</button>
-            </div>
+			<form id="shippment_form">
+				<div class="item-free attr-array">
+					<div class="item half-item-left"><label>日期：</label><input class="form-control" name="shipping_time" type="text" value="{{system_para.current_date|date:"Y-m-d"}}"></div>
+					<div class="item half-item-right"><label>单号：</label><input class="form-control" name="ship_no" type="text"></div>
+					<div class="item half-item-left"><label>物流公司：</label>
+						<div class="btn-group normal">
+							<button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{express_list|express_first_value:"name"}}</span></button>
+							<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn"
+									data-toggle="dropdown">
+								<span class="caret"></span>
+								<span class="sr-only">Toggle Dropdown</span>
+							</button>
+							<ul class="dropdown-menu" role="menu" id="selectOption">
+								{% for express in express_list %}
+									<li class="dropdown-item" data-value ="{{express.id}}">{{express.name}}</li>
+								{% endfor %}
+							</ul>
+							<input class="dropdown-item-input" type="hidden" name="express-id" value="{{express_list|express_first_value:"id"}}"/>
+						</div>
+					</div>
+					<div class="item half-item-right"><label>物流成本：</label><input class="form-control" name="shipping_cost" type="text"></div>
+					<div class="item item-all"><label>备注：</label><input class="form-control" name="remark" type="text"></div>
+					<div class="item half-item-left"><label>收货人姓：</label><input class="form-control" name="first_name" type="text" value="{{order.first_name}}"></div>
+					<div class="item half-item-right"><label>收货人名：</label><input class="form-control" name="last_name" type="text" value="{{order.first_name}}"></div>
+					<div class="item half-item-left"><label>国家：</label><input class="form-control" name="country" type="text" value="{{order.country}}"></div>
+					<div class="item half-item-right"><label>省/州：</label><input class="form-control" name="province" type="text" value="{{order.province}}"></div>
+					<div class="item half-item-left"><label>城市：</label><input class="form-control" name="city" type="text" value="{{order.city}}"></div>
+					<div class="item half-item-right"><label>区：</label><input class="form-control" name="district" type="text" value="{{order.district}}"></div>
+					<div class="item item-all"><label>地址行 1：</label><input class="form-control" name="address_line_1" type="text" value="{{order.address_line_1}}"></div>
+					<div class="item item-all"><label>地址行 2：</label><input class="form-control" name="address_line_2" type="text" value="{{order.address_line_2}}"></div>
+					<div class="item half-item-left"><label>电话：</label><input class="form-control" name="tel" type="text" value="{{order.tel}}"></div>
+					<div class="item half-item-left"><label>邮箱：</label><input class="form-control" type="text" value="{{order.user.email}}"></div>
+					
+				</div>
+				<div class="submit-item">
+					<input type="hidden" name="order_id" value="{{order.id}}" />
+					<button type="button" id="shippment_submit_btn" class="btn btn-primary">提交</button>
+				</div>				
+			</form>		
         </div>
         <div class="add-content discount" id="tag_discount">
            <p>优惠</p>

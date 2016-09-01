@@ -466,11 +466,24 @@ class OrderShippment(models.Model):
 	ship_no = models.CharField(max_length=254,null=True,blank=True,verbose_name="快递单号")
 	shipping_cost = models.FloatField(default=0.00,verbose_name="快递成本")
 	shipping_time = models.DateTimeField(null=True,verbose_name="发货时间")
+	remark = models.CharField(max_length=254,null=True,blank=True,verbose_name="备注")
+	
+	country = models.CharField(max_length = 100,default='',blank=True,verbose_name='国家')
+	province = models.CharField(max_length = 100,default='',blank=True,verbose_name='省/州')
+	city = models.CharField(max_length = 100,default='',blank=True,verbose_name='市')
+	district = models.CharField(max_length = 100,default='',blank=True,verbose_name='区')
+	address_line_1 = models.CharField(max_length = 254,default='',blank=True,verbose_name='地址 1')
+	address_line_2 = models.CharField(max_length = 254,default='',blank=True,verbose_name='地址 2')
+	first_name = models.CharField(max_length = 254,default='',blank=True,verbose_name='名')
+	last_name = models.CharField(max_length = 254,default='',blank=True,verbose_name='姓')
+	zipcode = models.CharField(max_length = 10,default='',blank=True,verbose_name='邮编')
+	tel = models.CharField(max_length = 20,default='',blank=True,verbose_name='电话')
+	
 	create_time = models.DateTimeField(auto_now_add = True)
 	update_time = models.DateTimeField(auto_now = True)
 	
 	def __str__(self):
-		return self.content
+		return self.ship_no
 	
 	class Meta:
 		verbose_name = '发货记录'

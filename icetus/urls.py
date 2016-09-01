@@ -83,6 +83,8 @@ urlpatterns = patterns("",
 	url('^admin/order-detail/(\d+)/$', 'shopcart.myadmin.order.detail',name='admin_order_detail'),
 	url('^admin/order-remark-add/$', 'shopcart.myadmin.order.remark_add',name='admin_order_remark_add'),
 	url('^admin/order-oper/$', 'shopcart.myadmin.order.oper',name='admin_order_oper'),
+	url('^admin/order-shippment-manage/$', 'shopcart.myadmin.order.ship_out',name='admin_order_ship_out'),
+	
 	url('^admin/no-permission/$', 'shopcart.myadmin.index.no_permission',name='admin_no_permission'),
 	url('^admin/product-oper/$', 'shopcart.myadmin.product.oper',name='admin_product_oper'),
 	url('^admin/product/$', 'shopcart.myadmin.product.product_list',name='admin_product_list'),

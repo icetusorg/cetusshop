@@ -85,6 +85,11 @@ urlpatterns = patterns("",
 	url('^admin/order-oper/$', 'shopcart.myadmin.order.oper',name='admin_order_oper'),
 	url('^admin/order-shippment-manage/$', 'shopcart.myadmin.order.ship_out',name='admin_order_ship_out'),
 	
+	url('^admin/system-config/(.+)/$', 'shopcart.myadmin.system_config.view',name='admin_system_config_view'),
+	url('^admin/site-config-manage/$', 'shopcart.myadmin.system_config.site_config_manage',name='admin_site_config_manage'),
+	url('^admin/display-config-manage/$', 'shopcart.myadmin.system_config.display_config_manage',name='admin_display_config_manage'),
+	
+	
 	url('^admin/no-permission/$', 'shopcart.myadmin.index.no_permission',name='admin_no_permission'),
 	url('^admin/product-oper/$', 'shopcart.myadmin.product.oper',name='admin_product_oper'),
 	url('^admin/product/$', 'shopcart.myadmin.product.product_list',name='admin_product_list'),

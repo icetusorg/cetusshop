@@ -30,3 +30,12 @@ def express_first_value(value,arg):
 			return item.id
 	
 	return ''
+	
+@register.filter		
+def equalornot(value,arg):
+	arg_list = arg.split(',')
+	
+	if value == arg_list[0]:
+		return arg_list[1]
+	else:
+		return arg_list[2]

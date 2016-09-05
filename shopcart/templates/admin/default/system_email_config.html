@@ -1,0 +1,75 @@
+{% extends "admin/default/content_base.html" %}
+{% block breadcrumbs %}
+<section class="content-header">
+    <h1>{{page_name}}</h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+        <li class="active"><a href="#">系统参数管理</a></li>
+    </ol>
+</section>
+{% endblock %}
+
+{% block main %}
+{% load i18n %}
+{% load shopcart_extras %}
+<section class="content">
+    <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+    <div class="col-md-12 add-product system-attr">
+        <div class="system-attr-mian">
+			<ul class="tag">
+				<li class="{{current_page|equalornot:"site_config,active,"}}" data="tag_site_config"><a href="../site_config/">网站信息</a></li>
+				<li class="{{current_page|equalornot:"email_config,active,"}}" data="tag_email_config"><a href="../email_config/">邮箱配置</a></li>
+				<li class="{{current_page|equalornot:"display_config,active,"}}" data="tag_display_config"><a href="../display_config/">显示配置</a></li>
+				<li class="{{current_page|equalornot:"picture_config,active,"}}" data="tag_picture_config"><a href="../picture_config/">图片配置</a></li>
+			</ul>
+        <!--页签-->
+        <div class="add-content email-config active" id="tag_email_config">
+            <p class="title">邮箱管理</p>
+
+            <div class="item-free attr-array">
+                <div class="attr-array-list title">
+                    <dl>
+                        <dd>模板名称</dd>
+                        <dd>是否发送</dd>
+                        <dd>发送邮箱</dd>
+                        <dd>操作</dd>
+                    </dl>
+                </div>
+                <div class="attr-array-list">
+					{% for email in email_list %}
+						<dl>
+							<dd>{{email.useage_name}}</dd>
+							<dd>
+								<input type="radio" name="{{email.id}}_is_send" {{email.is_send|yesno:"checked,,"}}><label>是</label>
+								<input type="radio" name="{{email.id}}_is_send" {{email.is_send|yesno:",checked,"}}><label>否</label>
+							</dd>
+							<dd>{{email.email_address}}</dd>
+							<dd><a class="edit">编辑</a></dd>
+						</dl>
+					{% endfor %}
+                </div>
+                <div class="box-footer clearfix">
+                    <!--
+					<div class="xy-pages-jump">
+                        <ul class="pagination pagination-sm no-margin pull-right">
+                            <li><a href="#">&lt;</a></li>
+                            <li class="active"><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">&gt;</a></li>
+                        </ul>
+                        <p>共7条记录 , 共3页，每页显示：15条</p>
+                    </div>
+					-->
+                </div>
+            </div>
+        </div>
+        
+        </div>
+        <!--页签结束-->
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+	{% load staticfiles %}
+{% endblock %}

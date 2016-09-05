@@ -549,7 +549,57 @@ jQuery("#product-detail-info-submit-btn").click(function(e){
 	});
 });
 
+//系统管理页面
 
+//网站信息
+jQuery("#site_config_submit_btn").click(function(e){
+	var url = "/admin/site-config-manage/";
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#site_config_form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			if(data.success==true){
+				$('#myModal').on('hidden.bs.modal', function (e) {
+					location.reload(true); 
+				})
+			}
+			$("#myModal").modal('toggle');
+		}
+	});
+});
+
+//显示设置
+jQuery("#display_config_submit_btn").click(function(e){
+	var url = "/admin/display-config-manage/";
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#display_config_form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			if(data.success==true){
+				$('#myModal').on('hidden.bs.modal', function (e) {
+					location.reload(true); 
+				})
+			}
+			$("#myModal").modal('toggle');
+		}
+	});
+});
 
 
 //通用函数

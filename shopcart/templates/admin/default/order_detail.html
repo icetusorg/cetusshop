@@ -166,7 +166,7 @@
 									<li class="dropdown-item" data-value ="{{express.id}}">{{express.name}}</li>
 								{% endfor %}
 							</ul>
-							<input class="dropdown-item-input" type="hidden" name="express-id" value="{{express_list|express_first_value:"id"}}"/>
+							<input class="dropdown-item-input" type="hidden" name="express_id" value="{{express_list|express_first_value:"id"}}"/>
 						</div>
 					</div>
 					<div class="item half-item-right"><label>物流成本：</label><input class="form-control" name="shipping_cost" type="text"></div>

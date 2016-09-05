@@ -369,6 +369,8 @@ class Wish(models.Model):
 
 class Email(models.Model):
 	useage = models.CharField(max_length = 100,unique=True)
+	useage_name = models.CharField(max_length = 254,null=True,blank=True,verbose_name='邮件用途显示名称')
+	is_send = models.BooleanField(default=False,verbose_name='是否发送')
 	email_address = models.EmailField(null=True)
 	title = models.CharField(max_length=254,verbose_name='邮件主题')
 	smtp_host = models.CharField(max_length=100)
@@ -379,6 +381,51 @@ class Email(models.Model):
 	create_time = models.DateTimeField(auto_now_add = True)
 	update_time = models.DateTimeField(auto_now = True)
 
+@python_2_unicode_compatible
+class Email_List(models.Model):
+	email = models.EmailField(unique=True, db_index=True, max_length=254,verbose_name = '电子邮件')
+	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
+	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
+	
+	def __str__(self):
+		return self.email
+		
+	class Meta:
+		verbose_name = '订阅邮件列表'
+		verbose_name_plural = '订阅邮件列表'
+
+@python_2_unicode_compatible
+class ExpressType(models.Model):
+	name = models.CharField(max_length=100,null=True,verbose_name = '送货方式')
+	price_fixed = models.FloatField(verbose_name = '固定运费')
+	price_per_kilogram = models.FloatField(verbose_name = '每千克运费')
+	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
+	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
+	
+	def __str__(self):
+		return self.name
+	
+	class Meta:
+		verbose_name = '送货方式'
+		verbose_name_plural = '送货方式'
+
+		
+@python_2_unicode_compatible
+class Express(models.Model):
+	name = models.CharField(max_length=100,null=True,verbose_name = '快递名称')
+	express_type = models.ManyToManyField(ExpressType,null=True,related_name='expresses')
+	price_fixed = models.FloatField(verbose_name = '固定运费')
+	price_per_kilogram = models.FloatField(verbose_name = '每千克运费')
+	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
+	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
+	
+	def __str__(self):
+		return self.name
+	
+	class Meta:
+		verbose_name = '快递公司'
+		verbose_name_plural = '快递公司'	
+	
 @python_2_unicode_compatible
 class Order(models.Model):
 	# 订单等待付款 
@@ -463,6 +510,7 @@ class Order(models.Model):
 class OrderShippment(models.Model):
 	order = models.ForeignKey(Order,null=True,related_name='shippments')
 	shipper_name = models.CharField(max_length=254,null=True,blank=True,verbose_name="快递公司")
+	express = models.ForeignKey(Express,null=True,related_name='related_orders',verbose_name='承运快递公司')
 	ship_no = models.CharField(max_length=254,null=True,blank=True,verbose_name="快递单号")
 	shipping_cost = models.FloatField(default=0.00,verbose_name="快递成本")
 	shipping_time = models.DateTimeField(null=True,verbose_name="发货时间")
@@ -613,51 +661,6 @@ class Album(models.Model):
 	class Meta:
 		verbose_name = '相册'
 		verbose_name_plural = '相册'
-	
-@python_2_unicode_compatible
-class Email_List(models.Model):
-	email = models.EmailField(unique=True, db_index=True, max_length=254,verbose_name = '电子邮件')
-	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
-	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
-	
-	def __str__(self):
-		return self.email
-		
-	class Meta:
-		verbose_name = '订阅邮件列表'
-		verbose_name_plural = '订阅邮件列表'
-
-@python_2_unicode_compatible
-class ExpressType(models.Model):
-	name = models.CharField(max_length=100,null=True,verbose_name = '送货方式')
-	price_fixed = models.FloatField(verbose_name = '固定运费')
-	price_per_kilogram = models.FloatField(verbose_name = '每千克运费')
-	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
-	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
-	
-	def __str__(self):
-		return self.name
-	
-	class Meta:
-		verbose_name = '送货方式'
-		verbose_name_plural = '送货方式'
-
-		
-@python_2_unicode_compatible
-class Express(models.Model):
-	name = models.CharField(max_length=100,null=True,verbose_name = '快递名称')
-	express_type = models.ManyToManyField(ExpressType,null=True,related_name='expresses')
-	price_fixed = models.FloatField(verbose_name = '固定运费')
-	price_per_kilogram = models.FloatField(verbose_name = '每千克运费')
-	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
-	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
-	
-	def __str__(self):
-		return self.name
-	
-	class Meta:
-		verbose_name = '快递公司'
-		verbose_name_plural = '快递公司'
 			
 
 @python_2_unicode_compatible		

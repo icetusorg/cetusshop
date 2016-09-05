@@ -45,7 +45,14 @@ def view_wishlist(request):
 	ctx['page_name'] = 'My Wishlist'
 	if request.method =='GET':
 		wish_list = Wish.objects.filter(user=request.user)
-		wish_list, page_range = my_pagination(request, wish_list,display_amount=5)
+		
+		try:
+			page_size = int(System_Config.objects.get(name='wish_list_page_size').val)
+		except:
+			logger.info('The system parameter [wish_list_page_size] is not setted,use the default value 5.')
+			page_size = 5
+		
+		wish_list, page_range = my_pagination(request, wish_list,display_amount=page_size)
 		ctx['wish_list'] = wish_list
 		ctx['page_range'] = page_range
 		return render(request,System_Config.get_template_name() + '/wish_list.html',ctx)

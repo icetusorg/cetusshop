@@ -1,0 +1,99 @@
+#coding=utf-8
+from django.shortcuts import render,redirect,render_to_response
+from django.core.urlresolvers import reverse
+from shopcart.models import System_Config,Email
+from shopcart.utils import System_Para,get_system_parameters
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse,JsonResponse,Http404
+import logging,json
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import permission_required
+from django.utils.translation import ugettext as _
+from django.db import transaction
+from shopcart.myadmin.utils import NO_PERMISSION_PAGE
+
+
+# Get an instance of a logger
+import logging
+logger = logging.getLogger('icetus.shopcart')
+
+	
+@staff_member_required
+def view(request,type='site_config'):
+	ctx = {}
+	ctx['system_para'] = get_system_parameters()
+	ctx['page_name'] = '系统配置'
+	ctx['current_page'] = type
+	
+	#邮件设置
+	email_list = Email.objects.all()
+	ctx['email_list'] = email_list
+	
+	
+	template_name = '/system_%s.html' % type
+	return render(request,System_Config.get_template_name('admin') + template_name ,ctx)
+
+@transaction.atomic()	
+def save_config_items(request,is_create=True,is_continue_if_not_exist=True):
+	#遍历POST中的参数，找出system_config_开头的参数
+	for key in request.POST.keys():
+		if key.startswith('system_config_'):
+			value = request.POST[key]
+			db_key = key[len('system_config_'):len(key)]
+			try:
+				config = System_Config.objects.get(name=db_key)
+			except Exception as err:
+				logger.info('The system config item [%s] is not exist.' % db_key)
+				
+			if not config:	
+				if is_create:
+					config = System_Config.objects.create(name=db_key)
+				else:
+					if is_continue_if_not_exist:
+						continue
+					else:
+						raise Exception('SystemConfigDosNotExits')
+			config.val = value
+			config.save()	
+			
+@staff_member_required
+@transaction.atomic()
+def display_config_manage(request):
+	result = {}
+	result['success'] = False
+	result['message'] = ''
+	if request.method == 'POST':		
+		try:
+			save_config_items(request)
+			result['success'] = True
+			result['message'] = '显示设置保存成功'
+		except Exception as err:
+			result['message'] = '显示保存失败'
+
+		return JsonResponse(result) 
+	elif request.method == 'GET':
+		raise Http404
+	else:
+		raise Http404			
+	
+@staff_member_required
+@transaction.atomic()
+def site_config_manage(request):
+	result = {}
+	result['success'] = False
+	result['message'] = ''
+	if request.method == 'POST':
+		#logger.debug('POST:%s' % request.POST)
+		
+		try:
+			save_config_items(request)
+			result['success'] = True
+			result['message'] = '网站信息保存成功'
+		except Exception as err:
+			result['message'] = '网站信息保存失败'
+
+		return JsonResponse(result) 
+	elif request.method == 'GET':
+		raise Http404
+	else:
+		raise Http404	

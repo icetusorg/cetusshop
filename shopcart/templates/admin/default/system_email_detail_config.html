@@ -1,0 +1,70 @@
+{% extends "admin/default/content_base.html" %}
+{% block breadcrumbs %}
+<section class="content-header">
+    <h1>{{page_name}}</h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+        <li class="active"><a href="#">系统参数管理</a></li>
+    </ol>
+</section>
+{% endblock %}
+
+{% block main %}
+{% load i18n %}
+{% load shopcart_extras %}
+<section class="content">
+    <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+    <div class="col-md-12 add-product system-attr">
+        <div class="system-attr-mian">
+			<ul class="tag">
+				<li class="{{current_page|equalornot:"site_config,active,"}}" data="tag_site_config"><a href="../system-config/site_config/">网站信息</a></li>
+				<li class="{{current_page|equalornot:"email_config,active,"}}" data="tag_email_config"><a href="../system-config/email_config/">邮箱配置</a></li>
+				<li class="{{current_page|equalornot:"display_config,active,"}}" data="tag_display_config"><a href="../system-config/display_config/">显示配置</a></li>
+				<li class="{{current_page|equalornot:"picture_config,active,"}}" data="tag_picture_config"><a href="../system-config/picture_config/">图片配置</a></li>
+			</ul>
+        <!--页签-->
+        <div class="email-edit active">
+			<form id="email_detail_config_form">
+				{% csrf_token %}
+				<p class="title">邮件设置：{{email.useage_name}}</p>
+				<div class="item"><label>是否启用：</label><input type="checkbox" name="is_send" value="1" {{email.is_send|yesno:"checked,,"}}></div>
+				<div class="item"><label>发件邮箱：</label><input type="text" name="email_address" value="{{email.email_address}}" class="form-control"></div>
+				<div class="item"><label>邮件主题：</label><input type="text" name="title" value="{{email.title}}" class="form-control"></div>
+				<div class="item"><label>SMTP地址：</label><input type="text" name="smtp_host" value="{{email.smtp_host}}" class="form-control"></div>
+				<div class="item"><label>用户名：</label><input type="text" name="username" value="{{email.username}}" class="form-control"></div>
+				<div class="item"><label>密码：</label><input type="text" name="password" value="{{email.password}}" class="form-control"></div>
+				<div class="item"><label>模板组：</label><input type="text" name="template" value="{{email.template}}" class="form-control"></div>
+				<div class="item"><label>模板文件：</label><input type="text" name="template_file" value="{{email.template_file}}" class="form-control"></div>
+				
+				<!--<div class="item"><label>同步已更新配置：</label><input type="checkbox"></div>-->
+				<!--<div class="item"><label>端口：</label><input type="text" class="form-control"></div>-->
+				<!--
+				<div class="item"><label>加密：</label>
+					<div class="checkbox">
+						<input name="setPassword" checked="checked" type="radio"><label>加密</label>
+						<input name="setPassword" type="radio"><label>不加密</label>
+					</div>
+				</div>
+				-->
+				<!--
+				<div class="item email-test"><label>邮件测试：</label>
+					<input type="text" class="form-control">
+					<button type="button" class="btn btn-primary">发送</button>
+				</div>
+				-->
+				<div class="submit-item">
+					<input type="hidden" name="useage_name" value="{{email.useage_name}}" />
+					<input type="hidden" name="id" value="{{email.id}}" />
+					<button type="button" id="email_detail_config_submit_btn" class="btn btn-primary" id="emailEditSubmit">提交</button>
+				</div>
+			</form>
+        </div>
+		
+        </div>
+        <!--页签结束-->
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+	{% load staticfiles %}
+{% endblock %}

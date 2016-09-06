@@ -257,8 +257,7 @@ def check_out(request):
 		cart_product_id_list = request.POST.getlist('cart_product_id',[])
 
 		#添加快递选择
-		ctx['express_list'] = ExpressType.objects.all()		
-		
+		ctx['express_list'] = ExpressType.objects.filter(is_in_use=True).filter(is_delete=False)
 		ctx['default_express'] = ExpressType.objects.all()[0]
 		
 		prices = get_prices(cart_product_id_list=cart_product_id_list,express_type=ctx['default_express'])

@@ -40,6 +40,7 @@ def save_config_items(request,is_create=True,is_continue_if_not_exist=True):
 		if key.startswith('system_config_'):
 			value = request.POST[key]
 			db_key = key[len('system_config_'):len(key)]
+			config = None
 			try:
 				config = System_Config.objects.get(name=db_key)
 			except Exception as err:
@@ -74,7 +75,50 @@ def display_config_manage(request):
 	elif request.method == 'GET':
 		raise Http404
 	else:
-		raise Http404			
+		raise Http404	
+
+
+@staff_member_required
+@transaction.atomic()
+def email_config_manage(request):
+	if request.method == 'POST':
+		result = {}
+		result['success'] = False
+		result['message'] = ''
+	
+
+		from shopcart.forms import email_form
+		id = request.POST.get('id','')
+
+		try:
+			email = Email.objects.get(id=id)
+			form = email_form(request.POST,instance=email)
+			form.save()
+		except Exception as err:
+			logger.error('Save email config which id is [%s] faild. \n Error message: %s' % (id,err))
+			result['message'] = '邮件设置保存失败'
+			return JsonResponse(result)
+
+		result['success'] = True
+		result['message'] = '邮件设置保存成功'
+		return JsonResponse(result) 
+	elif request.method == 'GET':
+		ctx = {}
+		ctx['system_para'] = get_system_parameters()
+		ctx['page_name'] = '邮件配置'
+	
+		id = request.GET.get('id','')
+		try:
+			email = Email.objects.get(id=id)
+			ctx['email'] = email
+		except Exception as err:
+			logger.error('Can not find email setting which id is [%s]' % id)
+			raise Http404
+			
+		return render(request,System_Config.get_template_name('admin') + '/system_email_detail_config.html' ,ctx)
+	else:
+		raise Http404	
+		
 	
 @staff_member_required
 @transaction.atomic()

@@ -954,9 +954,7 @@ iframe {
 .email-config .attr-array-list dd a:last-child{
     padding-left:4px;
 }
-.email-edit{
-    display: none;
-}
+
 .email-edit .item input{
     width:220px;
 }

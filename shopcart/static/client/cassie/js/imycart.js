@@ -750,6 +750,8 @@ function imycartRemoveProductFromWishlistCallBack(result,triggerControl,extraInf
 
 //选择了商品某个额外属性
 jQuery(".product-attribute-item").click(function(){
+		
+	
 		var product_to_get = new Object();
 		product_to_get.product_id = $(this).data("product-id");
 		condition = ".product-attribute-group-selected[title=" + $(this).data("group-code") + "]";		
@@ -785,6 +787,17 @@ jQuery(".product-attribute-item").click(function(){
 						}else{
 							//设定可以选择的属性列表
 							//alert('Attributs avaliable to select are:' + result.message)
+							//$(".product-attribute-item").attr("disabled",true);
+							//$(".product-attribute-item").addClass("disabled");
+							
+							
+							//id_list = String(result.message).split(",");
+							
+							//$.each(id_list,function(index,id){
+							//	$("[data-attribute-id=" + id + "]").attr("disabled",false);
+							//	$(".product-attribute-item").removeClass("disabled");
+							//});
+							
 						
 						}
 						//alert('pa_id:' + $("input[name=product-attribute-id]").val());

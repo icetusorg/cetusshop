@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from django import forms
-from shopcart.models import MyUser,Address,Product,Inquiry,OrderShippment
+from shopcart.models import MyUser,Address,Product,Inquiry,OrderShippment,Email
 from captcha.fields import CaptchaField
 from django.utils.translation import ugettext as _
 from django.core.exceptions import ValidationError 	
@@ -75,9 +75,21 @@ class order_shippment_form(forms.ModelForm):
 		model = OrderShippment
 		fields = ('shipper_name','ship_no','shipping_cost','shipping_time','remark','country','province','city','district','address_line_1','address_line_2','first_name','last_name','zipcode','tel')
 	
+class email_form(forms.ModelForm):		
+	useage_name = forms.CharField(required=False)
+	is_send = forms.CharField(required=False)
+	email_address = forms.CharField(required=False)
+	title = forms.CharField(required=False)
+	smtp_host = forms.CharField(required=False)
+	username = forms.CharField(required=False)
+	password = forms.CharField(required=False)
+	template = forms.CharField(required=False)
+	template_file = forms.CharField(required=False)
+	class Meta:
+		model = Email
+		fields = ('useage_name','is_send','email_address','title','smtp_host','username','password','template','template_file')
 		
-		
-		
+	
 class inquiry_form(forms.ModelForm):
 	company = forms.CharField(required=False)
 	class Meta:

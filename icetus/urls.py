@@ -88,6 +88,7 @@ urlpatterns = patterns("",
 	url('^admin/system-config/(.+)/$', 'shopcart.myadmin.system_config.view',name='admin_system_config_view'),
 	url('^admin/site-config-manage/$', 'shopcart.myadmin.system_config.site_config_manage',name='admin_site_config_manage'),
 	url('^admin/display-config-manage/$', 'shopcart.myadmin.system_config.display_config_manage',name='admin_display_config_manage'),
+	url('^admin/email-config-manage/$', 'shopcart.myadmin.system_config.email_config_manage',name='admin_email_config_manage'),
 	
 	
 	url('^admin/no-permission/$', 'shopcart.myadmin.index.no_permission',name='admin_no_permission'),

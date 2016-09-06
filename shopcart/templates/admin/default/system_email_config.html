@@ -44,7 +44,7 @@
 								<input type="radio" name="{{email.id}}_is_send" {{email.is_send|yesno:",checked,"}}><label>否</label>
 							</dd>
 							<dd>{{email.email_address}}</dd>
-							<dd><a class="edit">编辑</a></dd>
+							<dd><a class="edit" href="/admin/email-config-manage/?id={{email.id}}">编辑</a></dd>
 						</dl>
 					{% endfor %}
                 </div>

@@ -37,7 +37,7 @@ def detail(request,id=None):
 		raise Http404
 	
 	#快递列表
-	express_list = Express.objects.all()
+	express_list = Express.objects.filter(is_in_use=True).filter(is_delete=False)
 	ctx['express_list'] = express_list
 	
 	ctx['order'] = order

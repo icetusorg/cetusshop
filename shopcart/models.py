@@ -399,6 +399,8 @@ class ExpressType(models.Model):
 	name = models.CharField(max_length=100,null=True,verbose_name = '送货方式')
 	price_fixed = models.FloatField(verbose_name = '固定运费')
 	price_per_kilogram = models.FloatField(verbose_name = '每千克运费')
+	is_in_use = models.BooleanField(default=True,verbose_name='是否启用')
+	is_delete = models.BooleanField(default=False,verbose_name='是否删除')
 	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
 	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
 	
@@ -416,6 +418,8 @@ class Express(models.Model):
 	express_type = models.ManyToManyField(ExpressType,null=True,related_name='expresses')
 	price_fixed = models.FloatField(verbose_name = '固定运费')
 	price_per_kilogram = models.FloatField(verbose_name = '每千克运费')
+	is_in_use = models.BooleanField(default=True,verbose_name='是否启用')
+	is_delete = models.BooleanField(default=False,verbose_name='是否删除')
 	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
 	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
 	

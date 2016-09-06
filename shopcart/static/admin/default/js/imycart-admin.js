@@ -601,6 +601,31 @@ jQuery("#display_config_submit_btn").click(function(e){
 	});
 });
 
+//邮件设置
+jQuery("#email_detail_config_submit_btn").click(function(e){
+	var url = "/admin/email-config-manage/";
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#email_detail_config_form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			if(data.success==true){
+				$('#myModal').on('hidden.bs.modal', function (e) {
+					location.reload(true); 
+				})
+			}
+			$("#myModal").modal('toggle');
+		}
+	});
+});
+
 
 //通用函数
 /* 

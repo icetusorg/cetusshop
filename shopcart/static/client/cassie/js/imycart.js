@@ -750,6 +750,10 @@ function imycartRemoveProductFromWishlistCallBack(result,triggerControl,extraInf
 
 //选择了商品某个额外属性
 jQuery(".product-attribute-item").click(function(){
+		/*  给商品加上表示选中红框的逻辑 */
+		$(this).parent().prevAll().removeClass('redborder');
+		$(this).parent().nextAll().removeClass('redborder');
+		$(this).parent().addClass('redborder');
 		
 	
 		var product_to_get = new Object();
@@ -805,7 +809,7 @@ jQuery(".product-attribute-item").click(function(){
 				error : function(result) {
 					alert('Sorry.An error occured.Please try again.');
 				}
-		});
+		}); 
 });
 
 

@@ -131,7 +131,7 @@ jQuery("#main-content-checkbox-all").change(function(){
 	}
 }); 
 
-jQuery("#main-content-btn-all").click(function(e){
+jQuery("#main-content-btn-all").click(function(event){
 	event.preventDefault();
 	if($("#main-content-checkbox-all").is(":checked")){
 		$("#main-content-checkbox-all").prop("checked",false);
@@ -144,7 +144,7 @@ jQuery("#main-content-btn-all").click(function(e){
 
 //页码切换
 //页数点击切换
-jQuery(".pageChage").click(function(){
+jQuery(".pageChage").click(function(event){
 	event.preventDefault();//阻止A标签跳转
 	var url = location.href;
 	var pageNo = $.getUrlParam("page");
@@ -401,7 +401,7 @@ jQuery("#product-attribute-submit-btn").click(function(){
 });
 
 //删除SKU
-jQuery(".sku_delete_link").click(function(){
+jQuery(".sku_delete_link").click(function(event){
 	event.preventDefault();//阻止A标签跳转
 	
 	var url = "/admin/product-sku-delete/" + $(this).data("sku-id") + "/";
@@ -433,7 +433,7 @@ jQuery(".sku_delete_link").click(function(){
 //商品图片管理
 
 //设为主图
-jQuery(".set-to-main-picture-link").click(function(){
+jQuery(".set-to-main-picture-link").click(function(event){
 	event.preventDefault();
 	var img_url = $(this).data("image-url");
 	$("input[name=product_image]").val(img_url);

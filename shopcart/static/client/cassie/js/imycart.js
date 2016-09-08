@@ -116,7 +116,7 @@ function imycartAjaxGetCartInfoCallback(result,triggerControl,extraInfo){
 
 
 //提交询盘问题
-jQuery("#inquiry-submit").click(function(e){
+jQuery("#inquiry-submit").click(function(event){
 	event.preventDefault();
 	url = '/inquiry/add/'
 	
@@ -140,14 +140,14 @@ jQuery("#inquiry-submit").click(function(e){
 
 
 //切换语言
-jQuery(".change_locale_btn").click(function(e){
+jQuery(".change_locale_btn").click(function(event){
 	event.preventDefault();
 	$("#changeLocaleForm").submit();
 });
 
 
 //加入邮件列表
-jQuery(".add-to-emaillist").click(function(){
+jQuery(".add-to-emaillist").click(function(event){
 	event.preventDefault();
 	var email = new Object();
 	email.email = $("#newsletter-email").val();
@@ -203,7 +203,7 @@ jQuery(".try-promotion-code").click(function(e){
 });
 
 //每页显示数量设置
-jQuery(".pageSize").click(function(){
+jQuery(".pageSize").click(function(event){
 	event.preventDefault();
 	var url = location.href;
 	var newurl = changeURLArg(url,"pageSize",$(this).data("page-size"));
@@ -212,7 +212,7 @@ jQuery(".pageSize").click(function(){
 
 
 //页数点击切换
-jQuery(".pageChage").click(function(){
+jQuery(".pageChage").click(function(event){
 	event.preventDefault();//阻止A标签跳转
 	var url = location.href;
 	var pageNo = $.getUrlParam("page");
@@ -267,7 +267,7 @@ jQuery(".sortDirection").click(function(event) {
 });
 
 //刷新验证码
-jQuery(".next-captcha").click(function(){
+jQuery(".next-captcha").click(function(event){
 	event.preventDefault();
 	$.getJSON('/refresh-captcha', function(json) {  
 		// This should update your captcha image src and captcha hidden input  
@@ -696,7 +696,7 @@ function imycartAddProductToCartCallBack(result,triggerControl,extraInfo){
 
 //把商品添加到愿望清单
 jQuery("#addToWishList").click(
-	function() {
+	function(event) {
 		event.preventDefault();
 		imycartAddProductToWishlist($(this).data("product-id"),$(this),null);
 	}
@@ -722,7 +722,7 @@ function imycartAddProductToWishlistCallBack(result,triggerControl,extraInfo){
 
 //把商品从愿望清单删除
 jQuery(".remove-from-wishlist").click(
-	function() {
+	function(event) {
 		event.preventDefault();
 		var extraInfo = new Object();
 		extraInfo.topDivId = $(this).data("top-div-id");

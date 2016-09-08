@@ -74,8 +74,19 @@ def place_order(request):
 			amount_to_check = amount_to_check + cp.get_total()
 			#向主订单加入商品
 			logger.debug('>>>>>5:product.id='+str(cp.product.id))
-			op = Order_Products.objects.create(product_id=cp.product.id,product_attribute=cp.product_attribute,order=order,name=cp.product.name,short_desc=cp.product.short_desc,price=cp.get_product_price(),
-				thumb=cp.product.thumb,image=cp.product.image,quantity=cp.quantity)
+			
+			pa_id = None
+			pa_name = ''
+			pa_item_number = None
+			if cp.product_attribute:
+				pa_id = cp.product_attribute.id
+				pa_name = cp.product_attribute.get_grouped_attribute_desc()
+				pa_item_number = cp.product_attribute.sub_item_number
+			
+			
+			op = Order_Products.objects.create(product_id=cp.product.id,product_attribute_id=pa_id,order=order,name=cp.product.name,short_desc=cp.product.short_desc,price=cp.get_product_price(),
+				thumb=cp.product.thumb,image=cp.product.image,quantity=cp.quantity,product_attribute_name = pa_name,product_attribute_item_number=pa_item_number)
+
 			logger.debug('>>>>>6:op.id='+str(op.id))
 			# 20160614，考拉，加入了扣减库存的逻辑
 			if cp.product_attribute:

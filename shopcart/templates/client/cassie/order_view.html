@@ -63,14 +63,10 @@
 								<div class="carts-item">
 									<div class="carts-goods-img">
 										<a href="/product/{{op.product_id}}/">
-										    {% if op.product_attribute %}
-												<img src="{{op.product_attribute.image.thumb}}" alt="{{op.name}}">
-											{% else %}
-												<img src="{{op.thumb}}" alt="{{op.name}}">
-											{% endif %}
+										    <img src="{{op.thumb}}" alt="{{op.name}}">
 										</a>
 									</div>
-									<div class="carts-goods-name"><div><a href="/product/{{op.product_id}}/">{{op.name}}</a><br>{{op.get_short_product_attr}}</div></div>
+									<div class="carts-goods-name"><div><a href="/product/{{op.product_id}}/">{{op.name}}</a><br>{{op.product_attribute_name}}</div></div>
 									<div class="carts-goods-price">${{op.price|floatformat:"2"}}</div>
 									<div class="carts-goods-qty">
 										<div class="quy-item">{{op.quantity}}</div>

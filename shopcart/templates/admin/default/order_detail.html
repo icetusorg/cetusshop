@@ -77,24 +77,20 @@
                 <dl>
                     <dt>商品图片</dt>
                     <dt>商品名称</dt>
-                    <dt>属性</dt>
-                    <dt>货号</dt>
+                    <dt>SKU名称</dt>
+                    <dt>SKU编号</dt>
                     <dt class="text-center">数量</dt>
                 </dl>
 				{% for op in order.order_products.all%}
 					<dl>
 						<dd>
 							<a href="/product/{{op.product_id}}/">
-							    {% if op.product_attribute %}
-									<img src="{{op.product_attribute.image.thumb}}" alt="{{op.name}}">
-								{% else %}
-									<img src="{{op.thumb}}" alt="{{op.name}}">
-								{% endif %}
+								<img src="{{op.thumb}}" alt="{{op.name}}">
 							</a>
 						</dd>
 						<dd><a href="/product/{{op.product_id}}/">{{op.name}}</a></dd>
-						<dd>{{op.get_short_product_attr}}</dd>
-						<dd>{{op.item_number}}</dd>
+						<dd>{{op.product_attribute_name|default:"无SKU信息"}}</dd>
+						<dd>{{op.product_attribute_item_number|default:"无SKU信息"}}</dd>
 						<dd class="text-center">{{op.quantity}}</dd>
 					</dl>
 				{% endfor %}

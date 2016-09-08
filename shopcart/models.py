@@ -560,7 +560,10 @@ class OrderRemark(models.Model):
 @python_2_unicode_compatible		
 class Order_Products(models.Model):
 	product_id = models.IntegerField(default=0,verbose_name='商品编号')
-	product_attribute = models.ForeignKey(Product_Attribute,null=True)
+	#product_attribute = models.ForeignKey(Product_Attribute,null=True)
+	product_attribute_id = models.IntegerField(null=True,blank=True,verbose_name='SKU的id')
+	product_attribute_item_number = models.CharField(max_length=100,null=True,blank=True,verbose_name='SKU编号')
+	product_attribute_name = models.CharField(max_length=1000,default='',verbose_name='选中的商品属性文字说明')
 	order = models.ForeignKey(Order,null=True,related_name='order_products')
 	name = models.CharField(max_length = 100,default='',verbose_name='商品名称')
 	short_desc = models.CharField(max_length = 254,default='')
@@ -580,8 +583,8 @@ class Order_Products(models.Model):
 		
 	def get_short_product_attr(self):
 		attr_list = []
-		if self.product_attribute:
-			attr_list = Attribute.objects.filter(product_attribute=self.product_attribute).distinct()
+		if self.product_attribute_id:
+			attr_list = Attribute.objects.filter(product_attribute__id=self.product_attribute_id).distinct()
 		ret_str = ''
 		for attr in attr_list:
 			ret_str = ret_str + ' [' + attr.group.name + ':' + attr.name + ']'

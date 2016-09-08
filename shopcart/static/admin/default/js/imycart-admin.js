@@ -329,11 +329,16 @@ jQuery(".add-attribute-group").click(function(){
 				$.each(data.data.items,function(index,attr){
 					itemArray.push(attr);
 				});
-				itemArray.sort();
+				//itemArray.sort();
+				
+				var sortedArray = itemArray.sort(function(a,b){
+					return a.name.localeCompare(b.name);
+				});	
 				
 				$.each(itemArray,function(index,attr){
 					$('<input type="checkbox" value="'+ attr.id +'" name="attribute-id" class="attribute-to-sku" data-attr-id="' + attr.id + '" /><label>' + attr.name + '</label>').appendTo($item);
 				});
+				
 			}
 		});
 	} 

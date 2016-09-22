@@ -44,13 +44,13 @@ def place_order(request):
 		try:
 			address = Address.objects.get(id=request.POST['address_id'])
 		except:
-			ctx['order_result'] = _('Address is not correct')
-			return render(request,System_Config.get_template_name() + '/order_result.html',ctx)
+			ctx['content'] = _('Address is not correct')
+			return render(request,System_Config.get_template_name() + '/info_show.html',ctx)
 			
 		if address not in request.user.addresses.all():
 			#如果这个地址不是这个用户的，报错
-			ctx['order_result'] = 'System Error.Please try again.'
-			return render(request,System_Config.get_template_name() + '/order_result.html',ctx)
+			ctx['content'] = 'System Error.Please try again.'
+			return render(request,System_Config.get_template_name() + '/info_show.html',ctx)
 		
 		#金额
 		sub_total,shipping,discount,total,remark,express_type = request.POST['sub_total'],request.POST['shipping'],request.POST['discount'],request.POST['total'],request.POST['remark'],request.POST['express']
@@ -92,14 +92,21 @@ def place_order(request):
 			if cp.product_attribute:
 				product_attribute = cp.product_attribute
 				product_attribute.quantity = product_attribute.quantity - cp.quantity
-				#if product_attribute.quantity < 0:
-				#	raise Exception('QUANTITY_INVALID|The product is sold out.')
+				if product_attribute.quantity < 0:
+					ctx['content'] = 'The product "%s" is sold out.' % product_attribute.product.name
+					ctx['backurl'] = '/cart/show/'
+					return render(request,System_Config.get_template_name() + '/info_show.html',ctx)
+				
+					#raise Exception('The product "%s" is sold out.' % product_attribute.product.name)
 				product_attribute.save()
 			else:
 				product = cp.product
 				product.quantity = product.quantity - cp.quantity
-				#if product.quantity < 0:
-				#	raise Exception('QUANTITY_INVALID|The product is sold out.')
+				if product.quantity < 0:
+					ctx['content'] = 'The product "%s" is sold out.' % product.name
+					ctx['backurl'] = '/cart/show/'
+					return render(request,System_Config.get_template_name() + '/info_show.html',ctx)
+					#raise Exception('The product "%s" is sold out.' % product.name)
 				product.save()
 			
 			

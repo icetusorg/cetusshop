@@ -151,6 +151,7 @@ def ajax_modify_cart(request):
 			cart_exist.save()
 			result_dict['cart_product_total'] = cart_exist.get_total()
 			result_dict['sub_total'] = cart_exist.cart.get_sub_total()
+
 		elif cart['method'] == 'sub':
 			quantity = cart_exist.quantity - int(cart['quantity'])
 			#不可减到1个以下
@@ -185,28 +186,53 @@ def ajax_modify_cart(request):
 	
 	return JsonResponse(result_dict)
 
+
+def quantity_check(cart_product,quantity):
+	if cart_product.product_attribute:
+		product_attribute = cart_product.product_attribute
+		if quantity > product_attribute.quantity:
+			return False,product_attribute.quantity
+		else:
+			return True,0
+	else:
+		product = cart_product.product
+		if quantity > product.quantity:
+			return False,product.quantity
+		else:
+			return True,0
 	
 def set_cart_product_quantity(quantity,cart_exist,result_dict):
 	
 	min_order_quantity = 0
+	quantity_left = 0
+	current_quantity = cart_exist.quantity
 	if cart_exist.product_attribute:	
 		min_order_quantity = cart_exist.product_attribute.min_order_quantity
+		quantity_left = cart_exist.product_attribute.quantity
 		logger.debug('cart_exist.product_attribute:%s' % (cart_exist.product_attribute.min_order_quantity))
 	else:
 		min_order_quantity = cart_exist.product.min_order_quantity
+		quantity_left = cart_exist.product.quantity
 		logger.debug('cart_exist.product:%s' % (cart_exist.product.min_order_quantity))
 	logger.debug('at least:' + str(min_order_quantity))
 	
 	
 	if quantity >= min_order_quantity:
-		cart_exist.quantity = quantity
-		cart_exist.save()
-		result_dict['cart_product_total'] = cart_exist.get_total()
-		result_dict['sub_total'] = cart_exist.cart.get_sub_total()
-		return True
+		if quantity <= quantity_left:
+			cart_exist.quantity = quantity
+			cart_exist.save()
+			result_dict['cart_product_total'] = cart_exist.get_total()
+			result_dict['sub_total'] = cart_exist.cart.get_sub_total()
+			return True
+		else:
+			result_dict['success'] = False
+			result_dict['available'] = quantity_left
+			result_dict['origin'] = current_quantity
+			result_dict['message'] = _('There is only %s pieces in stock.' % quantity_left)
+			return False
 	else:
 		result_dict['message'] = 'The product must order more than %s' % (min_order_quantity)
-		result_dict['origin'] = cart_exist.quantity
+		result_dict['origin'] = current_quantity
 		return False
 
 def view_cart(request):

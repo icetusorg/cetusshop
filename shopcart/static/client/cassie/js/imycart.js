@@ -317,6 +317,12 @@ jQuery(".return-to-cart").click(function() {
  ***/
  
 //π∫ŒÔ≥µœÍ«È
+jQuery(".cart-qty").blur(function(e){
+	var cp_id = $(this).data('cartid');
+	var qty = $(this).val();
+	imycartModifyCart('set',cp_id,qty,$(this));
+});
+
 jQuery(".qty-decrease").click(function(e){
 	var cp_id = $(this).data('cartid');
 	var current_qty = $("#cartqty-" + cp_id).val();

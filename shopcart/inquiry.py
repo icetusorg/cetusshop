@@ -26,6 +26,7 @@ def add(request):
 		form = inquiry_form(request.POST) # 获取Post表单数据
 		if form.is_valid():# 验证表单
 			inquiry = form.save()
+			logger.debug('request.META:%s' % request.META)
 			
 			if 'HTTP_X_FORWARDED_FOR' in request.META:
 				ip =  request.META['HTTP_X_FORWARDED_FOR']

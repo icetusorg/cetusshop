@@ -28,9 +28,12 @@ def add(request):
 			inquiry = form.save()
 			
 			if 'HTTP_X_FORWARDED_FOR' in request.META:
-				ip =  request.META['HTTP_X_FORWARDED_FOR']  
+				ip =  request.META['HTTP_X_FORWARDED_FOR']
+				logger.debug('There is HTTP_X_FORWARDED_FOR in request.META,ip is:%s' % ip)
 			else:  
-				ip = request.META['REMOTE_ADDR'] 
+				ip = request.META['REMOTE_ADDR']
+				logger.debug('Get ip from REMOTE_ADDR is:%s' % ip)
+			
 			inquiry.ip_address = ip
 			inquiry.save()
 			

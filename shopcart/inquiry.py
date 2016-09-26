@@ -26,6 +26,14 @@ def add(request):
 		form = inquiry_form(request.POST) # 获取Post表单数据
 		if form.is_valid():# 验证表单
 			inquiry = form.save()
+			
+			if 'HTTP_X_FORWARDED_FOR' in request.META:
+				ip =  request.META['HTTP_X_FORWARDED_FOR']  
+			else:  
+				ip = request.META['REMOTE_ADDR'] 
+			inquiry.ip_address = ip
+			inquiry.save()
+			
 			result_dict['success'] = True
 			result_dict['message'] = _('Your inquiry was submitted and will be responded to as soon as possible. Thank you for contacting us.')
 			

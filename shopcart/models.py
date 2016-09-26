@@ -676,6 +676,7 @@ class Inquiry(models.Model):
 	company = models.CharField(max_length=200,null=True,verbose_name = '对方公司')
 	email = models.EmailField(max_length=254,null=True,verbose_name = '电子邮件')
 	message = models.TextField(blank=True,verbose_name='询盘信息')
+	ip_address = models.CharField(max_length=32,null=True,blank=True,verbose_name='IP地址')
 	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
 	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
 	

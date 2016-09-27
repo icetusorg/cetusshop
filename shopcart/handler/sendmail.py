@@ -9,121 +9,156 @@ logger = logging.getLogger('icetus.shopcart')
 from django.dispatch import receiver
 @receiver(signals.user_registration_success)
 def user_registration_success_send_mail(sender, **kwargs):
-	logger.info('Enter user_registration_success_send_mail hanlder!')
-	from shopcart.utils import get_system_parameters
-	user = kwargs['user']
-	mail_ctx = {}
-	mail_ctx['first_name'] = user.first_name
-	mail_ctx['last_name'] = user.last_name
-	mail_ctx['email'] = user.email
-	mail_ctx['system_para'] = get_system_parameters()
-	#sendmail('user_registration_success_send_mail',user.email,mail_ctx,title=None,useage='user_registration_success')	
-	sendmail(user.email,mail_ctx,title=None,useage='user_registration_success')
+	try:
+		logger.info('Enter user_registration_success_send_mail hanlder!')
+		from shopcart.utils import get_system_parameters
+		user = kwargs['user']
+		mail_ctx = {}
+		mail_ctx['first_name'] = user.first_name
+		mail_ctx['last_name'] = user.last_name
+		mail_ctx['email'] = user.email
+		mail_ctx['system_para'] = get_system_parameters()
+		#sendmail('user_registration_success_send_mail',user.email,mail_ctx,title=None,useage='user_registration_success')	
+		sendmail(user.email,mail_ctx,title=None,useage='user_registration_success')
+	except Exception as err:
+		logger.error('There is an error ocuuerd in user_registration_success_send_mail . \n Error Message：%s' % err)
 	
 @receiver(signals.user_password_modify_applied)			
 def user_password_modify_applied_send_mail(sender,	**kwargs):
-	logger.info('Enter user_password_modify_applied_send_mail hanlder!')
-	email = kwargs['reset_password'].email
-	validate_code = kwargs['reset_password'].validate_code
-	mail_ctx = {}
-	from shopcart.utils import get_system_parameters
-	from shopcart.utils import url_with_out_slash
-	mail_ctx['system_para'] = get_system_parameters()
-	reset_url =  '%s/user/reset-password?email=%s&validate_code=%s' % (url_with_out_slash(mail_ctx['system_para']['base_url']),email,validate_code)
-	logger.debug('reset_url:' + reset_url)
-	mail_ctx['email'] = email
-	mail_ctx['reset_password_link'] = reset_url
-	#sendmail('user_password_modify_applied_send_mail',email,mail_ctx,title=None,useage='user_password_modify_applied')
-	sendmail(email,mail_ctx,title=None,useage='user_password_modify_applied')
+	try:
+		logger.info('Enter user_password_modify_applied_send_mail hanlder!')
+		email = kwargs['reset_password'].email
+		validate_code = kwargs['reset_password'].validate_code
+		mail_ctx = {}
+		from shopcart.utils import get_system_parameters
+		from shopcart.utils import url_with_out_slash
+		mail_ctx['system_para'] = get_system_parameters()
+		reset_url =  '%s/user/reset-password?email=%s&validate_code=%s' % (url_with_out_slash(mail_ctx['system_para']['base_url']),email,validate_code)
+		logger.debug('reset_url:' + reset_url)
+		mail_ctx['email'] = email
+		mail_ctx['reset_password_link'] = reset_url
+		#sendmail('user_password_modify_applied_send_mail',email,mail_ctx,title=None,useage='user_password_modify_applied')
+		sendmail(email,mail_ctx,title=None,useage='user_password_modify_applied')
+	except Exception as err:
+		logger.error('There is an error ocuuerd in user_password_modify_applied_send_mail . \n Error Message：%s' % err)
 	
 
 @receiver(signals.user_password_modify_success)
 def user_password_modify_success_send_mail(sender,	**kwargs):
-	logger.info('Enter user_password_modify_success_send_mail hanlder!')
-	user = kwargs['user']
-	mail_ctx = {}
-	from shopcart.utils import get_system_parameters
-	from shopcart.utils import url_with_out_slash
-	mail_ctx['system_para'] = get_system_parameters()
-	mail_ctx['first_name'] = user.first_name
-	mail_ctx['last_name'] = user.last_name
-	#sendmail('user_password_modify_success_send_mail',user.email,mail_ctx,title=None,useage='user_password_modify_success')
-	sendmail(user.email,mail_ctx,title=None,useage='user_password_modify_success')
+	try:
+		logger.info('Enter user_password_modify_success_send_mail hanlder!')
+		user = kwargs['user']
+		mail_ctx = {}
+		from shopcart.utils import get_system_parameters
+		from shopcart.utils import url_with_out_slash
+		mail_ctx['system_para'] = get_system_parameters()
+		mail_ctx['first_name'] = user.first_name
+		mail_ctx['last_name'] = user.last_name
+		#sendmail('user_password_modify_success_send_mail',user.email,mail_ctx,title=None,useage='user_password_modify_success')
+		sendmail(user.email,mail_ctx,title=None,useage='user_password_modify_success')
+	except Exception as err:
+		logger.error('There is an error ocuuerd in user_password_modify_success_send_mail . \n Error Message：%s' % err)
 
 @receiver(signals.product_added_to_cart)		
 def product_added_to_cart_send_mail(sender,	**kwargs):
-	logger.info('Enter product_added_to_cart_send_mail hanlder!')
-	email = kwargs['email']
-	mail_ctx = {}
-	#sendmail('user_registration_success_send_mail',email,mail_ctx,'')
-	sendmail(email,mail_ctx,'')
+	try:
+		logger.info('Enter product_added_to_cart_send_mail hanlder!')
+		email = kwargs['email']
+		mail_ctx = {}
+		#sendmail('user_registration_success_send_mail',email,mail_ctx,'')
+		sendmail(email,mail_ctx,'')
+	except Exception as err:
+		logger.error('There is an error ocuuerd in product_added_to_cart_send_mail . \n Error Message：%s' % err)
 
 @receiver(signals.product_added_to_wishlist)	
 def product_added_to_wishlist_send_mail(sender,	**kwargs):
-	logger.info('Enter product_added_to_wishlist_send_mail hanlder!')
-	email = kwargs['email']
-	mail_ctx = {}
-	#sendmail('user_registration_success_send_mail',email,mail_ctx,'')
-	sendmail(email,mail_ctx,'')
-			
+	try:
+		logger.info('Enter product_added_to_wishlist_send_mail hanlder!')
+		email = kwargs['email']
+		mail_ctx = {}
+		#sendmail('user_registration_success_send_mail',email,mail_ctx,'')
+		sendmail(email,mail_ctx,'')
+	except Exception as err:
+		logger.error('There is an error ocuuerd in product_added_to_wishlist_send_mail . \n Error Message：%s' % err)
+
+	
 @receiver(signals.order_was_placed)
 def order_was_placed_send_mail(sender,	**kwargs):
-	logger.info('Enter order_was_placed_send_mail hanlder!')
-	email = kwargs['email']
-	mail_ctx = {}
-	#sendmail('user_registration_success_send_mail',email,mail_ctx,'')
-	sendmail(email,mail_ctx,'')
+	try:
+		logger.info('Enter order_was_placed_send_mail hanlder!')
+		email = kwargs['email']
+		mail_ctx = {}
+		#sendmail('user_registration_success_send_mail',email,mail_ctx,'')
+		sendmail(email,mail_ctx,'')
+	except Exception as err:
+		logger.error('There is an error ocuuerd in product_added_to_wishlist_send_mail . \n Error Message：%s' % err)
 
 @receiver(signals.order_was_payed)
 def order_was_payed_send_mail(sender,	**kwargs):
-	logger.info('Enter order_was_payed_send_mail hanlder!')
-	order = kwargs['order']
-	user = order.user
-	mail_ctx = {}
-	from shopcart.utils import get_system_parameters
-	mail_ctx['system_para'] = get_system_parameters()
-	mail_ctx['first_name'] = user.first_name
-	mail_ctx['last_name'] = user.last_name
-	mail_ctx['order'] = order
-	#sendmail('order_was_payed_send_mail',user.email,mail_ctx,title=None,useage='order_was_payed')
-	sendmail(user.email,mail_ctx,title=None,useage='order_was_payed')
+	try:
+		logger.info('Enter order_was_payed_send_mail hanlder!')
+		order = kwargs['order']
+		user = order.user
+		mail_ctx = {}
+		from shopcart.utils import get_system_parameters
+		mail_ctx['system_para'] = get_system_parameters()
+		mail_ctx['first_name'] = user.first_name
+		mail_ctx['last_name'] = user.last_name
+		mail_ctx['order'] = order
+		#sendmail('order_was_payed_send_mail',user.email,mail_ctx,title=None,useage='order_was_payed')
+		sendmail(user.email,mail_ctx,title=None,useage='order_was_payed')
+	except Exception as err:
+		logger.error('There is an error ocuuerd in product_added_to_wishlist_send_mail . \n Error Message：%s' % err)	
 	
 @receiver(signals.order_was_canceled)
 def order_was_canceled_send_mail(sender,	**kwargs):
-	logger.info('Enter order_was_canceled_send_mail hanlder!')
-	email = kwargs['email']
-	mail_ctx = {}
-	#sendmail('user_registration_success_send_mail',email,mail_ctx,'')
-	sendmail(email,mail_ctx,'')
+	try:
+		logger.info('Enter order_was_canceled_send_mail hanlder!')
+		email = kwargs['email']
+		mail_ctx = {}
+		#sendmail('user_registration_success_send_mail',email,mail_ctx,'')
+		sendmail(email,mail_ctx,'')
+	except Exception as err:
+		logger.error('There is an error ocuuerd in order_was_canceled_send_mail . \n Error Message：%s' % err)		
 	
 @receiver(signals.order_was_shipped)
 def order_was_shipped_send_mail(sender,	**kwargs):
-	logger.info('Enter order_was_shipped_send_mail hanlder!')
-	email = kwargs['email']
-	mail_ctx = {}
-	#sendmail('user_registration_success_send_mail',email,mail_ctx,'')
-	sendmail(email,mail_ctx,'')
+	try:
+		logger.info('Enter order_was_shipped_send_mail hanlder!')
+		email = kwargs['email']
+		mail_ctx = {}
+		#sendmail('user_registration_success_send_mail',email,mail_ctx,'')
+		sendmail(email,mail_ctx,'')
+	except Exception as err:
+		logger.error('There is an error ocuuerd in order_was_canceled_send_mail . \n Error Message：%s' % err)
+	
 	
 @receiver(signals.order_was_complete)
 def order_was_complete_send_mail(sender,**kwargs):
-	logger.info('Enter order_was_complete_send_mail hanlder!')
-	email = kwargs['email']
-	mail_ctx = {}
-	#sendmail('user_registration_success_send_mail',email,mail_ctx,'')
-	sendmail(email,mail_ctx,'')
+	try:
+		logger.info('Enter order_was_complete_send_mail hanlder!')
+		email = kwargs['email']
+		mail_ctx = {}
+		#sendmail('user_registration_success_send_mail',email,mail_ctx,'')
+		sendmail(email,mail_ctx,'')
+	except Exception as err:
+		logger.error('There is an error ocuuerd in order_was_canceled_send_mail . \n Error Message：%s' % err)
+
 	
 @receiver(signals.inquiry_received)
 def inquiry_received_send_mail(sender,**kwargs):
-	logger.info('Enter inquiry_received_send_mail hanlder!')
-	inquiry = kwargs['inquiry']
-
-	mail_ctx = {}
-	from shopcart.utils import get_system_parameters
-	mail_ctx['system_para'] = get_system_parameters()
-	mail_ctx['name'] = inquiry.name
-	#sendmail('inquiry_received_send_mail',inquiry.email,mail_ctx,title=None,useage='inquiry_received')
-	sendmail(inquiry.email,mail_ctx,title=None,useage='inquiry_received')	
-
+	try:
+		logger.info('Enter inquiry_received_send_mail hanlder!')
+		inquiry = kwargs['inquiry']
+	
+		mail_ctx = {}
+		from shopcart.utils import get_system_parameters
+		mail_ctx['system_para'] = get_system_parameters()
+		mail_ctx['name'] = inquiry.name
+		#sendmail('inquiry_received_send_mail',inquiry.email,mail_ctx,title=None,useage='inquiry_received')
+		sendmail(inquiry.email,mail_ctx,title=None,useage='inquiry_received')	
+	except Exception as err:
+		logger.error('There is an error ocuuerd in inquiry_received_send_mail . \n Error Message：%s' % err)
 	
 
 	

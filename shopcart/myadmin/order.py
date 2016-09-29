@@ -86,8 +86,11 @@ def list_view(request):
 	else:
 		raise Http404
 
+		
+'''		
 @staff_member_required
 @transaction.atomic()
+###由于发货已经改成记录明细了，所以这个方法不需要了
 def ship(request):	
 	result_dict = {}
 	message_dict = {}
@@ -114,6 +117,8 @@ def ship(request):
 		
 	else:
 		raise Http404		
+'''		
+		
 		
 @staff_member_required
 @transaction.atomic()
@@ -139,7 +144,7 @@ def remark_add(request):
 def ship_out(request):
 	result_dict = {}
 	if request.method == 'POST':
-		logger.debug('request.POST:%s' % request.POST)
+		#logger.debug('request.POST:%s' % request.POST)
 	
 		try:
 			order_id = request.POST.get('order_id','')
@@ -167,6 +172,10 @@ def ship_out(request):
 			order_shippment.shipper_name = express.name
 			order_shippment.express = express
 			order_shippment.save()
+			#修改订单状态
+			order.status = Order.ORDER_STATUS_SHIPPING
+			order.save()
+			
 			result_dict['success'] = True
 			result_dict['message'] = '发货成功'
 			return JsonResponse(result_dict)
@@ -175,8 +184,48 @@ def ship_out(request):
 			result_dict['message'] = '表单填写的内容不合法，请检查。'
 			return JsonResponse(result_dict)
 		
-		
-		
+@staff_member_required
+@transaction.atomic()
+def modify_status(request,status='',order_id=''):
+	result_dict = {}
+	result_dict['success'] = False
+	result_dict['message'] = '表单填写的内容不合法，请检查。'
+	if request.method == 'POST':
+		if order_id:
+			try:
+				order = Order.objects.get(id=order_id)
+			except Exception as err:
+				logger.error('Can not find the order which id is [%s].' % order_id)
+				
+			if order:	
+				if status == 'collected':
+					if order.status == Order.ORDER_STATUS_PAYED_SUCCESS:
+						#已有在付款已确认状态下，才可以备货
+						order.status = Order.ORDER_STATUS_COLLECT_SUCCESS
+						order.save()
+						result_dict['success'] = True
+						result_dict['message'] = '订单备货完成'
+					else:
+						result_dict['message'] = '订单当前状态不是“付款已确认状态”，不能进行备货操作。' 
+				elif status == 'closed':
+					#订单在任何情况下都可以关闭，权限很大
+					order.status = Order.ORDER_STATUS_CLOSED
+					order.save()
+					result_dict['success'] = True
+					result_dict['message'] = '订单成功关闭'
+				elif status == 'finished':
+					if order.status == Order.ORDER_STATUS_SHIPPING:
+						#只有在已经发货的状态下，才可以结束订单
+						order.status = Order.ORDER_STATUS_COMPLETE
+						order.save()
+						result_dict['success'] = True
+						result_dict['message'] = '订单成功完结'
+					else:
+						result_dict['message'] = '订单当前状态不是“已发货”状态，不得进行完成操作。'
+				else:
+					logger.info('Order Status arguments is not valid. The value is [%s].' % status)
+	return JsonResponse(result_dict)
+				
 @staff_member_required
 def oper(request):	
 	if request.method == 'POST':

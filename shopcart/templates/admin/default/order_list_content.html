@@ -11,6 +11,7 @@
 
 {% block main %}
 {% load i18n %}
+{% load shopcart_extras %}
 <section class="content">
     <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
     <div class="row">
@@ -71,21 +72,7 @@
 										<td>{{order.create_time|date:"M/d/Y"}}</td>
 										<td>{{order.first_name}} &nbsp; {{order.last_name}}</td>
 										<td>
-											{% if order.status == '0' %}
-													<span>待付款</span> 
-											{% elif order.status == '10' %}
-													<span>待发货</span>
-											{% elif order.status == '20'%}
-													<span>已发货</span>
-											{% elif order.status == '30'%}
-													<span>已完成</span>
-											{% elif order.status == '90'%}
-													<span>异常</span>
-											{% elif order.status == '99'%}
-													<span>已关闭</span>
-											{% else %}
-													<span>order.get_human_status</span>
-											{% endif %}
+											{{order.status|admin_order_status:"zh_CN"}}
 										</td>
 										<td>${{order.order_amount|floatformat:"2"}}</td>
 										<td><a href="/admin/order-detail/{{order.id}}/">查看</a> | <a href="#">备注</a></td>

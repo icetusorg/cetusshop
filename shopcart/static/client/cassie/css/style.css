@@ -175,6 +175,8 @@ button:hover{border-radius:0;border-bottom-left-radius:0;border-bottom-right-rad
 .detail-attr ul{width:100%; display:inline-block;}
 .detail-attr li{float:left;margin-right:10px; line-height: 30px; font-size: 16px; display: inline-block;}
 .detail-attr li img{width:100%; border:1px #fff solid; cursor:pointer;}
+li.sku-inavailable{cursor: not-allowed;}
+li.sku-inavailable img{cursor: not-allowed;border: 1px dashed #ccc;}
 .cart-move{display:none;position: absolute;z-index: 999;}
 .detail-quality{padding-top:24px;border-top:1px solid #ddd;}
 .detail-quality .detail-add-btn{ font-size:16px;text-transform: capitalize;padding:10px 37px;border:1px solid #f7931d; line-height:30px; margin-right:20px; color:#fff; background: #f7931d;font-size: 16px;}

@@ -186,6 +186,91 @@ jQuery("#order_batch_delete").click(function(e){
 	$("#order_oper_form").submit();
 });
 
+//订单动作类
+jQuery("#admin_pay_order").click(function(event){
+	event.preventDefault();//阻止A标签跳转
+	$("#infoMessage").html("本功能正在开发中，敬请期待。");
+	$("#myModal").modal('toggle');
+});
+
+jQuery("#collect_order_products").click(function(event){
+	event.preventDefault();//阻止A标签跳转
+	o_status = "collected";
+	order_id = $(this).data("order-id");
+	modify_order_status(o_status,order_id);
+});
+
+jQuery("#ship_order_products").click(function(event){
+	event.preventDefault();//阻止A标签跳转
+	//$("#infoMessage").html("本功能正在开发中，敬请期待。");
+	//$("#myModal").modal('toggle');
+	$(".tag li,.add-content").removeClass("active");
+	$(".tag_shippment").addClass("active");
+	$("#tag_shippment").addClass("active");
+	
+});
+
+jQuery("#return_money").click(function(event){
+	event.preventDefault();//阻止A标签跳转
+	$("#infoMessage").html("本功能正在开发中，敬请期待。");
+	$("#myModal").modal('toggle');
+});
+
+jQuery("#return_order_products").click(function(event){
+	event.preventDefault();//阻止A标签跳转
+	$("#infoMessage").html("本功能正在开发中，敬请期待。");
+	$("#myModal").modal('toggle');
+});
+
+jQuery("#close_order").click(function(event){
+	event.preventDefault();//阻止A标签跳转
+	o_status = "closed";
+	order_id = $(this).data("order-id");
+	modify_order_status(o_status,order_id);
+});
+
+jQuery("#finish_order").click(function(event){
+	event.preventDefault();//阻止A标签跳转
+	o_status = "finished";
+	order_id = $(this).data("order-id");
+	modify_order_status(o_status,order_id);
+});
+
+jQuery("#edit_order").click(function(event){
+	event.preventDefault();//阻止A标签跳转
+	$("#infoMessage").html("本功能正在开发中，敬请期待。");
+	$("#myModal").modal('toggle');
+});
+
+function modify_order_status(order_status,order_id){
+	var url = "/admin/order-status/{status}/{order_id}/";
+	url = url.replace("{status}",order_status);
+	url = url.replace("{order_id}",order_id);
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:null,
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			$('#myModal').on('hidden.bs.modal', function (e) {
+				var url = location.href;
+				var newurl = changeURLArg(url,"tab_name","tag_remark");
+				location.href = newurl;//跳转到对应的页面
+			});
+			
+			$("#myModal").modal('toggle');
+		}
+	});
+	
+};
+
+
 //订单备注添加
 jQuery("#order-remark-add-submit-btn").click(function(){
 	var url = "/admin/order-remark-add/";
@@ -248,12 +333,66 @@ jQuery("#shippment_submit_btn").click(function(){
 	});	
 });
 
+//文章管理界面
+//批量删除
+jQuery("#article_batch_delete").click(function(event){
+	event.preventDefault();//阻止A标签跳转
+	var url = "/admin/article-delete/";
+
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#article_oper_form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			$('#myModal').on('hidden.bs.modal', function (e) {
+				var url = location.href;
+				location.href = url;//跳转到对应的页面
+			});
+			
+			$("#myModal").modal('toggle');
+		}
+	});	
+	
+});
+
+//文章基本信息提交
+jQuery("#article-basic-info-submit-btn").click(function(event){
+	event.preventDefault();
+	var url = "/admin/article-edit/";
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#article-basic-info-form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			if(data.success==true){
+				$('#myModal').on('hidden.bs.modal', function (e) {
+					location.href = url + "?id=" + data.data.article_id;
+				})
+			}
+			$("#myModal").modal('toggle');
+		}
+	});
+});
+
 
 
 //商品管理界面
 //Tab页切换方法
 //添加商品，页签（基本信息-属性-相册）点击事件
-$(".product-info-tag li").on("click",function(){
+jQuery(".product-info-tag li .article-info-tag li").on("click",function(){
 	if($("input[name=id]").val()!=''){
 		var contentId=$(this).attr("data");
 		$(".product-info-tag li,.add-content").removeClass("active");

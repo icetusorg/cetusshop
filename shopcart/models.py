@@ -438,6 +438,8 @@ class Order(models.Model):
 	ORDER_STATUS_PAYED_UNCONFIRMED = '5'
 	# 订单付款已确认
 	ORDER_STATUS_PAYED_SUCCESS = '10'
+	# 订单已备货
+	ORDER_STATUS_COLLECT_SUCCESS = '15'
 	# 订单已发货
 	ORDER_STATUS_SHIPPING = '20'
 	# 订单已完成
@@ -448,11 +450,12 @@ class Order(models.Model):
 	ORDER_STATUS_ERROR = '90'
 	# 订单已关闭
 	ORDER_STATUS_CLOSED = '99'
-	# 文章状态选项 
+	# 订单状态选项 
 	ORDER_STATUS_CHOICES = ( 
 		(ORDER_STATUS_PLACE_ORDER,'等待付款'),
 		(ORDER_STATUS_PAYED_UNCONFIRMED,'已付款未确认'),
 		(ORDER_STATUS_PAYED_SUCCESS,'已付款'),
+		(ORDER_STATUS_COLLECT_SUCCESS,'已备货'),
 		(ORDER_STATUS_SHIPPING,'已发货'),
 		(ORDER_STATUS_COMPLETE,'已完成'),
 		(ORDER_STATUS_CANCLED,'已取消'),
@@ -499,7 +502,7 @@ class Order(models.Model):
 		return self.order_number
 	
 	def get_human_status(self):
-		dict = {'0':'Wait For Payment','10':'Wait For Shipment','20':'Shipping','30':'Complete','40':'Canceled','90':'Payment Error','99':'Closed'}
+		dict = {'0':'Wait For Payment','10':'Wait For Shipment','15':'Wait For Shippment','20':'Shipping','30':'Complete','40':'Canceled','90':'Payment Error','99':'Closed'}
 		return dict[self.status]
 	#get_human_status.admin_order_field = 'pub_date'
 	#get_human_status.boolean = True
@@ -651,7 +654,7 @@ class Article(models.Model):
 	
 	def get_url(self):
 		from shopcart.functions.article_util_func import get_url
-		return get_url(self)
+		return get_url(self)		
 
 	class Meta:
 		verbose_name = '文章'

@@ -55,7 +55,7 @@
 							<ul class="detail-color">
 								<li>{{group.name}}:</li>
 					{% endif %}
-								<li><input class="product-attribute-item" data-attribute-id="{{attr.id}}" data-group-code="{{group.code}}" data-product-id="{{product.id}}" type="radio" name="{{group.code}}" value="{{attr.id}}" />{{attr.name}}</li>
+								<li class="sku-available"><input class="product-attribute-item" data-attribute-id="{{attr.id}}" data-group-code="{{group.code}}" data-product-id="{{product.id}}" type="radio" name="{{group.code}}" value="{{attr.id}}" />{{attr.name}}</li>
 					{% if forloop.last %}
 							</ul>
 						</div>
@@ -67,7 +67,7 @@
 							<ul class="detail-color">
 								<li>{{group.name}}:</li>
 					{% endif %}
-								<li class="product-color{{forloop.counter}}">
+								<li class="product-color{{forloop.counter}} sku-available">
 									<img class="product-attribute-item" data-attribute-id="{{attr.id}}" data-group-code="{{group.code}}" data-product-id="{{product.id}}" src='{{attr.thumb}}' alt='{{attr.name}}' title='{{attr.name}}'/>
 								</li>
 					{% if forloop.last %}

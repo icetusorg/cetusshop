@@ -1,0 +1,130 @@
+{% extends "admin/default/content_base.html" %}
+{% block breadcrumbs %}
+<section class="content-header">
+    <h1>文章管理</h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+        <li class="active"><a href="#">文章管理</a></li>
+    </ol>
+</section>
+{% endblock %}
+
+{% block main %}
+{% load i18n %}
+{% load shopcart_extras %}
+<section class="content">
+    <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box xy-search">
+                <div class="box-header with-border">
+                    <h3 class="box-title">文章查询</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div>
+                                <form>
+                                    <div class="form-group">
+                                        <label>标题 :</label>
+                                        <input type="text" class="form-control" value="{{title}}" name="title">
+                                    </div>
+                                    <div class="form-group"><label>文章类型：</label>
+                                        <div class="btn-group normal">
+                                            <button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{type|default:"请选择一个类型"|admin_article_category:"zh_CN"}}</span></button>
+                                            <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn"
+                                                    data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu" id="category-selection">
+                                                <li class="dropdown-item" data-value="">请选择一个类型</li>
+												<li class="dropdown-item" data-value ="0">宣传博客</li>
+												<li class="dropdown-item" data-value ="10">网站公告</li>
+												<li class="dropdown-item" data-value ="20">站点信息</li>
+                                            </ul>
+											<input class="dropdown-item-input" type="hidden" name="type" value=""/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">查询</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="box xy-list-product">
+                <div class="box-body no-padding">
+                    <ul class="xy-list-all">
+                        <li class="list-all list-all2"><input type="checkbox" id="main-content-checkbox-all"> <a id="main-content-btn-all" href="#">全选</a></li>
+                        <li><a href="#">新增</a></li>
+                        <li><a href="#" id="article_batch_delete">删除</a></li>
+                    </ul>
+					<form id="article_oper_form" method="POST">
+						{% csrf_token %}
+						<table class="table table-striped" id="main-content-table">
+							<tbody>
+							<!--多余th为了调整表格色块-->
+							<tr>
+								<th></th>
+							</tr>
+							<tr>
+								<th></th>
+								<th>图片</th>
+								<th>标题</th>
+								<th>分类</th>
+								<th>静态文件名</th>
+								<th>操作</th>
+							</tr>
+							{% for article in article_list %}
+								<tr>
+									<td><input type="checkbox" name="article_id" value="{{article.id}}"></td>
+									<td><a href="#"><img src="{{article.image}}"></a></td>
+									<td><a href="#">{{article.title}}</a></td>
+									<td>{{article.category|admin_article_category:"zh_CN"}}</td>
+									<td>{{article.static_file_name}}</td>
+									<td><a href="{{article.get_url}}" target="_blank">预览</a> | <a href="#" class="article-edit-link" data-article-id="{{article.id}}">编辑</a></td>
+								</tr>
+							{% endfor %}
+							</tbody>
+						</table>
+					</form>
+                </div>
+                <div class="box-footer clearfix">
+                    <div class="xy-pages-jump">
+                        <ul class="pagination pagination-sm no-margin pull-right">
+							{% if article_list.has_previous %}
+								<li><a name="pageChange" data-tag="Previous" class="pageChage prev" data-page="{{ article_list.previous_page_number }}">&lt;</a></li>
+							{% else %}
+								<li><a>&lt;</a></li>
+							{% endif %}	
+							
+							{% for p in page_range %}
+								{% ifequal p objects.number %}
+									<li class="active">{{p}}</li>
+								{% else %}
+									<li><a class="pageChage"  data-page = "{{p}}" href="#" title="{{p}}">{{p}}</a></li>
+								{% endifequal %}
+							{% endfor %}
+                            {% if article_list.has_next %}
+								<li><a name="pageChange" class="pageChage next" data-page = "{{p}}" data-page-range="{{page_range}}" data-tag="Next">&gt;</a></li>
+							{% else %}
+								<li><a>&gt;</a></li>
+							{% endif %}
+                        </ul>
+                        <p>共 {{article_count}} 条记录 , 共 {{page_range|last}} 页，每页显示： {{page_size}} 条</p>
+                    </div>
+                </div>
+            </div><!-- /.box -->
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+	{% load staticfiles %}
+{% endblock %}

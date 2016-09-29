@@ -79,7 +79,9 @@ def file_upload(request,item_type,item_id):
 			if filenames['upload_result'] == False:
 				return HttpResponse(filenames['upload_error_msg'])			
 		
+			logger.debug('Upload success!!!')
 			ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id)
+			logger.debug('ai success!!!')
 		else:
 			raise Http404
 		#判断是否是从CKEDITER传上来的

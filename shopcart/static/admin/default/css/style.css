@@ -9,6 +9,10 @@ ul, li, dl, ol {
     padding: 0
 }
 
+.col-md-12 p {
+    margin-bottom: 0;
+}
+
 .strong {
     font-weight: bold;
 }
@@ -344,6 +348,10 @@ ul, li, dl, ol {
     width: 75%;
     float: left;
 }
+.add-product .item2 input, .add-product .item2 textarea {
+    width: 35% !important;
+    float: left;
+}
 
 .add-product .item.thumb {
     height: 70px;
@@ -357,7 +365,7 @@ ul, li, dl, ol {
 
 .add-product .item.thumb input {
     width: 40%;
-    margin-top:18px;
+    margin-top: 18px;
 }
 
 .add-product .item.thumb img {
@@ -384,7 +392,9 @@ ul, li, dl, ol {
 .add-product .btn-item input {
     width: 63%;
 }
-
+.add-product .btn-item2 input {
+    width: 35% !important;
+}
 .add-product .inputAndBtn .file {
     width: auto !important;
     height: auto;
@@ -393,7 +403,7 @@ ul, li, dl, ol {
 
 .add-product .btn-item button {
     float: left;
-    width: 9%;
+    width: 5%;
     margin-left: 3%;
 }
 
@@ -404,9 +414,12 @@ ul, li, dl, ol {
 }
 
 .add-content.attr .next-steep {
-    padding: 7px 20px;
+    /*padding: 7px 20px;*/
 }
-
+.add-content h1{
+    font-size: 18px;
+    margin-bottom: 0px;
+}
 .btn-primary {
     background-color: #3c8dbc;
 }
@@ -495,9 +508,10 @@ ul, li, dl, ol {
 .item-list-dl dt:nth-child(2), .item-list-dl dd:nth-child(2) {
     width: 35%;
 }
-.photo .item-list-dl dd:nth-child(2){
+
+.photo .item-list-dl dd:nth-child(2) {
     line-height: 24px;
-    padding-top:28px;
+    padding-top: 28px;
 }
 
 .item-list-dl dl:last-child {
@@ -596,20 +610,23 @@ ul, li, dl, ol {
     height: 98px;
 }
 
- .item-list-dl dd{
-     line-height: 20px;
-     height:80px;
-     overflow: hidden;
-     padding-right: 5px;
+.item-list-dl dd {
+    line-height: 20px;
+    height: 80px;
+    overflow: hidden;
+    padding-right: 5px;
 }
-.photo .item-list-dl dd{
+
+.photo .item-list-dl dd {
     line-height: 80px;
 }
-.attr .item-list-dl dd,.attr .item-list-dl dt{
+
+.attr .item-list-dl dd, .attr .item-list-dl dt {
     line-height: 40px;
-    padding:0;
-    height:40px;
+    padding: 0;
+    height: 40px;
 }
+
 .item-list-dl dt.select, .item-list-dl dd.select, .item-list-dl dl.select {
     width: 36%;
     overflow: inherit;
@@ -625,15 +642,16 @@ ul, li, dl, ol {
     min-width: 322px;
 }
 
- .item-list-dl dd img {
-     margin-top:10px;
+.item-list-dl dd img {
+    margin-top: 10px;
     height: 60px;
 }
 
 /*bootstrap修改*/
-.main-footer{
+.main-footer {
     font-size: 12px;
 }
+
 .dropdown-menu {
     border-top-left-radius: 0 !important;
     border-top-right-radius: 0 !important;
@@ -741,32 +759,39 @@ iframe {
 /*订单详情页*/
 
 /*订单状态的颜色*/
-.yellow{
-    color:#f39c11;
+.yellow {
+    color: #f39c11;
 }
-.blue{
-    color:#00c0ef;
+
+.blue {
+    color: #00c0ef;
 }
-.red{
-    color:#de4b39;
+
+.red {
+    color: #de4b39;
 }
-.green{
-    color:#00a65a;
+
+.green {
+    color: #00a65a;
 }
-.order-base-info{
-    width:100%;
+
+.order-base-info {
+    width: 100%;
     display: inline-block;
 }
-.order-header .operating a.disabled{
+
+.order-header .operating a.disabled {
     background: #76afd0 !important;
 }
-.order-base-info .message{
+
+.order-base-info .message {
     min-height: 60px;
-    padding-top:10px;
-    width:100%;
-    float:left;
+    padding-top: 10px;
+    width: 100%;
+    float: left;
     border-top: 1px solid #ddd;
 }
+
 .order-header .order-num li {
     margin-right: 60px;
     line-height: 50px;
@@ -776,212 +801,392 @@ iframe {
     width: 100%;
     display: inline-block;
 }
-.order-header ul li{
+
+.order-header ul li {
     display: inline-block;
     float: left;
 }
-.order-header .operating{
-   line-height: 34px;
+
+.order-header .operating {
+    line-height: 34px;
     border-bottom: 1px solid #ddd;
     padding: 10px 0;
 }
-.order-header .operating span{
-    margin-right:50px;
+
+.order-header .operating span {
+    margin-right: 50px;
 }
-.order-header .operating a{
-    padding:6px 20px 7px 20px;
-    color:#fff;
+
+.order-header .operating a {
+    padding: 6px 20px 7px 20px;
+    color: #fff;
     background: #3c8dbc;
     margin-right: 12px;
     border-radius: 3px;
 }
+
 .order-header .operating a:hover {
     background: #286090;
 }
-.order-detail .item-block{
+
+.order-detail .item-block {
     padding: 15px;
     border: 1px solid #ddd;
-    width:30.92%;
-    margin:25px 1.2%;
-    float:left;
+    width: 30.92%;
+    margin: 25px 1.2%;
+    float: left;
 }
-.order-detail .item-block li{
+
+.order-detail .item-block li {
     line-height: 22px;
     font-size: 12px;
 }
-.order-infos .item-list-dl dt,.order-infos .item-list-dl dd{
-    width:10%;
+
+.order-infos .item-list-dl dt, .order-infos .item-list-dl dd {
+    width: 10%;
 }
-.order-infos .item-list-dl dt:nth-child(2),.order-infos .item-list-dl dt:nth-child(3){
-    width:35%
+
+.order-infos .item-list-dl dt:nth-child(2), .order-infos .item-list-dl dt:nth-child(3) {
+    width: 35%
 }
-.order-infos .item-list-dl dd:nth-child(2),.order-infos .item-list-dl dd:nth-child(3) {
-    padding-top:30px;
-    width:35%
+
+.order-infos .item-list-dl dd:nth-child(2), .order-infos .item-list-dl dd:nth-child(3) {
+    padding-top: 30px;
+    width: 35%
 }
-.order-infos .item-list-dl dd:nth-child(4),.order-infos .item-list-dl dd:nth-child(5){
+
+.order-infos .item-list-dl dd:nth-child(4), .order-infos .item-list-dl dd:nth-child(5) {
     line-height: 80px;
 }
-.order-detail .add-content{
-    padding:0 15px 30px 15px;
-}
-.order-detail .ship .half-item{
-    width:35%;
-    margin-right:15%;
+
+.order-detail .add-content {
+    padding: 0 15px 30px 15px;
 }
 
-.order-detail .ship .item label,.order-detail .ship .half-item-left label,.order-detail .ship .half-item-right label{
-    width:80px;
+.order-detail .ship .half-item {
+    width: 35%;
+    margin-right: 15%;
 }
-.order-detail .ship .half-item-left input,.order-detail .ship .half-item-right input{
-    width:200px;
+
+.order-detail .ship .item label, .order-detail .ship .half-item-left label, .order-detail .ship .half-item-right label {
+    width: 80px;
 }
-.order-detail .ship .item-all input{
-    width:52%;
+
+.order-detail .ship .half-item-left input, .order-detail .ship .half-item-right input {
+    width: 200px;
 }
-.order-detail .ship .half-item-left{
-   width:35%;
+
+.order-detail .ship .item-all input {
+    width: 52%;
 }
-.order-detail .ship .half-item-right{
-    width:35%;
-    margin-right:30%;
+
+.order-detail .ship .half-item-left {
+    width: 35%;
 }
-.order-detail .ship p.title{
-    margin-top:12px;
+
+.order-detail .ship .half-item-right {
+    width: 35%;
+    margin-right: 30%;
+}
+
+.order-detail .ship p.title {
+    margin-top: 12px;
     font-weight: bold;
 }
-.attr-array-list dt,.attr-array-list dd{
-    width:19%;
+
+.attr-array-list dt, .attr-array-list dd {
+    width: 19%;
     line-height: 20px;
     padding: 10px 5px;
-    float:left;
-}
-.attr-array-list dt:first-child, .attr-array-list dd:first-child{
-    width:24%;
-}
-.attr-array-list.title{
-    font-weight: bold;
-    border-bottom:1px solid #ddd;
-    margin-top:0;
-}
-.attr-array-list{
-    width:100%;
-    float:left;
-    border-bottom: 1px solid #ddd;
-}
-.order-detail .ship .attr-array{
-    border:1px solid #ddd;
-    padding-bottom: 24px;
-}
-.remark .attr-array-list dt,.remark .attr-array-list dd{
-    width:15%;
-}
-.remark .attr-array-list dt:nth-child(3),.remark .attr-array-list dd:nth-child(3){
-    width:25%;
-}
-.remark .attr-array-list dt:nth-child(2),.remark .attr-array-list dd:nth-child(2){
-    width:60%;
-}
-.remark .attr-array{
-    border:1px solid #ddd;
-}
-.remark .attr-array-list:last-child{
-    border:none;
-}
-.remark .btn-item{
-    margin-bottom: 30px;
-}
-.remark .btn-item input{
-    width:72%;
-}
-.remark .btn-item button{
-    padding:7px 25px;
-    width:auto;
-    margin-left:30px;
-}
-.system-attr{
-    box-shadow:  0 0 0 rgba(0, 0, 0, 0);
+    float: left;
 }
 
-.add-content.website-info .item input{
-    width:400px;
+.attr-array-list dt:first-child, .attr-array-list dd:first-child {
+    width: 24%;
 }
-.add-content.show-config .item input{
-    width:80px;
+
+.attr-array-list.title {
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+    margin-top: 0;
+}
+
+.attr-array-list {
+    width: 100%;
+    float: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.order-detail .ship .attr-array {
+    border: 1px solid #ddd;
+    padding-bottom: 24px;
+}
+
+.remark .attr-array-list dt, .remark .attr-array-list dd {
+    width: 15%;
+}
+
+.remark .attr-array-list dt:nth-child(3), .remark .attr-array-list dd:nth-child(3) {
+    width: 25%;
+}
+
+.remark .attr-array-list dt:nth-child(2), .remark .attr-array-list dd:nth-child(2) {
+    width: 60%;
+}
+
+.remark .attr-array {
+    border: 1px solid #ddd;
+}
+
+.remark .attr-array-list:last-child {
+    border: none;
+}
+
+.remark .btn-item {
+    margin-bottom: 30px;
+}
+
+.remark .btn-item input {
+    width: 72%;
+}
+
+.remark .btn-item button {
+    padding: 7px 25px;
+    width: auto;
+    margin-left: 30px;
+}
+
+.system-attr {
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}
+
+.add-content.website-info .item input {
+    width: 400px;
+}
+
+.add-content.show-config .item input {
+    width: 80px;
 }
 
 .system-attr p.title {
     margin-top: 12px;
     font-weight: bold;
 }
-.email-config .attr-array-list:last-child{
-    border-bottom:none;
-}
-.email-config .attr-array{
-    border-bottom:1px solid #ddd;
-}
-.email-config .attr-array-list dt, .email-config .attr-array-list dd{
-    width:21%;
-}
-.email-config .attr-array-list dt:nth-child(3), .email-config .attr-array-list dd:nth-child(3){
-    width:37%;
-}
-.email-config input{
-    float:left;
-    width:14px;
-    margin:3px 4px 0 0;
-}
-.email-config label{
-    float:left;
-    margin-right:20px;
-    font-weight: normal;
-    margin-bottom:0;
-}
-.email-config .box-footer{
-    width:100%;
-    float:left;
-}
-.email-config .box-footer p{
-    line-height: 30px;
-    margin-bottom:0;
-}
-.email-config .xy-box-select{width:15%;}
-.email-config .xy-pages-jump{width:85%;float: right;}
-.email-config .attr-array-list dd a{cursor: pointer}
-.email-config .attr-array-list dd a:first-child{
-    padding-right:4px;
-}
-.email-config .attr-array-list dd a:last-child{
-    padding-left:4px;
+
+.email-config .attr-array-list:last-child {
+    border-bottom: none;
 }
 
-.email-edit .item input{
-    width:220px;
+.email-config .attr-array {
+    border-bottom: 1px solid #ddd;
 }
-.email-edit input[type="checkbox"]{
-    width:14px;
+
+.email-config .attr-array-list dt, .email-config .attr-array-list dd {
+    width: 21%;
+}
+
+.email-config .attr-array-list dt:nth-child(3), .email-config .attr-array-list dd:nth-child(3) {
+    width: 37%;
+}
+
+.email-config input {
+    float: left;
+    width: 14px;
+    margin: 3px 4px 0 0;
+}
+
+.email-config label {
+    float: left;
+    margin-right: 20px;
+    font-weight: normal;
+    margin-bottom: 0;
+}
+
+.email-config .box-footer {
+    width: 100%;
+    float: left;
+}
+
+.email-config .box-footer p {
+    line-height: 30px;
+    margin-bottom: 0;
+}
+
+.email-config .xy-box-select {
+    width: 15%;
+}
+
+.email-config .xy-pages-jump {
+    width: 85%;
+    float: right;
+}
+
+.email-config .attr-array-list dd a {
+    cursor: pointer
+}
+
+.email-config .attr-array-list dd a:first-child {
+    padding-right: 4px;
+}
+
+.email-config .attr-array-list dd a:last-child {
+    padding-left: 4px;
+}
+
+.email-edit .item input {
+    width: 220px;
+}
+
+.email-edit input[type="checkbox"] {
+    width: 14px;
     margin-top: 9px;
 }
+
 .email-edit input[type="radio"] {
-    width:14px;
-    margin-top:9px;
-}
-.email-edit .checkbox label{
-    padding-left:4px;
-    padding-right:25px;
-    width:auto;
-}
-.email-test button{
-    margin-left:25px;
+    width: 14px;
+    margin-top: 9px;
 }
 
+.email-edit .checkbox label {
+    padding-left: 4px;
+    padding-right: 25px;
+    width: auto;
+}
 
+.email-test button {
+    margin-left: 25px;
+}
+
+/*编辑邮件模板*/
+.email-template-div {
+    width: 100%;
+}
+
+.email-template-div2 {
+    width: 850px;
+    padding-left: 10px;
+    float: left;
+}
+
+.email-template-div button {
+    /*margin-left: 10px;*/
+    /*width: 70px;*/
+    /*height: 30px;*/
+    /*background: #3c8ebb;*/
+    /*border: none;*/
+    /*border-radius: 5px;*/
+    /*color: #fff;*/
+}
+
+.email-template-div label:first-child {
+    width: 150px !important;
+}
+
+.email-template-div-input {
+    width: 18px !important;
+    margin-top: 11px !important;
+}
+
+.category {
+    padding-bottom: 60px;
+}
+
+.category  p.title {
+    border-bottom: 1px solid #f4f4f4;
+    padding: 10px 0;
+    margin-bottom: 0;
+}
+.category  p.btn{
+    padding: 24px 15px;
+    font-size: 12px;
+    line-height: 20px;
+    margin: 0;
+    text-align: left;
+    display: block;
+    border-bottom: 1px solid #f4f4f4;
+}
+.category .addInputList .deleteInput,.category .addInputList .addBtn,.category  p.btn a{
+    cursor: pointer;
+    background-color: #367fa9;
+    padding: 7px 20px;
+    border-radius: 4px;
+    color: #fff;
+    outline: none;
+}
+.category .addInputList .addBtn{
+    margin-right: 18px;
+}
+.category .addInputList .warning{
+    border:1px solid #ff0000;
+}
+.category  p.btn a{
+    margin-right: 20px;
+}
+
+.category .category_title{
+    font-size: 12px;
+    font-weight: bold;
+}
+.category .category_02,.category .category_03,.category .category_04{
+    display: none;
+}
+.category .category_01 .name {padding-left:15px;}
+.category .category_02 .name{padding-left:30px;}
+.category .category_03 .name{padding-left:45px;}
+.category .category_04 .name{padding-left:60px;}
+.category .addChild {
+    color: #333;
+    margin-right: 20px;
+}
+
+.category .editCategory {
+    color: #367fa9;
+    padding-right:3px;
+}
+
+.category .deleteCategory,.category .editCategoryCancel{
+    color: #ff0000;
+    padding-left:3px;
+}
+
+.category li {
+    height: 38px;
+    overflow: hidden;
+    line-height: 38px;
+    height: 38px;
+    width: 33.333%;
+    float: left;
+    border-bottom: 1px solid #f4f4f4;
+}
+
+.category .categoryIco {
+    width: 38px;
+    height: 38px;
+    display: block;
+    float: left;
+    background-image: url("../images/plus.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+.category .categoryIco.active {
+    background-image: url("../images/decrease.png");
+}
+.category li a {
+    cursor: pointer;
+}
+.category .category_04 .addChild{display: none !important;}
+.category .category_04 .categoryIco{background-image: url("../images/decrease.png") !important;}
+.category .category_04 .editCategory,.category .editCategorySubmit{margin-left: 84px;padding-right: 3px;}
 
 
 /*自适应*/
 @media (min-width: 1600px) {
     .xy-list-all .list-all {
         margin-left: 2.5%;
+    }
+    .list-all2{
+        margin-left: 100px!important;
     }
 }
 
@@ -1010,38 +1215,49 @@ iframe {
     .xy-box-select input {
         margin-left: 3%;
     }
+
     .item-list-dl dd.select .inputBtn {
         min-width: 220px;
     }
+
     .item-list-dl dd.select .dropdown-menu li {
         min-width: 242px;
     }
+
     .order-header .operating a {
         padding: 6px 10px 7px 10px;
     }
-    .order-header .operating span{
-        margin-right:20px;
+
+    .order-header .operating span {
+        margin-right: 20px;
     }
-    .order-detail .ship .half-item-right{
-        margin-right:0;
+
+    .order-detail .ship .half-item-right {
+        margin-right: 0;
     }
-    .order-detail .ship .half-item-right,.order-detail .ship .half-item-left{
-        width:100%;
+
+    .order-detail .ship .half-item-right, .order-detail .ship .half-item-left {
+        width: 100%;
     }
-    .order-detail .ship .half-item-right input,.order-detail .ship .half-item-left input{
-        width:60%;
+
+    .order-detail .ship .half-item-right input, .order-detail .ship .half-item-left input {
+        width: 60%;
     }
-    .order-detail .ship .item input{
-        width:60%;
+
+    .order-detail .ship .item input {
+        width: 60%;
     }
-    .remark .btn-item input{
-        width:50%;
+
+    .remark .btn-item input {
+        width: 50%;
     }
-    .order-detail{
-        box-shadow:  0 0 0 rgba(0, 0, 0, 0);
+
+    .order-detail {
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
     }
-    .add-product.website-info .item input{
-        width:65%;
+
+    .add-product.website-info .item input {
+        width: 65%;
     }
 }
 
@@ -1055,6 +1271,7 @@ iframe {
     .add-content, .add-product .half-item, .xy-box-select {
         width: 100%;
     }
+
     .xy-pages-jump {
         width: 100%;
         display: inline-block;
@@ -1072,18 +1289,21 @@ iframe {
     .content-wrapper {
         margin-left: 0;
     }
-    .order-detail .item-block{
+
+    .order-detail .item-block {
         padding: 15px;
         border: 1px solid #ddd;
-        width:97%;
-        margin:15px 1% 5px 1%;
-        float:left;
+        width: 97%;
+        margin: 15px 1% 5px 1%;
+        float: left;
     }
+
     .order-header .order-num li {
         margin-right: 15px;
     }
-    .order-base-info .message{
-        margin-top:15px;
+
+    .order-base-info .message {
+        margin-top: 15px;
     }
 }
 

@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from django import forms
-from shopcart.models import MyUser,Address,Product,Inquiry,OrderShippment,Email
+from shopcart.models import MyUser,Address,Product,Inquiry,OrderShippment,Email,Article
 from captcha.fields import CaptchaField
 from django.utils.translation import ugettext as _
 from django.core.exceptions import ValidationError 	
@@ -43,6 +43,11 @@ class product_basic_info_form(forms.ModelForm):
 	class Meta:
 		model = Product
 		fields = ('item_number','name','is_publish','price','market_price','quantity','min_order_quantity')
+		
+class article_basic_info_form(forms.ModelForm):
+	class Meta:
+		model = Article
+		fields = ('title','category')
 		
 class product_detail_info_form(forms.ModelForm):
 	keywords = forms.CharField(required=False)

@@ -21,18 +21,22 @@
             <ul class="order-num">
                 <li>订单信息</li>
                 <li>单号：{{order.order_number}}</li>
-                <li>状态：<span class="yellow">等待发货</span></li>
+                <li>状态：
+					<span class="yellow">
+						{{order.status|admin_order_status:"zh_CN"}}
+					</span>
+				</li>
             </ul>
             <ul class="operating">
                 <li><span>操作：</span></li>
-                <li><a href="#">支付</a></li>
-                <li><a href="#">备货</a></li>
-                <li><a href="#">发货</a></li>
-                <li><a href="#">退款</a></li>
-                <li><a href="#">退货</a></li>
-                <li><a href="#">关闭</a></li>
-                <li><a href="#" class="disabled">完成</a></li>
-                <li><a href="#" class="disabled">编辑</a></li>
+                <li><a href="#" id="admin_pay_order" data-order-id="{{order.id}}">支付</a></li>
+                <li><a href="#" id="collect_order_products" data-order-id="{{order.id}}">备货</a></li>
+                <li><a href="#" id="ship_order_products" data-order-id="{{order.id}}">发货</a></li>
+                <li><a href="#" id="return_money" data-order-id="{{order.id}}">退款</a></li>
+                <li><a href="#" id="return_order_products" data-order-id="{{order.id}}">退货</a></li>
+                <li><a href="#" id="close_order" data-order-id="{{order.id}}">关闭</a></li>
+                <li><a href="#" id="finish_order" data-order-id="{{order.id}}" class="disabled">完成</a></li>
+                <li><a href="#" id="edit_order" data-order-id="{{order.id}}" class="disabled">编辑</a></li>
             </ul>
         </div>
         <div class="order-base-info">

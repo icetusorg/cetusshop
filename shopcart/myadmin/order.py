@@ -42,16 +42,7 @@ def detail(request,id=None):
 	
 	ctx['order'] = order
 	return render(request,System_Config.get_template_name('admin') + '/order_detail.html',ctx)
-	
-	
-@staff_member_required
-def view(request):
-	ctx = {}
-	ctx['system_para'] = get_system_parameters()
-	ctx['page_name'] = 'Order List'
-	
-	return render(request,System_Config.get_template_name('admin') + '/order_list.html',ctx)
-	
+		
 
 @staff_member_required
 @permission_required('shopcart.can_list_order', login_url=NO_PERMISSION_PAGE)

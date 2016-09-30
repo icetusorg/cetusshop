@@ -77,8 +77,13 @@ urlpatterns = patterns("",
 	url(r'^i18n/', include('django.conf.urls.i18n')),
 	
 	#以下是正式的admin url
+	url('^admin/index/$', 'shopcart.myadmin.index.view',name='admin_index_view'),
+	url('^admin/index-content/$', 'shopcart.myadmin.index.content_view',name='admin_index_content_view'),
+	
+	
 	url('^admin/menu/$', 'shopcart.myadmin.index.menu_view',name='admin_index_menu_view'),
-	url('^admin/order/$', 'shopcart.myadmin.order.view',name='admin_order_view'),
+	#url('^admin/order/$', 'shopcart.myadmin.order.view',name='admin_order_view'),
+	
 	url('^admin/order-list/$', 'shopcart.myadmin.order.list_view',name='admin_order_list_view'),
 	url('^admin/order-detail/(\d+)/$', 'shopcart.myadmin.order.detail',name='admin_order_detail'),
 	url('^admin/order-remark-add/$', 'shopcart.myadmin.order.remark_add',name='admin_order_remark_add'),
@@ -92,6 +97,8 @@ urlpatterns = patterns("",
 	url('^admin/article-edit/$', 'shopcart.myadmin.article.article_basic_edit',name='admin_article_basic_edit'),
 	url('^admin/article-detail-manage/$', 'shopcart.myadmin.article.article_detail_info_manage',name='admin_article_detail_info_manage'),
 	url('^admin/article-picture-manage/$', 'shopcart.myadmin.article.article_picture_manage',name='admin_article_picture_manage'),
+	
+	url('^admin/category-list/$', 'shopcart.myadmin.category.list_view',name='admin_category_list_view'),
 	
 	url('^admin/system-config/(.+)/$', 'shopcart.myadmin.system_config.view',name='admin_system_config_view'),
 	url('^admin/site-config-manage/$', 'shopcart.myadmin.system_config.site_config_manage',name='admin_site_config_manage'),

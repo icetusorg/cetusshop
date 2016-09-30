@@ -88,7 +88,7 @@
 									<td><a href="#">{{article.title}}</a></td>
 									<td>{{article.category|admin_article_category:"zh_CN"}}</td>
 									<td>{{article.static_file_name}}</td>
-									<td><a href="{{article.get_url}}" target="_blank">预览</a> | <a href="#" class="article-edit-link" data-article-id="{{article.id}}">编辑</a></td>
+									<td><a href="{{article.get_url}}" target="_blank">预览</a> | <a href="../article-edit/?id={{article.id}}" class="article-edit-link" data-article-id="{{article.id}}">编辑</a></td>
 								</tr>
 							{% endfor %}
 							</tbody>

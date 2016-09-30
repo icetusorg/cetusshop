@@ -28,6 +28,12 @@ def content_view(request):
 	ctx['system_para'] = get_system_parameters()
 	if request.method == 'GET':
 		return render(request,System_Config.get_template_name('admin') + '/index_content.html',ctx)
+		
+def login(request):
+	ctx = {}
+	ctx['system_para'] = get_system_parameters()
+	if request.method == 'GET':
+		return render(request,System_Config.get_template_name('admin') + '/login.html',ctx)
 	
 def no_permission(request):
 	return HttpResponse('您没有相应的权限，请联系管理员分配。')

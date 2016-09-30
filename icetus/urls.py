@@ -77,6 +77,8 @@ urlpatterns = patterns("",
 	url(r'^i18n/', include('django.conf.urls.i18n')),
 	
 	#以下是正式的admin url
+	url('^myadmin/$', 'shopcart.myadmin.index.login',name='admin_index_login'),
+	
 	url('^admin/index/$', 'shopcart.myadmin.index.view',name='admin_index_view'),
 	url('^admin/index-content/$', 'shopcart.myadmin.index.content_view',name='admin_index_content_view'),
 	

@@ -90,6 +90,8 @@ urlpatterns = patterns("",
 	url('^admin/article-delete/$', 'shopcart.myadmin.article.delete',name='admin_article_delete'),
 	url('^admin/article-detail/(\d+)/$', 'shopcart.myadmin.article.detail',name='admin_article_detail'),
 	url('^admin/article-edit/$', 'shopcart.myadmin.article.article_basic_edit',name='admin_article_basic_edit'),
+	url('^admin/article-detail-manage/$', 'shopcart.myadmin.article.article_detail_info_manage',name='admin_article_detail_info_manage'),
+	url('^admin/article-picture-manage/$', 'shopcart.myadmin.article.article_picture_manage',name='admin_article_picture_manage'),
 	
 	url('^admin/system-config/(.+)/$', 'shopcart.myadmin.system_config.view',name='admin_system_config_view'),
 	url('^admin/site-config-manage/$', 'shopcart.myadmin.system_config.site_config_manage',name='admin_site_config_manage'),

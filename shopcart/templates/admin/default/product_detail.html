@@ -106,7 +106,7 @@
 	
 				<div class="item item-area">
 					<label>简要描述：</label>
-					<textarea type="text" name="short_desc" class="form-control" value="{{product.short_desc}}"></textarea>
+					<textarea type="text" name="short_desc" class="form-control">{{product.short_desc|default:""}}</textarea>
 				</div>
 				
 				<div class="item">
@@ -251,7 +251,7 @@
 							<div class="image-operaion">
 								<a href='{{image.image}}' target="_blank">预览</a> | 
 								<a href='{{file_delete_url}}/{{image.id}}/{{product.id}}/?return_url=/admin/product-edit/%3fid={{product.id}}%26tab_name=tag_picture'> 删除 </a> | 
-								<a href="#" class="set-to-main-picture-link" data-image-url="{{image.image}}" >主图 </a>
+								<a href="#" class="set-to-main-picture-link" data-image-url="{{image.image}}" data-image-type="product">主图 </a>
 							</div>
 						</div>
 					{% empty %}

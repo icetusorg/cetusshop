@@ -1,7 +1,7 @@
 #coding=utf-8
 from django.shortcuts import render,redirect
 from shopcart.models import Article,System_Config,Album
-from shopcart.forms import article_basic_info_form
+from shopcart.forms import article_basic_info_form,article_detail_info_form
 from shopcart.utils import System_Para,my_pagination,get_serial_number,get_system_parameters
 from django.http import HttpResponse,JsonResponse,Http404
 from django.views.decorators.csrf import csrf_exempt
@@ -129,7 +129,66 @@ def article_basic_edit(request):
 	else:
 		raise Http404	
 
+
+@staff_member_required
+@transaction.atomic()
+def article_detail_info_manage(request):
+	result = {}
+	result['success'] = False
+	result['message'] = ''
+	if request.method == 'POST':
+		try:
+			article = Article.objects.get(id=request.POST['id'])
+			form = article_detail_info_form(request.POST,instance=article)
+		except Exception as err:
+			logger.error('Error: %s' % err)
+			raise Http404
+		
+		if form.is_valid():
+			article = form.save()	
+			logger.debug('article:%s' % article.short_desc)
+			result['success'] = True
+			result['message'] = '文章详细信息保存成功'
+		else:
+			result['message'] = '文章详细信息保存失败'
+		return JsonResponse(result) 
+	elif request.method == 'GET':
+		raise Http404
+	else:
+		raise Http404			
+		
+
+@staff_member_required
+@transaction.atomic()		
+def article_picture_manage(request):
+	result_dict = {}
+	result_dict['success'] = False
+	result_dict['message'] = ''
 	
+	if request.method == 'POST':
+		#先找出文章
+		try:
+			article = Article.objects.get(id=request.POST.get('id'))
+		except Exception as err:
+			logger.error('Can not find article which id is %s.' % id)
+			result_dict['message'] = '文章找不到，可能商品已经被删除了，请重试。'
+			return JsonResponse(result_dict)
+		
+		
+		#保存主图和缩略图
+		image_url = request.POST.get('article_image')
+		article.image = image_url
+		dot_index = image_url.rfind('.')
+		thumb_url = image_url[:dot_index] + "-thumb" + image_url[dot_index:]
+		logger.debug("thumb_url:%s" % thumb_url)
+		article.thumb = thumb_url
+		article.save()
+		
+		result_dict['success'] = True
+		result_dict['message'] = '图片设置成功'
+	
+	return JsonResponse(result_dict)		
+		
 	
 @staff_member_required
 @transaction.atomic()	

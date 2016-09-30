@@ -388,6 +388,61 @@ jQuery("#article-basic-info-submit-btn").click(function(event){
 });
 
 
+//文章详细信息提交
+jQuery("#article-detail-info-submit-btn").click(function(event){
+	event.preventDefault();
+	var url = "/admin/article-detail-manage/";
+	//由于使用了ckeditor，直接获取文本域的值，会丢失修改部分的信息，因此要先用api获取修改以后的值填到文本域中
+	
+	var data = CKEDITOR.instances.article_content_editor.getData();
+	$("#article_content_editor").val(data);
+	//alert($("#editor").val())
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#article-detail-info-form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			$("#myModal").modal('toggle');
+			if(data.success==true){
+				;
+			}
+		}
+	});
+});
+
+//文章图片
+jQuery("#article-picture-manage-submit-btn").click(function(event){
+	event.preventDefault();
+	var url = "/admin/article-picture-manage/";
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#article_picture_manage_form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			if(data.success==true){
+				//$('#myModal').on('hidden.bs.modal', function (e) {
+				//	location.href = url + "?id=" + data.data.product_id;
+				//})
+			}
+			$("#myModal").modal('toggle');
+		}
+	});
+});
+
 
 //商品管理界面
 //Tab页切换方法
@@ -575,8 +630,21 @@ jQuery(".sku_delete_link").click(function(event){
 jQuery(".set-to-main-picture-link").click(function(event){
 	event.preventDefault();
 	var img_url = $(this).data("image-url");
-	$("input[name=product_image]").val(img_url);
-	$("#product_main_image").attr("src",img_url);
+	
+	//兼容产品与文章
+	var type = $(this).data("image-type");
+	if(!type){
+		type = "product";
+	}
+	if(type=="product"){
+		$("input[name=product_image]").val(img_url);
+		$("#product_main_image").attr("src",img_url);
+	}
+	
+	if(type=="article"){
+		$("input[name=article_image]").val(img_url);
+		$("#article_main_image").attr("src",img_url);
+	}
 });
 
 //保存主图设置和SKU图设置

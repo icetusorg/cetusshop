@@ -511,7 +511,8 @@ class Order(models.Model):
 	class Meta:
 		verbose_name = '订单'
 		verbose_name_plural = '订单'
-
+		
+		
 		
 @python_2_unicode_compatible		
 class OrderShippment(models.Model):
@@ -603,6 +604,23 @@ class Abnormal_Order(models.Model):
 	detail = models.TextField()
 	create_time = models.DateTimeField(auto_now_add = True)
 	update_time = models.DateTimeField(auto_now = True)
+	
+@python_2_unicode_compatible		
+class CustomizeURL(models.Model):
+	url = models.CharField(max_length=254,db_index=True,null=True,blank=True,verbose_name="自定义URL")
+	target_url = models.CharField(max_length=1024,null=True,blank=True,verbose_name="目标URL")
+	module = models.CharField(max_length=1024,null=True,blank=True,verbose_name="内部模块名称")
+	function = models.CharField(max_length=1024,null=True,blank=True,verbose_name="内部模块方法")
+	type = models.CharField(max_length=10,null=True,blank=True,verbose_name="跳转方式")
+	create_time = models.DateTimeField(auto_now_add = True)
+	update_time = models.DateTimeField(auto_now = True)
+	
+	def __str__(self):
+		return self.url
+	
+	class Meta:
+		verbose_name = '自定义URL'
+		verbose_name_plural = '自定义URL'
 
 class Reset_Password(models.Model):
 	email = models.EmailField('email address',max_length=254)

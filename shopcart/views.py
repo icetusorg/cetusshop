@@ -27,7 +27,7 @@ def contact_page(request):
 def url_dispatch(request,url):
 	logger.debug('Url to dispatch:' + url)
 	
-	from shopcart.models import Product,Category,Article
+	from shopcart.models import Product,Category,Article,CustomizeURL
 	#优先级 1 ：解析商品路径
 	try:
 		product = Product.objects.get(static_file_name=url)
@@ -60,6 +60,22 @@ def url_dispatch(request,url):
 		return detail(request,article.id)
 	except Exception as err:
 		logger.error('Can not find url [%s] in artilces.Error message is %s' % (url,err))
+			
+	#优先级 4 ： 自定义URL
+	try:
+		cust = CustomizeURL.objects.get(url = url)
+		if cust.type == 'MVC':
+			logger.info('CustomizeURL module is [%s],function is [%s].' % (cust.module,cust.function))
+			import importlib
+			module = importlib.import_module(cust.module)
+			logger.debug('Module : [%s]' % module)
+			function =  getattr(module,cust.function)
+			logger.info('Function is [%s].' % function)
+			return function(request)
+		else:	
+			return redirect(cust.target_url)
+	except Exception as err:
+		logger.error('Can not find url [%s] in customizeURL.Error message is %s' % (url,err))
 		
 	raise Http404
 	

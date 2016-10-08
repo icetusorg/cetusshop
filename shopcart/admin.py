@@ -1,7 +1,12 @@
 from django.contrib import admin
 from django.contrib.auth.models import Permission
 
-from shopcart.models import Product,Order,Order_Products,Category,System_Config,Attribute,Attribute_Group,Article,Email_List,Product_Attribute,Express,ExpressType,Inquiry,Product_Images,Promotion,OrderRemark,MyUser,Email,OrderShippment
+from shopcart.models import Product,Order,Order_Products,Category,System_Config,Attribute,Attribute_Group,Article,Email_List,Product_Attribute,Express,ExpressType,Inquiry,Product_Images,Promotion,OrderRemark,MyUser,Email,OrderShippment,CustomizeURL
+# Register your models here.
+class CustomizeURLAdmin(admin.ModelAdmin):
+	list_display = ('url', 'target_url', 'module','function','create_time','update_time') 
+admin.site.register(CustomizeURL,CustomizeURLAdmin)
+
 # Register your models here.
 class OrderShippmentAdmin(admin.ModelAdmin):
 	list_display = ('order', 'shipper_name', 'ship_no','shipping_cost','shipping_time','create_time','update_time') 

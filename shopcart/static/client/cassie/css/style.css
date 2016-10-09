@@ -174,9 +174,13 @@ button:hover{border-radius:0;border-bottom-left-radius:0;border-bottom-right-rad
 .detail-attr-lable{ line-height:48px; width:100%; font-size:12px; color:#666666; text-transform:uppercase;}
 .detail-attr ul{width:100%; display:inline-block;}
 .detail-attr li{float:left;margin-right:10px; line-height: 30px; font-size: 16px; display: inline-block;}
-.detail-attr li img{width:100%; border:1px #fff solid; cursor:pointer;}
+.detail-attr li img{width:100%; border:1px #ccc solid; cursor:pointer;padding:1px;}
 li.sku-inavailable{cursor: not-allowed;}
 li.sku-inavailable img{cursor: not-allowed;border: 1px dashed #ccc;}
+.detail-sku-text{}
+li.sku-text-available{border:1px solid #ccc;cursor:pointer;padding:0 3px; font-size: 14px;min-width:40px;text-align: center;}
+li.sku-text-available2{border:1px solid #ccc;cursor:pointer;padding:0 3px; font-size: 14px; min-width:40px;text-align: center;}
+li.sku-text-inavailable{border:1px dashed #ccc;cursor:not-allowed;padding:0 3px; font-size: 14px;color: #ccc;min-width:40px; text-align: center;}
 .cart-move{display:none;position: absolute;z-index: 999;}
 .detail-quality{padding-top:24px;border-top:1px solid #ddd;}
 .detail-quality .detail-add-btn{ font-size:16px;text-transform: capitalize;padding:10px 37px;border:1px solid #f7931d; line-height:30px; margin-right:20px; color:#fff; background: #f7931d;font-size: 16px;}
@@ -189,10 +193,11 @@ li.sku-inavailable img{cursor: not-allowed;border: 1px dashed #ccc;}
 .detail-attr-social{width:100%;display:inline-block;}
 .detail-des{ display: inline-block; border-left:1px solid #ddd; border-bottom:1px solid #ddd;}
 .detail-des-main{padding:30px;margin-top:35px; border-right:1px solid #ddd;}
-..detail-des-main h2, .detail-des-main h3,.detail-des-main h4,.detail-des-main h5,.detail-des-main h6{line-height: 40px;font-size: 18px;color: #000;}
+.detail-des-main h2, .detail-des-main h3,.detail-des-main h4,.detail-des-main h5,.detail-des-main h6{line-height: 40px;font-size: 18px;color: #000;}
 .detail-des-title{width:114px;color:#f7931d; font-size: 14px; height:36px;line-height: 33px; text-align: center;border-top:2px solid #f7931d; border-right:1px solid #ddd;float:left;}
 .detail-des-line{width:1054px;height: 36px;border-bottom:1px solid #ddd;float:left;}
-.redborder img{border-color:#ff0000 !important;}
+.redborder img{border:0px #ff0000 solid !important;}
+.redborder{border:2px #ff0000 solid !important;}
 .imycart-modal{box-shadow: 0 3px 10px rgba(200,200,200,.5) !important;border: 1px solid rgba(200,200,200,.3) !important;border-top: 3px solid #f7931d !important;}
 .imycart-modal,.modal-footer .btn{ background: #f7931d; border-color:#f7931d; color:#fff;}
 .imycart-modal,.modal-footer .btn:hover,.imycart-modal,.modal-footer .btn:focus{color:#666;border:1px solid #ccc; background: #fff;}
@@ -240,6 +245,15 @@ li.sku-inavailable img{cursor: not-allowed;border: 1px dashed #ccc;}
 .contact-form div textarea{line-height: 24px; padding: 7px 10px;border: 1px solid #ccc; width: 100%; min-height: 280px;float:left;}
 .contact-form div p{line-height: 30px; height:30px;margin-bottom: 0; color:#ff0000;}
 .contact-form p span{ display: none;}
+/*Email邮件页面*/
+.email-wapper{width:640px; margin:40px auto; border: 1px solid #eee;}
+.email-wapper a{color:#F7931D}
+.email-logo{width:640px; margin:0 auto; border-top:5px solid #F7931D; text-align: center;padding-top: 10px; padding-bottom: 20px;}
+.email-content{padding:0 20px; height:500px;}
+.email-footer{width:600px; margin:0 auto; height:60px; line-height:60px; text-align: center; border-top:1px solid #ccc;}
+.email-buttom{margin-top: 20px;}
+.email-buttom a{padding:10px; background-color: #F7931D; color:#fff;}
+
 
 @media (max-width:1200px) {
     .copy-media{width:36%;}

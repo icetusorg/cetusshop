@@ -756,16 +756,32 @@ function imycartRemoveProductFromWishlistCallBack(result,triggerControl,extraInf
 
 //选择了商品某个额外属性
 jQuery(".product-attribute-item").click(function(){
-		/*  给商品加上表示选中红框的逻辑 */
-		$(this).parent().prevAll().removeClass('redborder');
-		$(this).parent().nextAll().removeClass('redborder');
-		$(this).parent().addClass('redborder');
+		//判断当前点击的是否是无效选项
+		if ($(this).parent().hasClass("sku-inavailable")||$(this).parent().hasClass("sku-text-inavailable")){
+			return;
+		}
+	
+		//判断点击的是已经选中的还是没选中的
+		condition = ".product-attribute-group-selected[title=" + $(this).data("group-code") + "]";
 		
+		if ($(this).parent().hasClass("redborder")){
+			/*  给商品去掉表示选中红框的逻辑 */
+			$(this).parent().prevAll().removeClass('redborder');
+			$(this).parent().nextAll().removeClass('redborder');
+			$(this).parent().removeClass('redborder');
+			$(condition).val("");
+		}else{
+			/*  给商品加上表示选中红框的逻辑 */
+			$(this).parent().prevAll().removeClass('redborder');
+			$(this).parent().nextAll().removeClass('redborder');
+			$(this).parent().addClass('redborder');
+			$(condition).val($(this).data("attribute-id"));
+		}
+			
 	
 		var product_to_get = new Object();
 		product_to_get.product_id = $(this).data("product-id");
-		condition = ".product-attribute-group-selected[title=" + $(this).data("group-code") + "]";		
-		$(condition).val($(this).data("attribute-id"));
+
 		var attr_list = new Array();
 		$(".product-attribute-group-selected").each(function(){
 			if($(this).val() != ""){
@@ -800,15 +816,46 @@ jQuery(".product-attribute-item").click(function(){
 							//$(".product-attribute-item").attr("disabled",true);
 							//$(".product-attribute-item").addClass("disabled");
 							
+							$(".attr-text").removeClass("sku-text-available");
+							$(".attr-text").addClass("sku-text-inavailable");
+
+							$(".attr-img").removeClass("sku-available");
+							$(".attr-img").addClass("sku-inavailable");
 							
-							//id_list = String(result.message).split(",");
 							
-							//$.each(id_list,function(index,id){
-							//	$("[data-attribute-id=" + id + "]").attr("disabled",false);
-							//	$(".product-attribute-item").removeClass("disabled");
-							//});
+							var id_and_type = result.not_selected;
 							
-						
+							if($.trim(id_and_type)!=""){
+								id_list = String(id_and_type).split(",");
+								$.each(id_list,function(index,id){
+									tmp = id.split("|")
+									var available_class_name = 'sku-available';
+									var inavailable_class_name = 'sku-inavailable';
+									if (tmp[1]=='text'){
+										available_class_name = 'sku-text-available';
+										inavailable_class_name = 'sku-text-inavailable';
+									}
+									$("[data-attribute-id=" + tmp[0] + "]").parent().removeClass(inavailable_class_name);
+									$("[data-attribute-id=" + tmp[0] + "]").parent().addClass(available_class_name);
+								});
+							}
+							
+							
+							id_and_type = result.selected;
+							if ($.trim(id_and_type)!=""){
+								id_list = String(id_and_type).split(",");
+								$.each(id_list,function(index,id){
+									tmp = id.split("|")
+									var available_class_name = 'sku-available';
+									var inavailable_class_name = 'sku-inavailable';
+									if (tmp[1]=='text'){
+										available_class_name = 'sku-text-available';
+										inavailable_class_name = 'sku-text-inavailable';
+									}
+									$("[data-attribute-id=" + tmp[0] + "]").parent().removeClass(inavailable_class_name);
+									$("[data-attribute-id=" + tmp[0] + "]").parent().addClass(available_class_name);
+								});
+							}						
 						}
 						//alert('pa_id:' + $("input[name=product-attribute-id]").val());
 				},

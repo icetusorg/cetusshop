@@ -1,7 +1,7 @@
 #coding=utf-8
 from django.shortcuts import render
 from django.template.loader import render_to_string
-from shopcart.models import System_Config,Product,Product_Images,Category
+from shopcart.models import System_Config,Product,Product_Images,Category,Attribute
 from shopcart.utils import System_Para,my_pagination,get_system_parameters
 import json,os
 from django.http import JsonResponse
@@ -255,7 +255,20 @@ def ajax_get_product_info(request):
 				attr_avaliable_set = attr_avaliable_set | temp #求并集
 	#进入到这里，说明前面没有选择全
 	result_dict['success'] = False
-	result_dict['message'] = list(attr_avaliable_set)#返回可以选择的attribute_id列表
+	not_selected_attr_list = []
+	selected_attr_list = []
+	for id in list(attr_avaliable_set):
+		#logger.debug('id:%s' % id)
+		attr = Attribute.objects.get(id=id)
+		not_selected_attr_list.append('%s|%s' % (id,attr.group.group_type))
+		
+	for id in list(para_list):
+		#logger.debug('id:%s' % id)
+		attr = Attribute.objects.get(id=id)
+		selected_attr_list.append('%s|%s' % (id,attr.group.group_type))
+	
+	result_dict['not_selected'] = not_selected_attr_list#返回可以选择的attribute_id列表
+	result_dict['selected'] = selected_attr_list #返回已经选择了的attribute_id列表
 	return JsonResponse(result_dict)
 
 def ajax_get_product_description(request,id):

@@ -150,9 +150,35 @@
             </div>
             <p class="title">发货</p>
 			<form id="shippment_form">
+			
 				<div class="item-free attr-array">
-					<div class="item half-item-left"><label>日期：</label><input class="form-control" name="shipping_time" type="text" value="{{system_para.current_date|date:"Y-m-d"}}"></div>
+					<div class="item half-item-left">
+						<label>日期：</label>
+						    <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd">
+							<input class="form-control" name="shipping_time" type="text" value="{{system_para.current_date|date:"Y-m-d"}}" readonly>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+					</div>
 					<div class="item half-item-right"><label>单号：</label><input class="form-control" name="ship_no" type="text"></div>
+					
+					<div class="item half-item-left"><label>配送方式：</label>
+						<div class="btn-group normal">
+							<button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{order.express_type_name}}</span></button>
+							<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn"
+									data-toggle="dropdown">
+								<span class="caret"></span>
+								<span class="sr-only">Toggle Dropdown</span>
+							</button>
+							<ul class="dropdown-menu" role="menu" id="selectOption">
+								{% for express_type in express_type_list %}
+									<li class="dropdown-item" data-value ="{{express_type.id}}">{{express_type.name}}</li>
+								{% endfor %}
+							</ul>
+							<input class="dropdown-item-input" type="hidden" name="express_id" value="{{express_list|express_first_value:"id"}}"/>
+						</div>
+					</div>
+					
 					<div class="item half-item-left"><label>物流公司：</label>
 						<div class="btn-group normal">
 							<button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{express_list|express_first_value:"name"}}</span></button>
@@ -169,6 +195,8 @@
 							<input class="dropdown-item-input" type="hidden" name="express_id" value="{{express_list|express_first_value:"id"}}"/>
 						</div>
 					</div>
+					
+					
 					<div class="item half-item-right"><label>物流成本：</label><input class="form-control" name="shipping_cost" type="text"></div>
 					<div class="item item-all"><label>备注：</label><input class="form-control" name="remark" type="text"></div>
 					<div class="item half-item-left"><label>收货人姓：</label><input class="form-control" name="first_name" type="text" value="{{order.first_name}}"></div>
@@ -227,7 +255,8 @@
 {% endblock %}
 {% block scripts %}
 	{% load staticfiles %}
-<script>
+
+	<script>
 	$(document).ready(function() {
 		var tab_name = $.getUrlParam('tab_name');
 		if (tab_name){
@@ -235,5 +264,16 @@
 			$("#" + tab_name).addClass("active");
 		}		
 	});
-</script>
+		
+	$('.form_date').datetimepicker({
+        language:  'zh-CN',
+	    weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 0
+    });
+	</script>
 {% endblock %}

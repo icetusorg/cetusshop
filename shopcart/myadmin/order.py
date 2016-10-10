@@ -1,7 +1,7 @@
 #coding=utf-8
 from django.shortcuts import render,redirect,render_to_response
 from django.core.urlresolvers import reverse
-from shopcart.models import System_Config,Express,Order,OrderRemark
+from shopcart.models import System_Config,Express,Order,OrderRemark,ExpressType
 from shopcart.utils import System_Para,my_pagination,get_serial_number,get_system_parameters
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse,JsonResponse,Http404
@@ -38,7 +38,22 @@ def detail(request,id=None):
 	
 	#快递列表
 	express_list = Express.objects.filter(is_in_use=True).filter(is_delete=False)
-	ctx['express_list'] = express_list
+	express_type_list = ExpressType.objects.filter(is_in_use=True).filter(is_delete=False)
+	ctx['express_type_list'] = express_type_list
+	
+	#logger.debug('express_id:%s' % order.express_type_id)
+	
+	if order.express_type_id != 0 :
+		try:
+			logger.debug("1.1")
+			express_list_result = express_list.filter(express_type=order.express_type_id)
+			logger.debug("1.2 : %s " % express_list_result)
+		except Exception as err:
+			logger.debug('1.3 : %s ' % err)
+			express_list_result = express_list
+			
+	ctx['express_list'] = express_list_result
+	
 	
 	ctx['order'] = order
 	return render(request,System_Config.get_template_name('admin') + '/order_detail.html',ctx)

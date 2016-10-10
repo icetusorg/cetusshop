@@ -481,6 +481,8 @@ class Order(models.Model):
 	tel = models.CharField(max_length = 20,default='',blank=True,verbose_name='电话')
 	mobile = models.CharField(max_length = 20,default='',blank=True)
 	email = models.CharField(max_length = 100,default='',blank=True)
+	
+	express_type_id = models.IntegerField(default=0,verbose_name="快递方式ID")
 	express_type_name = models.CharField(max_length=100,null=True,blank=True,verbose_name='送货方式')
 	shipper_name = models.CharField(max_length = 100,default='',blank=True,verbose_name='快递名称')
 	shpping_no = models.CharField(max_length = 100,default='',blank=True,verbose_name='快递单号')

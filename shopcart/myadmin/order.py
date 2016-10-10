@@ -43,6 +43,7 @@ def detail(request,id=None):
 	
 	#logger.debug('express_id:%s' % order.express_type_id)
 	
+	express_list_result = express_list
 	if order.express_type_id != 0 :
 		try:
 			logger.debug("1.1")
@@ -50,7 +51,7 @@ def detail(request,id=None):
 			logger.debug("1.2 : %s " % express_list_result)
 		except Exception as err:
 			logger.debug('1.3 : %s ' % err)
-			express_list_result = express_list
+			
 			
 	ctx['express_list'] = express_list_result
 	

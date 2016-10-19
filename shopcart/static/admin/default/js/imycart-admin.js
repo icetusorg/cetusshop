@@ -946,6 +946,34 @@ jQuery(".detele-express").click(function(e){
 });
 
 
+//支付方式设置
+//提交设置
+jQuery(".pay-config-submit-btn").click(function(e){
+	var url = "/admin/pay-config/";
+	var pay_type = $("input[name=pay_type]").val();
+	url = url + pay_type + "/";
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$(this).parent().parent().serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			if(data.success==true){
+				$('#myModal').on('hidden.bs.modal', function (e) {
+					location.reload(true); 
+				})
+			}
+			$("#myModal").modal('toggle');
+		}
+	});
+});
+
 //通用函数
 /* 
 * url 目标url 

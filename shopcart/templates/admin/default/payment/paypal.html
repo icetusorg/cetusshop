@@ -1,0 +1,69 @@
+{% extends "admin/default/content_base.html" %}
+{% block breadcrumbs %}
+<section class="content-header">
+    <h1>PAYPAL设置</h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+        <li class="active"><a>系统参数管理</a></li>
+    </ol>
+</section>
+{% endblock %}
+
+
+{% block main %}
+{% load i18n %}
+{% load shopcart_extras %}
+<section class="content">
+    <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+    <div class="col-md-12 add-product set-paypal">
+        <div class="system-attr-mian">
+        <ul class="tag">
+            <li>PAYPAL设置</li>
+        </ul>
+        <!--页签-->		
+			<div class="add-content active">
+				<form id="paypal_config_form">
+					<div class="item"><label>账号：</label><input type="text" class="form-control" name="paypal_account" value="{{paypal_account}}"></div>
+					<div class="item infos">
+						<label>是否正式环境：</label>
+						<div class="btn-group normal">
+							<button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{paypal_env|is_equal:"live"|yesno:"是,否"}}</span></button>
+							<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown" aria-expanded="true">
+								<span class="caret"></span>
+								<span class="sr-only">Toggle Dropdown</span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li class="dropdown-item" data-value="live">是</li>
+								<li class="dropdown-item" data-value="sandbox">否</li>
+							</ul>
+							<input class="dropdown-item-input" type="hidden" name="paypal_env" value="{{paypal_env}}"/>
+						</div>
+						<div class="message">
+							<span>?</span>
+							<div class="ico">
+								<div class="text">
+								<h4>提示信息</h4>
+								<p>PAYPAL提供了“沙盒模型”供测试使用，在正式投产前可以选择“否”在PAYPAL沙盒模式中验证各项功能；选择“是”则接入PAYPAL真是环境。</p>
+								</div>
+							</div>
+						</div>
+					</div>
+		
+					<div class="submit-item">
+						<input type="hidden" name="pay_type" value="paypal" />
+						<button type="button" class="btn btn-primary pay-config-submit-btn">提交</button>
+					</div>
+				</form>
+			</div>
+        </div>
+    </div>
+       <!--页签结束-->
+</section>
+
+{% load staticfiles %}
+{% load shopcart_extras %}
+
+{% endblock %}
+{% block scripts %}
+	{% load staticfiles %}
+{% endblock %}

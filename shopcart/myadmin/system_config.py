@@ -33,6 +33,7 @@ def view(request,type='site_config'):
 	template_name = '/system_%s.html' % type
 	return render(request,System_Config.get_template_name('admin') + template_name ,ctx)
 
+@staff_member_required
 @transaction.atomic()	
 def save_config_items(request,is_create=True,is_continue_if_not_exist=True):
 	#遍历POST中的参数，找出system_config_开头的参数
@@ -55,7 +56,61 @@ def save_config_items(request,is_create=True,is_continue_if_not_exist=True):
 					else:
 						raise Exception('SystemConfigDosNotExits')
 			config.val = value
-			config.save()	
+			config.save()
+
+			
+@staff_member_required
+@transaction.atomic()	
+def pay_config(request,pay_type):
+	ctx = {}
+	ctx['system_para'] = get_system_parameters()
+	ctx['page_name'] = '支付管理'
+	if request.method == 'GET':	
+		if pay_type == 'paypal':
+			account = ''
+			env = 'sandbox'
+			
+			try:
+				account = System_Config.objects.get(name='paypal_account').val
+				env = System_Config.objects.get(name='paypal_env').val
+			except Exception as err:
+				logger.debug('Can not find paypal config.\n Error Message:%s' % err)
+		
+			ctx['paypal_account'] = account
+			ctx['paypal_env'] = env
+		
+			return render(request,System_Config.get_template_name('admin') + '/payment/paypal.html' ,ctx)
+		else:
+			raise Http404
+	elif request.method == 'POST':
+		result = {}
+		result['success'] = False
+		result['message'] = '支付配置信息保存失败'
+		
+		account_name = request.POST.get('paypal_account','')
+		env_name = request.POST.get('paypal_env','')
+		
+		try:
+			account,a_created = System_Config.objects.get_or_create(name='paypal_account')
+			env,e_created = System_Config.objects.get_or_create(name='paypal_env')
+		except Exception as err:
+			logger.error('Can not find or create paypal config.\n Error Message: %s' % err)
+			result['success'] = False
+			result['message'] = '支付配置信息无法保存，可能存在风险，请检查数据库中是否存在多条paypal配置信息。'
+			return JsonResponse(result)
+		
+		account.val = account_name
+		account.save()
+		env.val = env_name
+		env.save()
+		result['success'] = True
+		result['message'] = '支付配置信息保存成功'
+	
+		return JsonResponse(result)
+	else:
+		raise Http404	
+	
+			
 			
 @staff_member_required
 @transaction.atomic()

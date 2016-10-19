@@ -103,6 +103,8 @@ urlpatterns = patterns("",
 	url('^admin/category-list/$', 'shopcart.myadmin.category.list_view',name='admin_category_list_view'),
 	
 	url('^admin/system-config/(.+)/$', 'shopcart.myadmin.system_config.view',name='admin_system_config_view'),
+	url('^admin/pay-config/(.+)/$', 'shopcart.myadmin.system_config.pay_config',name='admin_system_config_pay_config'),
+	
 	url('^admin/site-config-manage/$', 'shopcart.myadmin.system_config.site_config_manage',name='admin_site_config_manage'),
 	url('^admin/display-config-manage/$', 'shopcart.myadmin.system_config.display_config_manage',name='admin_display_config_manage'),
 	url('^admin/email-config-manage/$', 'shopcart.myadmin.system_config.email_config_manage',name='admin_email_config_manage'),

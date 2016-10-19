@@ -43,6 +43,13 @@ def express_first_value(value,arg):
 	return ''
 	
 @register.filter		
+def is_equal(value,arg):
+	if value == arg:
+		return True
+	else:
+		return False
+	
+@register.filter		
 def equalornot(value,arg):
 	arg_list = arg.split(',')
 	

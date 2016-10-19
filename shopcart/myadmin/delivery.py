@@ -63,13 +63,14 @@ def type_edit(request):
 		else:
 			form = express_type_form(request.POST)
 			
-		express_id_list = request.POST.getlist('express')
-		express_list = Express.objects.filter(id__in=express_id_list)
-		express_type.expresses = express_list
-		express_type.save()	
-			
 		if form.is_valid():
-			express_type = form.save()			
+			express_type = form.save()
+
+			express_id_list = request.POST.getlist('express')
+			express_list = Express.objects.filter(id__in=express_id_list)
+			express_type.expresses = express_list
+			express_type.save()	
+			
 			result['success'] = True
 			result['message'] = '配送方式信息保存成功'
 			result['express_type_id'] = express_type.id

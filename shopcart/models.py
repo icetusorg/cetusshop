@@ -397,8 +397,8 @@ class Email_List(models.Model):
 @python_2_unicode_compatible
 class ExpressType(models.Model):
 	name = models.CharField(max_length=100,null=True,verbose_name = '送货方式')
-	price_fixed = models.FloatField(verbose_name = '固定运费')
-	price_per_kilogram = models.FloatField(verbose_name = '每千克运费')
+	price_fixed = models.FloatField(default = 0.0,verbose_name = '固定运费')
+	price_per_kilogram = models.FloatField(default = 0.0,verbose_name = '每千克运费')
 	is_in_use = models.BooleanField(default=True,verbose_name='是否启用')
 	is_delete = models.BooleanField(default=False,verbose_name='是否删除')
 	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
@@ -410,14 +410,19 @@ class ExpressType(models.Model):
 	class Meta:
 		verbose_name = '送货方式'
 		verbose_name_plural = '送货方式'
+		
+	def get_expresses(self):
+		list = self.expresses.all()
+		list = list.filter(is_delete=False)
+		return list
 
 		
 @python_2_unicode_compatible
 class Express(models.Model):
 	name = models.CharField(max_length=100,null=True,verbose_name = '快递名称')
 	express_type = models.ManyToManyField(ExpressType,null=True,related_name='expresses')
-	price_fixed = models.FloatField(verbose_name = '固定运费')
-	price_per_kilogram = models.FloatField(verbose_name = '每千克运费')
+	price_fixed = models.FloatField(default = 0.0,verbose_name = '固定运费')
+	price_per_kilogram = models.FloatField(default = 0.0,verbose_name = '每千克运费')
 	is_in_use = models.BooleanField(default=True,verbose_name='是否启用')
 	is_delete = models.BooleanField(default=False,verbose_name='是否删除')
 	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
@@ -425,6 +430,11 @@ class Express(models.Model):
 	
 	def __str__(self):
 		return self.name
+		
+	def get_express_types(self):
+		list = self.express_type
+		list = list.filter(is_delete=False)
+		return list
 	
 	class Meta:
 		verbose_name = '快递公司'

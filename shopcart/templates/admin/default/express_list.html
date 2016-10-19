@@ -1,0 +1,53 @@
+{% extends "admin/default/content_base.html" %}
+{% block breadcrumbs %}
+<section class="content-header">
+    <h1>配送方式</h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+        <li class="active"><a href="order_list.html">系统参数管理</a></li>
+    </ol>
+</section>
+{% endblock %}
+
+
+{% block main %}
+{% load i18n %}
+<section class="content">
+    <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+    <div class="col-md-12 add-product system-attr">
+        <div class="system-attr-mian">
+            <!--页签-->
+            <div class="add-content email-config dispatching active">
+                <p class="signal-title">配送方式</p>
+                <div class="item-free attr-array">
+                    <div class="attr-array-list title">
+                        <dl>
+                            <dd>快递公司</dd>
+                            <dd>是否启用</dd>
+                            <dd>默认成本</dd>
+                            <dd>操作</dd>
+                        </dl>
+                    </div>
+                    <div class="attr-array-list">
+						{% for express in express_list %}
+						    <dl>
+								<dd>{{express.name}}</dd>
+								<dd><label>{{express.is_in_use|yesno:"是,否"}}</label></dd>
+								<dd>{{express.price_fixed|floatformat:"2"}} 元</dd>
+								<dd><a class="edit" href="/admin/express-edit/?id={{express.id}}">编辑</a>|<a class="delete detele-express" data-id="{{express.id}}" href="#">删除</a></dd>
+							</dl>
+						{% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--页签结束-->
+    </div>
+</section>
+{% load staticfiles %}
+{% load shopcart_extras %}
+
+{% endblock %}
+{% block scripts %}
+	{% load staticfiles %}
+{% endblock %}

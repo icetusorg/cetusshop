@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from django import forms
-from shopcart.models import MyUser,Address,Product,Inquiry,OrderShippment,Email,Article
+from shopcart.models import MyUser,Address,Product,Inquiry,OrderShippment,Email,Article,Express,ExpressType
 from captcha.fields import CaptchaField
 from django.utils.translation import ugettext as _
 from django.core.exceptions import ValidationError 	
@@ -105,7 +105,17 @@ class email_form(forms.ModelForm):
 	class Meta:
 		model = Email
 		fields = ('useage_name','is_send','email_address','title','smtp_host','username','password','template','template_file')
-		
+
+
+class express_form(forms.ModelForm):
+	class Meta:
+		model = Express
+		fields = ('name','is_in_use','price_fixed')	
+
+class express_type_form(forms.ModelForm):
+	class Meta:
+		model = ExpressType
+		fields = ('name','is_in_use','price_fixed')			
 	
 class inquiry_form(forms.ModelForm):
 	company = forms.CharField(required=False)

@@ -18,6 +18,16 @@ def check_if_in_product_attribute(value,arg):
 			return 'checked'
 	else:
 		return ''
+		
+@register.filter
+def check_if_in_delivery_type(value,arg):
+	type = value
+	express = arg
+	
+	if type in express.get_express_types():
+		return True
+	else:
+		return False
 
 @register.filter		
 def express_first_value(value,arg):

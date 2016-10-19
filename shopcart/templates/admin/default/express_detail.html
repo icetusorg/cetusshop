@@ -1,0 +1,53 @@
+{% extends "admin/default/content_base.html" %}
+{% block breadcrumbs %}
+<section class="content-header">
+    <h1>快递公司管理</h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+        <li class="active"><a href="order_list.html">系统参数管理</a></li>
+    </ol>
+</section>
+{% endblock %}
+
+
+{% block main %}
+{% load i18n %}
+{% load shopcart_extras %}
+<section class="content">
+    <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+    <div class="col-md-12 add-product website-info express">
+        <div class="system-attr-mian">
+        <p class="signal-title">快递公司</p>
+        <!--页签-->
+        <div class="add-content active">
+			<form id="express_detail_form" method="POST">
+				{% csrf_token %}
+				<div class="email-edit">
+				<div class="item"><label>名称：</label><input type="text" class="form-control" name="name" value="{{express.name}}"></div>
+				<div class="item"><label>默认成本：</label><input type="text" class="form-control" name="price_fixed" value="{{express.price_fixed|floatformat:"2"}}"></div>
+				<div class="item"><label>是否启用：</label><input type="checkbox" name="is_in_use" {{express.is_in_use|yesno:"checked,"}}></div>
+				<div class="item"><label>加入配送方式：</label></div>
+				<div class="item checkboxs">
+					{% for type in express_type_list %}
+						<input type="checkbox" name="express_type" value="{{type.id}}" {{type|check_if_in_delivery_type:express|yesno:"checked,"}}><span>{{type.name}}</span>
+					{% endfor %}
+				</div>
+				<div class="submit-item">
+					<input name="id" value="{{express.id}}" type="hidden" />
+					<button type="button" id="express_detail_submit_btn" class="btn btn-primary">提交</button>
+				</div>
+			</form>
+        </div>
+        </div>
+        </div>
+
+        <!--页签结束-->
+    </div>
+</section>
+{% load staticfiles %}
+{% load shopcart_extras %}
+
+{% endblock %}
+{% block scripts %}
+	{% load staticfiles %}
+{% endblock %}

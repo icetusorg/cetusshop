@@ -839,6 +839,113 @@ jQuery("#email_detail_config_submit_btn").click(function(e){
 });
 
 
+//快递管理
+//编辑快递方式
+jQuery("#delivery_type_detail_submit_btn").click(function(e){
+	var url = "/admin/delivery-type-edit/";
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#delivery_type_detail_form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			if(data.success==true){
+				$('#myModal').on('hidden.bs.modal', function (e) {
+					location.href = url + "?id=" + data.express_type_id;
+				})
+			}
+			$("#myModal").modal('toggle');
+		}
+	});
+});
+
+//删除配送方式
+jQuery(".delete-delivery-type").click(function(e){
+	var url = "/admin/delivery-type-delete/";
+	var type_id = $(this).data("id");
+	url = url + type_id + "/";
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:null,
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			if(data.success==true){
+				$('#myModal').on('hidden.bs.modal', function (e) {
+					location.reload(true); 
+				})
+			}
+			$("#myModal").modal('toggle');
+		}
+	});
+});
+
+
+//编辑快递公司
+jQuery("#express_detail_submit_btn").click(function(e){
+	var url = "/admin/express-edit/";
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#express_detail_form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			if(data.success==true){
+				$('#myModal').on('hidden.bs.modal', function (e) {
+					location.href = url + "?id=" + data.express_id;
+				})
+			}
+			$("#myModal").modal('toggle');
+		}
+	});
+});
+
+//删除快递公司
+jQuery(".detele-express").click(function(e){
+	var url = "/admin/express-delete/";
+	var express_id = $(this).data("id");
+	url = url + express_id + "/";
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:null,
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			if(data.success==true){
+				$('#myModal').on('hidden.bs.modal', function (e) {
+					location.reload(true); 
+				})
+			}
+			$("#myModal").modal('toggle');
+		}
+	});
+});
+
+
 //通用函数
 /* 
 * url 目标url 

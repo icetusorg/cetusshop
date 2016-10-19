@@ -292,6 +292,9 @@ ul, li, dl, ol {
     font-size: 12px;
     padding: 7px 12px;
 }
+.add-content .submit-item button{
+    padding:7px 30px;
+}
 
 .add-content .addPSubmit {
     padding: 7px 25px;
@@ -318,7 +321,42 @@ ul, li, dl, ol {
     font-size: 14px;
     cursor: pointer
 }
-
+.set-paypal .tag li{
+    border-right:none;
+}
+.set-paypal input{width:240px !important;}
+.set-paypal .message span{
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #00c0ef;
+    padding: 0 5px;
+    color: #fff;
+    float: left;
+    line-height: 16px;
+    margin-top: 8px;
+    margin-right: 10px;
+}
+.set-paypal{padding-bottom:40px;}
+.set-paypal .infos{position: relative;}
+.set-paypal .message{position:absolute;left:240px; top:0;}
+.set-paypal .message .ico{
+    width: 380px;
+    float: left;
+    height: 120px;
+    padding-left: 11px;
+    background: url("../images/paypal-message.png") no-repeat;
+    color:#fff;
+}
+.set-paypal .message .ico h4{margin:0;font-size: 15px;padding-bottom:8px;}
+.set-paypal .message .text{
+    padding:15px;
+    background: #00c0ef;
+    line-height: 22px;
+    overflow: hidden;
+}
+.set-paypal .normal .inputBtn{min-width: 50px;}
+.set-paypal .normal .dropdown-menu li,.dropdown-menu{ min-width: 73px;}
 .tag li:first-child {
     padding-left: 0;
 }
@@ -346,10 +384,6 @@ ul, li, dl, ol {
 
 .add-product .item input, .add-product .item textarea {
     width: 75%;
-    float: left;
-}
-.add-product .item2 input, .add-product .item2 textarea {
-    width: 35% !important;
     float: left;
 }
 
@@ -392,9 +426,7 @@ ul, li, dl, ol {
 .add-product .btn-item input {
     width: 63%;
 }
-.add-product .btn-item2 input {
-    width: 35% !important;
-}
+
 .add-product .inputAndBtn .file {
     width: auto !important;
     height: auto;
@@ -403,7 +435,7 @@ ul, li, dl, ol {
 
 .add-product .btn-item button {
     float: left;
-    width: 5%;
+    width: 9%;
     margin-left: 3%;
 }
 
@@ -414,12 +446,9 @@ ul, li, dl, ol {
 }
 
 .add-content.attr .next-steep {
-    /*padding: 7px 20px;*/
+    padding: 7px 20px;
 }
-.add-content h1{
-    font-size: 18px;
-    margin-bottom: 0px;
-}
+
 .btn-primary {
     background-color: #3c8dbc;
 }
@@ -646,7 +675,45 @@ ul, li, dl, ol {
     margin-top: 10px;
     height: 60px;
 }
-
+.category-set{padding-bottom:30px;}
+.add-product .signal-title{
+    line-height: 42px;border-bottom:1px solid #ddd; font-size: 15px;
+    width: 100%;    display: inline-block;
+}
+.dispatching .attr-array-list dt, .dispatching .attr-array-list dd{
+    width:25% !important;
+    text-align: center;
+}
+.deliverys .title-btn{padding:12px 0; border-bottom: 1px solid #ddd;}
+.deliverys .attr-array{width:60%;}
+.deliverys .attr-array-list dd,.deliverys .attr-array-list dt{width:30% !important; }
+.deliverys .attr-array-list dd,.deliverys .attr-array-list dt{}
+.deliverys .attr-array-list dd:nth-child(2),.deliverys .attr-array-list dt:nth-child(2){width:40% !important;text-align: center;}
+.deliverys .title-btn input[type=checkbox]{margin-top:12px;margin-right:15px;}
+.deliverys .title-btn button{margin-right:10px;}
+.deliverys .title-btn label{margin-top:8px;margin-right:50px;}
+.dispatching .attr-array-list dl{
+    height:40px; border-bottom:1px solid #ddd;
+}
+.dispatching .attr-array-list dl dd:nth-child(2){
+    text-align: center;
+    margin:0;
+}
+.dispatching .attr-array-list dl dd:nth-child(2) label{
+    float:none;margin:0;
+}
+.dispatching .attr-array-list,.dispatching .attr-array-list.title{border:none}
+.dispatching .signal-title{width:60%; margin-right:40%;border-bottom:none;}
+.dispatching .attr-array{width:60%;padding-bottom: 15px;}
+.express .checkboxs span{float:left;margin-right:36px;margin-left:8px;}
+.express .checkboxs{margin-top:0;}
+.express .checkboxs input{float:left;}
+.category-set .item{height:auto;}
+.category-set .signal-title.top{margin-top:20px;}
+.category-set .normal .inputBtn{min-width: 375px}
+.category-set .dropdown-menu{min-width:400px}
+.category-set .item textarea{width: 400px;}
+.category-set .large label{padding-right:0 !important;width:140px;}
 /*bootstrap修改*/
 .main-footer {
     font-size: 12px;
@@ -1031,6 +1098,7 @@ iframe {
 
 .email-config .attr-array-list dd a:last-child {
     padding-left: 4px;
+    color: red;
 }
 
 .email-edit .item input {
@@ -1058,24 +1126,23 @@ iframe {
 }
 
 /*编辑邮件模板*/
-.email-template-div {
+.article {
     width: 100%;
 }
 
-.email-template-div2 {
+.article-other {
     width: 850px;
     padding-left: 10px;
-    float: left;
 }
 
 .email-template-div button {
-    /*margin-left: 10px;*/
-    /*width: 70px;*/
-    /*height: 30px;*/
-    /*background: #3c8ebb;*/
-    /*border: none;*/
-    /*border-radius: 5px;*/
-    /*color: #fff;*/
+    margin-left: 10px;
+    width: 70px;
+    height: 30px;
+    background: #3c8ebb;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
 }
 
 .email-template-div label:first-child {
@@ -1184,9 +1251,6 @@ iframe {
 @media (min-width: 1600px) {
     .xy-list-all .list-all {
         margin-left: 2.5%;
-    }
-    .list-all2{
-        margin-left: 100px!important;
     }
 }
 

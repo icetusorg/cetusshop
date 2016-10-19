@@ -107,6 +107,13 @@ urlpatterns = patterns("",
 	url('^admin/display-config-manage/$', 'shopcart.myadmin.system_config.display_config_manage',name='admin_display_config_manage'),
 	url('^admin/email-config-manage/$', 'shopcart.myadmin.system_config.email_config_manage',name='admin_email_config_manage'),
 	
+	url('^admin/delivery-type-list/$', 'shopcart.myadmin.delivery.type_list_view',name='admin_delivery_type_list_view'),
+	url('^admin/delivery-type-edit/$', 'shopcart.myadmin.delivery.type_edit',name='admin_delivery_type_edit'),
+	url('^admin/delivery-type-delete/(\d+)/$', 'shopcart.myadmin.delivery.type_delete',name='admin_type_delete'),
+	url('^admin/express-list/$', 'shopcart.myadmin.delivery.express_list_view',name='admin_express_list_view'),
+	url('^admin/express-edit/$', 'shopcart.myadmin.delivery.express_edit',name='admin_express_edit'),
+	url('^admin/express-delete/(\d+)/$', 'shopcart.myadmin.delivery.express_delete',name='admin_express_delete'),
+	
 	
 	url('^admin/no-permission/$', 'shopcart.myadmin.index.no_permission',name='admin_no_permission'),
 	url('^admin/product-oper/$', 'shopcart.myadmin.product.oper',name='admin_product_oper'),

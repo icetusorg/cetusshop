@@ -24,8 +24,9 @@ def check_if_in_delivery_type(value,arg):
 	type = value
 	express = arg
 	
-	if type in express.get_express_types():
-		return True
+	if express:
+		if type in express.get_express_types():
+			return True
 	else:
 		return False
 

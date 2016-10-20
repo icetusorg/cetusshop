@@ -337,10 +337,12 @@ ul, li, dl, ol {
     margin-top: 8px;
     margin-right: 10px;
 }
+.set-paypal .message:hover .ico{ display:block;}
 .set-paypal{padding-bottom:40px;}
 .set-paypal .infos{position: relative;}
-.set-paypal .message{position:absolute;left:240px; top:0;}
+.set-paypal .message{position:absolute;left:240px; top:0; cursor: pointer;}
 .set-paypal .message .ico{
+    display: none;
     width: 380px;
     float: left;
     height: 120px;

@@ -27,7 +27,12 @@
         <div class="add-content detail-info active" id="tag_basic_info">
 			<form id="product-basic-info-form" method="POST">
 			{% csrf_token %}
-				<div class="item"><label>名称：</label><input type="text" name="name" class="form-control" value="{{product.name}}"></div>
+				<div class="item">
+					<label>名称：</label><input type="text" name="name" class="form-control" value="{{product.name}}">
+				</div>
+				
+				</div>
+				
 				<div class="item"><label>编号：</label><input type="text" name="item_number" class="form-control" value="{{product.item_number}}"></div>
 				<div class="item half-item"><label>售价：</label><input type="text" name="price" class="form-control" value="{{product.price}}"></div>
 				<div class="item half-item"><label>市场价：</label><input type="text" name="market_price" class="form-control" value="{{product.market_price}}"></div>

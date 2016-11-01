@@ -43,6 +43,7 @@
             <div class="item-block">
                 <ul>
                     <li>总价：<span>${{order.order_amount|floatformat:"2"}}</span></li>
+					<li>商品总价：<span>${{order.products_amount|floatformat:"2"}}</span></li>
                     <li>运费：<span>${{order.shipping_fee|floatformat:"2"}}</span></li>
                     <li class="strong">实付：<span>${{order.money_paid|floatformat:"2"}}</span></li>
                 </ul>
@@ -112,6 +113,7 @@
                         <dd>物流公司</dd>
                         <dd>备注</dd>
                         <dd>成本</dd>
+						<dd>操作</dd>
                     </dl>
                 </div>
 				{% for ship in order.shippments.all %}
@@ -122,6 +124,7 @@
 							<dd>{{ship.shipper_name|default:"未录入"}}</dd>
 							<dd>{{ship.remark}}</dd>
 							<dd>¥ {{ship.shipping_cost|default:"未录入"}}</dd>
+							<dd><a href="#" class="delete-ship-record" data-id="{{ship.id}}">删除</a></dd>
 						</dl>
 					</div>
 				{% endfor %}

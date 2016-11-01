@@ -199,6 +199,7 @@ def paypal_notify(sender, **kwargs):
 	logger.debug(str('STEP_4:校验通过，修改订单状态为支付成功'))
 	order.status = Order.ORDER_STATUS_PAYED_SUCCESS
 	order.pay_status = 'Paid Successfully'
+	order.money_paid = ipn_obj.mc_gross
 	order.save()
 	
 	#触发付款成功的事件

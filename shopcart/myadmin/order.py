@@ -1,7 +1,7 @@
 #coding=utf-8
 from django.shortcuts import render,redirect,render_to_response
 from django.core.urlresolvers import reverse
-from shopcart.models import System_Config,Express,Order,OrderRemark,ExpressType
+from shopcart.models import System_Config,Express,Order,OrderRemark,ExpressType,OrderShippment
 from shopcart.utils import System_Para,my_pagination,get_serial_number,get_system_parameters
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse,JsonResponse,Http404
@@ -190,6 +190,31 @@ def ship_out(request):
 			result_dict['success'] = False
 			result_dict['message'] = '表单填写的内容不合法，请检查。'
 			return JsonResponse(result_dict)
+			
+
+@staff_member_required
+@transaction.atomic()		
+def shipment_delete(request,id):
+	result_dict = {}
+	if request.method == 'POST':
+		try:
+			shipment = OrderShippment.objects.get(id=id)
+		except Exception as err:
+			logger.error('Can not find shippment which id is [%s]. \n Error Message:%s' %(id,err))
+			result_dict['success'] = False
+			result_dict['message'] = 'ID号为%s的发货记录找不到！' % id
+			return JsonResponse(result_dict)
+		
+		shipment.delete()
+		result_dict['success'] = True
+		result_dict['message'] = '删除成功'
+		return JsonResponse(result_dict)
+	else:
+		result_dict['success'] = False
+		result_dict['message'] = '表单填写的内容不合法，请检查。'
+		return JsonResponse(result_dict)			
+			
+			
 		
 @staff_member_required
 @transaction.atomic()

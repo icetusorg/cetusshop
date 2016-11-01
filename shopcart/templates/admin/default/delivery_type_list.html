@@ -33,7 +33,7 @@
 							<dl>
 								<dd>{{type.name}}</dd>
 								<dd><label>{{type.is_in_use|yesno:"是,否"}}</label></dd>
-								<dd>{{type.price_fixed|floatformat:"2"}} 元</dd>
+								<dd>{{type.price_fixed|floatformat:"2"}} 美元</dd>
 								<dd><a class="edit" href="/admin/delivery-type-edit/?id={{type.id}}">编辑</a>|<a class="delete delete-delivery-type" data-id="{{type.id}}" href="#">删除</a></dd>
 							</dl>
 						{% endfor %}

@@ -91,6 +91,7 @@ urlpatterns = patterns("",
 	url('^admin/order-remark-add/$', 'shopcart.myadmin.order.remark_add',name='admin_order_remark_add'),
 	url('^admin/order-oper/$', 'shopcart.myadmin.order.oper',name='admin_order_oper'),
 	url('^admin/order-shippment-manage/$', 'shopcart.myadmin.order.ship_out',name='admin_order_ship_out'),
+	url('^admin/order-shippment-manage/delete/(\d+)/$', 'shopcart.myadmin.order.shipment_delete',name='admin_order_shipment_delete'),
 	url('^admin/order-status/(.+)/(\d+)/$', 'shopcart.myadmin.order.modify_status',name='admin_modify_status'),
 	
 	url('^admin/article-list/$', 'shopcart.myadmin.article.list_view',name='admin_article_list_view'),

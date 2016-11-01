@@ -333,6 +333,36 @@ jQuery("#shippment_submit_btn").click(function(){
 	});	
 });
 
+//发货记录删除
+jQuery(".delete-ship-record").click(function(){
+	var url = "/admin/order-shippment-manage/delete/";
+	var id = $(this).data("id");
+	url = url + id + "/";
+
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:null,
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			$('#myModal').on('hidden.bs.modal', function (e) {
+				var url = location.href;
+				var newurl = changeURLArg(url,"tab_name","tag_shippment");
+				location.href = newurl;//跳转到对应的页面
+			});
+			
+			$("#myModal").modal('toggle');
+			
+		}
+	});	
+});
+
+
 //文章管理界面
 //批量删除
 jQuery("#article_batch_delete").click(function(event){

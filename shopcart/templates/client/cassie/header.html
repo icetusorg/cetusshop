@@ -4,19 +4,31 @@
 <!--手机左侧菜单-->
 <div class="menu-phone">
     <ul class="menu-phone-main">
-        <li><a href="/">home</a></li>
-        <li><a href="/about_us/about-us.html">about us</a></li>
-        <li><a href="/brushes-combs.html">products</a>
+        <li><a href="{{system_para.base_url}}/">home</a></li>
+		<li><a href="{{system_para.base_url}}/about_us/about-us.html">about us</a>
             <span class="glyphicon glyphicon-plus menu-phone-plus" data="phone-plus1" status="close"></span>
             <ul class="menu-low-one" id="phone-plus1">
-				{% for product in menu_products%}
-					<li><a href="{{product.get_url}}"><i></i>&gt;{{product.name}}</a></li>
-				{% endfor %}
+				<li><a href="{{system_para.base_url}}/hair-brush-manufacturer-profile.html"><i></i>Who We Are</a></li>
+				<li><a href="{{system_para.base_url}}/china-hair-brush-factory.html"><i></i>Our Factory</a></li>
+				<li><a href="{{system_para.base_url}}/meet-our-team.html"><i></i>Meet Our Team</a></li>				
             </ul>
         </li>
-		<li><a href="#">Customize</a></li>
-		<li><a href="/blog-list.html">Blog</a></li>
-        <li><a href="/Contact-us.html">Contact Us</a></li>
+        <li><a href="{{system_para.base_url}}/Products.html">products</a>
+            <span class="glyphicon glyphicon-plus menu-phone-plus" data="phone-plus1" status="close"></span>
+            <ul class="menu-low-one" id="phone-plus1">
+				<li><a href="{{system_para.base_url}}/Products/detangling-hair-brush.html"><i></i>Detangle Hair Brush</a></li>
+				<li><a href="{{system_para.base_url}}/Products/plastic-combs.html"><i></i>Plastic Combs</a></li>
+				<li><a href="{{system_para.base_url}}/Products/plastic-hair-brushes.html"><i></i>Plastic Hair Brushes</a></li>
+				<li><a href="{{system_para.base_url}}/Products/hair-dye-brush-accessories.html"><i></i>Hair Dyeing Brush And Bowl</a></li>
+				<li><a href="{{system_para.base_url}}/Products/hand-made-combs.html"><i></i>Hand-Made Combs</a></li>
+				<li><a href="{{system_para.base_url}}/Products/foldable-round-comb-with-mirror.html"><i></i>Foldable Round Comb With Mirror</a></li>
+				<li><a href="{{system_para.base_url}}/Products/carbon-fiber-comb-hair-brush.html"><i></i>Carbon Fiber Combs</a></li>
+				<li><a href="{{system_para.base_url}}/Products/hair-brush-set.html"><i></i>Hair Brush Set</a></li>
+            </ul>
+        </li>
+		<li><a href="{{system_para.base_url}}/customize-your-hair-brush.html">Customize</a></li>
+		<li><a href="{{system_para.base_url}}/blog-list.html">Blog</a></li>
+        <li><a href="{{system_para.base_url}}/Contact-us.html">Contact Us</a></li>
     </ul>
 </div>
 <!--头部-->
@@ -58,13 +70,13 @@
                 <div class="top-link">
                     <ul>
                         <li>{{user.get_short_name|default:"^_^"}} Welcome!</li>
-                        <li><a href="/order/show">{% trans 'MY ACCOUNT' %}</a></li>					
-                        <li><a href="/wishlist">{% trans ' My WISHLIST' %}</a></li>
+                        <li><a href="{{system_para.base_url}}/order/show">{% trans 'MY ACCOUNT' %}</a></li>					
+                        <li><a href="{{system_para.base_url}}/wishlist">{% trans ' My WISHLIST' %}</a></li>
                         <li>
 							{%	if user.is_authenticated %}          
-								<div class="login"><a href="/user/logout/"><span class="hidden-xs">{%trans 'LOG OUT' %}</span></a></div>    
+								<div class="login"><a href="{{system_para.base_url}}/user/logout/"><span class="hidden-xs">{%trans 'LOG OUT' %}</span></a></div>    
 							{% else %}
-								<div class="logout"><a href="/user/login/" class="loginModalLink"><span class="hidden-xs">{% trans 'LOG IN' %}</span></a></div>
+								<div class="logout"><a href="{{system_para.base_url}}/user/login/" class="loginModalLink"><span class="hidden-xs">{% trans 'LOG IN' %}</span></a></div>
 							{% endif %}
 						</li>
                     </ul>
@@ -76,7 +88,7 @@
         <div class="container">
             <div class="row">
                 <div class="top-search">
-					<form method="GET" action="/query/product/">
+					<form method="GET" action="{{system_para.base_url}}/query/product/">
 						<input class="form-control" placeholder="Search..." name="query" id="q" value="" type="text">
 						<button class="glyphicon glyphicon-search" type="submit"></button>
 					</form>
@@ -95,7 +107,7 @@
                 <div class="top-middle-right">
                     <div class="top-phone"><span class="glyphicon glyphicon-earphone"></span><span>{{system_para.hot_line}}</span></div>
                     <div class="top-cart">
-                        <span class="top-cart-num"><a class="top-cart-num-link" href="/cart/show/">0</a></span>
+                        <span class="top-cart-num"><a class="top-cart-num-link" href="{{base_url}}/cart/show/">0</a></span>
                     </div>
                 </div>
             </div>
@@ -106,18 +118,29 @@
         <div class="container">
             <div class="row">
                 <ul>
-                    <li><a href="/">home</a></li>
-                    <li><a href="/about_us/about-us.html">about us</a></li>
-                    <li><a href="/brushes-combs.html">products <img src="{% static "client/cassie/images/ico/menu-arrow.png"%}"></a>
-							<ul class="menu-low-one" id="phone-plus1">
-								{% for product in menu_products%}
-									<li><a href="{{product.get_url}}"><i></i>{{product.name}}</a></li>
-								{% endfor %}
-							</ul>
+                    <li><a href="{{system_para.base_url}}/">home</a></li>
+                    <li><a href="{{system_para.base_url}}/about_us/about-us.html">about us <img src="{% static "client/cassie/images/ico/menu-arrow.png"%}"></a>
+						<ul class="menu-low-one" id="phone-plus1">
+							<li><a href="{{system_para.base_url}}/hair-brush-manufacturer-profile.html"><i></i>Who We Are</a></li>
+							<li><a href="{{system_para.base_url}}/china-hair-brush-factory.html"><i></i>Our Factory</a></li>
+							<li><a href="{{system_para.base_url}}/meet-our-team.html"><i></i>Meet Our Team</a></li>				
+						</ul>
+					</li>
+                    <li><a href="{{system_para.base_url}}/Products.html">products <img src="{% static "client/cassie/images/ico/menu-arrow.png"%}"></a>
+						<ul class="menu-low-one" id="phone-plus1">
+							<li><a href="{{system_para.base_url}}/Products/detangling-hair-brush.html"><i></i>Detangle Hair Brush</a></li>
+							<li><a href="{{system_para.base_url}}/Products/plastic-combs.html"><i></i>Plastic Combs</a></li>
+							<li><a href="{{system_para.base_url}}/Products/plastic-hair-brushes.html"><i></i>Plastic Hair Brushes</a></li>
+							<li><a href="{{system_para.base_url}}/Products/hair-dye-brush-accessories.html"><i></i>Hair Dyeing Brush And Bowl</a></li>
+							<li><a href="{{system_para.base_url}}/Products/hand-made-combs.html"><i></i>Hand-Made Combs</a></li>
+							<li><a href="{{system_para.base_url}}/Products/foldable-round-comb-with-mirror.html"><i></i>Foldable Round Comb With Mirror</a></li>
+							<li><a href="{{system_para.base_url}}/Products/carbon-fiber-comb-hair-brush.html"><i></i>Carbon Fiber Combs</a></li>
+							<li><a href="{{system_para.base_url}}/Products/hair-brush-set.html"><i></i>Hair Brush Set</a></li>
+						</ul>
                     </li>
-					<li><a href="#">Customize</a></li>
-					<li><a href="/blog-list.html">Blog</a></li>
-                    <li><a href="/Contact-us.html">Contact Us</a></li>
+					<li><a href="{{system_para.base_url}}/customize-your-hair-brush.html">Customize</a></li>
+					<li><a href="{{system_para.base_url}}/blog-list.html">Blog</a></li>
+                    <li><a href="{{system_para.base_url}}/Contact-us.html">Contact Us</a></li>
                 </ul>
             </div>
         </div>

@@ -124,6 +124,13 @@ button:hover{border-radius:0;border-bottom-left-radius:0;border-bottom-right-rad
 .sliders{width:100%;}
 .sliders img{width:100%;}
 .home h1,.products h1{color:#666666; font-size:18px; line-height: 30px; padding-top:25px;}
+.home-products-main div img,.products-main div img{ width:100%;}
+.home-products-main h2,.products-main h2{ font-size: 14px; text-align: center; line-height: 18px; margin-top:14px; height:36px; overflow: hidden;}
+.home-products-main h2 a,.products-main h2 a{color:#666; text-decoration: none;}
+.home-products-main h2 a:hover,.products-main h2 a:hover{color:#f7931d;}
+.home-products-main p,.products-main p{ font-size:20px; color:#333; text-align: center; line-height: 36px;margin-bottom:34px;}
+.home-products-main p:hover,.products-main p:hover{color:#f7931d;}
+.home-product-des,.products-des{padding-bottom:15px; font-size: 14px;}
 
 
 /*home about*/

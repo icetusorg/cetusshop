@@ -131,6 +131,7 @@ def view_list(request,category_id=None):
 		else:
 			logger.debug("all products")
 			product_list = Product.objects.filter(is_publish=True)
+			logger.debug('Products count in product_list : [%s]' % len(product_list))
 		
 		#按分类筛选
 		logger.debug('category_id : %s ' % category_id)
@@ -150,6 +151,8 @@ def view_list(request,category_id=None):
 				if category.category_template:
 					template = '/custmize/product/' + category.category_template
 				product_list = product_list.filter(categorys__in = cat_list)
+				product_list = list(set(product_list))
+				logger.debug('Products count in product_list : [%s]' % len(product_list))
 			except Exception as err:
 				logger.error('Can not find category which id is %s. Error message is %s ' % (category_id,err))
 			

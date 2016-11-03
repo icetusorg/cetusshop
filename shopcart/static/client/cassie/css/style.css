@@ -237,7 +237,16 @@ button:hover{border-radius:0;border-bottom-left-radius:0;border-bottom-right-rad
 .detail-attr-lable{ line-height:48px; width:100%; font-size:12px; color:#666666; text-transform:uppercase;}
 .detail-attr ul{width:100%; display:inline-block;}
 .detail-attr li{float:left;margin-right:10px; line-height: 30px; font-size: 16px; display: inline-block;}
-.detail-attr li img{width:100%; border:1px #fff solid; cursor:pointer;}
+/*.detail-attr li img{width:100%; border:1px #fff solid; cursor:pointer;}*/
+
+.detail-attr li img{width:100%; border:1px #ccc solid; cursor:pointer;padding:1px;}
+li.sku-inavailable{cursor: not-allowed;}
+li.sku-inavailable img{cursor: not-allowed;border: 1px dashed #ccc;}
+.detail-sku-text{}
+li.sku-text-available{border:1px solid #ccc;cursor:pointer;padding:0 3px; font-size: 14px;min-width:40px;text-align: center;}
+li.sku-text-available2{border:1px solid #ccc;cursor:pointer;padding:0 3px; font-size: 14px; min-width:40px;text-align: center;}
+li.sku-text-inavailable{border:1px dashed #ccc;cursor:not-allowed;padding:0 3px; font-size: 14px;color: #ccc;min-width:40px; text-align: center;}
+
 .cart-move{display:none;position: absolute;z-index: 999;}
 .detail-quality{padding-top:24px;border-top:1px solid #ddd;}
 .detail-quality .detail-add-btn{ font-size:16px;text-transform: capitalize;padding:10px 37px;border:1px solid #f7931d; line-height:30px; margin-right:20px; color:#fff; background: #f7931d;font-size: 16px;}

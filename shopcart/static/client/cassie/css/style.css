@@ -83,7 +83,7 @@ button:hover{border-radius:0;border-bottom-left-radius:0;border-bottom-right-rad
 .copy-media a:nth-child(2),.artical-media a:nth-child(1){ background:#9e9e9e;}
 .copy-media a:nth-child(2):hover,.artical-media a:nth-child(1):hover{ background:#3c599b;}
 .copy-media a:nth-child(3),.artical-media a:nth-child(2){ background:#9e9e9e;}
-.copy-media a:nth-child(3):hover,.artical-media a:nth-child(2):hover{ background:#1ca8e3;}
+.copy-media a:nth-child(3):hover,.artical-media a:nth-child(2):hover{ background:#BD2126;}
 .copy-media a:nth-child(4),.artical-media a:nth-child(3){ background:#9e9e9e;}
 .copy-media a:nth-child(4):hover,.artical-media a:nth-child(3):hover{ background:#4975b6;}
 .copy-media a{ display: inline-block;float:left;margin:21px 4px; cursor: pointer;border-radius: 50%;-webkit-transition:0.4s; -moz-transition: 0.4s;-o-transition: 0.4s;transition: 0.4s;}

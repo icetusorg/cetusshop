@@ -262,7 +262,10 @@ li.sku-text-inavailable{border:1px dashed #ccc;cursor:not-allowed;padding:0 3px;
 .detail-des-main h2, .detail-des-main h3,.detail-des-main h4,.detail-des-main h5,.detail-des-main h6{line-height: 40px;font-size: 18px;color: #000;}
 .detail-des-title{width:114px;color:#f7931d; font-size: 14px; height:36px;line-height: 33px; text-align: center;border-top:2px solid #f7931d; border-right:1px solid #ddd;float:left;}
 .detail-des-line{width:1054px;height: 36px;border-bottom:1px solid #ddd;float:left;}
-.redborder img{border-color:#ff0000 !important;}
+
+.redborder img{border:0px #ff0000 solid !important;}
+.redborder{border:2px #ff0000 solid !important;}
+
 .imycart-modal{box-shadow: 0 3px 10px rgba(200,200,200,.5) !important;border: 1px solid rgba(200,200,200,.3) !important;border-top: 3px solid #f7931d !important;}
 .imycart-modal,.modal-footer .btn{ background: #f7931d; border-color:#f7931d; color:#fff;}
 .imycart-modal,.modal-footer .btn:hover,.imycart-modal,.modal-footer .btn:focus{color:#666;border:1px solid #ccc; background: #fff;}

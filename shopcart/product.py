@@ -149,7 +149,7 @@ def view_list(request,category_id=None):
 				else:
 					ctx['page_name'] = category.name
 				if category.category_template:
-					template = '/custmize/product/' + category.category_template
+					template = '/custmize/category/' + category.category_template
 				product_list = product_list.filter(categorys__in = cat_list)
 				product_list = list(set(product_list))
 				logger.debug('Products count in product_list : [%s]' % len(product_list))

@@ -197,7 +197,7 @@ class Product(models.Model):
 	is_free_shipping = models.BooleanField(default=False,verbose_name='是否包邮')
 	sort_order = models.IntegerField(default=0,verbose_name='排序序号')
 	static_file_name = models.CharField(max_length = 254,null=True,db_index=True,unique=True,blank=True,verbose_name='静态文件名(不包含路径，以html结尾)')
-	categorys = models.ManyToManyField(Category,verbose_name='商品分类')
+	categorys = models.ManyToManyField(Category,verbose_name='商品分类',related_name="products")
 	min_order_quantity = models.IntegerField(default=0,verbose_name='最小下单数量')
 	is_publish = models.BooleanField(default=False,verbose_name='上架')
 	detail_template = models.CharField(max_length = 254,default='',blank=True,verbose_name='详情页指定模板')

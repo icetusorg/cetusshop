@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from django import forms
-from shopcart.models import MyUser,Address,Product,Inquiry,OrderShippment,Email,Article,Express,ExpressType
+from shopcart.models import MyUser,Address,Product,Inquiry,OrderShippment,Email,Article,Express,ExpressType,Category
 from captcha.fields import CaptchaField
 from django.utils.translation import ugettext as _
 from django.core.exceptions import ValidationError 	
@@ -106,6 +106,24 @@ class email_form(forms.ModelForm):
 		model = Email
 		fields = ('useage_name','is_send','email_address','title','smtp_host','username','password','template','template_file')
 
+class category_simple_form(forms.ModelForm):
+	class Meta:
+		model = Category
+		fields = ('name','code')
+		
+class category_form(forms.ModelForm):
+	name = forms.CharField(required=False)
+	code = forms.CharField(required=False)
+	page_title = forms.CharField(required=False)
+	keywords = forms.CharField(required=False)
+	short_desc = forms.CharField(required=False)
+	sort_order = forms.CharField(required=False)
+	detail_template = forms.CharField(required=False)
+	category_template = forms.CharField(required=False)
+	static_file_name = forms.CharField(required=False)
+	class Meta:
+		model = Category
+		fields = ('name','code','page_title','keywords','short_desc','sort_order','detail_template','category_template','static_file_name')
 
 class express_form(forms.ModelForm):
 	class Meta:

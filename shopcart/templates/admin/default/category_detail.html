@@ -1,0 +1,113 @@
+{% extends "admin/default/content_base.html" %}
+{% block breadcrumbs %}
+<section class="content-header">
+    <h1>分类管理</h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+        <li class="active"><a>分类管理</a></li>
+    </ol>
+</section>
+{% endblock %}
+
+{% block main %}
+{% load i18n %}
+
+{% load staticfiles %}
+{% load shopcart_extras %}
+<section class="content">
+    <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+    <div class="col-md-12 add-product category-set">
+        <div class="system-attr-mian">
+            <p class="signal-title">分类管理</p>
+            <!--页签-->
+            <div class="add-content website-info active">
+				<form id="category_detail_form">
+				{% csrf_token %}
+					<div class="item">
+						<label>上级分类：</label>
+						<div class="btn-group normal">
+							<input type="text" class="form-control" value="{{category.parent.name|default:"顶级分类"}}" readonly>
+						</div>
+					</div>
+					
+					<div class="item"><label>分类名称：</label><input type="text" name="name" class="form-control" value="{{category.name}}"></div>
+					<div class="item"><label>分类代码：</label><input type="text" name="code" class="form-control" value="{{category.code}}"></div>
+					<p class="signal-title top">SEO 设置</p>
+					<div class="item"><label>分类页标题：</label><input type="text" name="page_title" class="form-control" value="{{category.page_title}}"></div>
+					<div class="item"><label>分类页关键词：</label><input type="text" name="keywords" class="form-control" value="{{category.keywords}}"></div>
+					<div class="item"><label>分类页简述：</label><textarea type="text" name="short_desc" class="form-control" value="{{category.short_desc}}"></textarea>
+					<div class="item btn-item">
+							<label>分类静态文件名：</label><input type="text" name="static_file_name" class="form-control" value="{{category.static_file_name|default:""}}">
+							<button type="button" class="btn btn-primary url_advise_btn">推荐</button>
+					</div>
+					<p class="signal-title top">模板设置</p>
+					<div class="item large">
+						<label>分类下商品详情页模板：</label>
+						<div class="btn-group normal">
+							<button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{category.detail_template|default:"系统默认"}}</span></button>
+							<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown" aria-expanded="true">
+								<span class="caret"></span>
+								<span class="sr-only">Toggle Dropdown</span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li class="dropdown-item" data-value="">系统默认</li>						
+								{% for t in custmize_product_template %}
+									<li class="dropdown-item" data-value ="{{t}}">{{t}}</li>
+								{% endfor %}
+								<input class="dropdown-item-input" type="hidden" name="detail_template" value="{{category.detail_template}}"/>
+							</ul>
+						</div>
+					</div>
+					<div class="item large">
+						<label>分类页自定义模板：</label>
+						<div class="btn-group normal">
+							<button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{category.category_template|default:"系统默认"}}</span></button>
+							<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown" aria-expanded="true">
+								<span class="caret"></span>
+								<span class="sr-only">Toggle Dropdown</span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li class="dropdown-item" data-value="">系统默认</li>						
+								{% for t in custmize_template %}
+									<li class="dropdown-item" data-value ="{{t}}">{{t}}</li>
+								{% endfor %}
+							</ul>
+							<input class="dropdown-item-input" type="hidden" name="category_template" value="{{category.category_template}}"/>
+						</div>
+					</div>
+					<div class="submit-item">
+						<input type="hidden" value="{{category.id}}" name="id" />
+						<button type="button" id="category_detail_submit_btn" class="btn btn-primary next-steep">提交</button>
+					</div>
+				</form>
+            </div>
+            </div>
+        </div>
+        <!--页签结束-->
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+	{% load staticfiles %}
+		<script>	
+		$(document).ready(function() {
+			$(".url_advise_btn").click(function(){
+				title = $("input[name=name]").val();
+				arr = new Array();
+				arr = title.split(" ");
+				url = "";
+				
+				$.each(arr, function(idx, item) {
+					if(item.trim()!=""){
+						url = url + item + "-";
+					}
+				});
+				if(url.endWith("-")){
+					url = url.substring(0,url.length-1);
+					url = url + ".html";
+				}
+				$("input[name=static_file_name]").val(url);
+			});	
+		});
+		</script>
+{% endblock %}

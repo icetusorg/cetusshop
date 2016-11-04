@@ -130,6 +130,8 @@ def file_list(path,filetype):
 		path = 'shopcart/templates/' + path + 'product/'
 	elif filetype == 'custmize_template_article':
 		path = 'shopcart/templates/' + path + 'article/'
+	elif filetype == 'custmize_template_category':
+		path = 'shopcart/templates/' + path + 'category/'
 	else:
 		pass
 	

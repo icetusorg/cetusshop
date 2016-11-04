@@ -102,6 +102,10 @@ urlpatterns = patterns("",
 	url('^admin/article-picture-manage/$', 'shopcart.myadmin.article.article_picture_manage',name='admin_article_picture_manage'),
 	
 	url('^admin/category-list/$', 'shopcart.myadmin.category.list_view',name='admin_category_list_view'),
+	url('^admin/category-edit/$', 'shopcart.myadmin.category.edit',name='admin_category_edit'),
+	url('^admin/category-detele/(\d+)/$', 'shopcart.myadmin.category.delete',name='admin_category_delete'),
+	url('^admin/ajax_add_category/$', 'shopcart.myadmin.category.ajax_add_category',name='admin_category_ajax_add_category'),
+	
 	
 	url('^admin/system-config/(.+)/$', 'shopcart.myadmin.system_config.view',name='admin_system_config_view'),
 	url('^admin/pay-config/(.+)/$', 'shopcart.myadmin.system_config.pay_config',name='admin_system_config_pay_config'),

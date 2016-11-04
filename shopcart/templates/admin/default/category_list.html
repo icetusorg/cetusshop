@@ -46,35 +46,35 @@
                             <!--"一级分类"-->
                             <!-- id=list+数字 给每条分类加一个ID class=operate中的data一致-->
 							{% for cat in category_list%}
-								<ul class="category_01" id="list_{{cat.id}}">
+								<ul class="category_01 category-list" id="list_{{cat.id}}">
 									<li class="name">
 										<!-- data_level代表分类的级数，暂时从1级到4级-->
 										<span class="categoryIco" data_level="1"></span><span class="nameText">{{cat.name}}</span>
 									</li>
 									<li class="view"><span>{{cat.code}}</span></li>
-									<li class="operate" data="list_{{cat.id}}"><a class="addChild">添加子分类</a>
-										<a class="editCategory">编辑</a><span>/</span><a class="deleteCategory">删除</a></li>
+									<li class="operate" data="list_{{cat.id}}" data-cat-id="{{cat.id}}"><a class="addChild">添加子分类</a>
+										<a class="editCategory" href="../category-edit/?id={{cat.id}}">编辑</a><span>/</span><a class="deleteCategory">删除</a><span>/</span><a class="moveCategory">移动</a></li>
 									<!--"二级分类"-->
 									{% for cat2 in cat.childrens.all%}
 										<ul class="category_02" id="list_{{cat2.id}}">
 											<li class="name"><span class="categoryIco" data_level="2"></span><span class="nameText">{{cat2.name}}</span></li>
 											<li class="view"><span>{{cat2.code}}</span></li>
-											<li class="operate" data="list_{{cat2.id}}"><a class="addChild">添加子分类</a>
-												<a class="editCategory">编辑</a><span>/</span><a class="deleteCategory">删除</a></li>
+											<li class="operate" data="list_{{cat2.id}}" data-cat-id="{{cat2.id}}"><a class="addChild">添加子分类</a>
+												<a class="editCategory" href="../category-edit/?id={{cat2.id}}">编辑</a><span>/</span><a class="deleteCategory">删除</a>/</span><a class="moveCategory">移动</a></li>
 											<!--"三级分类"-->
 											{% for cat3 in cat2.childrens.all %}
 											<ul class="category_03" id="list_{{cat3.id}}">
 												<li class="name"><span class="categoryIco" data_level="3"></span><span class="nameText">{{cat3.name}}</span></li>
 												<li class="view"><span>{{cat3.code}}</span></li>
-												<li class="operate" data="list_{{cat3.id}}"><a class="addChild">添加子分类</a>
-													<a class="editCategory">编辑</a><span>/</span><a class="deleteCategory">删除</a></li>
+												<li class="operate" data="list_{{cat3.id}}" data-cat-id="{{cat3.id}}"><a class="addChild">添加子分类</a>
+													<a class="editCategory" href="../category-edit/?id={{cat3.id}}">编辑</a><span>/</span><a class="deleteCategory">删除</a>/</span><a class="moveCategory">移动</a></li>
 												<!--"四级分类"-->
 												{% for cat4 in cat3.childrens.all %}
 												<ul class="category_04" id="list_{{cat4.id}}">
 													<li class="name"><span class="categoryIco" data_level="4"></span><span class="nameText">{{cat4.name}}</span></li>
 													<li class="view"><span>{{cat4.code}}</span></li>
-													<li class="operate" data="list_{{cat4.id}}"><a class="addChild">添加子分类</a>
-														<a class="editCategory">编辑</a><span>/</span><a class="deleteCategory">删除</a></li>
+													<li class="operate" data="list_{{cat4.id}}" data-cat-id="{{cat4.id}}"><a class="addChild">添加子分类</a>
+														<a class="editCategory" href="../category-edit/?id={{cat4.id}}">编辑</a><span>/</span><a class="deleteCategory">删除</a>/</span><a class="moveCategory">移动</a></li>
 												</ul>
 												{% endfor %}
 											</ul>
@@ -115,15 +115,20 @@
     })
 
     //点击添加子分类
-    $(".addChild").on("click", function () {
+    //$(".addChild").on("click", addChildFunc);
+	
+	$(".category-list").on("click",".addChild",addChildFunc);
+	
+	function addChildFunc() {
         $(".addInputList").remove();
         var listId = $(this).parent().attr("data");
+		var parent_id = $(this).parent().data("cat-id");
         var level = $("#" + listId).find(".categoryIco").attr("data_level");
         level = parseInt(level) + 1;
         var insertHtml = '<ul class="addInputList category_0' + level + '" style="display:block;">' +
                 '<li class="name"><span class="categoryIco active"></span>' +
                 '<input type="text" class="form-control" id="categoryName" placeholder="分类名称"></li>' +
-                '<li class="view"><input type="text" class="form-control" id="categoryUrl" placeholder="分类网址"></li>' +
+                '<li class="view"><input type="text" class="form-control" id="categoryCode" placeholder="分类代码"></li>' +
                 '<li class="operate"><a id="categorySubmit" class="addBtn">确定</a><a class="deleteInput">删除</a></li></ul>';
         $("#" + listId).append(insertHtml);
         $("#categoryName").focus();
@@ -132,47 +137,94 @@
         })
         $("#categorySubmit").click(function () {
             var name = $("#categoryName").val();
-            var url = $("#categoryUrl").val();
+            var code = $("#categoryCode").val();
             if (level <= maxCategoryNum) {
-                addCategory(level, listId, name, url);
+                addCategory(level, listId, name, code,parent_id);
             }
         })
-    })
+    };
+	
 
     //模拟"增加分类"提交服务器:  给级别为level，ID为listId的分类增加子分类，子分类名称为name，网址为url
-    function addCategory(level, listId, name, url) {
-        console.info("Level: " + level + " ListId: " + listId + " Name: " + name, " Url: " + url);
+    function addCategory(level, listId, name, code, parent_id) {
+        console.info("Level: " + level + " ListId: " + listId + " Name: " + name + " Code: " + code + " ParentId:" + parent_id);
 
         if (name == "") {
             $("#categoryName").addClass("warning");
         }
-        if (url == "") {
-            $("#categoryUrl").addClass("warning");
+        if (code == "") {
+            $("#categoryCode").addClass("warning");
         }
 
         //提交服务器如果成功，删除输入行，增加新添加的行
-        if (name != "" && url != "") {
-            $(".addInputList").remove();
-            $("#" + listId).append('<ul class="category_0' + level + '" id="newId" style="display:block;">' +
-                    '<li class="name"><span class="categoryIco active" data_level="2"></span><span class="nameText">' + name + '</span></li>' +
-                    '<li class="view"><a href="' + url + '" target="_blank" title="' + url + '">预览</a></li>' +
-                    '<li class="operate" data="newId"><a class="addChild">添加子分类</a>' +
-                    '<a class="editCategory">编辑</a><span>/</span><a class="deleteCategory">删除</a></li></ul>');
+        if (name != "" && code != "") {
+			//提价服务器
+			
+			var url = "/admin/ajax_add_category/";
+			var postdata = {"name":name,"code":code,"parent_id":parent_id};
+	
+			$.ajax({
+				cache: false,
+				type: "POST",
+				url:url,
+				data:postdata,
+				async: false,
+				error: function(request) {
+					alert("System error");
+				},
+				success: function(data) {
+					console.info('enter...');
+				
+					$("#infoMessage").html(data.message);
+					if(data.success==true){
+						console.info('enter 2 ...');
+						var newId = data.category_id;
+						$(".addInputList").remove();
+							
+						console.info('enter 3 ...');
+						var tmpHtml = '<ul class="category_0' + level + '" id="list_' + newId + '" style="display:block;">' +
+							'<li class="name"><span class="categoryIco active" data_level="' + level +'"></span><span class="nameText">' + name + '</span></li>' +
+							'<li class="view"><span>' + code + '</span></li>' +
+							'<li class="operate" data="list_' + newId + '" data-cat-id="' + newId +'"><a class="addChild">添加子分类</a>' +
+							'<a class="editCategory" href="../category-edit/?id=' + newId +'">编辑</a><span>/</span><a class="deleteCategory">删除</a>/</span><a class="moveCategory">移动</a></li></ul>';
+							
+						console.info("html: " + tmpHtml);
+						console.info('enter 4 ...');
+						$("#" + listId).append(tmpHtml);
+						console.info('enter 5 ...');
+												
+					}
+					$("#myModal").modal('toggle');
+				}
+			});
         }
-    }
+    };
 
 
 	//删除分类
     $(".deleteCategory").on("click",function(){
         var listId = $(this).parent().attr("data");
-        $("#"+listId).remove();
+		var cat_id = $(this).parent().data("cat-id");
+		var url = "/admin/category-detele/" + cat_id + "/";
+		$.ajax({
+				cache: false,
+				type: "POST",
+				url:url,
+				data:null,
+				async: false,
+				error: function(request) {
+					alert("System error");
+				},
+				success: function(data) {
+					console.info('enter...');
+				
+					$("#infoMessage").html(data.message);
+					if(data.success==true){
+						$("#"+listId).remove();
+					}
+					$("#myModal").modal('toggle');
+				}
+			});
     })
-
-
-    //删除分类模拟提交服务器：
-    function deleteCategory(level,listId,name,url){
-
-
-    }
 	</script>
 {% endblock %}

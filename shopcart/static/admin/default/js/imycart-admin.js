@@ -700,7 +700,6 @@ jQuery("#product-picture-manage-submit-btn").click(function(){
 			$("#myModal").modal('toggle');
 		}
 	});
-	
 });
 
 
@@ -1003,6 +1002,33 @@ jQuery(".pay-config-submit-btn").click(function(e){
 		}
 	});
 });
+
+//分类管理编辑
+//提交
+jQuery("#category_detail_submit_btn").click(function(e){
+	var url = "/admin/category-edit/";
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#category_detail_form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			if(data.success==true){
+				$('#myModal').on('hidden.bs.modal', function (e) {
+					location.reload(true); 
+				})
+			}
+			$("#myModal").modal('toggle');
+		}
+	});
+});
+
 
 //通用函数
 /* 

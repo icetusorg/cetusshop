@@ -32,10 +32,12 @@
 					
 					<div class="item"><label>分类名称：</label><input type="text" name="name" class="form-control" value="{{category.name}}"></div>
 					<div class="item"><label>分类代码：</label><input type="text" name="code" class="form-control" value="{{category.code}}"></div>
+					<div class="item"><label>分类详细描述：</label><textarea type="text" name="description" class="form-control">{{category.description}}</textarea>
+					
 					<p class="signal-title top">SEO 设置</p>
 					<div class="item"><label>分类页标题：</label><input type="text" name="page_title" class="form-control" value="{{category.page_title}}"></div>
 					<div class="item"><label>分类页关键词：</label><input type="text" name="keywords" class="form-control" value="{{category.keywords}}"></div>
-					<div class="item"><label>分类页简述：</label><textarea type="text" name="short_desc" class="form-control" value="{{category.short_desc}}"></textarea>
+					<div class="item"><label>分类页简述：</label><textarea type="text" name="short_desc" class="form-control">{{category.short_desc}}</textarea>
 					<div class="item btn-item">
 							<label>分类静态文件名：</label><input type="text" name="static_file_name" class="form-control" value="{{category.static_file_name|default:""}}">
 							<button type="button" class="btn btn-primary url_advise_btn">推荐</button>

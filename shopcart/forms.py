@@ -117,13 +117,14 @@ class category_form(forms.ModelForm):
 	page_title = forms.CharField(required=False)
 	keywords = forms.CharField(required=False)
 	short_desc = forms.CharField(required=False)
+	description = forms.CharField(required=False)
 	sort_order = forms.CharField(required=False)
 	detail_template = forms.CharField(required=False)
 	category_template = forms.CharField(required=False)
 	static_file_name = forms.CharField(required=False)
 	class Meta:
 		model = Category
-		fields = ('name','code','page_title','keywords','short_desc','sort_order','detail_template','category_template','static_file_name')
+		fields = ('name','code','page_title','keywords','short_desc','sort_order','description','detail_template','category_template','static_file_name')
 
 class express_form(forms.ModelForm):
 	class Meta:

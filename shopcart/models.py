@@ -147,6 +147,7 @@ class Category(models.Model):
 	page_title = models.CharField(max_length = 100,blank=True,default='',verbose_name='网页标题')
 	keywords = models.CharField(max_length = 254,default='',blank=True,verbose_name='关键字')
 	short_desc = models.CharField(max_length = 254,default='',blank=True,verbose_name='简略描述')
+	description = models.CharField(max_length = 1024,default='',blank=True,verbose_name='分类描述')
 	sort_order = models.CharField(max_length = 100,default='',verbose_name = '排序序号')
 	parent = models.ForeignKey('self',null=True,default=None,related_name='childrens',blank=True,verbose_name = '上级分类')
 	detail_template = models.CharField(max_length = 254,default='',blank=True,verbose_name='商品详情页指定模板')

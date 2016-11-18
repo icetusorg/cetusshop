@@ -156,9 +156,9 @@ def view_list(request,category_id=None):
 			except Exception as err:
 				logger.error('Can not find category which id is %s. Error message is %s ' % (category_id,err))
 				
-		#设置分类专用的标题和描述
-		ctx['category_title'] = category.name
-		ctx['category_desc'] = category.description
+			#设置分类专用的标题和描述
+			ctx['category_title'] = category.name
+			ctx['category_desc'] = category.description
 			
 		logger.debug("no sort_by")
 		if 'page_size' in request.GET:

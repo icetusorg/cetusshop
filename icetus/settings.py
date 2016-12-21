@@ -121,7 +121,7 @@ USE_TZ = True
 AUTH_USER_MODEL = 'shopcart.MyUser'
 
 
-
+#加入这一段的时候，需要注意下面指定的日志目录，必须先建好，不然会报错
 LOGGING = {
 	'version': 1,
 	'disable_existing_loggers': True,

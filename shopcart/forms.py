@@ -138,6 +138,9 @@ class express_type_form(forms.ModelForm):
 	
 class inquiry_form(forms.ModelForm):
 	company = forms.CharField(required=False)
+	name = forms.CharField(required=False)
+	product = forms.CharField(required=False)
+	quantity = forms.CharField(required=False)
 	class Meta:
 		model = Inquiry
-		fields = ('name','company','email','message')
+		fields = ('name','company','email','message','product','quantity')

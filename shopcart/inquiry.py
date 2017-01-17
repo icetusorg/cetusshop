@@ -6,6 +6,7 @@ from django.core.context_processors import csrf
 from shopcart.forms import inquiry_form
 from django.http import HttpResponse,JsonResponse
 from django.utils.translation import ugettext as _
+from django.db import transaction
 from django.http import Http404
 from shopcart import signals
 # import the logging library
@@ -13,7 +14,7 @@ import logging
 # Get an instance of a logger
 logger = logging.getLogger('icetus.shopcart')
 
-# Create your views here.
+@transaction.atomic()
 def add(request):
 	ctx = {}
 	ctx.update(csrf(request))
@@ -26,6 +27,9 @@ def add(request):
 		form = inquiry_form(request.POST) # 获取Post表单数据
 		if form.is_valid():# 验证表单
 			inquiry = form.save()
+			if inquiry.name == None or inquiry.name.strip() == '':
+				logger.info('Inquiry customer name is Null.')
+				inquiry.name = 'None'
 			#logger.debug('request.META:%s' % request.META)
 			
 			if 'HTTP_X_FORWARDED_FOR' in request.META:

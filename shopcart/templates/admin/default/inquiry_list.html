@@ -79,9 +79,21 @@
 						{% for inquiry in inquiry_list %}
 							<tr id="message_list1">
 								<td><input type="checkbox" name="inquiry_id" value="{{inquiry.id}}"></td>
-								<td><a href="mailto:{{inquiry.email}}">{{inquiry.email}}</a></td>
-								<td>{{inquiry.title|default:"未填写"}}</td>
-								<td><a href='{{inquiry.product_detail.get_url}}' target='_blank'>{{inquiry.product_detail.name|default:'没有关联商品'}}</a></td>
+								<td><a href="../inquiry-detail/{{inquiry.id}}/">{{inquiry.email}}</a></td>
+								<td>
+									{%if inquiry.title %}
+										<a href="../inquiry-detail/{{inquiry.id}}/">{{inquiry.title}}</a>
+									{%else%}
+										未填写
+									{%endif%}
+								</td>
+								<td>
+									{%if inquiry.product_detail %}
+										<a href='{{inquiry.product_detail.get_url}}' target='_blank'>{{inquiry.product_detail.name}}</a>
+									{%else%}
+										没有关联商品
+									{%endif%}
+								</td>
 								<td>{{inquiry.create_time|date:"Y/m/d"}}</td>
 								<td>{{inquiry.ip_address|default:"未能获取对方IP"}}</td>
 								<td data="message_list1"><a class="deleteCategory message-delete inquiry-delete" data-inquiry-id="{{inquiry.id}}">删除</a> / <a href="../inquiry-detail/{{inquiry.id}}/">查看</a></td>

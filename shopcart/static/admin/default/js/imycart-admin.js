@@ -867,6 +867,59 @@ jQuery("#email_detail_config_submit_btn").click(function(e){
 	});
 });
 
+//留言管理
+//删除留言
+jQuery(".inquiry-delete").click(function(e){
+	var url = "/admin/inquiry-delete/";
+	
+	// 创建Form  
+    //var myform = $('<form></form>'); 
+	var $myform = $("<form>",{
+					id:'inquiry_delete_form',
+					});
+
+	
+	//判断来自单条删除的还是批量的删除 
+	var inquiry_id = $(this).data("inquiry-id");
+	if("batch"==inquiry_id){
+		//批量的
+		$("#main-content-table").find("input[type='checkbox']:checked").each(function(){
+			var $input = $("<input>",{
+							name:'inquiry_id',
+							value:$(this).val(),
+							}).appendTo($myform);
+		});
+		
+	}else{
+		var $input = $("<input>",{
+					name:'inquiry_id',
+					value:inquiry_id,
+					}).appendTo($myform);
+	}
+    
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$myform.serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			if(data.success==true){
+				$('#myModal').on('hidden.bs.modal', function (e) {
+					var newurl = location.href;
+					location.href = newurl;
+				})
+			}
+			$("#myModal").modal('toggle');
+		}
+	});
+	
+});
+
 
 //快递管理
 //编辑快递方式

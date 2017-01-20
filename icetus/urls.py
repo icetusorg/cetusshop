@@ -121,6 +121,12 @@ urlpatterns = patterns("",
 	url('^admin/express-edit/$', 'shopcart.myadmin.delivery.express_edit',name='admin_express_edit'),
 	url('^admin/express-delete/(\d+)/$', 'shopcart.myadmin.delivery.express_delete',name='admin_express_delete'),
 	
+	url('^admin/inquiry-list/$', 'shopcart.myadmin.inquiry.list_view',name='inquiry_list_view'),
+	url('^admin/inquiry-detail/(\d+)/$', 'shopcart.myadmin.inquiry.detail',name='inquiry_detail'),
+	url('^admin/inquiry-delete/$', 'shopcart.myadmin.inquiry.delete',name='inquiry_delete'),
+	
+	
+	
 	
 	url('^admin/no-permission/$', 'shopcart.myadmin.index.no_permission',name='admin_no_permission'),
 	url('^admin/product-oper/$', 'shopcart.myadmin.product.oper',name='admin_product_oper'),

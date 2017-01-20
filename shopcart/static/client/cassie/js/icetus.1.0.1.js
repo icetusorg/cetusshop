@@ -100,6 +100,15 @@ jQuery(document).ready(function(e){
 	$(".top-cart-num-link").text(item_count);
 });
 
+//公共方法
+//下拉菜单选项切换
+jQuery(".dropdown-item").click(function(){
+	var select_text = $(this).text();	
+	var value = $(this).data("value");
+	$(this).parent().parent().find(".inputBtn").find(".selected-text").text(select_text);
+	$(this).parent().parent().find(".dropdown-item-input").val(value); // 将选中的值放入隐藏的input
+});
+
 //鼠标滑过顶部的购物车数量时的事件
 jQuery(".top-cart-num-link").hover(function(e){
 	var url = '/cart/show/';

@@ -292,8 +292,9 @@ ul, li, dl, ol {
     font-size: 12px;
     padding: 7px 12px;
 }
-.add-content .submit-item button{
-    padding:7px 30px;
+
+.add-content .submit-item button {
+    padding: 7px 30px;
 }
 
 .add-content .addPSubmit {
@@ -321,11 +322,16 @@ ul, li, dl, ol {
     font-size: 14px;
     cursor: pointer
 }
-.set-paypal .tag li{
-    border-right:none;
+
+.set-paypal .tag li {
+    border-right: none;
 }
-.set-paypal input{width:240px !important;}
-.set-paypal .message span{
+
+.set-paypal input {
+    width: 240px !important;
+}
+
+.set-paypal .message span {
     width: 16px;
     height: 16px;
     border-radius: 50%;
@@ -337,28 +343,57 @@ ul, li, dl, ol {
     margin-top: 8px;
     margin-right: 10px;
 }
-.set-paypal .message:hover .ico{ display:block;}
-.set-paypal{padding-bottom:40px;}
-.set-paypal .infos{position: relative;}
-.set-paypal .message{position:absolute;left:240px; top:0; cursor: pointer;}
-.set-paypal .message .ico{
+
+.set-paypal .message:hover .ico {
+    display: block;
+}
+
+.set-paypal {
+    padding-bottom: 40px;
+}
+
+.set-paypal .infos {
+    position: relative;
+}
+
+.set-paypal .message {
+    position: absolute;
+    left: 240px;
+    top: 0;
+    cursor: pointer;
+}
+
+.set-paypal .message .ico {
     display: none;
     width: 380px;
     float: left;
     height: 120px;
     padding-left: 11px;
     background: url("../images/paypal-message.png") no-repeat;
-    color:#fff;
+    color: #fff;
 }
-.set-paypal .message .ico h4{margin:0;font-size: 15px;padding-bottom:8px;}
-.set-paypal .message .text{
-    padding:15px;
+
+.set-paypal .message .ico h4 {
+    margin: 0;
+    font-size: 15px;
+    padding-bottom: 8px;
+}
+
+.set-paypal .message .text {
+    padding: 15px;
     background: #00c0ef;
     line-height: 22px;
     overflow: hidden;
 }
-.set-paypal .normal .inputBtn{min-width: 50px;}
-.set-paypal .normal .dropdown-menu li,.dropdown-menu{ min-width: 73px;}
+
+.set-paypal .normal .inputBtn {
+    min-width: 50px;
+}
+
+.set-paypal .normal .dropdown-menu li, .dropdown-menu {
+    min-width: 73px;
+}
+
 .tag li:first-child {
     padding-left: 0;
 }
@@ -386,6 +421,11 @@ ul, li, dl, ol {
 
 .add-product .item input, .add-product .item textarea {
     width: 75%;
+    float: left;
+}
+
+.add-product .item2 input, .add-product .item2 textarea {
+    width: 35% !important;
     float: left;
 }
 
@@ -429,6 +469,10 @@ ul, li, dl, ol {
     width: 63%;
 }
 
+.add-product .btn-item2 input {
+    width: 35% !important;
+}
+
 .add-product .inputAndBtn .file {
     width: auto !important;
     height: auto;
@@ -437,7 +481,7 @@ ul, li, dl, ol {
 
 .add-product .btn-item button {
     float: left;
-    width: 9%;
+    width: 5%;
     margin-left: 3%;
 }
 
@@ -448,7 +492,12 @@ ul, li, dl, ol {
 }
 
 .add-content.attr .next-steep {
-    padding: 7px 20px;
+    /*padding: 7px 20px;*/
+}
+
+.add-content h1 {
+    font-size: 18px;
+    margin-bottom: 0px;
 }
 
 .btn-primary {
@@ -677,45 +726,128 @@ ul, li, dl, ol {
     margin-top: 10px;
     height: 60px;
 }
-.category-set{padding-bottom:30px;}
-.add-product .signal-title{
-    line-height: 42px;border-bottom:1px solid #ddd; font-size: 15px;
-    width: 100%;    display: inline-block;
+
+.category-set {
+    padding-bottom: 30px;
 }
-.dispatching .attr-array-list dt, .dispatching .attr-array-list dd{
-    width:25% !important;
+
+.add-product .signal-title {
+    line-height: 42px;
+    border-bottom: 1px solid #ddd;
+    font-size: 15px;
+    width: 100%;
+    display: inline-block;
+}
+
+.dispatching .attr-array-list dt, .dispatching .attr-array-list dd {
+    width: 25% !important;
     text-align: center;
 }
-.deliverys .title-btn{padding:12px 0; border-bottom: 1px solid #ddd;}
-.deliverys .attr-array{width:60%;}
-.deliverys .attr-array-list dd,.deliverys .attr-array-list dt{width:30% !important; }
-.deliverys .attr-array-list dd,.deliverys .attr-array-list dt{}
-.deliverys .attr-array-list dd:nth-child(2),.deliverys .attr-array-list dt:nth-child(2){width:40% !important;text-align: center;}
-.deliverys .title-btn input[type=checkbox]{margin-top:12px;margin-right:15px;}
-.deliverys .title-btn button{margin-right:10px;}
-.deliverys .title-btn label{margin-top:8px;margin-right:50px;}
-.dispatching .attr-array-list dl{
-    height:40px; border-bottom:1px solid #ddd;
+
+.deliverys .title-btn {
+    padding: 12px 0;
+    border-bottom: 1px solid #ddd;
 }
-.dispatching .attr-array-list dl dd:nth-child(2){
+
+.deliverys .attr-array {
+    width: 60%;
+}
+
+.deliverys .attr-array-list dd, .deliverys .attr-array-list dt {
+    width: 30% !important;
+}
+
+.deliverys .attr-array-list dd, .deliverys .attr-array-list dt {
+}
+
+.deliverys .attr-array-list dd:nth-child(2), .deliverys .attr-array-list dt:nth-child(2) {
+    width: 40% !important;
     text-align: center;
-    margin:0;
 }
-.dispatching .attr-array-list dl dd:nth-child(2) label{
-    float:none;margin:0;
+
+.deliverys .title-btn input[type=checkbox] {
+    margin-top: 12px;
+    margin-right: 15px;
 }
-.dispatching .attr-array-list,.dispatching .attr-array-list.title{border:none}
-.dispatching .signal-title{width:60%; margin-right:40%;border-bottom:none;}
-.dispatching .attr-array{width:60%;padding-bottom: 15px;}
-.express .checkboxs span{float:left;margin-right:36px;margin-left:8px;}
-.express .checkboxs{margin-top:0;}
-.express .checkboxs input{float:left;}
-.category-set .item{height:auto;}
-.category-set .signal-title.top{margin-top:20px;}
-.category-set .normal .inputBtn{min-width: 375px}
-.category-set .dropdown-menu{min-width:400px}
-.category-set .item textarea{width: 400px;}
-.category-set .large label{padding-right:0 !important;width:140px;}
+
+.deliverys .title-btn button {
+    margin-right: 10px;
+}
+
+.deliverys .title-btn label {
+    margin-top: 8px;
+    margin-right: 50px;
+}
+
+.dispatching .attr-array-list dl {
+    height: 40px;
+    border-bottom: 1px solid #ddd;
+}
+
+.dispatching .attr-array-list dl dd:nth-child(2) {
+    text-align: center;
+    margin: 0;
+}
+
+.dispatching .attr-array-list dl dd:nth-child(2) label {
+    float: none;
+    margin: 0;
+}
+
+.dispatching .attr-array-list, .dispatching .attr-array-list.title {
+    border: none
+}
+
+.dispatching .signal-title {
+    width: 60%;
+    margin-right: 40%;
+    border-bottom: none;
+}
+
+.dispatching .attr-array {
+    width: 60%;
+    padding-bottom: 15px;
+}
+
+.express .checkboxs span {
+    float: left;
+    margin-right: 36px;
+    margin-left: 8px;
+}
+
+.express .checkboxs {
+    margin-top: 0;
+}
+
+.express .checkboxs input {
+    float: left;
+}
+
+.category-set .item {
+    height: auto;
+}
+
+.category-set .signal-title.top {
+    margin-top: 20px;
+}
+
+.category-set .normal .inputBtn {
+    min-width: 375px
+}
+
+.category-set .dropdown-menu {
+    min-width: 400px
+}
+
+.category-set .item textarea {
+    width: 400px;
+}
+
+.category-set .large label {
+    padding-right: 0 !important;
+    width: 140px;
+}
+
 /*bootstrap修改*/
 .main-footer {
     font-size: 12px;
@@ -1135,16 +1267,17 @@ iframe {
 .article-other {
     width: 850px;
     padding-left: 10px;
+    float: left;
 }
 
 .email-template-div button {
-    margin-left: 10px;
-    width: 70px;
-    height: 30px;
-    background: #3c8ebb;
-    border: none;
-    border-radius: 5px;
-    color: #fff;
+    /*margin-left: 10px;*/
+    /*width: 70px;*/
+    /*height: 30px;*/
+    /*background: #3c8ebb;*/
+    /*border: none;*/
+    /*border-radius: 5px;*/
+    /*color: #fff;*/
 }
 
 .email-template-div label:first-child {
@@ -1160,12 +1293,13 @@ iframe {
     padding-bottom: 60px;
 }
 
-.category  p.title {
+.category p.title {
     border-bottom: 1px solid #f4f4f4;
     padding: 10px 0;
     margin-bottom: 0;
 }
-.category  p.btn{
+
+.category p.btn {
     padding: 24px 15px;
     font-size: 12px;
     line-height: 20px;
@@ -1174,7 +1308,8 @@ iframe {
     display: block;
     border-bottom: 1px solid #f4f4f4;
 }
-.category .addInputList .deleteInput,.category .addInputList .addBtn,.category  p.btn a{
+
+.category .addInputList .deleteInput, .category .addInputList .addBtn, .category p.btn a {
     cursor: pointer;
     background-color: #367fa9;
     padding: 7px 20px;
@@ -1182,27 +1317,44 @@ iframe {
     color: #fff;
     outline: none;
 }
-.category .addInputList .addBtn{
+
+.category .addInputList .addBtn {
     margin-right: 18px;
 }
-.category .addInputList .warning{
-    border:1px solid #ff0000;
+
+.category .addInputList .warning {
+    border: 1px solid #ff0000;
 }
-.category  p.btn a{
+
+.category p.btn a {
     margin-right: 20px;
 }
 
-.category .category_title{
+.category .category_title {
     font-size: 12px;
     font-weight: bold;
 }
-.category .category_02,.category .category_03,.category .category_04{
+
+.category .category_02, .category .category_03, .category .category_04 {
     display: none;
 }
-.category .category_01 .name {padding-left:15px;}
-.category .category_02 .name{padding-left:30px;}
-.category .category_03 .name{padding-left:45px;}
-.category .category_04 .name{padding-left:60px;}
+
+.category .category_01 .name {
+    padding-left: 15px;
+}
+
+.category .category_02 .name {
+    padding-left: 30px;
+}
+
+.category .category_03 .name {
+    padding-left: 45px;
+}
+
+.category .category_04 .name {
+    padding-left: 60px;
+}
+
 .category .addChild {
     color: #333;
     margin-right: 20px;
@@ -1210,12 +1362,12 @@ iframe {
 
 .category .editCategory {
     color: #367fa9;
-    padding-right:3px;
+    padding-right: 3px;
 }
 
-.category .deleteCategory,.category .editCategoryCancel{
+.category .deleteCategory, .category .editCategoryCancel {
     color: #ff0000;
-    padding-left:3px;
+    padding-left: 3px;
 }
 
 .category li {
@@ -1238,21 +1390,75 @@ iframe {
     background-repeat: no-repeat;
     cursor: pointer;
 }
+
 .category .categoryIco.active {
     background-image: url("../images/decrease.png");
 }
+
 .category li a {
     cursor: pointer;
 }
-.category .category_04 .addChild{display: none !important;}
-.category .category_04 .categoryIco{background-image: url("../images/decrease.png") !important;}
-.category .category_04 .editCategory,.category .editCategorySubmit{margin-left: 84px;padding-right: 3px;}
 
+.category .category_04 .addChild {
+    display: none !important;
+}
 
+.category .category_04 .categoryIco {
+    background-image: url("../images/decrease.png") !important;
+}
+
+.category .category_04 .editCategory, .category .editCategorySubmit {
+    margin-left: 84px;
+    padding-right: 3px;
+}
+
+/*询盘管理*/
+.message-delete {
+    color: #e75555;
+}
+
+.message-detail-table tr td:first-child {
+    width: 5%;
+    font-size: 12px;
+    color: #333333;
+}
+
+.message-detail-table tr td:last-child {
+    width:100%;
+    font-size: 12px;
+    float: left;
+    color: #333333;
+}
+
+.message-detail-table-content tr th:first-child, .message-detail-table-content tr th:nth-child(3), .message-detail-table-content tr th:nth-child(4) {
+    width: 15%;
+    font-size: 12px;
+}
+.message-detail-table-content tr th:nth-child(2){
+    font-size: 12px;
+    width: 55%;
+}
+.message-detail-table-content tr td:first-child, .message-detail-table-content tr td:nth-child(3), .message-detail-table-content tr td:nth-child(4) {
+    width: 15%;
+    font-size: 12px;
+    line-height: 60px;
+}
+.message-detail-table-content tr td:nth-child(2){
+    font-size: 12px;
+    width: 55%;
+    line-height: 60px;
+}
+.message-detail-table-content tr:nth-child(even) td{
+    background: #f9f9f9;
+}
 /*自适应*/
 @media (min-width: 1600px) {
     .xy-list-all .list-all {
         margin-left: 2.5%;
+    }
+
+    .list-all2 {
+        margin-left: 100px !important;
     }
 }
 

@@ -1,0 +1,132 @@
+{% extends "admin/default/content_base.html" %}
+{% block breadcrumbs %}
+<section class="content-header">
+    <h1>留言管理</h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+        <li class="active"><a href="#">留言管理</a></li>
+    </ol>
+</section>
+{% endblock %}
+
+{% block main %}
+{% load i18n %}
+{% load shopcart_extras %}
+<section class="content">
+    <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box xy-search">
+                <div class="box-header with-border">
+                    <h3 class="box-title">留言查询</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div>
+                                <form>
+                                    <div class="form-group">
+                                        <div class="btn-group normal message-list-input">
+                                            <button type="button" class="btn btn-default inputBtn"><span class="selected-text">Eamil</span></button>
+                                            <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn"
+                                                    data-toggle="dropdown" aria-expanded="true">
+                                                <span class="caret"></span>
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li class="dropdown-item" data-value ="email">Eamil</li>
+                                                <li class="dropdown-item" data-value ="title">标题</li>
+												<li class="dropdown-item" data-value ="message">内容</li>
+                                            </ul>
+											<input class="dropdown-item-input" type="hidden" name="qry_field" value="email"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="qry_value" />
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">查询</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="box xy-list">
+                <div class="box-header with-border">
+                    <h3 class="box-title">留言列表</h3>
+                </div>
+                <div class="box-body no-padding">
+                    <table class="table table-striped" id="main-content-table">
+                        <tbody>
+                        <!--多余th为了调整表格色块-->
+                        <tr>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <th>选择</th>
+                            <th>Email</th>
+                            <th>留言标题</th>
+                            <th>产品信息</th>
+                            <th>留言时间</th>
+                            <th>IP</th>
+                            <th>操作</th>
+                        </tr>
+						{% for inquiry in inquiry_list %}
+							<tr id="message_list1">
+								<td><input type="checkbox" name="inquiry_id" value="{{inquiry.id}}"></td>
+								<td><a href="mailto:{{inquiry.email}}">{{inquiry.email}}</a></td>
+								<td>{{inquiry.title|default:"未填写"}}</td>
+								<td><a href='{{inquiry.product_detail.get_url}}' target='_blank'>{{inquiry.product_detail.name|default:'没有关联商品'}}</a></td>
+								<td>{{inquiry.create_time|date:"Y/m/d"}}</td>
+								<td>{{inquiry.ip_address|default:"未能获取对方IP"}}</td>
+								<td data="message_list1"><a class="deleteCategory message-delete inquiry-delete" data-inquiry-id="{{inquiry.id}}">删除</a> / <a href="../inquiry-detail/{{inquiry.id}}/">查看</a></td>
+							</tr>
+						{% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="box-footer clearfix">
+                    <div class="xy-box-select">
+                        <input type="checkbox"  id="main-content-checkbox-all">
+                        <a id="main-content-btn-all" href="#">全选</a>
+                        <button type="button" data-inquiry-id="batch" class="btn btn-danger inquiry-delete" id="inquiry_delete_all_btn">删除</button>
+                    </div>
+                    <div class="box-footer clearfix">
+                    <div class="xy-pages-jump">
+                        <ul class="pagination pagination-sm no-margin pull-right">
+							{% if inquiry_list.has_previous %}
+								<li><a name="pageChange" data-tag="Previous" class="pageChage prev" data-page="{{ inquiry_list.previous_page_number }}">&lt;</a></li>
+							{% else %}
+								<li><a>&lt;</a></li>
+							{% endif %}	
+							
+							{% for p in page_range %}
+								{% ifequal p objects.number %}
+									<li class="active">{{p}}</li>
+								{% else %}
+									<li><a class="pageChage"  data-page = "{{p}}" href="#" title="{{p}}">{{p}}</a></li>
+								{% endifequal %}
+							{% endfor %}
+                            {% if inquiry_list.has_next %}
+								<li><a name="pageChange" class="pageChage next" data-page = "{{p}}" data-page-range="{{page_range}}" data-tag="Next">&gt;</a></li>
+							{% else %}
+								<li><a>&gt;</a></li>
+							{% endif %}
+                        </ul>
+                        <p>共 {{inquiry_count}} 条记录 , 共 {{page_range|last}} 页，每页显示： {{page_size}} 条</p>
+                    </div>
+                </div>
+                </div>
+            </div><!-- /.box -->
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+	{% load staticfiles %}
+{% endblock %}

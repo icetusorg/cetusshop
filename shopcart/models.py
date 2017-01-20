@@ -709,10 +709,12 @@ class Inquiry(models.Model):
 	name = models.CharField(max_length=100,null=True,verbose_name = '对方称呼')
 	company = models.CharField(max_length=200,null=True,verbose_name = '对方公司')
 	email = models.EmailField(max_length=254,null=True,verbose_name = '电子邮件')
+	title = models.CharField(max_length=100,null=True,verbose_name = '留言标题')
 	message = models.TextField(blank=True,verbose_name='询盘信息')
 	ip_address = models.CharField(max_length=32,null=True,blank=True,verbose_name='IP地址')
 	product = models.IntegerField(default=0,verbose_name='关联商品的id')
 	quantity = models.IntegerField(default=0,verbose_name='数量')
+	unit = models.CharField(max_length=100,null=True,verbose_name = '数量单位')
 	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
 	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
 	

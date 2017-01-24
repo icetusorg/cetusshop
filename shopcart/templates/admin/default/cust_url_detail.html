@@ -1,0 +1,86 @@
+{% extends "admin/default/content_base.html" %}
+{% block breadcrumbs %}
+<section class="content-header">
+    <h1>编辑自定义URL</h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+        <li class="active"><a href="#">编辑页面</a></li>
+    </ol>
+</section>
+{% endblock %}
+
+{% block main %}
+{% load i18n %}
+{% load shopcart_extras %}
+<section class="content">
+    <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+    <div class="col-md-12 add-product">
+        <div class="page_editor">
+			<form id="customize_url_detail_form">
+				<div class="item item2"><label>页面名称*：</label><input type="text" class="form-control" value="{{customize_url.name}}" name="name" readonly></div>
+				<div class="item item2"><label>网页标题*：</label><input type="text" class="form-control" value="{{customize_url.page_name}}" name="page_name"></div>
+				<div class="item btn-item btn-item2">
+					<label>自定义URL*：</label><input type="text" class="form-control" name="url" value="{{customize_url.url}}">
+				</div>
+	
+				<!--是否启动自定义TDK-->
+				<div class="TKD">
+					<div class="page_deitor_TDK item item-area item2">
+						<div class="form-group">
+							<label>自定义关键词描述：</label>
+							<div class="btn-group normal">
+								<button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{customize_url.is_customize_tdk|yesno:"是,否,"}}</span></button>
+								<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn"
+										data-toggle="dropdown">
+									<span class="caret"></span>
+									<span class="sr-only">Toggle Dropdown</span>
+								</button>
+								<ul class="dropdown-menu" role="menu" id="selectOption">
+										<li class="dropdown-item" data-value ="true">是</li>
+										<li class="dropdown-item" data-value ="false">否</li>
+								</ul>
+								<input class="dropdown-item-input" type="hidden" name="is_customize_tdk" value="{{customize_url.is_customize_tdk}}"/>
+							</div>
+						</div>
+					</div>
+	
+					<div class="item item2"><label>关键词：</label><input type="text" class="form-control" value="{{customize_url.keywords}}" name="keywords"></div>
+					<div class="item item-area item2"><label>简要描述：</label><textarea type="text"
+																					class="form-control" name="short_desc">{{customize_url.short_desc}}</textarea>
+					</div>
+				</div>
+				<!--跳转方式-->
+				<div class="page_deitor_jump item item-area item2">
+					<div class="form-group">
+						<label>跳转方式：</label>
+							<div class="btn-group normal">
+								<button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{customize_url.type|is_equal:"MVC"|yesno:"MVC（网址不变）,重定向（网址会变）,"}}</span></button>
+								<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn"
+										data-toggle="dropdown">
+									<span class="caret"></span>
+									<span class="sr-only">Toggle Dropdown</span>
+								</button>
+								<ul class="dropdown-menu" role="menu" id="selectOption">
+										<li class="dropdown-item" data-value ="MVC" data-func="jump_type_extra">MVC（网址不变）</li>
+										<li class="dropdown-item" data-value ="REDIRECT" data-func="jump_type_extra">重定向（网址会变）</li>
+								</ul>
+								<input class="dropdown-item-input" type="hidden" name="type" value="{{customize_url.type}}"/>
+							</div>
+	
+					</div>
+					<div id="page_deitor_jump_div" class="item item2" style="display:{{customize_url.type|is_equal:"MVC"|yesno:"none,block,"}};" >
+						<label>目标URL：</label><input type="text"	class="form-control" name="target_url" value="{{customize_url.target_url}}">
+					</div>
+				</div>
+	
+				<div class="submit-item form-group article">
+					<button type="button" class="btn btn-primary next-steep" id="customize_url_detail_submit_btn" data-id="{{customize_url.id}}">提交</button>
+				</div>
+			</form>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+	{% load staticfiles %}
+{% endblock %}

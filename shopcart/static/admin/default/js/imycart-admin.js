@@ -101,8 +101,18 @@ function imycartAjaxCallWithCallback(url,object,callback,triggerControl,extraInf
 jQuery(".dropdown-item").click(function(){
 	var select_text = $(this).text();	
 	var value = $(this).data("value");
+	//可以接收一个后续的函数，做出额外的处理
+	var extra_func = $(this).data("func");
+		
 	$(this).parent().parent().find(".inputBtn").find(".selected-text").text(select_text);
 	$(this).parent().parent().find(".dropdown-item-input").val(value); // 将选中的值放入隐藏的input
+	
+	
+	if (extra_func != '' && extra_func != null && extra_func != undefined){
+		//alert(extra_func);
+		fn = eval(extra_func);
+	    fn.call(this,value);
+	}
 });
 
 
@@ -1057,6 +1067,7 @@ jQuery(".pay-config-submit-btn").click(function(e){
 });
 
 //分类管理编辑
+
 //提交
 jQuery("#category_detail_submit_btn").click(function(e){
 	var url = "/admin/category-edit/";
@@ -1082,6 +1093,47 @@ jQuery("#category_detail_submit_btn").click(function(e){
 	});
 });
 
+//自定义URL详情
+//跳转方式切换的变化
+function jump_type_extra(type){
+	if (type=='MVC'){
+		 $("#page_deitor_jump_div").css("display", "none");
+	}else{
+		$("#page_deitor_jump_div").css("display", "block");
+	}
+}
+
+
+//提交设置
+jQuery("#customize_url_detail_submit_btn").click(function(event){
+	event.preventDefault();
+	var url = "/admin/customize-url-detail/{id}/";
+	
+	id = $(this).data("id");
+	
+	url = url.replace("{id}",id)
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#customize_url_detail_form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			if(data.success==true){
+				$('#myModal').on('hidden.bs.modal', function (e) {
+					var newurl = location.href;
+					location.href = newurl;
+				})
+			}
+			$("#myModal").modal('toggle');
+		}
+	});
+});
 
 //通用函数
 /* 

@@ -125,8 +125,8 @@ urlpatterns = patterns("",
 	url('^admin/inquiry-detail/(\d+)/$', 'shopcart.myadmin.inquiry.detail',name='inquiry_detail'),
 	url('^admin/inquiry-delete/$', 'shopcart.myadmin.inquiry.delete',name='inquiry_delete'),
 	
-	
-	
+	url('^admin/customize-url-list/$', 'shopcart.myadmin.customize_url.list_view',name='customize_url_list_view'),
+	url('^admin/customize-url-detail/(\d+)/$', 'shopcart.myadmin.customize_url.detail',name='customize_url_detail'),
 	
 	url('^admin/no-permission/$', 'shopcart.myadmin.index.no_permission',name='admin_no_permission'),
 	url('^admin/product-oper/$', 'shopcart.myadmin.product.oper',name='admin_product_oper'),

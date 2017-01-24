@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from django import forms
-from shopcart.models import MyUser,Address,Product,Inquiry,OrderShippment,Email,Article,Express,ExpressType,Category
+from shopcart.models import MyUser,Address,Product,Inquiry,OrderShippment,Email,Article,Express,ExpressType,Category,CustomizeURL
 from captcha.fields import CaptchaField
 from django.utils.translation import ugettext as _
 from django.core.exceptions import ValidationError 	
@@ -146,3 +146,13 @@ class inquiry_form(forms.ModelForm):
 	class Meta:
 		model = Inquiry
 		fields = ('name','company','email','message','product','quantity','unit','title')
+		
+		
+class customize_url_detail_form(forms.ModelForm):
+	target_url = forms.CharField(required=False)
+	keywords = forms.CharField(required=False)
+	short_desc = forms.CharField(required=False)
+
+	class Meta:
+		model = CustomizeURL
+		fields = ('url','target_url','type','is_customize_tdk','page_name','keywords','short_desc')

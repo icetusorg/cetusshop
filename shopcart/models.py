@@ -620,6 +620,7 @@ class Abnormal_Order(models.Model):
 	
 @python_2_unicode_compatible		
 class CustomizeURL(models.Model):
+	name = models.CharField(max_length=254,db_index=True,null=True,blank=True,verbose_name="页面名称")
 	url = models.CharField(max_length=254,db_index=True,null=True,blank=True,verbose_name="自定义URL")
 	target_url = models.CharField(max_length=1024,null=True,blank=True,verbose_name="目标URL")
 	module = models.CharField(max_length=1024,null=True,blank=True,verbose_name="内部模块名称")

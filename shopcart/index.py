@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.shortcuts import render,redirect
-from shopcart.models import System_Config
+from shopcart.models import System_Config,CustomizeURL
 from captcha.models import CaptchaStore
 from captcha.helpers import captcha_image_url
 from django.http import HttpResponse
@@ -16,7 +16,7 @@ logger = logging.getLogger('icetus.shopcart')
 
 
 # Create your views here.
-def view_index(request): 
+def view_index(request,tdk=None): 
 	ctx = {}
 	ctx['system_para'] = get_system_parameters()
 	ctx['menu_products'] = get_menu_products()
@@ -25,11 +25,14 @@ def view_index(request):
 	ctx['page_description'] = ''
 	
 	try:
-		ctx['page_name'] = System_Config.objects.get(name='index_page_title').val
-		ctx['page_key_words'] = System_Config.objects.get(name='index_keywords').val
-		ctx['page_description'] = System_Config.objects.get(name='index_description').val
+		cust = CustomizeURL.objects.get(url = 'index.html')
+		
+		if cust.is_customize_tdk:
+			ctx['page_name'] = cust.page_name
+			ctx['page_key_words'] = cust.keywords
+			ctx['page_description'] = cust.short_desc
 	except Exception as err:
-		logger.info('The system parameter page_name,page_key_words,page_description maybe has not setted.')
+		logger.info('Can not find the index.html TDK parameter.')
 	
 	return render(request,System_Config.get_template_name() + '/index.html',ctx)
 	

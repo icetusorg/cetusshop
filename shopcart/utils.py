@@ -24,6 +24,18 @@ def url_with_out_slash(url):
 		url =  url[:-1]
 	return url
 
+#强制指定自定义的TDK
+def customize_tdk(ctx,tdk):
+	if tdk:
+		if tdk['page_title']:
+			ctx['page_name'] = tdk['page_title']
+		if tdk['keywords']:
+			ctx['page_key_words'] = tdk['keywords']
+		if tdk['short_desc']:
+			ctx['page_description'] = tdk['short_desc']
+	return ctx
+	
+
 def add_captcha(ctx):
 	hashkey = CaptchaStore.generate_key()  
 	imgage_url = captcha_image_url(hashkey)

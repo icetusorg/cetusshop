@@ -625,6 +625,10 @@ class CustomizeURL(models.Model):
 	module = models.CharField(max_length=1024,null=True,blank=True,verbose_name="内部模块名称")
 	function = models.CharField(max_length=1024,null=True,blank=True,verbose_name="内部模块方法")
 	type = models.CharField(max_length=10,null=True,blank=True,verbose_name="跳转方式")
+	is_customize_tdk = models.BooleanField(default=False,verbose_name="是否自定义TDK")
+	page_name = models.CharField(max_length=1024,null=True,blank=True,verbose_name="页面标题")
+	keywords = models.CharField(max_length=1024,null=True,blank=True,verbose_name="关键字")
+	short_desc = models.CharField(max_length=1024,null=True,blank=True,verbose_name="简略描述")
 	create_time = models.DateTimeField(auto_now_add = True)
 	update_time = models.DateTimeField(auto_now = True)
 	

@@ -3,7 +3,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse,Http404
 from django.http import JsonResponse,QueryDict
 from shopcart.models import System_Config,Product,Product_Images,Category,MyUser,Email,Reset_Password,Address,Product_Attribute,Attribute_Group,Attribute,Article,Express,ExpressType
-from shopcart.utils import my_send_mail,get_serial_number
+from shopcart.utils import my_send_mail,get_serial_number,customize_tdk
 from django.db import transaction
 from django.utils.translation import ugettext as _
 import datetime
@@ -16,11 +16,13 @@ import logging
 logger = logging.getLogger('icetus.shopcart')
 
 
-def contact_page(request):
+def contact_page(request,tdk=None):
 	ctx = {}
 	ctx['system_para'] = get_system_parameters()
 	ctx['menu_products'] = get_menu_products()
 	ctx['page_name'] = 'Contact us'
+	
+	customize_tdk(ctx,tdk)
 	
 	return render(request,System_Config.get_template_name() + '/contact.html',ctx)
 
@@ -71,7 +73,15 @@ def url_dispatch(request,url):
 			logger.debug('Module : [%s]' % module)
 			function =  getattr(module,cust.function)
 			logger.info('Function is [%s].' % function)
-			return function(request)
+			
+			tdk = None
+			if cust.is_customize_tdk:
+				tdk = {}
+				tdk['page_title'] = cust.page_name
+				tdk['keywords'] = cust.keywords
+				tdk['short_desc'] = cust.short_desc
+			
+			return function(request,tdk)
 		else:	
 			return redirect(cust.target_url)
 	except Exception as err:

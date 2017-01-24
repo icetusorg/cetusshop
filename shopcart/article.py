@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from shopcart.models import System_Config,Article
-from shopcart.utils import System_Para,my_pagination,get_system_parameters
+from shopcart.utils import System_Para,my_pagination,get_system_parameters,customize_tdk
 import json,os
 from django.http import JsonResponse
 from django.http import Http404
@@ -31,7 +31,7 @@ def detail(request,id):
 		ctx['page_name'] = article.title
 	ctx['page_key_words'] = article.keywords
 	ctx['page_description'] = article.short_desc
-		
+	
 	template = '/article.html'
 		
 	if article.detail_template != '':
@@ -74,11 +74,13 @@ def detail(request,id):
 				f.close()
 		return JsonResponse(result_dict)
 		
-def view_blog_list(request):
+def view_blog_list(request,tdk=None):
 	ctx = {}
 	ctx['system_para'] = get_system_parameters()
 	ctx['menu_products'] = get_menu_products()
 	ctx['page_name'] = 'Blog'
+	
+	customize_tdk(ctx,tdk)
 	
 	try:
 		blog_list_page_size = System_Config.objects.get('blog_list_page_size')

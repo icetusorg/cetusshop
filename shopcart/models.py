@@ -203,6 +203,11 @@ class Product(models.Model):
 	is_publish = models.BooleanField(default=False,verbose_name='上架')
 	detail_template = models.CharField(max_length = 254,default='',blank=True,verbose_name='详情页指定模板')
 	related_products = models.ManyToManyField('self',null=True,blank=True,related_name='parent_product',verbose_name='关联商品')
+	weight = models.FloatField(default=0.0,verbose_name='重量，克')
+	cuboid_long = models.FloatField(default=0.0,verbose_name='体积_长_厘米')
+	cuboid_width = models.FloatField(default=0.0,verbose_name='体积_宽_厘米')
+	cuboid_height = models.FloatField(default=0.0,verbose_name='体积_高_厘米')
+	
 	create_time = models.DateTimeField(auto_now_add = True)
 	update_time = models.DateTimeField(auto_now = True)
 
@@ -224,6 +229,21 @@ class Product(models.Model):
 	def get_url(self):
 		from shopcart.functions.product_util_func import get_url
 		return get_url(self)
+		
+	def get_stere(self,unit=None):
+		stere_cm = self.cuboid_long * self.cuboid_width * self.cuboid_height
+		if unit == None or unit == 'm':
+			#换算成立方米
+			return stere_cm / 1000
+		else:
+			return stere_cm
+			
+	def get_weight(self,unit=None):
+		if unit==None or unit=='kg':
+			#换算成千克
+			return self.weight / 1000
+		else:
+			return self.weight
 	
 	def __str__(self):
 		return self.name
@@ -343,6 +363,12 @@ class Cart_Products(models.Model):
 	def get_total(self):
 		return self.quantity * self.get_product_price()
 		
+	def get_weight_total(self,unit=None):
+		return self.quantity * self.product.get_weight(unit)
+		
+	def get_stere_total(self,unit=None):
+		return self.quantity * self.product.get_stere(unit)
+		
 	def get_short_product_attr(self):
 		logger.debug('product_attribute: %s' % self.product_attribute)
 		attr_list = []
@@ -400,6 +426,8 @@ class ExpressType(models.Model):
 	name = models.CharField(max_length=100,null=True,verbose_name = '送货方式')
 	price_fixed = models.FloatField(default = 0.0,verbose_name = '固定运费')
 	price_per_kilogram = models.FloatField(default = 0.0,verbose_name = '每千克运费')
+	price_per_stere = models.FloatField(default = 0.0,verbose_name = '每立方米运费')
+	price_calc_type = models.CharField(max_length=10,default='fixed',verbose_name = '运费计算方式')
 	is_in_use = models.BooleanField(default=True,verbose_name='是否启用')
 	is_delete = models.BooleanField(default=False,verbose_name='是否删除')
 	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
@@ -424,6 +452,7 @@ class Express(models.Model):
 	express_type = models.ManyToManyField(ExpressType,null=True,related_name='expresses')
 	price_fixed = models.FloatField(default = 0.0,verbose_name = '固定运费')
 	price_per_kilogram = models.FloatField(default = 0.0,verbose_name = '每千克运费')
+	price_per_stere = models.FloatField(default = 0.0,verbose_name = '每立方米运费')
 	is_in_use = models.BooleanField(default=True,verbose_name='是否启用')
 	is_delete = models.BooleanField(default=False,verbose_name='是否删除')
 	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')

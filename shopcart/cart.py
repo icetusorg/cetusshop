@@ -283,7 +283,12 @@ def check_out(request):
 		cart_product_id_list = request.POST.getlist('cart_product_id',[])
 
 		#添加快递选择
-		ctx['express_list'] = ExpressType.objects.filter(is_in_use=True).filter(is_delete=False)
+		express_list = ExpressType.objects.filter(is_in_use=True).filter(is_delete=False)
+		#将各种方式的价格都计算出来
+		for e in express_list:
+			e.price_infact = calc_shipping_fee(cart_product_id_list,e)
+		ctx['express_list'] = express_list
+		
 		ctx['default_express'] = ExpressType.objects.all()[0]
 		
 		prices = get_prices(cart_product_id_list=cart_product_id_list,express_type=ctx['default_express'])
@@ -336,8 +341,43 @@ def re_calculate_price(request):
 		ret_dict['success'] = True
 		ret_dict['message'] = prices
 	return JsonResponse(ret_dict)
+	
+def calc_shipping_fee(cart_product_id_list,express_type):
+	cart_product_list = Cart_Products.objects.filter(id__in=cart_product_id_list)
+	weight_total = 0.0
+	stere_total = 0.0
+	shipping_fee = 0.00 
+	for cp in cart_product_list:
+		weight_total = weight_total + cp.get_weight_total('kg')
+		stere_total = stere_total + cp.get_stere_total('m')
+	
+	logger.debug('The order total weight is [%s] kg , total stere is [%s] m*m*m' % (weight_total,stere_total))
+	
+	weight_ship_fee = express_type.price_per_kilogram * weight_total
+	stere_ship_fee = express_type.price_per_stere * stere_total
+	
+	list_fee = [express_type.price_fixed,weight_ship_fee,stere_ship_fee]
 		
-def get_prices(cart_product_id_list,discount=0.0,express_type=None,express_mode='fixed'):
+	logger.debug('fix_ship_fee is：%s,weight_ship_fee：%s,stere_ship_fee is:%s' % (express_type.price_fixed,weight_ship_fee,stere_ship_fee))
+	
+	if express_type.price_calc_type == 'fixed':
+		shipping_fee = express_type.price_fixed
+	elif express_type.price_calc_type == 'weight':
+		shipping_fee = weight_ship_fee
+	elif express_type.price_calc_type == 'stere':
+		shipping_fee = stere_ship_fee
+	elif express_type.price_calc_type == 'min':
+		shipping_fee = min(list_fee)
+	elif express_type.price_calc_type == 'max':
+		shipping_fee = max(list_fee)
+	else:
+		#意外的参数，按照最贵的计算
+		shipping_fee = max(list_fee)
+	return shipping_fee
+	
+	
+		
+def get_prices(cart_product_id_list,discount=0.0,express_type=None):
 	cart_product_list = Cart_Products.objects.filter(id__in=cart_product_id_list)
 	ret_dict = {}
 	ret_dict['product_list'] = cart_product_list
@@ -346,12 +386,12 @@ def get_prices(cart_product_id_list,discount=0.0,express_type=None,express_mode=
 	ret_dict['discount'] = discount
 	ret_dict['total'] = 0.00
 	
+	
+	
 	for cp in cart_product_list:
 		ret_dict['sub_total'] = ret_dict['sub_total'] + cp.get_total()
-		
-	if express_type:
-		if express_mode == 'fixed':
-			ret_dict['shipping'] = express_type.price_fixed
+	
+	ret_dict['shipping'] = 	calc_shipping_fee(cart_product_id_list,express_type)
 	
 	ret_dict['total'] = ret_dict['sub_total'] + ret_dict['shipping'] - ret_dict['discount']
 	return ret_dict

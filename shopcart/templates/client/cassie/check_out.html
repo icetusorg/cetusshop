@@ -127,7 +127,7 @@
 										{%for express in express_list%}
 												<div class="check-fee-item">
 													<input type="radio" name="express" value = "{{express.id}}" {%if express.id == default_express.id %}checked{%endif%}>
-													<a>{{express.name}}</a><span>${{express.price_fixed|floatformat:"2"}}</span>
+													<a>{{express.name}}</a><span>${{express.price_infact|floatformat:"2"}}</span>
 												</div>
 											{%endfor%}
 								</div>

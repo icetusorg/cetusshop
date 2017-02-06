@@ -2,7 +2,7 @@
 #from shopcart.handler import sendmail
 from django.shortcuts import render,redirect,render_to_response
 from shopcart.models import System_Config,MyUser,Cart,Product,Cart_Products,Wish,Reset_Password,Address,Order,Order_Products,Abnormal_Order
-from shopcart.utils import System_Para,my_pagination,add_captcha,my_send_mail,get_serial_number,get_system_parameters
+from shopcart.utils import System_Para,my_pagination,add_captcha,my_send_mail,get_serial_number,get_system_parameters,customize_tdk
 from django.contrib import auth
 from django.core.urlresolvers import reverse
 from django.core.context_processors import csrf
@@ -46,7 +46,7 @@ def register(request):
 			
 			#准备登陆
 			myuser.password = form.cleaned_data['password']
-			return login(request,myuser)
+			return inner_login(request,myuser)
 		else:
 			logger.error('form is not valid')
 			ctx['reg_result'] = _('Registration faild.')
@@ -83,45 +83,52 @@ def info(request):
 		myuser.save()
 		return redirect('/user/info/?success=true')
 
-def login(request,login_user=None):
+def do_login(request,myuser):
+	if myuser is not None:
+		auth.login(request,myuser)
+		mycart = merge_cart(request)
+		redirect_url = reverse('product_view_list')
+		if 'next' in request.POST:
+			if len(request.POST['next']) > 0:
+				redirect_url = request.POST['next']
+			
+		response = redirect(redirect_url)
+		response.set_cookie('cart_id',mycart.id,max_age = 3600*24*365)
+		response.set_cookie('cart_item_type_count',mycart.cart_products.all().count(),max_age = 3600*24*365)
+		response.set_cookie('icetususer',myuser.email)
+		return response
+	else:
+		ctx['login_result'] = _('Your account name or password is incorrect.')
+		return render(request,System_Config.get_template_name() + '/login.html',ctx)	
+
+def inner_login(request,login_user):
+	myuser = None
+	if login_user:
+		myuser = auth.authenticate(username = login_user.email, password = login_user.password)
+	return do_login(request,myuser)
+
+def login(request,tdk=None):
 	ctx = {}
 	ctx['system_para'] = get_system_parameters()
 	ctx['menu_products'] = get_menu_products()
 	ctx['page_name'] = 'Login'
 	ctx = add_captcha(ctx) #添加验证码
+	customize_tdk(ctx,tdk)
 	if request.method == 'GET':
 		#GET请求，直接返回页面
 		if 'next' in request.GET:
 			ctx['next'] = request.GET['next']
 		return render(request,System_Config.get_template_name() + '/login.html',ctx)
-	else:
-		if login_user:
-			myuser = auth.authenticate(username = login_user.email, password = login_user.password)
-		else:		
-			ctx.update(csrf(request))
-			form = captcha_form(request.POST) # 获取Post表单数据
-			if 'next' in request.POST:
-				next = request.POST['next']
-				ctx['next'] = next
+	else:	
+		ctx.update(csrf(request))
+		form = captcha_form(request.POST) # 获取Post表单数据
+		if 'next' in request.POST:
+			next = request.POST['next']
+			ctx['next'] = next
 			
-			#if form.is_valid():# 验证表单,会自动验证验证码，（新版不要验证码了）
-			myuser = auth.authenticate(username = request.POST['email'].lower(), password = request.POST['password'])
-		if myuser is not None:
-			auth.login(request,myuser)
-			mycart = merge_cart(request)
-			redirect_url = reverse('product_view_list')
-			if 'next' in request.POST:
-				if len(request.POST['next']) > 0:
-					redirect_url = request.POST['next']
-			
-			response = redirect(redirect_url)
-			response.set_cookie('cart_id',mycart.id,max_age = 3600*24*365)
-			response.set_cookie('cart_item_type_count',mycart.cart_products.all().count(),max_age = 3600*24*365)
-			response.set_cookie('icetususer',myuser.email)
-			return response
-		else:
-			ctx['login_result'] = _('Your account name or password is incorrect.')
-			return render(request,System_Config.get_template_name() + '/login.html',ctx)
+		#if form.is_valid():# 验证表单,会自动验证验证码，（新版不要验证码了）
+		myuser = auth.authenticate(username = request.POST['email'].lower(), password = request.POST['password'])
+		return do_login(request,myuser)
 		#else:
 		#	ctx['login_result'] = _('Please check you input.')
 		#	return render(request,System_Config.get_template_name() + '/login.html',ctx)

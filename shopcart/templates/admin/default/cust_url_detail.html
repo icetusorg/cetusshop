@@ -29,15 +29,15 @@
 						<div class="form-group">
 							<label>自定义关键词描述：</label>
 							<div class="btn-group normal">
-								<button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{customize_url.is_customize_tdk|yesno:"是,否,"}}</span></button>
+								<button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{customize_url.is_customize_tdk|yesno:"启用,不启用,"}}</span></button>
 								<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn"
 										data-toggle="dropdown">
 									<span class="caret"></span>
 									<span class="sr-only">Toggle Dropdown</span>
 								</button>
 								<ul class="dropdown-menu" role="menu" id="selectOption">
-										<li class="dropdown-item" data-value ="true">是</li>
-										<li class="dropdown-item" data-value ="false">否</li>
+										<li class="dropdown-item" data-value ="true">启用</li>
+										<li class="dropdown-item" data-value ="false">不启用</li>
 								</ul>
 								<input class="dropdown-item-input" type="hidden" name="is_customize_tdk" value="{{customize_url.is_customize_tdk}}"/>
 							</div>

@@ -1423,8 +1423,25 @@ iframe {
     color: #333333;
 }
 
+.inquiry-table-list tr th:nth-child(4) {
+    width: 35% !important;
+}
+
+ .inquiry-table-list tr th:nth-child(2), .inquiry-table-list tr th:nth-child(3).inquiry-table-list tr th:nth-child(5), .inquiry-table-list tr th:nth-child(6) {
+    width: 10% !important;
+}
+
+.inquiry-table-list tr td:nth-child(4) {
+    width: 35% !important;
+}
+.inquiry-table-list tr td:nth-child(1),.inquiry-table-list tr th:nth-child(1){
+    width: 5%;
+}
+ .inquiry-table-list tr td:nth-child(2), .inquiry-table-list tr td:nth-child(3).inquiry-table-list tr td:nth-child(5), .inquiry-table-list tr td:nth-child(6) {
+    width: 10% !important;
+}
 .message-detail-table tr td:last-child {
-    width:100%;
+    width: 100%;
     font-size: 12px;
     float: left;
     color: #333333;
@@ -1434,23 +1451,28 @@ iframe {
     width: 15%;
     font-size: 12px;
 }
-.message-detail-table-content tr th:nth-child(2){
+
+.message-detail-table-content tr th:nth-child(2) {
     font-size: 12px;
     width: 55%;
 }
+
 .message-detail-table-content tr td:first-child, .message-detail-table-content tr td:nth-child(3), .message-detail-table-content tr td:nth-child(4) {
     width: 15%;
     font-size: 12px;
     line-height: 60px;
 }
-.message-detail-table-content tr td:nth-child(2){
+
+.message-detail-table-content tr td:nth-child(2) {
     font-size: 12px;
     width: 55%;
     line-height: 60px;
 }
-.message-detail-table-content tr:nth-child(even) td{
+
+.message-detail-table-content tr:nth-child(even) td {
     background: #f9f9f9;
 }
+
 /*自适应*/
 @media (min-width: 1600px) {
     .xy-list-all .list-all {
@@ -1587,4 +1609,29 @@ iframe {
     .xy-box-select input {
         margin-left: 0;
     }
+}
+.page-table-list{
+    border-top: 2px solid #d1d8de;
+}
+.btn-add{
+    margin-left: 10px;
+    background:#3c8ebb ;
+    border-color:  #3c8ebb;
+}
+.btn-add:hover,.btn-add:active,.btn-add:focus{
+    background:#3c8ebb ;
+    border: 1px solid #3c8eff;
+}
+.page-list-input{
+    margin-left: 69px!important;
+}
+#page_deitor_jump_div{
+    margin: 0px!important;
+}
+.TKD{
+    border-top: 1px dashed #ccc;
+    border-bottom: 1px dashed #ccc;
+    display: inline-block;
+    padding: 0 0 30px ;
+    margin: 30px 0 30px;
 }

@@ -204,9 +204,9 @@ class Product(models.Model):
 	detail_template = models.CharField(max_length = 254,default='',blank=True,verbose_name='详情页指定模板')
 	related_products = models.ManyToManyField('self',null=True,blank=True,related_name='parent_product',verbose_name='关联商品')
 	weight = models.FloatField(default=0.0,verbose_name='重量，克')
-	cuboid_long = models.FloatField(default=0.0,verbose_name='体积_长_厘米')
-	cuboid_width = models.FloatField(default=0.0,verbose_name='体积_宽_厘米')
-	cuboid_height = models.FloatField(default=0.0,verbose_name='体积_高_厘米')
+	cuboid_long = models.FloatField(default=0.0,verbose_name='体积_长_毫米')
+	cuboid_width = models.FloatField(default=0.0,verbose_name='体积_宽_毫米')
+	cuboid_height = models.FloatField(default=0.0,verbose_name='体积_高_毫米')
 	
 	create_time = models.DateTimeField(auto_now_add = True)
 	update_time = models.DateTimeField(auto_now = True)
@@ -234,7 +234,7 @@ class Product(models.Model):
 		stere_cm = self.cuboid_long * self.cuboid_width * self.cuboid_height
 		if unit == None or unit == 'm':
 			#换算成立方米
-			return stere_cm / 1000
+			return stere_cm / (1000 * 1000 * 1000)
 		else:
 			return stere_cm
 			

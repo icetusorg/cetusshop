@@ -40,7 +40,8 @@ def ajax_add_category(request):
 		result['message'] = '分类信息保存失败'
 		
 		form = category_simple_form(request.POST)
-			
+		
+		logger.debug('1111')
 		if form.is_valid():
 			category = form.save()
 			parent_id = request.POST.get('parent_id','')

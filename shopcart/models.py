@@ -271,6 +271,49 @@ class Product_Images(models.Model):
 		verbose_name = '商品相册'
 		verbose_name_plural = '商品相册'
 
+@python_2_unicode_compatible
+class ProductParaGroup(models.Model):
+	name = models.CharField(max_length = 100,default='',verbose_name='参数组名称')
+	create_time = models.DateTimeField(auto_now_add = True)
+	update_time = models.DateTimeField(auto_now = True)
+	
+	def __str__(self):
+		return self.name
+	
+	class Meta:
+		verbose_name = '商品参数组定义'
+		verbose_name_plural = '商品参数组定义'
+
+@python_2_unicode_compatible
+class ProductPara(models.Model):
+	group = models.ForeignKey(ProductParaGroup,related_name='paras',null=True)
+	name = models.CharField(max_length = 100,default='',verbose_name='参数名称')
+	create_time = models.DateTimeField(auto_now_add = True)
+	update_time = models.DateTimeField(auto_now = True)
+	
+	def __str__(self):
+		return self.name
+	
+	class Meta:
+		verbose_name = '商品参数定义'
+		verbose_name_plural = '商品参数定义'
+		
+@python_2_unicode_compatible
+class ProductParaDetail(models.Model):
+	product_para = models.ForeignKey(ProductPara,null=True)
+	product = models.ForeignKey(Product,null=True,blank=True,related_name='parameters',verbose_name='宿主商品')
+	value = models.CharField(max_length = 254,default='',verbose_name='参数值')
+	create_time = models.DateTimeField(auto_now_add = True)
+	update_time = models.DateTimeField(auto_now = True)
+	
+	def __str__(self):
+		return self.code
+	
+	class Meta:
+		verbose_name = '商品参数具体数值'
+		verbose_name_plural = '商品参数具体数值'
+
+		
 	
 @python_2_unicode_compatible
 class Attribute_Group(models.Model):

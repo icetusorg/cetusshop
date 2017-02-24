@@ -17,72 +17,78 @@
     <div class="row">
         <div class="col-md-12">
             <div class="box xy-search">
-                <div class="box-header with-border">
-                    <h3 class="box-title">商品查询</h3>
-                </div>
                 <div class="box-body">
                     <div class="row">
-                        <div class="col-md-12">
-                            <form>
-                                <div class="form-group">
-                                    <label>名称 :</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-primary">查询</button>
-                                </div>
-                            </form>
-                        </div>
                         <div class="col-md-12 category">
-                            <p class="title">分类列表</p>
-
-                            <p class="btn"><a class="add" id="addCategoryFirst">新增</a><a add="count" id="categoryCount">汇总商品数</a>
-                            </p>
                             <ul class="category_title">
+                                <li class="name">选择</li>
+                                <li class="view">排序</li>
                                 <li class="name">分类名称</li>
-                                <li class="view">分类代码</li>
                                 <li class="operate">操作</li>
                             </ul>
                             <!--"一级分类"-->
                             <!-- id=list+数字 给每条分类加一个ID class=operate中的data一致-->
 							{% for cat in category_list%}
 								<ul class="category_01 category-list" id="list_{{cat.id}}">
+									<li><input type="checkbox" name="selected"></li>
+									<li><input type="text" value="1"></li>
 									<li class="name">
 										<!-- data_level代表分类的级数，暂时从1级到4级-->
-										<span class="categoryIco" data_level="1"></span><span class="nameText">{{cat.name}}</span>
+										<span class="categoryIco" data_level="1">|--</span>
+										<a href="###"><span class="nameText">{{cat.name}}</span></a>
 									</li>
-									<li class="view"><span>{{cat.code}}</span></li>
 									<li class="operate" data="list_{{cat.id}}" data-cat-id="{{cat.id}}"><a class="addChild">添加子分类</a>
-										<a class="editCategory" href="../category-edit/?id={{cat.id}}">编辑</a><span>/</span><a class="deleteCategory">删除</a><span>/</span><a class="moveCategory">移动</a></li>
+										<a class="editCategory" href="../category-edit/?id={{cat.id}}">编辑</a><span>/</span><a class="deleteCategory">删除</a></li>
 									<!--"二级分类"-->
 									{% for cat2 in cat.childrens.all%}
 										<ul class="category_02" id="list_{{cat2.id}}">
-											<li class="name"><span class="categoryIco" data_level="2"></span><span class="nameText">{{cat2.name}}</span></li>
-											<li class="view"><span>{{cat2.code}}</span></li>
+											<li><input type="checkbox" name="selected"></li>
+											<li><input type="text" value="1"></li>
+											<li class="name">
+												<span class="categoryIco" data_level="2">|--</span>
+												<a href="###"><span class="nameText">{{cat2.name}}</span></a>
+											</li>
 											<li class="operate" data="list_{{cat2.id}}" data-cat-id="{{cat2.id}}"><a class="addChild">添加子分类</a>
-												<a class="editCategory" href="../category-edit/?id={{cat2.id}}">编辑</a><span>/</span><a class="deleteCategory">删除</a>/</span><a class="moveCategory">移动</a></li>
+												<a class="editCategory" href="../category-edit/?id={{cat2.id}}">编辑</a><span>/</span><a class="deleteCategory">删除</a>
+											</li>
 											<!--"三级分类"-->
 											{% for cat3 in cat2.childrens.all %}
 											<ul class="category_03" id="list_{{cat3.id}}">
-												<li class="name"><span class="categoryIco" data_level="3"></span><span class="nameText">{{cat3.name}}</span></li>
-												<li class="view"><span>{{cat3.code}}</span></li>
+												<li><input type="checkbox" name="selected"></li>
+												<li><input type="text" value="1"></li>
+												<li class="name">
+													<span class="categoryIco" data_level="3">|--</span>
+													<a href="###"><span class="nameText">{{cat3.name}}</span></a>
+												</li>
 												<li class="operate" data="list_{{cat3.id}}" data-cat-id="{{cat3.id}}"><a class="addChild">添加子分类</a>
-													<a class="editCategory" href="../category-edit/?id={{cat3.id}}">编辑</a><span>/</span><a class="deleteCategory">删除</a>/</span><a class="moveCategory">移动</a></li>
+													<a class="editCategory" href="../category-edit/?id={{cat3.id}}">编辑</a><span>/</span><a class="deleteCategory">删除</a>
+												</li>
 												<!--"四级分类"-->
 												{% for cat4 in cat3.childrens.all %}
 												<ul class="category_04" id="list_{{cat4.id}}">
-													<li class="name"><span class="categoryIco" data_level="4"></span><span class="nameText">{{cat4.name}}</span></li>
-													<li class="view"><span>{{cat4.code}}</span></li>
+													<li><input type="checkbox" name="selected"></li>
+													<li><input type="text" value="1"></li>
+													<li class="name">
+														<span class="categoryIco" data_level="4">|--</span>
+														<a href="###"><span class="nameText">{{cat4.name}}</span></a>
+													</li>
 													<li class="operate" data="list_{{cat4.id}}" data-cat-id="{{cat4.id}}"><a class="addChild">添加子分类</a>
-														<a class="editCategory" href="../category-edit/?id={{cat4.id}}">编辑</a><span>/</span><a class="deleteCategory">删除</a>/</span><a class="moveCategory">移动</a></li>
+														<a class="editCategory" href="../category-edit/?id={{cat4.id}}">编辑</a><span>/</span><a class="deleteCategory">删除</a></li>
 												</ul>
 												{% endfor %}
 											</ul>
 											{% endfor %}
 										</ul>
-									{% endfor %}
-								</ul>
-							{% endfor %}
+										{% endfor %}
+									</ul>
+							{% endfor %}	
+                        </div>
+                        <div class="xy-box-select">
+                            <input class="category-set-input" type="checkbox" onclick="selectAll()" id="controlAll">
+                            <a>全选</a>
+                            <button type="button" class="btn btn-danger">删除</button>
+                            <button type="button" class="btn    btn-add">新增</button>
+                            <button type="button" class="btn    btn-add">排序</button>
                         </div>
                     </div>
                 </div>
@@ -91,6 +97,7 @@
 
     </div>
 </section>
+
 {% endblock %}
 {% block scripts %}
 	{% load staticfiles %}
@@ -124,12 +131,16 @@
         var listId = $(this).parent().attr("data");
 		var parent_id = $(this).parent().data("cat-id");
         var level = $("#" + listId).find(".categoryIco").attr("data_level");
-        level = parseInt(level) + 1;
-        var insertHtml = '<ul class="addInputList category_0' + level + '" style="display:block;">' +
+        level = parseInt(level) + 1;				
+	    var insertHtml = '<ul class="addInputList category_0' + level + '" style="display:block;">' +
+                '<li><input type="checkbox" name="selected"></li>'+
+                '<li><input type="text" value="0"></li>'+
+				'<li class="name"><input type="text" class="form-control" id="categoryCode" placeholder="分类代码"></li>'+
                 '<li class="name"><span class="categoryIco active"></span>' +
                 '<input type="text" class="form-control" id="categoryName" placeholder="分类名称"></li>' +
-                '<li class="view"><input type="text" class="form-control" id="categoryCode" placeholder="分类代码"></li>' +
-                '<li class="operate"><a id="categorySubmit" class="addBtn">确定</a><a class="deleteInput">删除</a></li></ul>';
+                '<li class="operate"><a id="categorySubmit" class="addBtn">确定</a><a class="deleteInput">删除</a></li></ul>';		
+				
+				
         $("#" + listId).append(insertHtml);
         $("#categoryName").focus();
         $(".deleteInput").click(function () {
@@ -182,9 +193,11 @@
 						$(".addInputList").remove();
 							
 						console.info('enter 3 ...');
+
 						var tmpHtml = '<ul class="category_0' + level + '" id="list_' + newId + '" style="display:block;">' +
-							'<li class="name"><span class="categoryIco active" data_level="' + level +'"></span><span class="nameText">' + name + '</span></li>' +
-							'<li class="view"><span>' + code + '</span></li>' +
+							'<li><input type="checkbox" name="selected"></li>'+
+							'<li><input type="text" value="0"></li>'+
+							'<li class="name"><span class="categoryIco active" data_level="' + level +'"></span><span class="categoryIco" data_level="3">|--</span><a href="###"><span class="nameText">' + name + '</span></a></li>' +
 							'<li class="operate" data="list_' + newId + '" data-cat-id="' + newId +'"><a class="addChild">添加子分类</a>' +
 							'<a class="editCategory" href="../category-edit/?id=' + newId +'">编辑</a><span>/</span><a class="deleteCategory">删除</a>/</span><a class="moveCategory">移动</a></li></ul>';
 							

@@ -1,6 +1,6 @@
 #coding=utf-8
 from django.shortcuts import render,redirect
-from shopcart.models import Product,System_Config,Category,Attribute,Attribute_Group,Product_Attribute,Product_Images
+from shopcart.models import Product,System_Config,Category,Attribute,Attribute_Group,Product_Attribute,Product_Images,ProductParaGroup
 from shopcart.forms import product_add_form,product_basic_info_form,product_detail_info_form
 from shopcart.utils import System_Para,handle_uploaded_file,my_pagination
 from django.http import Http404,HttpResponse,JsonResponse
@@ -12,6 +12,74 @@ from shopcart.templatetags import shopcart_extras
 import logging
 # Get an instance of a logger
 logger = logging.getLogger('icetus.shopcart')
+
+
+@staff_member_required
+@transaction.atomic()
+def product_para_list(request):
+	ctx = {}
+	ctx['system_para'] = System_Para.get_default_system_parameters()
+	if request.method == 'GET':
+		product_para_list = ProductParaGroup.objects.all()
+		
+		page_size = 12
+		product_para_list, page_range = my_pagination(request=request, queryset=product_para_list,display_amount=page_size)
+		ctx['product_para_list'] = product_para_list
+		ctx['page_range'] = page_range
+		ctx['item_count'] = ProductParaGroup.objects.all().count()
+		ctx['page_size'] = page_size
+		return render(request,System_Config.get_template_name('admin') + '/product_para_list_content.html',ctx)
+	else:
+			raise Http404
+
+@staff_member_required
+@transaction.atomic()
+def product_para_group_edit(request):
+	ctx = {}
+	ctx['system_para'] = System_Para.get_default_system_parameters()
+	ctx['page_name'] = '商品参数组管理'
+	
+	if request.method == 'GET':
+		try:
+			id = request.GET.get('id','')
+			para_group = ProductParaGroup.objects.get(id=id)
+		except Exception as err:
+			logger.error('Can not find ProductParaGroup which id is [%s].\n Error Message: %s' % (id,err))
+			para_group = None
+		
+		ctx['para_group'] = para_group
+		return render(request,System_Config.get_template_name('admin') + '/product_para_detail.html',ctx)
+	elif request.method == 'POST':
+		result = {}
+		result['success'] = False
+		result['message'] = '商品参数组管理保存失败'
+		
+		para_group = None
+		
+		try:
+			id = request.POST.get('id','')
+			para_group = ProductParaGroup.objects.get(id=id)
+		except Exception as err:
+			logger.info('Can not find para_group which id is [%s]. Create one. \n Error Message: %s' %(id,err))
+			
+		if para_group:
+			form = product_para_group_form(request.POST,instance=para_group)
+		else:
+			form = product_para_group_form(request.POST)
+			
+		if form.is_valid():
+			para_group = form.save()
+			
+			result['success'] = True
+			result['message'] = '配送方式信息保存成功'
+			result['para_group_id'] = para_group.id
+		return JsonResponse(result)		
+	else:
+		raise Http404		
+
+			
+			
+
 
 @staff_member_required
 def product_opration(request,opration,id):

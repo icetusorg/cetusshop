@@ -4,7 +4,7 @@
     <h1>配送方式</h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
-        <li class="active"><a href="order_list.html">系统参数管理</a></li>
+        <li class="active"><a href="order_list.html">配送方式管理</a></li>
     </ol>
 </section>
 {% endblock %}
@@ -13,41 +13,79 @@
 {% block main %}
 {% load i18n %}
 {% load shopcart_extras %}
-<section class="content">
-    <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
-    <div class="col-md-12 add-product website-info express">
-        <div class="system-attr-mian">
-            <p class="signal-title">配送方式</p>
-            <!--页签-->
-            <div class="add-content active">
-				<form id="delivery_type_detail_form" method="POST">
-					{% csrf_token %}
-					<div class="email-edit">
-					<div class="item"><label>名称：</label><input type="text" class="form-control" name="name" value="{{express_type.name}}"></div>
-					<div class="item"><label>运费：</label><input type="text" class="form-control" name="price_fixed" value="{{express_type.price_fixed|floatformat:"2"}}"></div>
-					<div class="item"><label>是否启用：</label><input type="checkbox" name="is_in_use" {{express_type.is_in_use|yesno:"checked,"}}></div>
-					
-					<div class="item"><label>包含的快递公司：</label></div>
-					<div class="item checkboxs">
-						{% for express in express_list %}
-							<input type="checkbox" name="express" value="{{express.id}}" {{express_type|check_if_in_delivery_type:express|yesno:"checked,"}}><span>{{express.name}}</span>
-						{% endfor %}
-					</div>
-					
-					<div class="submit-item">
-						<input type="hidden" name="id" value="{{express_type.id}}" />
-						<button type="button" id="delivery_type_detail_submit_btn" class="btn btn-primary">提交</button>
-					</div>
-					</div>
-				</form>
-            </div>
-        </div>
-        <!--页签结束-->
-    </div>
-</section>
 {% load staticfiles %}
 {% load shopcart_extras %}
-
+<section class="content">
+    <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box xy-search">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div>
+                                <form id="delivery_type_detail_form" method="POST">
+									{% csrf_token %}
+                                    <div class="form-group edit-sku-from-div edit-dispatching-from-input">
+                                        <label>配送方式名称:</label>
+                                        <input type="text" class="form-control" name="name" value="{{express_type.name}}">
+                                    </div>
+                                    <div class="form-group edit-sku-from-div edit-dispatching-from-input">
+                                        <label>固定运费:</label>
+                                        <input type="text" class="form-control" name="price_fixed" value="{{express_type.price_fixed|floatformat:'2'}}">
+                                    </div>
+                                    <div class="form-group edit-sku-from-div edit-dispatching-from-input">
+                                        <label>每千克运费:</label>
+                                        <input type="text" class="form-control" name="price_per_kilogram" value="{{express_type.price_per_kilogram|floatformat:'2'}}">
+                                    </div>
+                                    <div class="form-group edit-sku-from-div edit-dispatching-from-input">
+                                        <label>每立方米运费:</label>
+                                        <input type="text" class="form-control" name="price_per_stere" value="{{express_type.price_per_stere|floatformat:'2'}}">
+                                    </div>
+                                    <div class="form-group edit-sku-from-div edit-dispatching-from-input">
+                                        <label>运费计算方式:</label>
+											<div class="btn-group normal product-button-search">
+											<button type="button" class="btn btn-default inputBtn"><span
+													class="selected-text">{{express_type.price_calc_type|express_type_list:"zh_CN"|default:"固定运费"}}</span></button>
+											<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn"
+													data-toggle="dropdown">
+												<span class="caret"></span>
+												<span class="sr-only">Toggle Dropdown</span>
+											</button>
+											<ul class="dropdown-menu" role="menu" id="selectOption2">
+												<li class="dropdown-item" data-value="fixed">固定运费</li>
+												<li class="dropdown-item" data-value="weight">按重量</li>
+												<li class="dropdown-item" data-value="stere">按体积</li>
+												<li class="dropdown-item" data-value="max">就高</li>
+												<li class="dropdown-item" data-value="min">就低</li>
+											</ul>
+											<input type="hidden" class="dropdown-item-input" name="price_calc_type" value="{{price_calc_type|default:"fixed"}}">
+										</div>
+                                    </div>
+                                    <div class="form-group edit-sku-from-div edit-attr-from-div edit-dispatching-from-input-checkbob">
+                                        <label>是否启用:</label>
+                                        <input type="checkbox"  name="is_in_use" {{express_type.is_in_use|yesno:"checked,"}}/>
+                                    </div>
+                                    <div class="form-group edit-sku-from-div edit-attr-from-div edit-dispatching-from-input-checkbob">
+                                        <label>包含的快递公司:</label>
+										{% for express in express_list %}
+											<input type="checkbox" name="express" value="{{express.id}}" {{express_type|check_if_in_delivery_type:express|yesno:"checked,"}}>
+											<label>{{express.name}}</label>
+										{% endfor %}
+                                    </div>
+                                    <div class="form-group edit-sku-from-div edit-attr-from-btn">
+                                        <input type="hidden" name="id" value="{{express_type.id}}" />
+										<button type="button" id="delivery_type_detail_submit_btn" class="btn btn-primary">提交</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
 {% block scripts %}
 	{% load staticfiles %}

@@ -134,7 +134,7 @@ class express_form(forms.ModelForm):
 class express_type_form(forms.ModelForm):
 	class Meta:
 		model = ExpressType
-		fields = ('name','is_in_use','price_fixed')			
+		fields = ('name','is_in_use','price_fixed','price_per_kilogram','price_per_stere','price_calc_type')			
 	
 class inquiry_form(forms.ModelForm):
 	company = forms.CharField(required=False)

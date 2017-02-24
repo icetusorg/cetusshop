@@ -21,6 +21,12 @@ def type_list_view(request):
 	if request.method == 'GET':
 		express_type_list = ExpressType.objects.filter(is_delete=False)
 		
+		express_type_list, page_range = my_pagination(request=request, queryset=express_type_list,display_amount=15)
+		ctx['page_range'] = page_range
+		ctx['item_count'] = ExpressType.objects.all().count()
+		ctx['page_size'] = 15
+		
+		
 		ctx['express_type_list'] = express_type_list
 		return render(request,System_Config.get_template_name('admin') + '/delivery_type_list.html',ctx)
 	else:
@@ -114,7 +120,13 @@ def express_list_view(request):
 	
 	if request.method == 'GET':
 		express_list = Express.objects.filter(is_delete=False)
+		express_list, page_range = my_pagination(request=request, queryset=express_list,display_amount=15)
 		ctx['express_list'] = express_list
+		ctx['page_range'] = page_range
+		ctx['item_count'] = Express.objects.all().count()
+		ctx['page_size'] = 15
+		
+		
 		return render(request,System_Config.get_template_name('admin') + '/express_list.html',ctx)
 	else:
 		raise Http404

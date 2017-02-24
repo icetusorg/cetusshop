@@ -1,7 +1,7 @@
 {% extends "admin/default/content_base.html" %}
 {% block breadcrumbs %}
 <section class="content-header">
-    <h1>自定义URL列表</h1>
+    <h1>页面列表</h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
         <li class="active"><a href="#">页面列表</a></li>
@@ -23,7 +23,7 @@
                         <tr>
                             <th>页面名称</th>
 							<th>网页标题</th>
-                            <th>自定义URL</th>
+                            <th>URL</th>
                             <th>操作</th>
                         </tr>
 						{% for url in url_list %}

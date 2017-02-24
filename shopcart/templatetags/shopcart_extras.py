@@ -29,6 +29,24 @@ def check_if_in_delivery_type(value,arg):
 			return True
 	else:
 		return False
+		
+@register.filter		
+def express_type_list(value,arg):
+	if  value == 'fixed':
+		return '固定运费'
+	elif value == 'weight':	
+		return '按重量'
+	elif value == 'stere':
+		return '按体积'
+	elif value == 'max':
+		return '就高'
+	elif value == 'min':
+		return '就低'										
+	else:
+		return value
+
+		
+		
 
 @register.filter		
 def express_first_value(value,arg):

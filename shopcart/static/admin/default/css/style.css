@@ -46,7 +46,9 @@ ul, li, dl, ol {
     display: inline-block;
     margin-right: 10px;
 }
-
+.form-control-hidden{
+    margin-right: 15px;
+}
 .xy-search label {
     padding: 0 12px;
     float: left;
@@ -1822,13 +1824,13 @@ iframe {
 }
 
 .xy-list-product .article-table-striped th:nth-child(1), .xy-list-product .article-table-striped tr td:nth-child(1), .xy-list-product .article-table-striped th:nth-child(2), .xy-list-product .article-table-striped tr td:nth-child(2), .xy-list-product .article-table-striped th:nth-child(5), .xy-list-product .article-table-striped tr td:nth-child(5), .xy-list-product .article-table-striped th:nth-child(6), .xy-list-product .article-table-striped tr td:nth-child(6) {
-    width: 5%;
+    width: 10%;
     text-align: center;
 }
 
 .xy-list-product .article-table-striped th:nth-child(4), .xy-list-product .article-table-striped tr td:nth-child(4) {
-    width: 50%;
-    text-align: center;
+    width: 30%;
+    text-align: left;
 }
 
 .xy-list-product .article-table-striped th:nth-child(7), .xy-list-product .article-table-striped tr td:nth-child(7) {

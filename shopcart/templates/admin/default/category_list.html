@@ -131,15 +131,13 @@
         var listId = $(this).parent().attr("data");
 		var parent_id = $(this).parent().data("cat-id");
         var level = $("#" + listId).find(".categoryIco").attr("data_level");
-        level = parseInt(level) + 1;				
-	    var insertHtml = '<ul class="addInputList category_0' + level + '" style="display:block;">' +
+        level = parseInt(level) + 1;						
+        var insertHtml = '<ul class="addInputList category_0' + level + '" style="display:block;">' +
                 '<li><input type="checkbox" name="selected"></li>'+
                 '<li><input type="text" value="0"></li>'+
-				'<li class="name"><input type="text" class="form-control" id="categoryCode" placeholder="分类代码"></li>'+
                 '<li class="name"><span class="categoryIco active"></span>' +
-                '<input type="text" class="form-control" id="categoryName" placeholder="分类名称"></li>' +
-                '<li class="operate"><a id="categorySubmit" class="addBtn">确定</a><a class="deleteInput">删除</a></li></ul>';		
-				
+                '<input type="text" class="form-control form-control-hidden" id="categoryCode" placeholder="分类代码"> <input type="text" class="form-control" id="categoryName" placeholder="分类名称"></li>' +
+                '<li class="operate"><a id="categorySubmit" class="addBtn">确定</a><a class="deleteInput">删除</a></li></ul>';
 				
         $("#" + listId).append(insertHtml);
         $("#categoryName").focus();

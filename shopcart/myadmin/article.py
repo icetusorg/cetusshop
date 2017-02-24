@@ -1,6 +1,6 @@
 #coding=utf-8
 from django.shortcuts import render,redirect
-from shopcart.models import Article,System_Config,Album
+from shopcart.models import Article,System_Config,Album,ArticleBusiCategory
 from shopcart.forms import article_basic_info_form,article_detail_info_form
 from shopcart.utils import System_Para,my_pagination,get_serial_number,get_system_parameters
 from django.http import HttpResponse,JsonResponse,Http404
@@ -14,8 +14,8 @@ def get_page_size():
 	try:
 		size = System_Config.objects.get(name='admin_article_list_page_size').val
 	except:
-		logger.info('"admin_order_list_page_size" is not setted.Use default value 12.')
-		size = 12
+		logger.info('"admin_order_list_page_size" is not setted.Use default value 8.')
+		size = 8
 	return size
 
 @staff_member_required
@@ -32,7 +32,7 @@ def delete(request):
 	result_dict['success'] = False
 	result_dict['message'] = '表单填写的内容不合法，请检查。'
 	if request.method == 'POST':
-		article_id_list = request.POST.getlist('article_id',[])
+		article_id_list = request.POST.getlist('is_oper',[])
 		count = 0
 		if article_id_list:
 			for id in article_id_list:
@@ -44,6 +44,29 @@ def delete(request):
 		else:
 			result_dict['message'] = '没有选择任何文章进行操作。'
 	return JsonResponse(result_dict)
+	
+@staff_member_required
+@transaction.atomic()
+def sort(request):
+	result_dict = {}
+	result_dict['success'] = False
+	result_dict['message'] = '表单填写的内容不合法，请检查。'
+	if request.method == 'POST':
+		article_id_list = request.POST.getlist('is_oper',[])
+		count = 0
+		if article_id_list:
+			for id in article_id_list:
+				article = Article.objects.get(id=id)
+				article.sort_order = request.POST.get('sort_%s' % id , '0' )
+				article.save()
+				
+				count += 1
+			result_dict['success'] = True
+			result_dict['message'] = '%s 篇文章的排序被重新设置' % count
+		else:
+			result_dict['message'] = '没有选择任何文章进行操作。'
+	return JsonResponse(result_dict)	
+	
 
 	
 @staff_member_required
@@ -198,22 +221,54 @@ def list_view(request):
 	ctx['page_name'] = '文章管理'
 	
 	if request.method == 'GET':
-		title = request.GET.get('title','')
-		ctx['title'] = title
+
 		type = request.GET.get('type','')
 		ctx['type'] = type
+		#默认只查询博客文章
+		if not type:
+			type = '0'
+			
+			
+		query_item = request.GET.get('query_item','')
+		ctx['query_item'] = query_item
+		logger.debug('query item : %s' % query_item)
+		
+		item_value = request.GET.get('item_value','')
+		ctx['item_value'] = item_value
+		logger.debug('item_value : %s' % item_value)
+		query_busi_category = request.GET.get('query_busi_category','')
+		ctx['query_busi_category_id'] = query_busi_category
+		try:
+			busi_cat = ArticleBusiCategory.objects.get(id=query_busi_category)
+			ctx['query_busi_category_name'] = busi_cat.name
+		except:
+			ctx['query_busi_category_name'] = ''
+		
+		logger.debug('query_busi_category : %s' % query_busi_category)
+			
 		
 		all = Article.objects.all()
-				
-		if title:
-			from django.db.models import Q
-			all = all.filter(Q(title__icontains=title))
-		
 		if type:
 			all = all.filter(category=type)
+				
+		if query_item == 'title':
+			if item_value:
+				from django.db.models import Q
+				all = all.filter(Q(title__icontains=item_value))
+				
+		if query_busi_category:
+			all = all.filter(busi_category=query_busi_category)
+		
+		
 			
 		page_size = get_page_size()
 		artile_list, page_range = my_pagination(request=request, queryset=all,display_amount=page_size)
+		
+		#为页面准备分类的下拉列表
+		from shopcart.myadmin.article_busi_category import get_all_category
+		busi_category_list = get_all_category()
+		logger.debug('busi_category_list : %s' % busi_category_list)
+		ctx['busi_category_list'] = busi_category_list
 		
 		ctx['article_list'] = artile_list
 		ctx['page_range'] = page_range

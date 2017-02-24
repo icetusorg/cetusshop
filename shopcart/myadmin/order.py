@@ -68,20 +68,32 @@ def list_view(request):
 	ctx['page_name'] = '订单管理'
 	
 	if request.method == 'GET':
-		order_number = request.GET.get('order_number','')
-		ctx['order_number'] = order_number
-		user_email = request.GET.get('user_email','')
-		ctx['user_email'] = user_email
+		query_item = request.GET.get('query_item','')
+		ctx['query_item'] = query_item
+		
+		logger.debug('query item : %s' % query_item)
+		
+		item_value = request.GET.get('item_value','')
+		ctx['item_value'] = item_value
+		query_status = request.GET.get('query_status','')
+		ctx['query_status'] = query_status
 		
 		all = Order.objects.all()
 		
-		if order_number != '':
-			all = all.filter(order_number=order_number)
+		if query_item == 'order_number':
+			if item_value:
+				all = all.filter(order_number=item_value)
+		elif query_item == 'order_user_email':
+			if item_value:
+				all = all.filter(user__email=item_value)
+		else:
+			pass
 		
-		if user_email != '':
-			all = all.filter(user__email=user_email)
+		if query_status:
+			all = all.filter(status=query_status)
 		
 		
+
 		page_size = get_page_size()
 		order_list, page_range = my_pagination(request=request, queryset=all,display_amount=page_size)
 		

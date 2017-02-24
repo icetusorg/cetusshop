@@ -1,36 +1,46 @@
 {% extends "admin/default/content_base.html" %}
 {% block breadcrumbs %}
 <section class="content-header">
-    <h1>商品管理</h1>
+    <h1>产品列表</h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
-        <li class="active"><a href="#">商品管理</a></li>
+        <li class="active"><a href="#">产品列表</a></li>
     </ol>
 </section>
 {% endblock %}
 
 {% block main %}
 {% load i18n %}
+{% load shopcart_extras %}
 <section class="content">
     <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
     <div class="row">
         <div class="col-md-12">
             <div class="box xy-search">
                 <div class="box-header with-border">
-                    <h3 class="box-title">商品查询</h3>
+                    <h3 class="box-title">产品查询</h3>
                 </div>
                 <div class="box-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <div>
+                            <div>							
                                 <form>
-                                    <div class="form-group">
-                                        <label>货号 :</label>
-                                        <input type="text" name="item_number" value="{{query_item_number}}" class="form-control">
+                                    <div class="btn-group normal product-button-search">
+                                        <button type="button" class="btn btn-default inputBtn"><span
+                                                class="selected-text">{{query_item|is_equal:"item_name"|yesno:"产品名称,产品编号,"}}</span></button>
+                                        <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn"
+                                                data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu" id="selectOption2">
+                                            <li class="dropdown-item" data-value="item_name">产品名称</li>
+                                            <li class="dropdown-item" data-value="item_number">产品编号</li>
+                                        </ul>
+                                        <input type="hidden" class="dropdown-item-input" name="query_item" value="{{query_item|default:"item_name"}}">
                                     </div>
                                     <div class="form-group">
-                                        <label>名称 :</label>
-                                        <input type="text" name="name" value="{{query_name}}" class="form-control">
+                                        <input type="text" name="item_value" value="{{item_value}}" class="form-control product-list-search-input">
                                     </div>
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary">查询</button>
@@ -46,44 +56,43 @@
         <div class="col-md-12">
             <div class="box xy-list-product">
                 <div class="box-body no-padding">
-                    <ul class="xy-list-all">
-                        <li class="list-all"><input type="checkbox" id="main-content-checkbox-all"> <a id="main-content-btn-all" href="#">全选</a></li>
-                        <li><a id="product-add-new" href="/admin/product-edit/">新增</a></li>
-                        <!--<li><a id="product-batch-delete">删除</a></li>-->
-                        <li><a class="product-batch-publish" data-method="on">上架</a></li>
-                        <li><a class="product-batch-publish" data-method="off">下架</a></li>
-                        <li><a id="product-batch-refresh">刷新</a></li>
-                    </ul>
-					<form id="product_oper_form" method="POST" action="/admin/product-oper/">
-						{% csrf_token %}
-						<input type="hidden" value="" id="oper-ids" name="oper-ids"/>
-						<input type="hidden" value="" id="oper-method" name="oper-method"/>
-						<table id="main-content-table" class="table table-striped">
+					<form id="product_batch_form">
+						<input name="method" id="product_batch_method" type="hidden" value="" />
+						<table id="main-content-table" class="table table-striped product-table-striped">
 							<tbody>
 							<!--多余th为了调整表格色块-->
-							<tr><th></th></tr>
 							<tr>
 								<th></th>
+							</tr>
+							<tr>
+								<th>选择</th>
+								<th>排序</th>
 								<th>商品图片</th>
 								<th>货号</th>
 								<th>名称</th>
-								<th>售价</th>
-								<th>原价</th>
-								<th>库存</th>
-								<th>操作</th>
+								<th>分类</th>
+								<th>更新时间</th>
 								<th>上架</th>
+								<th>操作</th>
 							</tr>
 							{% for product in product_list %}
 								<tr>
-									<td><input name="is_oper" data-order-id="{{product.id}}" type="checkbox"></td>
+									<td><input name="is_oper" data-order-id="{{product.id}}" value="{{product.id}}" type="checkbox"></td>
+									<td><input type="text" name="sort_{{product.id}}" value="{{product.sort_order}}"></td>
 									<td><a href="#"><img src={{product.thumb}}></a></td>
 									<td>{{product.item_number}}</td>
 									<td>{{product.name}}</td>
-									<td>${{product.price}}</td>
-									<td>${{product.market_price}}</td>
-									<td>{{product.quantity}}</td>
-									<td><a href="/admin/product-edit/?id={{product.id}}">编辑</a> | <a href="{{product.get_url}}" target="_blank">预览</a></td>
+									<td>
+										<ul>
+											{%for cat in product.categorys.all%}
+											<li>{{cat.name}}</li>
+											{%endfor%}
+										</ul>
+									</td>
+									<td>{{product.update_time|date:"M/d/Y"}}</td>
 									<td>{{product.is_publish|yesno:"是,否,未定义"}}</td>
+									<td><a href="/admin/product-edit/?id={{product.id}}">编辑</a> | <a href="{{product.get_url}}" target="_blank">预览</a></td>
+									
 								</tr>
 							{% endfor %}
 							</tbody>
@@ -91,9 +100,23 @@
 					</form>
                 </div>
                 <div class="box-footer clearfix">
+                    <div class="xy-box-select">
+                        <input class=" product-list-input-checkbox-all" type="checkbox" id="main-content-checkbox-all">
+                        <a id="main-content-btn-all" href="#">全选</a>
+                        <button type="button" data-method="delete" class="btn btn-danger product-batch-oper">删除</button>
+                        <a href="/admin/product-edit/" id="product-add-new" class="btn btn-primary">新增</a>
+                        <button type="button" data-method="sort" class="btn btn-primary product-batch-oper">排序</button>
+                        <button type="button" data-method="onpublish" class="btn btn-primary product-batch-oper">上架</button>
+                        <button type="button" data-method="offpublish" class="btn btn-primary product-batch-oper">下架</button>
+                    </div>
+					
                     <div class="xy-pages-jump">
+                        <button type="button" class="btn btn-primary page-jump">跳转</button>
+                        <input type="text" name="page_number_to_jump" class="form-control">
+                        <p>跳转到：</p>
+
                         <ul class="pagination pagination-sm no-margin pull-right">
-							{% if product_list.has_previous %}
+                            {% if product_list.has_previous %}
 								<li><a name="pageChange" data-tag="Previous" class="pageChage prev" data-page="{{ product_list.previous_page_number }}">&lt;</a></li>
 							{% else %}
 								<li><a>&lt;</a></li>

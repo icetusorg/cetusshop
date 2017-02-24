@@ -96,6 +96,8 @@ urlpatterns = patterns("",
 	
 	url('^admin/article-list/$', 'shopcart.myadmin.article.list_view',name='admin_article_list_view'),
 	url('^admin/article-delete/$', 'shopcart.myadmin.article.delete',name='admin_article_delete'),
+	url('^admin/article-sort/$', 'shopcart.myadmin.article.sort',name='admin_article_sort'),
+	
 	url('^admin/article-detail/(\d+)/$', 'shopcart.myadmin.article.detail',name='admin_article_detail'),
 	url('^admin/article-edit/$', 'shopcart.myadmin.article.article_basic_edit',name='admin_article_basic_edit'),
 	url('^admin/article-detail-manage/$', 'shopcart.myadmin.article.article_detail_info_manage',name='admin_article_detail_info_manage'),

@@ -184,6 +184,7 @@ class Category(models.Model):
 class Product(models.Model):
 	item_number = models.CharField(max_length = 100,default='',db_index=True,blank=True,verbose_name='商品编号')
 	name = models.CharField(max_length = 100,default='',verbose_name='商品名称')
+	type = models.CharField(max_length = 20,default='B2C',verbose_name='商品类型')
 	click_count = models.IntegerField(default=0,verbose_name='浏览次数')
 	quantity = models.IntegerField(default=0,verbose_name='库存数量')
 	warn_quantity = models.IntegerField(default=0,verbose_name='预警库存')
@@ -685,6 +686,22 @@ class Serial_Number(models.Model):
 	update_time = models.DateTimeField(auto_now = True)
 
 	
+@python_2_unicode_compatible		
+class ArticleBusiCategory(models.Model):
+	name = models.CharField(max_length=254,db_index=True,null=True,blank=True,verbose_name="分类名称")
+	code = models.CharField(max_length=254,db_index=True,null=True,blank=True,verbose_name="分类代码")
+	short_desc = models.CharField(max_length=1024,null=True,blank=True,verbose_name="简略描述")
+	create_time = models.DateTimeField(auto_now_add = True)
+	update_time = models.DateTimeField(auto_now = True)
+	
+	def __str__(self):
+		return self.name
+	
+	class Meta:
+		verbose_name = '文章业务分类'
+		verbose_name_plural = '文章业务分类'	
+	
+	
 @python_2_unicode_compatible
 class Article(models.Model):
 	title = models.CharField(max_length=254,null=True,db_index=True,verbose_name = '标题')
@@ -701,6 +718,8 @@ class Article(models.Model):
 		(ARTICLE_CATEGORY_SITEINFO,'站点信息'),
 	) 
 	category = models.CharField(max_length=10,null=True,blank=True,verbose_name = '文章分类',choices=CATEGORY_CHOICES)
+	sort_order = models.IntegerField(default=0,verbose_name='排序序号')
+	busi_category = models.ForeignKey(ArticleBusiCategory,null=True,blank=True,related_name='articles',verbose_name = '文章业务分类')
 	content = models.TextField(null=True,blank=True,verbose_name = '内容')
 	user = models.ForeignKey(MyUser,null=True,blank=True,verbose_name = '用户')
 	keywords = models.CharField(max_length=254,null=True,blank=True,verbose_name = '关键字')

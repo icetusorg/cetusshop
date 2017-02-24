@@ -773,18 +773,23 @@ jQuery(".product-attribute-item").click(function(){
 		//判断点击的是已经选中的还是没选中的
 		condition = ".product-attribute-group-selected[title=" + $(this).data("group-code") + "]";
 		
+		//本次点击的sku项目的相关信息
+		current_attribute_id = $(this).data("attribute-id");
+		
 		if ($(this).parent().hasClass("redborder")){
 			/*  给商品去掉表示选中红框的逻辑 */
 			$(this).parent().prevAll().removeClass('redborder');
 			$(this).parent().nextAll().removeClass('redborder');
 			$(this).parent().removeClass('redborder');
 			$(condition).val("");
+			$("#current_attrobute_id").val("");
 		}else{
 			/*  给商品加上表示选中红框的逻辑 */
 			$(this).parent().prevAll().removeClass('redborder');
 			$(this).parent().nextAll().removeClass('redborder');
 			$(this).parent().addClass('redborder');
 			$(condition).val($(this).data("attribute-id"));
+			$("#current_attrobute_id").val(current_attribute_id);
 		}
 			
 	

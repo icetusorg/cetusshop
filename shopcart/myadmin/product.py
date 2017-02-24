@@ -343,24 +343,32 @@ def product_picture_manage(request):
 		
 @staff_member_required
 def oper(request):	
+	result_dict = {}
+	result_dict['success'] = False
+	result_dict['message'] = ''
+
 	if request.method == 'POST':
-		method = request.POST['oper-method']
-		oper_ids = request.POST.get('oper-ids','')
+		method = request.POST['method']
+		logger.debug("Product batch method : %s " % method)
+		oper_ids = request.POST.getlist('is_oper')
+		logger.debug("oper_ids:%s" % oper_ids)
 		if oper_ids == '':
 			raise Http404
 		else:
-			oper_id_list = oper_ids.split(',')
+			#oper_id_list = oper_ids.split(',')
 		
 			if method == 'delete':
-				for id in oper_id_list:
+				for id in oper_ids:
 					try:
 						product = Product.objects.get(id=id)
 						product.delete()
 					except:
 						logger.info('Can not find product which id is %s to delete.' % (id))
+				result_dict['success'] = True
+				result_dict['message'] = '产品批量删除成功'
 						
 			elif method == 'onpublish' or method == 'offpublish':
-				for id in oper_id_list:
+				for id in oper_ids:
 					try:
 						product = Product.objects.get(id=id)
 						if method == 'onpublish':
@@ -370,8 +378,23 @@ def oper(request):
 						product.save()
 					except:
 						logger.info('Can not find product which id is %s to delete.' % (id))
-						
-		return redirect('/admin/product/')
+				
+				result_dict['success'] = True
+				result_dict['message'] = '产品上下架状态设置成功'
+				
+			elif method == 'sort':
+				for id in oper_ids:
+					try:
+						product = Product.objects.get(id=id)
+						product.sort_order = request.POST.get('sort_%s' % id , '0' )
+						product.save()
+					except Exception as err:
+						logger.error(err)
+						logger.info('Can not find product which id is %s to set order.' % (id))
+				result_dict['success'] = True
+				result_dict['message'] = '产品顺序号设置成功'
+		return JsonResponse(result_dict)
+				
 	else:
 		raise Http404		
 		
@@ -382,10 +405,19 @@ def product_list(request):
 	ctx['system_para'] = System_Para.get_default_system_parameters()
 	if request.method == 'GET':
 		
-		name_condition = request.GET.get('name','')
-		item_number_condition = request.GET.get('item_number','')
+		#name_condition = request.GET.get('name','')
+		#item_number_condition = request.GET.get('item_number','')
+		
+		query_item = request.GET.get('query_item','')
+		item_value = request.GET.get('item_value','')
+		
 		from django.db.models import Q
-		product_list = Product.objects.filter(Q(name__icontains=name_condition)).filter(Q(item_number__icontains=item_number_condition))
+		if query_item == 'item_name':
+			product_list = Product.objects.filter(Q(name__icontains=item_value))
+		elif query_item == 'item_number':
+			product_list = Product.objects.filter(Q(item_number__icontains=item_value))
+		else:
+			product_list = Product.objects.all()
 		#icontains是大小写不敏感的，contains是大小写敏感的
 			
 		if 'page_size' in request.GET:
@@ -401,8 +433,8 @@ def product_list(request):
 		ctx['page_range'] = page_range
 		ctx['item_count'] = Product.objects.all().count()
 		ctx['page_size'] = page_size
-		ctx['query_item_number'] = item_number_condition
-		ctx['query_name'] = name_condition
+		ctx['query_item'] = query_item
+		ctx['item_value'] = item_value
 		return render(request,System_Config.get_template_name('admin') + '/product_list_content.html',ctx)
 	else:
 			raise Http404

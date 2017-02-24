@@ -181,6 +181,25 @@ jQuery(".pageChage").click(function(event){
 	}
 });
 
+//页码跳转
+jQuery(".page-jump").click(function(event){
+	event.preventDefault();//阻止A标签跳转
+	var url = location.href;
+	var pageNo = $.getUrlParam("page");
+	var tag = $(this).attr("data-tag");
+	try{
+		pageNo = "1";
+		$(this).parent().find("input[name=page_number_to_jump]").each(function(){
+			pageNo = ($(this).val());
+		});
+	}catch(err){
+		pageNo = "1";
+	}
+	
+	var newurl = changeURLArg(url,"page",pageNo);
+	location.href = newurl;//跳转到对应的页面
+
+});
 
 
 //订单管理界面
@@ -374,32 +393,35 @@ jQuery(".delete-ship-record").click(function(){
 
 
 //文章管理界面
-//批量删除
-jQuery("#article_batch_delete").click(function(event){
-	event.preventDefault();//阻止A标签跳转
-	var url = "/admin/article-delete/";
+//文章管理批量操作
+jQuery(".article-batch-oper").click(function(e){
+	var url = "/admin/article-";
+	method = $(this).data("method");
+	url = url + method + "/";
 
+	
 	$.ajax({
 		cache: false,
 		type: "POST",
 		url:url,
-		data:$("#article_oper_form").serialize(),
+		data:$("#article_batch_form").serialize(),
 		async: false,
 		error: function(request) {
 			alert("System error");
 		},
 		success: function(data) {
 			$("#infoMessage").html(data.message);
-			$('#myModal').on('hidden.bs.modal', function (e) {
-				var url = location.href;
-				location.href = url;//跳转到对应的页面
-			});
-			
+			if(data.success==true){
+				$('#myModal').on('hidden.bs.modal', function (e) {
+					var newurl = location.href;
+					location.href = newurl;
+				})
+			}
 			$("#myModal").modal('toggle');
 		}
-	});	
-	
+	});
 });
+
 
 //文章基本信息提交
 jQuery("#article-basic-info-submit-btn").click(function(event){
@@ -712,38 +734,39 @@ jQuery("#product-picture-manage-submit-btn").click(function(){
 	});
 });
 
+//修改了顺序号，自动勾选
 
 
-jQuery("#product-batch-delete").click(function(e){
-	var id_list = [];
-	 $("input[name='is_oper']").each(function(){
-		if($(this).is(':checked')){
-			id_list.push($(this).data("order-id"));
-		}
-	});
-	var oper_ids = id_list.join(',');
-	$("#oper-ids").val(oper_ids);
-	$("#oper-method").val('delete');
-	$("#product_oper_form").submit();
-});
 
-jQuery(".product-batch-publish").click(function(e){
-	var id_list = [];
-	 $("input[name='is_oper']").each(function(){
-		if($(this).is(':checked')){
-			id_list.push($(this).data("order-id"));
-		}
-	});
-	var oper_ids = id_list.join(',');
-	$("#oper-ids").val(oper_ids);
-	if($(this).data("method")=="on"){
-		$("#oper-method").val('onpublish');
-	}else{
-		$("#oper-method").val('offpublish');
-	}
+//产品管理批量操作
+jQuery(".product-batch-oper").click(function(e){
+	var url = "/admin/product-oper/";
+	method = $(this).data("method");
+	$("#product_batch_method").val(method);
+
 	
-	$("#product_oper_form").submit();
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#product_batch_form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			if(data.success==true){
+				$('#myModal').on('hidden.bs.modal', function (e) {
+					var newurl = location.href;
+					location.href = newurl;
+				})
+			}
+			$("#myModal").modal('toggle');
+		}
+	});
 });
+
 
 
 jQuery("#product-basic-info-submit-btn").click(function(e){

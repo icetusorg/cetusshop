@@ -24,18 +24,46 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div>
-                                <form method="GET">
+								<form>
                                     <div class="form-group">
-                                        <label>订单号 :</label>
-                                        <input name="order_number" type="text" class="form-control" value={{order_number}}>
+                                        <div class="btn-group normal product-button-search">
+                                            <button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{query_item|admin_order_quert_item:"zh_CN"|default:"订单号"}}</span></button>
+                                            <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown" aria-expanded="false">
+                                                <span class="caret"></span>
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu" id="selectOption2">
+                                                <li class="dropdown-item" data-value="order_number">订单号</li>
+                                                <li class="dropdown-item" data-value="order_user_email">下单用户</li>
+                                            </ul>
+                                            <input type="hidden" class="dropdown-item-input" name="query_item" value="{{query_item|default:"order_number"}}">
+                                        </div>
+                                        <input type="text" name="item_value" value="{{item_value}}" class="form-control order-list-input">
                                     </div>
                                     <div class="form-group">
-                                        <label>下单用户 :</label>
-                                        <input name="user_email" type="text" class="form-control" value={{user_email}}>
-                                    </div>
-                                    <div class="form-group">
+                                        <label>订单状态</label>
+                                        <div class="btn-group normal product-button-search">
+                                            <button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{query_status|admin_order_status:"zh_CN"|default:"所有"}}</span></button>
+                                            <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown" aria-expanded="false">
+                                                <span class="caret"></span>
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu" id="selectOption2">
+                                                <li class="dropdown-item" data-value="">所有</li>
+                                                <li class="dropdown-item" data-value="0">已下单</li>
+                                                <li class="dropdown-item" data-value="10">已付款</li>
+												<li class="dropdown-item" data-value="20">已发货</li>
+												<li class="dropdown-item" data-value="30">已完成</li>
+												<li class="dropdown-item" data-value="99">已关闭</li>
+												<li class="dropdown-item" data-value="90">异常</li>
+                                            </ul>
+                                            <input type="hidden" class="dropdown-item-input" name="query_status" value="{{query_status}}">
+                                        </div>
                                         <button type="submit" class="btn btn-primary">查询</button>
                                     </div>
+                                    <!--<div class="form-group">-->
+                                        <!---->
+                                    <!--</div>-->
                                 </form>
                             </div>
                         </div>
@@ -90,8 +118,8 @@
                         <button id="order_batch_delete" type="button" class="btn btn-danger">删除</button>
                     </div>
                     <div class="xy-pages-jump">
-                        <button type="submit" class="btn btn-primary">跳转</button>
-                        <input type="text" class="form-control">
+                        <button type="button" class="btn btn-primary page-jump">跳转</button>
+                        <input type="text" name="page_number_to_jump" class="form-control">
                         <p>跳转到：</p>
 
                         <ul class="pagination pagination-sm no-margin pull-right">

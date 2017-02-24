@@ -59,13 +59,21 @@ def equalornot(value,arg):
 		return arg_list[2]
 		
 @register.filter
+def admin_order_quert_item(value,arg):
+	if  value == 'order_number':
+		return '订单号'
+	elif value == 'order_user_email':	
+		return '用户名'											
+	else:
+		return value	
+		
+		
+@register.filter
 def admin_order_status(value,arg):
 	if  value == '0':
-		return '已下单，待付款'
+		return '已下单'
 	elif value == '10':	
-		return '已付款，待备货'
-	elif value == '15':
-		return '已备货，待发货'
+		return '已付款'
 	elif value == '20':
 		return '已发货'
 	elif value == '30':

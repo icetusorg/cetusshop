@@ -24,27 +24,39 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div>
-                                <form>
-                                    <div class="form-group">
-                                        <label>标题 :</label>
-                                        <input type="text" class="form-control" value="{{title}}" name="title">
+								<form>
+                                    <div class="btn-group normal product-button-search">
+                                        <button type="button" class="btn btn-default inputBtn"><span
+                                                class="selected-text">{{query_item|is_equal:"title"|yesno:"标题,标题,"}}</span></button>
+                                        <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn"
+                                                data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu" id="selectOption2">
+                                            <li class="dropdown-item" data-value="title">标题</li>
+                                        </ul>
+                                        <input type="hidden" class="dropdown-item-input" name="query_item" value="{{query_item|default:"title"}}">
                                     </div>
-                                    <div class="form-group"><label>文章类型：</label>
-                                        <div class="btn-group normal">
-                                            <button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{type|default:"请选择一个类型"|admin_article_category:"zh_CN"}}</span></button>
-                                            <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn"
-                                                    data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu" id="category-selection">
-                                                <li class="dropdown-item" data-value="">请选择一个类型</li>
-												<li class="dropdown-item" data-value ="0">宣传博客</li>
-												<li class="dropdown-item" data-value ="10">网站公告</li>
-												<li class="dropdown-item" data-value ="20">站点信息</li>
-                                            </ul>
-											<input class="dropdown-item-input" type="hidden" name="type" value=""/>
-                                        </div>
+                                    <div class="form-group">
+                                        <input type="text" name="item_value" value="{{item_value}}" class="form-control product-list-search-input">
+                                    </div>
+
+                                    <div class="btn-group normal product-button-search">
+                                        <button type="button" class="btn btn-default inputBtn"><span
+                                                class="selected-text">{{query_busi_category_name|default:"所有分类"}}</span></button>
+                                        <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn"
+                                                data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu" id="selectOption">
+                                            <li class="dropdown-item" data-value="">所有分类</li>
+											{%for cat in busi_category_list%}
+                                            <li class="dropdown-item" data-value="{{cat.id}}">{{cat.name}}</li>
+											{%endfor%}
+                                        </ul>
+                                        <input type="hidden" class="dropdown-item-input" name="query_busi_category" value="{{query_busi_category_id|default:""}}">
                                     </div>
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary">查询</button>
@@ -57,38 +69,40 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
+		<div class="col-md-12">
             <div class="box xy-list-product">
                 <div class="box-body no-padding">
-                    <ul class="xy-list-all">
-                        <li class="list-all list-all2"><input type="checkbox" id="main-content-checkbox-all"> <a id="main-content-btn-all" href="#">全选</a></li>
-                        <li><a href="../article-edit/">新增</a></li>
-                        <li><a href="#" id="article_batch_delete">删除</a></li>
-                    </ul>
-					<form id="article_oper_form" method="POST">
+					
+				
+					<form id="article_batch_form" method="POST">
 						{% csrf_token %}
-						<table class="table table-striped" id="main-content-table">
+					
+						<table id="main-content-table" class="table table-striped article-table-striped product-table-striped">
 							<tbody>
 							<!--多余th为了调整表格色块-->
 							<tr>
 								<th></th>
 							</tr>
 							<tr>
-								<th></th>
-								<th>图片</th>
-								<th>标题</th>
+								<th>选择</th>
+								<th>排序</th>
+								<th>文章图片</th>
+								<th>文章名称</th>
 								<th>分类</th>
-								<th>静态文件名</th>
+								<th>更新时间</th>
 								<th>操作</th>
 							</tr>
 							{% for article in article_list %}
 								<tr>
-									<td><input type="checkbox" name="article_id" value="{{article.id}}"></td>
+									<td><input type="checkbox" name="is_oper" value="{{article.id}}"></td>
+									<td><input type="text" name="sort_{{article.id}}" value="{{article.sort_order}}"></td>
 									<td><a href="#"><img src="{{article.image}}"></a></td>
-									<td><a href="#">{{article.title}}</a></td>
-									<td>{{article.category|admin_article_category:"zh_CN"}}</td>
-									<td>{{article.static_file_name}}</td>
-									<td><a href="{{article.get_url}}" target="_blank">预览</a> | <a href="../article-edit/?id={{article.id}}" class="article-edit-link" data-article-id="{{article.id}}">编辑</a></td>
+									<td>{{article.title}}</td>
+									<td>
+										{{article.busi_category.name}}
+									</td>
+									<td>{{article.update_time|date:"M/d/Y"}}</td>
+									<td><a href="../article-edit/?id={{article.id}}" class="article-edit-link" data-article-id="{{article.id}}">编辑</a> | <a href="{{article.get_url}}" target="_blank">预览</a></td>
 								</tr>
 							{% endfor %}
 							</tbody>
@@ -96,8 +110,20 @@
 					</form>
                 </div>
                 <div class="box-footer clearfix">
+                    <div class="xy-box-select">
+                        <input id="main-content-checkbox-all" type="checkbox">
+                        <a id="main-content-btn-all" href="#">全选</a>
+                        <button type="button" data-method="delete" class="btn btn-danger article-batch-oper">删除</button>
+                        <a href="/admin/article-edit/" id="article-add-new" class="btn btn-primary">新增</a>
+                        <button type="button" data-method="sort" class="btn btn-primary article-batch-oper">排序</button>
+                    </div>
                     <div class="xy-pages-jump">
-                        <ul class="pagination pagination-sm no-margin pull-right">
+                        <button type="button" class="btn btn-primary page-jump">跳转</button>
+                        <input type="text" name="page_number_to_jump" class="form-control">
+                        <p>跳转到：</p>
+
+						
+						<ul class="pagination pagination-sm no-margin pull-right">
 							{% if article_list.has_previous %}
 								<li><a name="pageChange" data-tag="Previous" class="pageChage prev" data-page="{{ article_list.previous_page_number }}">&lt;</a></li>
 							{% else %}

@@ -274,6 +274,25 @@ def ajax_get_product_info(request):
 		attr = Attribute.objects.get(id=id)
 		selected_attr_list.append('%s|%s' % (id,attr.group.group_type))
 	
+	
+	#组建可以选择的列表和不可选择的列表
+	'''
+	算法：
+		假设有3个组
+		1组： A B
+		2组： C D
+		3组： E F
+		理论上可以有 ACE/ACF/ADE/ADF/BCE/BCF/BDE/BDF 这样8种组合
+		事实上，实际商品可能并没有8种组合，也许只有 ACE/ACF 和 BDE/BDF 这么4种组合，甚至只有 ACE  和  BDE/BDF 这么三种组合
+		需要在前台利用灰色的框来表示当前的组合选择下，还有哪些可以选，就需要找出哪些按钮应该亮起。
+		算法可以举例表述为：
+		例如 当前选择了AE：
+		第一步：先找出PA中带有A和E的所有组合，比如找到了 ACE/ACF 和 BDE
+		第二步：找出既有A又有E的组合，找到了ACE。所以C亮起。
+		第三步：逐个分析与A或者E同组的选项，比如B，查找是否存在 BE的组合，存在则亮起，不存在则灰掉；同样，也要逐个分析与E同组的选项，比如F，不存在AF组合的话，就要将F灰掉。
+		经过上面的筛选，应该可以找到当前组合条件下，可以点选的选项了。
+	'''
+	
 	result_dict['not_selected'] = not_selected_attr_list#返回可以选择的attribute_id列表
 	result_dict['selected'] = selected_attr_list #返回已经选择了的attribute_id列表
 	return JsonResponse(result_dict)

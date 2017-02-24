@@ -46,6 +46,7 @@
 	<div class="product-attributes">
 		<!-- 先找出商品关联的所有的attributes，然后找出分组 -->
 		<input type="hidden" id="product-attribute-id" value="" />
+		<input type="hidden" id="current_attrobute_id" name="current_attrobute_id" value="" />
 		{% for group in product.get_attributes %}
 			{% for attr in group.attr_list %}
 				{% if group.group_type == 'text' %}

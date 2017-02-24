@@ -41,6 +41,7 @@ def save_config_items(request,is_create=True,is_continue_if_not_exist=True):
 		if key.startswith('system_config_'):
 			value = request.POST[key]
 			db_key = key[len('system_config_'):len(key)]
+			
 			config = None
 			try:
 				config = System_Config.objects.get(name=db_key)

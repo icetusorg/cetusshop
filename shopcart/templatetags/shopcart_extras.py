@@ -30,6 +30,19 @@ def check_if_in_delivery_type(value,arg):
 	else:
 		return False
 		
+		
+@register.filter		
+def currency_list(value,arg):
+	if  value == 'USD':
+		return '美元'
+	elif value == 'RMB':	
+		return '人民币'
+	elif value == 'EUR':
+		return '欧元'										
+	else:
+		return value		
+		
+		
 @register.filter		
 def express_type_list(value,arg):
 	if  value == 'fixed':

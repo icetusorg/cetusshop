@@ -531,6 +531,43 @@ jQuery("#user_admin_detail_submit_btn").click(function(event){
 	});
 });
 
+//用户管理批量操作
+jQuery(".user-batch-oper").click(function(e){
+	//自动选中选择的那行
+	user_id = $(this).data("user-id");
+	if(user_id != undefined){
+		$("#checkbox_"+user_id).prop("checked", true);
+	}
+	
+	var url = "/admin/user-";
+	method = $(this).data("method");
+	url = url + method + "/";
+
+	if (method=='active'){
+		url = url + $(this).data("status") + "/";
+	}
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#user_batch_form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			if(data.success==true){
+				$('#myModal').on('hidden.bs.modal', function (e) {
+					location.reload(true); 
+				})
+			}
+			$("#myModal").modal('toggle');
+		}
+	});
+});
+
 
 
 

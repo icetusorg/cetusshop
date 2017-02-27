@@ -146,6 +146,12 @@ urlpatterns = patterns("",
 	url('^admin/product-para-delete/$', 'shopcart.myadmin.product.product_para_delete',name='admin_product_para_delete'),
 	
 	url('^admin/user-admin-edit/$', 'shopcart.myadmin.user.admin_edit',name='admin_user_admin_edit'),
+	url('^admin/user-list/$', 'shopcart.myadmin.user.user_list',name='admin_user_list'),
+	url('^admin/user-delete/$', 'shopcart.myadmin.user.user_delete',name='admin_user_delete'),
+	url('^admin/user-active/(.+)/$', 'shopcart.myadmin.user.user_active',name='admin_user_active'),
+	url('^admin/user-reset-password/$', 'shopcart.myadmin.user.user_reset_password',name='admin_reset_password'),
+	
+	
 	
 	
 	#下面是初始化方法

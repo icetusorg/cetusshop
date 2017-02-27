@@ -101,7 +101,7 @@
 									<td>
 										{{article.busi_category.name}}
 									</td>
-									<td>{{article.update_time|date:"M/d/Y"}}</td>
+									<td>{{article.update_time|date:"Y-m-d H:i:s"}}</td>
 									<td><a href="../article-edit/?id={{article.id}}" class="article-edit-link" data-article-id="{{article.id}}">编辑</a> | <a href="{{article.get_url}}" target="_blank">预览</a></td>
 								</tr>
 							{% endfor %}

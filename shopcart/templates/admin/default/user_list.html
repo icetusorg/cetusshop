@@ -1,0 +1,130 @@
+{% extends "admin/default/content_base.html" %}
+{% block breadcrumbs %}
+<section class="content-header">
+    <h1>用户管理</h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+        <li class="active"><a href="#">用户管理</a></li>
+    </ol>
+</section>
+{% endblock %}
+
+{% block main %}
+{% load i18n %}
+{% load shopcart_extras %}
+<section class="content">
+    <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box xy-search">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div>
+                                <form>
+                                    <div class="form-group user-form-group">
+                                        <label>用户帐号</label>
+                                        <input type="text" class="form-control" name="item_value" value="{{item_value}}">
+                                    </div>
+                                    <div class="form-group user-form-group">
+                                        <button type="submit" class="btn btn-primary">查询</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="box xy-list">
+                <div class="box-body no-padding">
+					<form id="user_batch_form">
+					
+						<table id="main-content-table" class="table table-striped user-table-list">
+							<tbody>
+							<!--多余th为了调整表格色块-->
+							<tr>
+								<th></th>
+							</tr>
+							<tr>
+								<th>选择</th>
+								<th>账号</th>
+								<th>类型</th>
+								<th>最后登录</th>
+								<th>注册时间</th>
+								<th>状态</th>
+								<th>注册IP</th>
+								<th>操作</th>
+							</tr>
+							
+							{%for user in user_list%}
+								<tr id="message_list">
+									<td><input id="checkbox_{{user.id}}" type="checkbox" name="is_oper" value="{{user.id}}"></td>
+									<td><a href="###">{{user.email}}</a></td>
+									<td>普通用户</td>
+									<td>{{user.last_login|date:"Y-m-d H:i:s"}}</td>
+									<td>{{user.create_time|date:"Y-m-d H:i:s"}}</td>
+									<td>{{user.is_active|yesno:"正常,冻结,"}}</td>
+									<td>暂时没有IP</td>
+									<td><a href="#" class="user-batch-oper" data-user-id="{{user.id}}" data-method='reset-password'>重置密码</a> /
+									{%if user.is_active%}
+									<a href="#" class="user-batch-oper"  data-method='active' data-status="off" data-user-id="{{user.id}}">冻结</a>
+									{%else%}
+									<a href="#" class="user-batch-oper"  data-method='active' data-status="on" data-user-id="{{user.id}}">解冻</a>
+									{%endif%}
+									/ <a
+											class="cd-popup-trigger btn-danger-user user-batch-oper" data-method='delete' data-user-id="{{user.id}}">删除</a></td>
+								</tr>
+							{%endfor%}
+	
+							</tbody>
+						</table>
+					</form>
+                </div>
+                <div class="box-footer clearfix">
+                    <div class="xy-box-select">
+                        <input id="main-content-checkbox-all" type="checkbox">
+                        <a id="main-content-btn-all" href="#">全选</a>
+                        <button id="user_batch_delete" data-method='delete' type="button" class="btn btn-danger user-batch-oper">删除</button>
+						<button   type="button" class="btn btn-primary user-batch-oper" data-method='reset-password'>重置密码</button>
+						<button   type="button" class="btn btn-primary user-batch-oper" data-method='active' data-status="off">冻结</button>
+						<button   type="button" class="btn btn-primary user-batch-oper" data-method='active' data-status="on">解冻</button>
+                    </div>
+                    <div class="xy-pages-jump">
+                        <button type="button" class="btn btn-primary page-jump">跳转</button>
+                        <input type="text" name="page_number_to_jump" class="form-control">
+                        <p>跳转到：</p>
+
+                        <ul class="pagination pagination-sm no-margin pull-right">
+                            {% if user_list.has_previous %}
+								<li><a name="pageChange" data-tag="Previous" class="pageChage prev" data-page="{{ user_list.previous_page_number }}">&lt;</a></li>
+							{% else %}
+								<li><a>&lt;</a></li>
+							{% endif %}	
+							
+							{% for p in page_range %}
+								{% ifequal p objects.number %}
+									<li class="active">{{p}}</li>
+								{% else %}
+									<li><a class="pageChage"  data-page = "{{p}}" href="#" title="{{p}}">{{p}}</a></li>
+								{% endifequal %}
+							{% endfor %}
+                            {% if user_list.has_next %}
+								<li><a name="pageChange" class="pageChage next" data-page = "{{p}}" data-page-range="{{page_range}}" data-tag="Next">&gt;</a></li>
+							{% else %}
+								<li><a>&gt;</a></li>
+							{% endif %}
+                        </ul>
+                        <p>共{{item_count}}条记录 , 共{{page_range|last}}页，每页显示：{{page_size}}条</p>
+                    </div>
+                </div>
+            </div><!-- /.box -->
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+	{% load staticfiles %}
+{% endblock %}

@@ -94,7 +94,7 @@
 										没有关联商品
 									{%endif%}
 								</td>
-								<td>{{inquiry.create_time|date:"Y/m/d"}}</td>
+								<td>{{inquiry.create_time|date:"Y-m-d H:i:s"}}</td>
 								<td>{{inquiry.ip_address|default:"未能获取对方IP"}}</td>
 								<td data="message_list1"><a class="deleteCategory message-delete inquiry-delete" data-inquiry-id="{{inquiry.id}}">删除</a> / <a href="../inquiry-detail/{{inquiry.id}}/">查看</a></td>
 							</tr>

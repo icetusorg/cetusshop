@@ -1,6 +1,6 @@
 #coding=utf-8
 from django.shortcuts import render,redirect
-from shopcart.models import Product,System_Config,Category,Attribute,Attribute_Group,Product_Attribute,Product_Images,ProductParaGroup
+from shopcart.models import Product,System_Config,Category,Attribute,Attribute_Group,Product_Attribute,Product_Images,ProductParaGroup,ProductPara
 from shopcart.forms import product_add_form,product_basic_info_form,product_detail_info_form
 from shopcart.utils import System_Para,handle_uploaded_file,my_pagination
 from django.http import Http404,HttpResponse,JsonResponse
@@ -52,7 +52,7 @@ def product_para_group_edit(request):
 	elif request.method == 'POST':
 		result = {}
 		result['success'] = False
-		result['message'] = '商品参数组管理保存失败'
+		result['message'] = '商品参数组保存失败'
 		
 		para_group = None
 		
@@ -71,13 +71,82 @@ def product_para_group_edit(request):
 			para_group = form.save()
 			
 			result['success'] = True
-			result['message'] = '配送方式信息保存成功'
+			result['message'] = '商品参数组保存成功'
 			result['para_group_id'] = para_group.id
 		return JsonResponse(result)		
 	else:
 		raise Http404		
 
-			
+@staff_member_required
+@transaction.atomic()
+def product_para_edit(request):
+	ctx = {}
+	ctx['system_para'] = System_Para.get_default_system_parameters()
+	ctx['page_name'] = '商品参数管理'
+	
+	if request.method == 'GET':
+		raise Http404
+	elif request.method == 'POST':
+		result = {}
+		result['success'] = False
+		result['message'] = '商品参数保存失败'
+		
+		para_group = None
+		try:
+			para_group = ProductParaGroup.objects.get(id=request.POST.get('para_group_id',''))
+		except Exception as err:
+			logger.info('Can not find para_group which id is [%s]. \n Error Message: %s' %(id,err))
+			result['message'] = '无法找到编号为%s的参数组，可能已经被删除。' % request.POST.get('para_group_id','')
+			return JsonResponse(result)
+		
+		
+		name = request.POST.get('name','')
+		
+		try:
+			id = request.POST.get('id','')
+			para = ProductPara.objects.get(id=id)
+		except Exception as err:
+			logger.info('Can not find para which id is [%s]. Create one. \n Error Message: %s' %(id,err))
+			para = ProductPara.objects.create(group=para_group,name=name)
+		
+		para.name = name
+		para.save()
+		
+		result['success'] = True
+		result['message'] = '商品参数信息保存成功'
+		result['new_id'] = para.id
+		result['para_group_id'] = para_group.id
+		return JsonResponse(result)		
+	else:
+		raise Http404
+		
+@staff_member_required
+@transaction.atomic()
+def product_para_delete(request):
+	ctx = {}
+	ctx['system_para'] = System_Para.get_default_system_parameters()
+	ctx['page_name'] = '商品参数管理'
+	
+	if request.method == 'GET':
+		raise Http404
+	elif request.method == 'POST':
+		result = {}
+		result['success'] = False
+		result['message'] = '商品参数删除失败'
+		
+		try:
+			id = request.POST.get('id','')
+			para = ProductPara.objects.get(id=id)
+		except Exception as err:
+			logger.info('Can not find para which id is [%s]. \n Error Message: %s' %(id,err))
+			return JsonResponse(result)
+		
+		para.delete()
+		result['success'] = True
+		result['message'] = '商品参数删除成功'
+		return JsonResponse(result)		
+	else:
+		raise Http404
 			
 
 

@@ -142,6 +142,8 @@ urlpatterns = patterns("",
 	
 	url('^admin/product-para-list/$', 'shopcart.myadmin.product.product_para_list',name='admin_product_para_list'),
 	url('^admin/product-para-group-edit/$', 'shopcart.myadmin.product.product_para_group_edit',name='admin_product_para_group_edit'),
+	url('^admin/product-para-edit/$', 'shopcart.myadmin.product.product_para_edit',name='admin_product_para_edit'),
+	url('^admin/product-para-delete/$', 'shopcart.myadmin.product.product_para_delete',name='admin_product_para_delete'),
 	
 	
 	#下面是初始化方法

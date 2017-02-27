@@ -33,9 +33,15 @@ def edit(request):
 		try:
 			category = ArticleBusiCategory.objects.get(id=id)
 			ctx['category'] = category
-			return render(request,System_Config.get_template_name('admin') + '/article_busi_category_detail.html',ctx)
 		except Exception as err:
 			logger.error("Can not find ArticleBusiCategory which id is %s . \n Error message: %s" % (id,err))
+
+		#加载自定义模板供选择
+		from .file import file_list
+		template_list = file_list(System_Config.get_template_name('client') + '/custmize/','custmize_template_article_category')
+		logger.debug('>>>>>>>>>>>>>>>>>>custmize_template_article_category: %s' % template_list)
+		ctx['custmize_template'] = template_list
+
 			
 		return render(request,System_Config.get_template_name('admin') + '/article_busi_category_detail.html',ctx)
 	elif request.method=='POST':

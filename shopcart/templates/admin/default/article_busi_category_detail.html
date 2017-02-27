@@ -33,17 +33,18 @@
 					<div class="item">
 						<label>模板：</label>
 						<div class="btn-group normal ">
-							<button type="button" class="btn btn-default inputBtn"><span class="selected-text">模板1</span></button>
+							<button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{category.category_template|default:"系统默认"}}</span></button>
 							<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown" aria-expanded="false">
 								<span class="caret"></span>
 								<span class="sr-only">Toggle Dropdown</span>
 							</button>
 							<ul class="dropdown-menu" role="menu" id="selectOption">
-								<li class="dropdown-item" data-value="模板1">模板1</li>
-								<li class="dropdown-item" data-value="模板2">模板2</li>
-								<li class="dropdown-item" data-value="模板3">模板3</li>
+								<li class="dropdown-item" data-value="">系统默认</li>	
+								{% for t in custmize_template %}
+									<li class="dropdown-item" data-value ="{{t}}">{{t}}</li>
+								{% endfor %}
 							</ul>
-							<input type="hidden" class="dropdown-item-input" name="" value="产品编号1">
+							<input type="hidden" class="dropdown-item-input" name="category_template" value="{{category.category_template}}">
 						</div>
 					</div>
 					<div class="item"><label>排序：</label><input type="text" name="sort_order" value="{{category.sort_order}}" class="form-control article-categorys-set-input">

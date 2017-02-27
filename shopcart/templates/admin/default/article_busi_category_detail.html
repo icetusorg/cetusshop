@@ -1,0 +1,65 @@
+{% extends "admin/default/content_base.html" %}
+{% block breadcrumbs %}
+<section class="content-header">
+    <h1>编辑文章分类</h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+        <li class="active"><a>编辑文章分类</a></li>
+    </ol>
+</section>
+{% endblock %}
+{% block main %}
+{% load i18n %}
+
+{% load staticfiles %}
+{% load shopcart_extras %}
+<section class="content">
+    <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+    <div class="col-md-12 add-product category-set">
+        <div class="system-attr-mian">
+            <!--页签-->
+            <div class="add-content website-info active">
+				<form id="article_busi_catigory_detail_form">
+					<div class="item"><label>栏目名称<span class="point">*</span>：</label>
+					<input type="text" name="name" class="form-control" value="{{category.name}}"></div>
+					<div class="item"><label>静态文件名：<span class="point">*</span>：</label>
+					<input type="text" name="static_file_name" class="form-control" value="{{category.static_file_name|default:""}}"></div>
+					<p class="signal-title top">SEO 设置</p>
+					<div class="item"><label>标题：</label><input type="text" class="form-control" value="{{category.page_title|default:""}}" name="page_title"></div>
+					<div class="item"><label>关键词：</label><input type="text" class="form-control" name="keywords" value="{{category.keywords|default:""}}"></div>
+					<div class="item"><label>简要描述：</label><textarea type="text" class="form-control" name="short_desc">{{category.short_desc|default:""}}</textarea>
+					</div>
+					<p class="signal-title top">模板设置</p>
+					<div class="item">
+						<label>模板：</label>
+						<div class="btn-group normal ">
+							<button type="button" class="btn btn-default inputBtn"><span class="selected-text">模板1</span></button>
+							<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown" aria-expanded="false">
+								<span class="caret"></span>
+								<span class="sr-only">Toggle Dropdown</span>
+							</button>
+							<ul class="dropdown-menu" role="menu" id="selectOption">
+								<li class="dropdown-item" data-value="模板1">模板1</li>
+								<li class="dropdown-item" data-value="模板2">模板2</li>
+								<li class="dropdown-item" data-value="模板3">模板3</li>
+							</ul>
+							<input type="hidden" class="dropdown-item-input" name="" value="产品编号1">
+						</div>
+					</div>
+					<div class="item"><label>排序：</label><input type="text" name="sort_order" value="{{category.sort_order}}" class="form-control article-categorys-set-input">
+					</div>
+					<div class="submit-item">
+						<input type="hidden" name="id" value="{{category.id}}" />
+						<button type="button" id="article_busi_catigory_detail_submit_btn" class="btn btn-primary next-steep">提交</button>
+					</div>
+				</form>
+            </div>
+        </div>
+    </div>
+    <!--页签结束-->
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+	{% load staticfiles %}
+{% endblock %}

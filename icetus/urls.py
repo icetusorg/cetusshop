@@ -103,6 +103,8 @@ urlpatterns = patterns("",
 	url('^admin/article-detail-manage/$', 'shopcart.myadmin.article.article_detail_info_manage',name='admin_article_detail_info_manage'),
 	url('^admin/article-picture-manage/$', 'shopcart.myadmin.article.article_picture_manage',name='admin_article_picture_manage'),
 	
+	url('^admin/article-busi-category-edit/$', 'shopcart.myadmin.article_busi_category.edit',name='admin_article_busi_category_edit'),
+	
 	url('^admin/category-list/$', 'shopcart.myadmin.category.list_view',name='admin_category_list_view'),
 	url('^admin/category-edit/$', 'shopcart.myadmin.category.edit',name='admin_category_edit'),
 	url('^admin/category-detele/(\d+)/$', 'shopcart.myadmin.category.delete',name='admin_category_delete'),

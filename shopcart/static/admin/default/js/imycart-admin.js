@@ -505,6 +505,32 @@ jQuery("#article-picture-manage-submit-btn").click(function(event){
 	});
 });
 
+//文章分类管理
+//分类详情提交
+jQuery("#article_busi_catigory_detail_submit_btn").click(function(event){
+	event.preventDefault();
+	var url = "/admin/article-busi-category-edit/";
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#article_busi_catigory_detail_form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			if(data.success==true){
+				$('#myModal').on('hidden.bs.modal', function (e) {
+					location.href = url + "?id=" + data.category_id;
+				})
+			}
+			$("#myModal").modal('toggle');
+		}
+	});
+});
 
 //用户管理
 //管理员详情

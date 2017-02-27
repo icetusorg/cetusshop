@@ -1,9 +1,23 @@
 # -*- coding:utf-8 -*-
 from django import forms
-from shopcart.models import MyUser,Address,Product,Inquiry,OrderShippment,Email,Article,Express,ExpressType,Category,CustomizeURL
+from shopcart.models import MyUser,Address,Product,Inquiry,OrderShippment,Email,Article,Express,ExpressType,Category,CustomizeURL,ArticleBusiCategory
 from captcha.fields import CaptchaField
 from django.utils.translation import ugettext as _
 from django.core.exceptions import ValidationError 	
+		
+class article_busi_category_form(forms.ModelForm):
+	name = forms.CharField(required=False)
+	code = forms.CharField(required=False)
+	sort_order = forms.CharField(required=False)
+	keywords = forms.CharField(required=False)
+
+	page_title = forms.CharField(required=False)
+	static_file_name = forms.CharField(required=False)
+	short_desc = forms.CharField(required=False)
+	category_template = forms.CharField(required=False)
+	class Meta:
+		model = ArticleBusiCategory
+		fields = ('name','code','sort_order','keywords','page_title','static_file_name','short_desc','category_template')		
 		
 
 #只验证captcha字段的form

@@ -733,7 +733,12 @@ class Serial_Number(models.Model):
 class ArticleBusiCategory(models.Model):
 	name = models.CharField(max_length=254,db_index=True,null=True,blank=True,verbose_name="分类名称")
 	code = models.CharField(max_length=254,db_index=True,null=True,blank=True,verbose_name="分类代码")
+	sort_order = models.IntegerField(default=0,verbose_name='排序序号')
+	keywords = models.CharField(max_length=254,null=True,blank=True,verbose_name = '关键字')
+	page_title = models.CharField(max_length = 100,blank=True,default='',verbose_name='网页标题')
+	static_file_name = models.CharField(max_length = 254,db_index=True,unique=True,null=True,blank=True,verbose_name = '静态文件名')
 	short_desc = models.CharField(max_length=1024,null=True,blank=True,verbose_name="简略描述")
+	category_template = models.CharField(max_length = 254,default='',blank=True,verbose_name='分类指定模板')
 	create_time = models.DateTimeField(auto_now_add = True)
 	update_time = models.DateTimeField(auto_now = True)
 	

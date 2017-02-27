@@ -532,6 +532,42 @@ jQuery("#article_busi_catigory_detail_submit_btn").click(function(event){
 	});
 });
 
+//文章分类批量操作
+jQuery(".article-category-batch-oper").click(function(e){
+	//自动选中选择的那行
+	id = $(this).data("id");
+	if(id != undefined){
+		$("#checkbox_"+id).prop("checked", true);
+	}
+	
+	var url = "/admin/article-busi-category-";
+	method = $(this).data("method");
+	url = url + method + "/";
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#article_category_batch_form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			if(data.success==true){
+				$('#myModal').on('hidden.bs.modal', function (e) {
+					location.reload(true); 
+				})
+			}
+			$("#myModal").modal('toggle');
+		}
+	});
+});
+
+
+
+
 //用户管理
 //管理员详情
 jQuery("#user_admin_detail_submit_btn").click(function(event){

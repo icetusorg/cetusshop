@@ -1845,14 +1845,35 @@ iframe {
 .article-categorys-set-input {
     width: 3% !important;
 }
+.article-categorys-tables tr th:nth-child(1),.article-categorys-tables tr td:nth-child(1){
+    width:5%!important;
+}
 
+.article-categorys-tables tr th:nth-child(1) input,.article-categorys-tables tr td:nth-child(1) input{
+    margin-top: 7px!important;
+}
+.article-categorys-tables tr th:nth-child(2) input,.article-categorys-tables tr td:nth-child(2) input{
+    width: 10%;
+    text-align: center;
+}
+.article-categorys-tables tr th:nth-child(2),.article-categorys-tables tr td:nth-child(2){
+    width:20%!important;
+}
+.article-categorys-tables tr th:nth-child(3),.article-categorys-tables tr td:nth-child(3){
+    width:50%!important;
+}
+.article-categorys-tables tr th:nth-child(4),.article-categorys-tables tr td:nth-child(4){
+    width:5%!important;
+}
 .article-add-title h2 {
     color: #333;
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 20px;
 }
-
+.arricle-list-input-checkbox-all{
+    margin-left: 42px !important;
+}
 .article-add-title button {
     margin: 0px !important;
 }
@@ -2334,7 +2355,17 @@ iframe {
 .product-choose-attribute-p {
     padding-top: 5px;
 }
-
+.attribute-table{
+    font-size: 12px;
+    text-align: center;
+}
+.attribute-table tr th,.attribute-table tr td{
+    text-align: left;
+    width: 10% !important;
+}
+.delect{
+    color: #dd4b39;
+}
 .product-choose-sku-title h2 {
     font-size: 14px;
     color: #333;

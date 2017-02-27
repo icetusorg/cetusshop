@@ -1,0 +1,92 @@
+{% extends "admin/default/content_base.html" %}
+{% block breadcrumbs %}
+<section class="content-header">
+    <h1>文章分类管理</h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+        <li class="active"><a href="#">文章分类管理</a></li>
+    </ol>
+</section>
+{% endblock %}
+
+
+{% block main %}
+{% load i18n %}
+{% load staticfiles %}
+{% load shopcart_extras %}
+<section class="content">
+    <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box xy-list-product">
+                <div class="box-body no-padding">
+							<form id="article_category_batch_form">
+								<table id="main-content-table" class="table table-striped article-table-striped article-categorys-tables">
+									<tbody>
+									<!--多余th为了调整表格色块-->
+									<tr>
+										<th></th>
+									</tr>
+									<tr>
+										<th>选择</th>
+										<th>排序</th>
+										<th>分类名称</th>
+										<th>操作</th>
+									</tr>
+									{%for cat in category_list%}
+									<tr>
+										<td><input id="checkbox_{{cat.id}}" type="checkbox" name="is_oper" value="{{cat.id}}"></td>
+										<td><input type="text" name="sort_order_{{cat.id}}" value="{{cat.sort_order}}"></td>
+										<td><a href="###"><span class="nameText">{{cat.name}}</span></a></td>
+										<td><a class="editCategory" href="/admin/article-busi-category-edit/?id={{cat.id}}">编辑</a><span>/</span><a class="deleteCategory article-category-batch-oper" data-method="delete" data-id="{{cat.id}}">删除</a></td>
+									</tr>
+									{%endfor%}
+									</tbody>
+								</table>							
+							</form>
+                </div>
+                <div class="box-footer clearfix">
+                    <div class="xy-box-select">
+								<input class=" product-list-input-checkbox-all" type="checkbox" id="main-content-checkbox-all">
+								<a id="main-content-btn-all" href="#">全选</a>
+								<button type="button" data-method="delete" class="btn btn-danger article-category-batch-oper">删除</button>
+								<a href="/admin/article-busi-category-edit/"  class="btn btn-primary">新增</a>
+								<button type="button" data-method="sort" class="btn btn-primary article-category-batch-oper">排序</button>
+                    </div>
+                    <div class="xy-pages-jump">
+                        <button type="button" class="btn btn-primary page-jump">跳转</button>
+								<input type="text" name="page_number_to_jump" class="form-control">
+								<p>跳转到：</p>
+		
+								<ul class="pagination pagination-sm no-margin pull-right">
+									{% if category_list.has_previous %}
+										<li><a name="pageChange" data-tag="Previous" class="pageChage prev" data-page="{{ category_list.previous_page_number }}">&lt;</a></li>
+									{% else %}
+										<li><a>&lt;</a></li>
+									{% endif %}	
+									
+									{% for p in page_range %}
+										{% ifequal p objects.number %}
+											<li class="active">{{p}}</li>
+										{% else %}
+											<li><a class="pageChage"  data-page = "{{p}}" href="#" title="{{p}}">{{p}}</a></li>
+										{% endifequal %}
+									{% endfor %}
+									{% if category_list.has_next %}
+										<li><a name="pageChange" class="pageChage next" data-page = "{{p}}" data-page-range="{{page_range}}" data-tag="Next">&gt;</a></li>
+									{% else %}
+										<li><a>&gt;</a></li>
+									{% endif %}
+								</ul>
+								<p>共{{item_count}}条记录 , 共{{page_range|last}}页，每页显示：{{page_size}}条</p>
+                    </div>
+                </div>
+            </div><!-- /.box -->
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+{% block scripts %}
+	{% load staticfiles %}
+{% endblock %}

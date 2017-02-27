@@ -20,6 +20,100 @@ def get_page_size():
 		logger.info('"admin_article_busi_category_page_size" is not setted.Use default value 8.')
 		size = 15
 	return size
+	
+@staff_member_required
+@transaction.atomic()	
+def list(request):
+	ctx = {}
+	ctx['system_para'] = get_system_parameters()
+	ctx['page_name'] = '文章分类管理'
+	
+	if request.method == 'GET':
+		category_list = ArticleBusiCategory.objects.all()
+		
+		count = category_list.count()
+
+			
+		page_size = get_page_size()
+		category_list, page_range = my_pagination(request=request, queryset=category_list,display_amount=page_size)	
+		
+		ctx['category_list'] = category_list
+		ctx['page_range'] = page_range
+		ctx['page_size'] = page_size
+		ctx['count'] = count
+
+		return render(request,System_Config.get_template_name('admin') + '/article_busi_category_list.html',ctx)
+	elif request.method=='POST':
+		raise Http404
+	else:
+		raise Http404
+		
+		
+@staff_member_required
+@transaction.atomic()	
+def delete(request):
+	ctx = {}
+	ctx['system_para'] = get_system_parameters()
+	ctx['page_name'] = '文章分类管理'
+	
+	if request.method=='POST':
+		result = {}
+		result['success'] = False
+		result['message'] = '文章分类删除失败'
+		category = None
+		
+		try:
+			id_list = request.POST.getlist('is_oper')
+			for id in id_list:
+				category = ArticleBusiCategory.objects.get(id=id)
+				category.delete()
+		except Exception as err:
+			logger.info('Can not find ArticleBusiCategory which id is [%s]. Create one. \n Error Message: %s' %(id,err))
+			result['message'] = '删除编号为[%s]的文章分类时出错' % id
+			return JsonResponse(result)
+		
+		result['success'] = True
+		result['message'] = '文章分类删除成功'
+		result['category_id'] = category.id
+		return JsonResponse(result)	
+		
+	else:
+		raise Http404
+
+
+@staff_member_required
+@transaction.atomic()	
+def sort(request):
+	ctx = {}
+	ctx['system_para'] = get_system_parameters()
+	ctx['page_name'] = '文章分类管理'
+	
+	if request.method=='POST':
+		result = {}
+		result['success'] = False
+		result['message'] = '文章分类排序失败'
+		category = None
+		
+		try:
+			id_list = request.POST.getlist('is_oper')
+			for id in id_list:
+				category = ArticleBusiCategory.objects.get(id=id)
+				category.sort_order = request.POST.get('sort_order_%s' % id)
+				category.save()
+		except Exception as err:
+			logger.info('Can not find ArticleBusiCategory which id is [%s]. Create one. \n Error Message: %s' %(id,err))
+			result['message'] = '对编号为[%s]的文章分类重排序时出错' % id
+			return JsonResponse(result)
+		
+		result['success'] = True
+		result['message'] = '文章分类排序成功'
+		result['category_id'] = category.id
+		return JsonResponse(result)	
+		
+	else:
+		raise Http404		
+	
+	
 
 @staff_member_required
 @transaction.atomic()	

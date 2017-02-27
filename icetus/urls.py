@@ -104,6 +104,9 @@ urlpatterns = patterns("",
 	url('^admin/article-picture-manage/$', 'shopcart.myadmin.article.article_picture_manage',name='admin_article_picture_manage'),
 	
 	url('^admin/article-busi-category-edit/$', 'shopcart.myadmin.article_busi_category.edit',name='admin_article_busi_category_edit'),
+	url('^admin/article-busi-category-list/$', 'shopcart.myadmin.article_busi_category.list',name='admin_article_busi_category_list'),
+	url('^admin/article-busi-category-delete/$', 'shopcart.myadmin.article_busi_category.delete',name='admin_article_busi_category_delete'),
+	url('^admin/article-busi-category-sort/$', 'shopcart.myadmin.article_busi_category.sort',name='admin_article_busi_category_sort'),
 	
 	url('^admin/category-list/$', 'shopcart.myadmin.category.list_view',name='admin_category_list_view'),
 	url('^admin/category-edit/$', 'shopcart.myadmin.category.edit',name='admin_category_edit'),

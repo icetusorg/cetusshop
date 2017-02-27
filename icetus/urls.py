@@ -145,6 +145,8 @@ urlpatterns = patterns("",
 	url('^admin/product-para-edit/$', 'shopcart.myadmin.product.product_para_edit',name='admin_product_para_edit'),
 	url('^admin/product-para-delete/$', 'shopcart.myadmin.product.product_para_delete',name='admin_product_para_delete'),
 	
+	url('^admin/user-admin-edit/$', 'shopcart.myadmin.user.admin_edit',name='admin_user_admin_edit'),
+	
 	
 	#下面是初始化方法
 	url(r'^initdb/$', 'shopcart.views.init_database',name='init_database'),

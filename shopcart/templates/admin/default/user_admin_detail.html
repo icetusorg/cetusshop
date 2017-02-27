@@ -1,0 +1,54 @@
+{% extends "admin/default/content_base.html" %}
+{% block breadcrumbs %}
+<section class="content-header">
+    <h1>用户管理</h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+        <li class="active"><a href="#">添加管理员</a></li>
+    </ol>
+</section>
+{% endblock %}
+
+
+{% block main %}
+{% load i18n %}
+
+{% load staticfiles %}
+{% load shopcart_extras %}
+<section class="content">
+    <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+    <div class="col-md-12 add-product">
+        <div class="page_editor">
+			<form id="user_admin_detail_form">
+				<div class="item item2">
+					<label>邮件地址：</label>
+					<input type="text" class="form-control" name="email">
+				</div>
+				<div class="item item2">
+					<label>姓：</label>
+					<input type="text" class="form-control" name="first_name">
+				</div>
+				<div class="item item2">
+					<label>名：</label>
+					<input type="text" class="form-control" name="last_name">
+				</div>
+				<div class="item btn-item btn-item2">
+					<label>类型</label>
+					<label>管理员</label>
+				</div>
+				<div class="item item2">
+					<label>密码：</label>
+					<input type="text" class="form-control" name="password">
+				</div>
+				<div class="submit-item form-group article">
+					<button id="user_admin_detail_submit_btn" type="button" class="btn btn-primary next-steep">提交</button>
+				</div>
+			</form>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+	{% load staticfiles %}
+
+{% endblock %}

@@ -506,6 +506,34 @@ jQuery("#article-picture-manage-submit-btn").click(function(event){
 });
 
 
+//用户管理
+//管理员详情
+jQuery("#user_admin_detail_submit_btn").click(function(event){
+	event.preventDefault();
+	var url = "/admin/user-admin-edit/";
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#user_admin_detail_form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			if(data.success==true){
+				
+			}
+			$("#myModal").modal('toggle');
+		}
+	});
+});
+
+
+
+
 //商品管理界面
 //Tab页切换方法
 //添加商品，页签（基本信息-属性-相册）点击事件

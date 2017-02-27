@@ -1,7 +1,7 @@
 #coding=utf-8
 from django.shortcuts import render
 from django.template.loader import render_to_string
-from shopcart.models import System_Config,Article
+from shopcart.models import System_Config,Article,ArticleBusiCategory
 from shopcart.utils import System_Para,my_pagination,get_system_parameters,customize_tdk
 import json,os
 from django.http import JsonResponse
@@ -74,13 +74,11 @@ def detail(request,id):
 				f.close()
 		return JsonResponse(result_dict)
 		
-def view_blog_list(request,tdk=None):
+def view_blog_list(request,category_id=None):
 	ctx = {}
 	ctx['system_para'] = get_system_parameters()
 	ctx['menu_products'] = get_menu_products()
 	ctx['page_name'] = 'Blog'
-	
-	customize_tdk(ctx,tdk)
 	
 	try:
 		blog_list_page_size = System_Config.objects.get('blog_list_page_size')
@@ -88,8 +86,8 @@ def view_blog_list(request,tdk=None):
 		logger.debug('blog_list_page_size is not defined,use the default value 12.')
 		blog_list_page_size = 12
 	
-	if request.method =='GET':
-		product_list = None
+	if request.method =='GET':	
+		template = 'blog_list.html'
 		if 'sort_by' in request.GET:
 			if 'direction' in request.GET:
 				if 'desc' == request.GET['direction']:
@@ -100,6 +98,26 @@ def view_blog_list(request,tdk=None):
 				article_list = Article.objects.filter(category=Article.ARTICLE_CATEGORY_BLOG).order_by(request.GET['sort_by'])
 		else:
 			article_list = Article.objects.filter(category=Article.ARTICLE_CATEGORY_BLOG)
+			
+			
+		#按分类筛选
+		logger.debug('category_id : %s ' % category_id)
+		if category_id:
+			#查找该分类是否设置了自定义的分类模板
+			try:
+				category = ArticleBusiCategory.objects.get(id=category_id)
+				ctx['page_key_words'] = category.keywords
+				ctx['page_description'] = category.short_desc
+				if category.page_title:
+					ctx['page_name'] = category.page_title
+				else:
+					ctx['page_name'] = category.name
+					
+				if category.category_template:
+					template = '/custmize/article_category/' + category.category_template
+				article_list = article_list.filter(busi_category=category)
+			except Exception as err:
+				logger.error('Can not find category which id is %s. Error message is %s ' % (category_id,err))
 		
 		if 'page_size' in request.GET:
 			logger.debug('the page_size has been detacted')
@@ -109,4 +127,5 @@ def view_blog_list(request,tdk=None):
 		
 		ctx['article_list'] = article_list
 		ctx['page_range'] = page_range
-		return render(request,System_Config.get_template_name() + '/blog_list.html',ctx)
+		logger.info('template : ' + template)
+		return render(request,System_Config.get_template_name() + '/' + template,ctx)

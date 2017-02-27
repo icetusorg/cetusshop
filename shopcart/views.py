@@ -2,7 +2,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,Http404
 from django.http import JsonResponse,QueryDict
-from shopcart.models import System_Config,Product,Product_Images,Category,MyUser,Email,Reset_Password,Address,Product_Attribute,Attribute_Group,Attribute,Article,Express,ExpressType
+from shopcart.models import System_Config,Product,Product_Images,Category,MyUser,Email,Reset_Password,Address,Product_Attribute,Attribute_Group,Attribute,Article,Express,ExpressType,ArticleBusiCategory
 from shopcart.utils import my_send_mail,get_serial_number,customize_tdk
 from django.db import transaction
 from django.utils.translation import ugettext as _
@@ -44,7 +44,6 @@ def url_dispatch(request,url):
 	
 	
 	#优先级 2 ：解析分类路径
-	#暂未实现
 	try:
 		cate = Category.objects.get(static_file_name=url)
 		#mvc解析
@@ -53,9 +52,19 @@ def url_dispatch(request,url):
 		
 	except Exception as err:
 		logger.error('Can not find url [%s] in Category.Error message is %s' % (url,err))
+		
+	#优先级 3 ：解析文章分类路径
+	try:
+		cate = ArticleBusiCategory.objects.get(static_file_name=url)
+		#mvc解析
+		from shopcart.article import view_blog_list
+		return view_blog_list(request,cate.id)
+		
+	except Exception as err:
+		logger.error('Can not find url [%s] in ArticleBusiCategory.Error message is %s' % (url,err))
 	
 	
-	#优先级 3 ：解析文章路径
+	#优先级 4 ：解析文章路径
 	try:
 		article = Article.objects.get(static_file_name=url)
 		from shopcart.article import detail
@@ -63,7 +72,7 @@ def url_dispatch(request,url):
 	except Exception as err:
 		logger.error('Can not find url [%s] in artilces.Error message is %s' % (url,err))
 			
-	#优先级 4 ： 自定义URL
+	#优先级 5 ： 自定义URL
 	try:
 		cust = CustomizeURL.objects.get(url = url)
 		if cust.type == 'MVC':

@@ -4,7 +4,7 @@
     <h1>文章管理</h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
-        <li class="active"><a href="#">商品管理</a></li>
+        <li class="active"><a href="#">文章管理</a></li>
     </ol>
 </section>
 {% endblock %}
@@ -12,183 +12,248 @@
 
 {% block main %}
 {% load i18n %}
-
 {% load staticfiles %}
 {% load shopcart_extras %}
 <section class="content">
     <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
-    <div class="col-md-12 add-product">
+    <div class="col-md-12 add-product add-content active">
+        <div class="item item2">
+            <label>文章名称<span class="point">*</span>：</label>
+            <input type="text" value="{{article.title}}" name="title" class="form-control ">
+        </div>
+        <div class="item btn-item btn-item2">
+            <label>自定义URL<span class="point">*</span>：</label><input type="text" name="static_file_name" value="{{article.static_file_name|default:""}}" class="form-control">
+            <button type="button" id="static_file_name_advice" class="btn btn-primary">推荐</button>
+        </div>
+        <div class="item item2"><label>关键字：</label><input type="text" name="keywords" value="{{article.keywords|default:""}}" class="form-control"></div>
+        <div class="item item-area item2"><label>简要描述：</label><textarea type="text" name="short_desc" class="form-control" >{{article.short_desc|default:""}}</textarea>
+        </div>
+        <div class="item add-product-tree">
+            <label>分类：（<a href="#">新增分类</a>）</label>
+            <div class="btn-group normal">
+                <button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{article.busi_category}}</span>
+                </button>
+                <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown"
+                        aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu" role="menu" id="category-selection">
+					{%for cat in category_list%}
+                    <li class="dropdown-item" data-value="{{cat.id}}">{{cat.name}}</li>
+					{%endfor%}
+                </ul>
+                <input class="dropdown-item-input" type="hidden" name="busi_category" value="{{article.busi_category}}">
+            </div>
+        </div>
+        <div class="item item2"><label>排序号：</label><input type="text" class="form-control"></div>
+        <div class="item">
+            <label>自定义模板：</label>
 
-        <ul class="tag article-info-tag">
-            <li class="active" data="tag_basic_info">基本信息</li>
-            <li data="tag_detail_info">详细信息</li>
-            <li data="tag_picture">相册</li>
-        </ul>
-        <div class="add-content detail-info active" id="tag_basic_info">
-			<form id="article-basic-info-form" method="POST">
-			{% csrf_token %}
-				<div class="item item2"><label>标题：</label><input type="text" value="{{article.title}}" name="title" class="form-control "></div>
-					<div class="item form-group"><label>文章类型：</label>
-						<div class="btn-group normal">
-							<button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{article.category|default:"请选择一个类型"|admin_article_category:"zh_CN"}}</span></button>
-							<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn"
-													data-toggle="dropdown">
-								<span class="caret"></span>
-								<span class="sr-only">Toggle Dropdown</span>
-							</button>
-							<ul class="dropdown-menu" role="menu" id="category-selection">
-									<li class="dropdown-item" data-value="">请选择一个类型</li>
-									<li class="dropdown-item" data-value ="0">宣传博客</li>
-									<li class="dropdown-item" data-value ="10">网站公告</li>
-									<li class="dropdown-item" data-value ="20">站点信息</li>
-							</ul>
-							<input class="dropdown-item-input" type="hidden" name="category" value=""/>
-						</div>
-					</div>
-	
-				<div class="submit-item">
-					<input name="id" value="{{article.id}}" type="hidden" />
-					<button id="article-basic-info-submit-btn" type="button" class="btn btn-primary next-steep">保存</button>
-				</div>
-			</form>
+            <div class="btn-group normal">
+                <button type="button" class="btn btn-default inputBtn"><span class="selected-text">请选择模板</span>
+                </button>
+                <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown"
+                        aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu" role="menu" id="category-selection">
+                    <li class="dropdown-item" data-value="">模板1</li>
+                    <li class="dropdown-item" data-value="">模板2</li>
+                    <li class="dropdown-item" data-value="">模板3</li>
+                </ul>
+                <input class="dropdown-item-input" type="hidden" name="attribute-group" value="">
+            </div>
+        </div>
+
+        <div class="item add-product-tree article-add-title">
+            <h2>文章主图：</h2>
+            <button type="button" class="btn btn-primary cd-popup-trigger">添加主图</button>
+        </div>
+        <div class="item product-images">
+            <div class="images article-images-list col-md-1">
+                <a href="images/product.jpg" target="new"><img src="images/product.jpg"></a>
+                <p>feedoioaergrgrgr.jpg</p>
+                <a href="###">预览</a> | <a href="###" class="point">删除</a>
+            </div>
+        </div>
+        <div class="item item-area">
+            <label>详细描述:</label>
+        </div>
+		<div class="item item-area">
+			<textarea type="text" id="article_content_editor"  name="content" class="form-control">{{article.content|default:""}}</textarea>
 		</div>
-        <div class="add-content attr" id="tag_detail_info">
-			<form id="article-detail-info-form" method="POST">
-				{% csrf_token %}
-				<h1>SEO设置</h1>
-				<div class="item item2"><label>关键字：</label><input type="text" name="keywords" value="{{article.keywords|default:""}}" class="form-control"></div>
-				<div class="item btn-item btn-item2">
-					<label>网页标题：</label><input type="text" name="page_title" value="{{article.page_title|default:""}}" class="form-control">
-					<button type="button" id="article_page_title_advice" class="btn btn-primary">推荐</button>
-				</div>
-	
-				<div class="item item-area item2">
-					<label>简要描述：</label>
-					<textarea type="text" name="short_desc" class="form-control" >{{article.short_desc|default:""}}</textarea>
-				</div>
-				
-				<div class="item">
-					<label>文章内容：</label>
-				</div>
-				
-				<div class="item item-area">
-					<textarea type="text" id="article_content_editor"  name="content" class="form-control">{{article.content|default:""}}</textarea>
-				</div>
-				<div class="item btn-item btn-item2">
-					<label>静态文件名：</label><input type="text" name="static_file_name" value="{{article.static_file_name|default:""}}" class="form-control">
-					<button type="button" id="static_file_name_advice" class="btn btn-primary">推荐</button>
-				</div>
-				<div class="item btn-item btn-item2">
-					<label>导航信息：</label><input type="text" name="breadcrumbs" value="{{article.breadcrumbs|default:""}}" class="form-control">
-					<!--<button type="button" class="btn btn-primary">推荐</button>-->
-				</div>
-				<div class="item"><label>指定模板：</label>
-					<div class="btn-group normal">
-						<button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{article.detail_template|default:"无需自定义"}}</span></button>
-						<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
-							<span class="caret"></span>
-							<span class="sr-only">Toggle Dropdown</span>
-						</button>
-						<ul class="dropdown-menu" role="menu" id="detail_template-selection">
-							<li class="dropdown-item" data-value="">无需自定义</li>
-							{% for t in custmize_template %}
-									<li class="dropdown-item" data-value ="{{t}}">{{t}}</li>
-							{% endfor %}
-						</ul>
-						<input class="dropdown-item-input" type="hidden" name="detail_template" value=""/>
-					</div>
-				</div>
-				<div class="submit-item form-group">
-					<input name="id" value="{{article.id}}" type="hidden" />
-					<button type="button" id="article-detail-info-submit-btn" class="btn btn-primary next-steep">保存</button>
-				</div>
-			</form>
-        </div>
 
-		
-		<div class="add-content attr" id="tag_picture">
-			<form enctype="multipart/form-data" method="POST" action="{{action_url}}"> 
-				{% csrf_token %}
-				<div class="item inputAndBtn btn-item">
-					<label>选择文件：</label>
-					<input type="file" name="upload" class="form-control file">                
-				</div>
-				<div class="item">
-					<label>文件名生成方式：</label>
-					<div class="btn-group normal">
-						<button type="button" class="btn btn-default inputBtn"><span class="selected-text">原文件名</span></button>
-						<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
-							<span class="caret"></span>
-							<span class="sr-only">Toggle Dropdown</span>
-						</button>
-						<ul class="dropdown-menu" role="menu" id="selectOption">
-							<li class="dropdown-item" data-value="origin">原文件名</li>
-							<li class="dropdown-item" data-value="random">随机生成</li>
-							<li class="dropdown-item" data-value="manual">自由输入</li>
-						</ul>
-						<input class="dropdown-item-input" type="hidden" name="filename_type" value="origin"/>
-					</div>
-				</div>
-				<div class="item"><label>自定义文件名（不要后缀）：</label><input type="text" name="manual_name" class="form-control"></div>
-				<div class="item">
-					<label>重名文件处理：</label>
-					<div class="btn-group normal">
-						<button type="button" class="btn btn-default inputBtn"><span class="selected-text">拒绝</span></button>
-						<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
-							<span class="caret"></span>
-							<span class="sr-only">Toggle Dropdown</span>
-						</button>
-						<ul class="dropdown-menu" role="menu" id="selectOption">
-							<li class="dropdown-item" data-value="reject">拒绝</li>
-							<li class="dropdown-item" data-value="rewrite">覆盖</li>
-						</ul>
-						<input class="dropdown-item-input" type="hidden" name="same_name_handle" value="reject"/>
-					</div>
-				</div>
-				
-				<div class="submit-item">
-					<input type="hidden" name="return_url" value="/admin/article-edit/?id={{article.id}}&tab_name=tag_picture" />
-					<input type="hidden" class="form-control" name="sort" value="0">
-					<button type="submit" class="btn btn-primary">上传</button>
-				</div>
-			</form>
-
-			<div class="item product-images">
-				{% for image in image_list %}
-					<div class="images">
-						<a href='{{image.image}}' target="_blank"><img src='{{image.thumb}}' alt='{{product.name}}'></a> 
-						<div class="image-operaion">
-							<a href='{{image.image}}' target="_blank">预览</a> | 
-							<a href='{{file_delete_url}}/{{image.id}}/{{article.id}}/?return_url=/admin/article-edit/%3fid={{article.id}}%26tab_name=tag_picture'> 删除 </a> | 
-							<a href="#" class="set-to-main-picture-link" data-image-url="{{image.image}}" data-image-type="article">主图 </a>
-						</div>
-					</div>
-				{% empty %}
-					There is no image at all.
-				{% endfor %}
-			</div>
-			<form id="article_picture_manage_form">
-				{% csrf_token %}
-				<div class="item thumb">
-					<label>主图：</label>
-					<input type="text" class="form-control" name="article_image" value="{{article.image|default:""}}">
-					<div class="image"><img id="article_main_image" src="{{article.image|default:"images/product.jpg"}}"></div>
-				</div>
-	
-				<div class="submit-item">
-					<input name="id" value="{{article.id}}" type="hidden" />
-					<button type="button" id="article-picture-manage-submit-btn" class="btn btn-primary addPSubmit">提交</button>
-				</div>
-			</form>
+        <div class="submit-item item">
+            <button type="button" class="btn btn-primary addPSubmit">提交</button>
         </div>
-		
-		
+    </div>
+    <!--弹出-->
+    <div class="cd-popup" role="alert">
+        <div class="cd-popup-container">
+            <div class="popup-content">
+                <ul class="nav nav-tabs" id="myTab">
+                    <li class="active"><a href="#popup-content-uploading">图片上传</a></li>
+                    <li class=""><a href="#popup-content-album">相册</a></li>
+                </ul>
+                <div class="tab-content tab-content-content">
+                    <div class="popup-content-uploading tab-pane active" id="popup-content-uploading">
+                        <div class="tab-pane-item">
+                            <label>文章类型：</label>
+                            <input type="text" value=" "/>
+                            <button type="button" class="btn btn-primary btn-popup">浏览</button>
+                        </div>
+                        <div class="tab-pane-item">
+                            <label>文件名生成方式：</label>
+                            <div class="btn-group normal product-button-search">
+                                <button type="button" class="btn btn-default inputBtn"><span class="selected-text">原始文件名</span></button>
+                                <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown" aria-expanded="false">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu" id="selectOption">
+                                    <li class="dropdown-item" data-value="图片1">原始文件名1</li>
+                                    <li class="dropdown-item" data-value="图片2">原始文件名2</li>
+                                    <li class="dropdown-item" data-value="图片3">原始文件名3</li>
+                                </ul>
+                                <input type="hidden" class="dropdown-item-input" name="" value="">
+                            </div>
+                            <div class="message">
+                                <span>?</span>
+                                <div class="ico">
+                                    <div class="text">
+                                        <h4>描述</h4>
+                                        <p>若选择“自定义” 请填写下方的自定义文件名名称。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane-item">
+                            <label>自定义文件名：</label>
+                            <input type="text" value=" "/>
+                        </div>
+                        <div class="tab-pane-item">
+                            <label>重名处理：</label>
+                            <div class="btn-group normal product-button-search">
+                                <button type="button" class="btn btn-default inputBtn"><span class="selected-text">拒绝</span></button>
+                                <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown" aria-expanded="false">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu" id="selectOption">
+                                    <li class="dropdown-item" data-value="图片1">拒绝</li>
+                                    <li class="dropdown-item" data-value="图片2">同意</li>
+                                </ul>
+                                <input type="hidden" class="dropdown-item-input" name="" value="">
+                            </div>
+                        </div>
+                        <div class="tab-pane-item">
+                            <label>alt值：</label>
+                            <input class="tab-pane-item-alt-input" type="text" value=" "/>
+                            <div class="message">
+                                <span>?</span>
+                                <div class="ico">
+                                    <div class="text">
+                                        <h4>描述</h4>
+                                        <p>alt值有利于SEO，可填写与图片相关的描述的词。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary btn-popup btn-popup-submit">浏览</button>
+                    </div>
+                    <div class="popup-content-album tab-pane" id="popup-content-album">
+                        <div class="row">
+                            <div class="tab-pane-album col-md-2">
+                                <img src="images/album.png" alt="">
+                                <p>feedoioaergrgrgr.jpg</p>
+                                <a href="###">预览</a >|<a href="###">删除</a>
+                            </div>
+                            <div class="tab-pane-album col-md-2">
+                                <img src="images/album.png" alt="">
+                                <p>feedoioaergrgrgr.jpg</p>
+                                <a href="###">预览</a >|<a href="###">删除</a>
+                            </div>
+                            <div class="tab-pane-album col-md-2">
+                                <img src="images/album.png" alt="">
+                                <p>feedoioaergrgrgr.jpg</p>
+                                <a href="###">预览</a >|<a href="###">删除</a>
+                            </div>
+                            <div class="tab-pane-album col-md-2">
+                                <img src="images/album.png" alt="">
+                                <p>feedoioaergrgrgr.jpg</p>
+                                <a href="###">预览</a >|<a href="###">删除</a>
+                            </div>
+                            <div class="tab-pane-album col-md-2">
+                                <img src="images/album.png" alt="">
+                                <p>feedoioaergrgrgr.jpg</p>
+                                <a href="###">预览</a >|<a href="###">删除</a>
+                            </div>
+                            <div class="tab-pane-album col-md-2">
+                                <img src="images/album.png" alt="">
+                                <p>feedoioaergrgrgr.jpg</p>
+                                <a href="###">预览</a >|<a href="###">删除</a>
+                            </div>
+                            <div class="tab-pane-album col-md-2">
+                                <img src="images/album.png" alt="">
+                                <p>feedoioaergrgrgr.jpg</p>
+                                <a href="###">预览</a >|<a href="###">删除</a>
+                            </div>
+                            <div class="tab-pane-album col-md-2">
+                                <img src="images/album.png" alt="">
+                                <p>feedoioaergrgrgr.jpg</p>
+                                <a href="###">预览</a >|<a href="###">删除</a>
+                            </div>
+                            <div class="tab-pane-album col-md-2">
+                                <img src="images/album.png" alt="">
+                                <p>feedoioaergrgrgr.jpg</p>
+                                <a href="###">预览</a >|<a href="###">删除</a>
+                            </div>
+                            <div class="tab-pane-album col-md-2">
+                                <img src="images/album.png" alt="">
+                                <p>feedoioaergrgrgr.jpg</p>
+                                <a href="###">预览</a >|<a href="###">删除</a>
+                            </div>
+                            <div class="tab-pane-album col-md-2">
+                                <img src="images/album.png" alt="">
+                                <p>feedoioaergrgrgr.jpg</p>
+                                <a href="###">预览</a >|<a href="###">删除</a>
+                            </div>
+                            <div class="tab-pane-album col-md-2">
+                                <img src="images/album.png" alt="">
+                                <p>feedoioaergrgrgr.jpg</p>
+                                <a href="###">预览</a >|<a href="###">删除</a>
+                            </div>
+                        </div>
+
+                        <div class="box-footer clearfix tab-pane-footer">
+                            <div class="xy-pages-jump">
+                                <button type="submit" class="btn btn-primary tab-pane-footer-normal-btn">跳转</button>
+                                <input  type="text" class="form-control tab-pane-footer-normal">
+                                <p>跳转到：</p>
+
+                                <ul class="pagination pagination-sm tab-pane-footer-normal pull-right">
+                                    <li><a href="#">&lt;</a></li>
+                                    <li class="active"><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">&gt;</a></li>
+                                </ul>
+                                <p>共7条记录 , 共3页，每页显示：15条</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="#0" class="cd-popup-close img-replace">Close</a>
+        </div>
+        <!-- cd-popup-container -->
     </div>
 </section>
 {% endblock %}
 {% block scripts %}
 	{% load staticfiles %}
-	<script src="{% static 'admin/default/js/main.js' %}" type="text/javascript"></script>
 	<script src="{% static 'admin/default/js/ckeditor.js' %}" type="text/javascript"></script>
 	<script>	
 	$(document).ready(function() {

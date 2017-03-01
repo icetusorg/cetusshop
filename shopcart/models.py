@@ -245,6 +245,49 @@ class Product(models.Model):
 			return self.weight / 1000
 		else:
 			return self.weight
+			
+	def get_min_price(self):
+		return self.get_price_for_show('min')
+		
+	def get_max_price(self):
+		return self.get_price_for_show('max')
+		
+	def get_price(self):
+		return self.get_price_for_show('min-max')
+		
+	def has_price_range(self):
+		if self.get_max_price() - self.get_min_price() > 0.01:
+			return True
+		else:
+			return False
+			
+	def get_price_for_show(self,method='min'):
+		price_min = 0.0
+		price_max = 0.0
+		price_list = []
+		
+		if self.prices.all().count()>0:
+			
+			for p in self.prices.all():
+				price_list.append(p.price)
+			price_min = min(price_list)
+			price_max = max(price_list)
+		else:
+			price_min = self.price
+			price_max = self.price
+		
+		if method == 'min':
+			return price_min
+		elif method == 'max':
+			return price_max
+		elif method == 'min-max':
+			if price_max - price_min > 0.01:
+				return '%s - %s' % (price_min,price_max)
+			else:
+				return price_max
+		else:
+			return price_min
+			
 	
 	def __str__(self):
 		return self.name
@@ -252,6 +295,25 @@ class Product(models.Model):
 	class Meta:
 		verbose_name = '商品'
 		verbose_name_plural = '商品'
+		
+		
+@python_2_unicode_compatible		
+class ProductPrice(models.Model):
+	product = models.ForeignKey(Product,default=None,related_name='prices',verbose_name='关联的商品')
+	sort_order = models.IntegerField(default=0,verbose_name='排序序号')
+	price = models.FloatField(default=0.0,verbose_name='价格')
+	quantity = models.IntegerField(default=0,verbose_name='数量区间')
+	
+	create_time = models.DateTimeField(auto_now_add = True)
+	update_time = models.DateTimeField(auto_now = True)
+	
+	def __str__(self):
+		return self.product.name + ':' + str(self.price)
+	
+	class Meta:
+		verbose_name = '商品分段价格'
+		verbose_name_plural = '商品分段价格'
+	
 
 @python_2_unicode_compatible		
 class Product_Images(models.Model):
@@ -307,7 +369,7 @@ class ProductParaDetail(models.Model):
 	update_time = models.DateTimeField(auto_now = True)
 	
 	def __str__(self):
-		return self.code
+		return self.product.name + " " + self.product_para.name + ":" + self.value
 	
 	class Meta:
 		verbose_name = '商品参数具体数值'
@@ -426,10 +488,18 @@ class Cart_Products(models.Model):
 			return ret_str
 	
 	def get_product_price(self):
-		if self.product_attribute is None:
-			return self.product.price
+		price_list = self.product.prices.all()
+		if price_list.count()>0:
+			price = price_list[0].price
+			for p in price_list:
+				if self.quantity > p.quantity:
+					price = p.price
+			return price
 		else:
-			return self.product_attribute.price_adjusment + self.product.price
+			if self.product_attribute is None:
+				return self.product.price
+			else:
+				return self.product_attribute.price_adjusment + self.product.price
 
 	
 class Wish(models.Model):

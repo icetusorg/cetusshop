@@ -1,7 +1,12 @@
 from django.contrib import admin
 from django.contrib.auth.models import Permission
 
-from shopcart.models import Product,Order,Order_Products,Category,System_Config,Attribute,Attribute_Group,Article,Email_List,Product_Attribute,Express,ExpressType,Inquiry,Product_Images,Promotion,OrderRemark,MyUser,Email,OrderShippment,CustomizeURL,ArticleBusiCategory,ProductParaGroup,ProductPara,ProductParaDetail
+from shopcart.models import Product,Order,Order_Products,Category,System_Config,Attribute,Attribute_Group,Article,Email_List,Product_Attribute,Express,ExpressType,Inquiry,Product_Images,Promotion,OrderRemark,MyUser,Email,OrderShippment,CustomizeURL,ArticleBusiCategory,ProductParaGroup,ProductPara,ProductParaDetail,ProductPrice
+
+# Register your models here.
+class ProductPriceAdmin(admin.ModelAdmin):
+	list_display = ('product','quantity','price','update_time') 
+admin.site.register(ProductPrice,ProductPriceAdmin)
 
 # Register your models here.
 class ProductParaGroupAdmin(admin.ModelAdmin):

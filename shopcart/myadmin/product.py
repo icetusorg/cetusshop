@@ -201,6 +201,10 @@ def product_basic_edit(request):
 	attribute_group_list = Attribute_Group.objects.all();
 	ctx['attribute_group_list'] = attribute_group_list
 	
+	#加载商品参数组
+	para_group_list = ProductParaGroup.objects.all();
+	ctx['product_para_group_list'] = para_group_list
+	
 	if request.method == 'GET':
 		id = request.GET.get('id','')
 		if id != '':

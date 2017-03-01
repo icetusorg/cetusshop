@@ -42,7 +42,7 @@
 								<div class="carts-goods-name"><div><a href="{{cart_product.product.get_url}}">{{cart_product.product.name}}</a></div>
 									<p>{{cart_product.get_short_product_attr}}</p>
 								</div>
-								<div class="carts-goods-price price1">${{cart_product.get_product_price|floatformat:"2"}}</div>
+								<div class="carts-goods-price price1" id="product-price-{{cart_product.id}}" >${{cart_product.get_product_price|floatformat:"2"}}</div>
 								<div class="carts-goods-qty">
 									<div class="quy-item">
 										<!-- 下面两个a中的data和“input的id”对应起来即可-->

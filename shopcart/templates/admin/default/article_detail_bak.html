@@ -1,0 +1,230 @@
+{% extends "admin/default/content_base.html" %}
+{% block breadcrumbs %}
+<section class="content-header">
+    <h1>文章管理</h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+        <li class="active"><a href="#">商品管理</a></li>
+    </ol>
+</section>
+{% endblock %}
+
+
+{% block main %}
+{% load i18n %}
+
+{% load staticfiles %}
+{% load shopcart_extras %}
+<section class="content">
+    <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+    <div class="col-md-12 add-product">
+
+        <ul class="tag article-info-tag">
+            <li class="active" data="tag_basic_info">基本信息</li>
+            <li data="tag_detail_info">详细信息</li>
+            <li data="tag_picture">相册</li>
+        </ul>
+        <div class="add-content detail-info active" id="tag_basic_info">
+			<form id="article-basic-info-form" method="POST">
+			{% csrf_token %}
+				<div class="item item2"><label>标题：</label><input type="text" value="{{article.title}}" name="title" class="form-control "></div>
+					<div class="item form-group"><label>文章类型：</label>
+						<div class="btn-group normal">
+							<button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{article.category|default:"请选择一个类型"|admin_article_category:"zh_CN"}}</span></button>
+							<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn"
+													data-toggle="dropdown">
+								<span class="caret"></span>
+								<span class="sr-only">Toggle Dropdown</span>
+							</button>
+							<ul class="dropdown-menu" role="menu" id="category-selection">
+									<li class="dropdown-item" data-value="">请选择一个类型</li>
+									<li class="dropdown-item" data-value ="0">宣传博客</li>
+									<li class="dropdown-item" data-value ="10">网站公告</li>
+									<li class="dropdown-item" data-value ="20">站点信息</li>
+							</ul>
+							<input class="dropdown-item-input" type="hidden" name="category" value=""/>
+						</div>
+					</div>
+	
+				<div class="submit-item">
+					<input name="id" value="{{article.id}}" type="hidden" />
+					<button id="article-basic-info-submit-btn" type="button" class="btn btn-primary next-steep">保存</button>
+				</div>
+			</form>
+		</div>
+        <div class="add-content attr" id="tag_detail_info">
+			<form id="article-detail-info-form" method="POST">
+				{% csrf_token %}
+				<h1>SEO设置</h1>
+				<div class="item item2"><label>关键字：</label><input type="text" name="keywords" value="{{article.keywords|default:""}}" class="form-control"></div>
+				<div class="item btn-item btn-item2">
+					<label>网页标题：</label><input type="text" name="page_title" value="{{article.page_title|default:""}}" class="form-control">
+					<button type="button" id="article_page_title_advice" class="btn btn-primary">推荐</button>
+				</div>
+	
+				<div class="item item-area item2">
+					<label>简要描述：</label>
+					<textarea type="text" name="short_desc" class="form-control" >{{article.short_desc|default:""}}</textarea>
+				</div>
+				
+				<div class="item">
+					<label>文章内容：</label>
+				</div>
+				
+				<div class="item item-area">
+					<textarea type="text" id="article_content_editor"  name="content" class="form-control">{{article.content|default:""}}</textarea>
+				</div>
+				<div class="item btn-item btn-item2">
+					<label>静态文件名：</label><input type="text" name="static_file_name" value="{{article.static_file_name|default:""}}" class="form-control">
+					<button type="button" id="static_file_name_advice" class="btn btn-primary">推荐</button>
+				</div>
+				<div class="item btn-item btn-item2">
+					<label>导航信息：</label><input type="text" name="breadcrumbs" value="{{article.breadcrumbs|default:""}}" class="form-control">
+					<!--<button type="button" class="btn btn-primary">推荐</button>-->
+				</div>
+				<div class="item"><label>指定模板：</label>
+					<div class="btn-group normal">
+						<button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{article.detail_template|default:"无需自定义"}}</span></button>
+						<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
+							<span class="caret"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+						</button>
+						<ul class="dropdown-menu" role="menu" id="detail_template-selection">
+							<li class="dropdown-item" data-value="">无需自定义</li>
+							{% for t in custmize_template %}
+									<li class="dropdown-item" data-value ="{{t}}">{{t}}</li>
+							{% endfor %}
+						</ul>
+						<input class="dropdown-item-input" type="hidden" name="detail_template" value=""/>
+					</div>
+				</div>
+				<div class="submit-item form-group">
+					<input name="id" value="{{article.id}}" type="hidden" />
+					<button type="button" id="article-detail-info-submit-btn" class="btn btn-primary next-steep">保存</button>
+				</div>
+			</form>
+        </div>
+
+		
+		<div class="add-content attr" id="tag_picture">
+			<form enctype="multipart/form-data" method="POST" action="{{action_url}}"> 
+				{% csrf_token %}
+				<div class="item inputAndBtn btn-item">
+					<label>选择文件：</label>
+					<input type="file" name="upload" class="form-control file">                
+				</div>
+				<div class="item">
+					<label>文件名生成方式：</label>
+					<div class="btn-group normal">
+						<button type="button" class="btn btn-default inputBtn"><span class="selected-text">原文件名</span></button>
+						<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
+							<span class="caret"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+						</button>
+						<ul class="dropdown-menu" role="menu" id="selectOption">
+							<li class="dropdown-item" data-value="origin">原文件名</li>
+							<li class="dropdown-item" data-value="random">随机生成</li>
+							<li class="dropdown-item" data-value="manual">自由输入</li>
+						</ul>
+						<input class="dropdown-item-input" type="hidden" name="filename_type" value="origin"/>
+					</div>
+				</div>
+				<div class="item"><label>自定义文件名（不要后缀）：</label><input type="text" name="manual_name" class="form-control"></div>
+				<div class="item">
+					<label>重名文件处理：</label>
+					<div class="btn-group normal">
+						<button type="button" class="btn btn-default inputBtn"><span class="selected-text">拒绝</span></button>
+						<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
+							<span class="caret"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+						</button>
+						<ul class="dropdown-menu" role="menu" id="selectOption">
+							<li class="dropdown-item" data-value="reject">拒绝</li>
+							<li class="dropdown-item" data-value="rewrite">覆盖</li>
+						</ul>
+						<input class="dropdown-item-input" type="hidden" name="same_name_handle" value="reject"/>
+					</div>
+				</div>
+				
+				<div class="submit-item">
+					<input type="hidden" name="return_url" value="/admin/article-edit/?id={{article.id}}&tab_name=tag_picture" />
+					<input type="hidden" class="form-control" name="sort" value="0">
+					<button type="submit" class="btn btn-primary">上传</button>
+				</div>
+			</form>
+
+			<div class="item product-images">
+				{% for image in image_list %}
+					<div class="images">
+						<a href='{{image.image}}' target="_blank"><img src='{{image.thumb}}' alt='{{product.name}}'></a> 
+						<div class="image-operaion">
+							<a href='{{image.image}}' target="_blank">预览</a> | 
+							<a href='{{file_delete_url}}/{{image.id}}/{{article.id}}/?return_url=/admin/article-edit/%3fid={{article.id}}%26tab_name=tag_picture'> 删除 </a> | 
+							<a href="#" class="set-to-main-picture-link" data-image-url="{{image.image}}" data-image-type="article">主图 </a>
+						</div>
+					</div>
+				{% empty %}
+					There is no image at all.
+				{% endfor %}
+			</div>
+			<form id="article_picture_manage_form">
+				{% csrf_token %}
+				<div class="item thumb">
+					<label>主图：</label>
+					<input type="text" class="form-control" name="article_image" value="{{article.image|default:""}}">
+					<div class="image"><img id="article_main_image" src="{{article.image|default:"images/product.jpg"}}"></div>
+				</div>
+	
+				<div class="submit-item">
+					<input name="id" value="{{article.id}}" type="hidden" />
+					<button type="button" id="article-picture-manage-submit-btn" class="btn btn-primary addPSubmit">提交</button>
+				</div>
+			</form>
+        </div>
+		
+		
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+	{% load staticfiles %}
+	<script src="{% static 'admin/default/js/main.js' %}" type="text/javascript"></script>
+	<script src="{% static 'admin/default/js/ckeditor.js' %}" type="text/javascript"></script>
+	<script>	
+	$(document).ready(function() {
+		var tab_name = $.getUrlParam('tab_name');
+		if (tab_name){
+			$(".article-info-tag li,.add-content").removeClass("active");
+			$("#" + tab_name).addClass("active");
+		}
+	
+		CKEDITOR.replace('article_content_editor',{
+			filebrowserUploadUrl: '{{upload_url}}'
+		});	
+
+		$("#article_page_title_advice").click(function(event){
+			event.preventDefault();
+			$("input[name=page_title]").val($("input[name=title]").val()); 
+		});
+		
+		$("#static_file_name_advice").click(function(event){
+			event.preventDefault();
+			var title = $("input[name=title]").val();
+			var arr = new Array();
+			arr = title.split(" ");
+			url = "";
+			
+			$.each(arr, function(idx, item) {
+				if(item.trim()!=""){
+					url = url + item + "-";
+				}
+			});
+			if(url.endWith("-")){
+				url = url.substring(0,url.length-1);
+				url = url + ".html";
+			}
+			$("input[name=static_file_name]").val(url);
+		});
+	});
+	</script>
+{% endblock %}

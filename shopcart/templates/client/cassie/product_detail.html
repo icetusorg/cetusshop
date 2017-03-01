@@ -36,10 +36,10 @@
 				${{product.market_price|floatformat:"2"}}
 		</span>
 		<span id="product-price-main" class="price">
-			{% if has_price_range %}
-				${{price_min|floatformat:"2"}} - ${{price_max|floatformat:"2"}}
+			{% if product.has_price_range %}
+				${{product.get_min_price|floatformat:"2"}} - ${{product.get_max_price|floatformat:"2"}}
 			{% else %}
-				${{product.price|floatformat:"2"}}
+				${{product.get_min_price|floatformat:"2"}}
 			{% endif %}
 		</span>
 	 </div>

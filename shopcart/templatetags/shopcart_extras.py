@@ -98,6 +98,37 @@ def admin_order_quert_item(value,arg):
 	else:
 		return value	
 		
+@register.filter
+def admin_product_para_group(value,arg):
+	if  value.parameters.all().count() > 0:
+		return value.parameters.all()[0].product_para.group.name										
+	else:
+		return '请选择一个属性组'
+		
+@register.filter
+def admin_product_price(value,arg):
+	try:
+		index = int(arg)
+	except:
+		return None
+		
+	if value.prices.all().count()>0:
+		return value.prices.all()[index].price
+	else:
+		return None
+		
+@register.filter
+def admin_product_price_quantity(value,arg):
+	try:
+		index = int(arg)
+	except:
+		return None
+		
+	if value.prices.all().count()>0:
+		return value.prices.all()[index].quantity
+	else:
+		return None
+		
 		
 @register.filter
 def admin_order_status(value,arg):

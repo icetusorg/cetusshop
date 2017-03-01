@@ -34,6 +34,7 @@ def detail(request,id):
 	else:
 		ctx['page_name'] = product.name
 	
+	'''价格规则改成判断数量了，这段暂时不要
 	price_min = product.price
 	price_max = product.price
 	for attribut in product.attributes.all():
@@ -45,10 +46,14 @@ def detail(request,id):
 				price_min = product.price + attribut.price_adjusment
 	ctx['price_min'] = price_min
 	ctx['price_max'] = price_max
-	if price_max - price_min < 0.01:
+	
+	
+	
+	if product.get_max_price_max - price_min < 0.01:
 		ctx['has_price_range'] = False
 	else:
 		ctx['has_price_range'] = True
+	'''
 		
 	if request.method =='GET': #正常访问，返回动态页面
 		#检查商品是否已经加入了用户的愿望清单

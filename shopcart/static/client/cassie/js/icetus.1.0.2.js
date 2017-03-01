@@ -398,6 +398,7 @@ function imycartModifyCartCallback(result,triggerControl,extraInfo){
 	if(extraInfo.method=="set"){
 		if(result.success==true){
 			$("#price-" + extraInfo.cart_id).text("$" + result.cart_product_total.toFixed(2));
+			$("#product-price-" + extraInfo.cart_id).text("$" + result.cart_product_price.toFixed(2));
 			$("#cartqty-" + extraInfo.cart_id).val(extraInfo.quantity_origin);
 			flag = true;
 		}else{
@@ -817,7 +818,8 @@ jQuery(".product-attribute-item").click(function(){
 							$("#product-attribute-id").val(result.message.pa_id);
 							$("#min_order_quantity").text(result.message.min_order_quantity);
 							//确定价格
-							$("#product-price-main").text("$" + result.message.price.toFixed(2));
+							//$("#product-price-main").text("$" + result.message.price.toFixed(2));
+							//现在价格不由SKU决定了
 							
 							//更新显示的大图
 							if (result.message.show_image==true){

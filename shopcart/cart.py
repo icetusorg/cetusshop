@@ -59,7 +59,7 @@ def add_to_cart(request):
 					#logger.debug('pa.id %s and product_attribute_id_to_be_add %s' % [str(pa.id),str(product_attribute_id_to_be_add)])
 					if pa.id == product_attribute_id_to_be_add:
 						product_attribute = pa
-						min_order_quantity = pa.min_order_quantity
+						#min_order_quantity = pa.min_order_quantity  #不控制pa的最小起订量了。
 						quantity_can_be_sold = pa.quantity
 						logger.debug('The min_order_quantity of this product has been changed to :%s' % (min_order_quantity))
 						add_result_flag = True
@@ -149,8 +149,10 @@ def ajax_modify_cart(request):
 		if cart['method'] == 'add':
 			cart_exist.quantity = cart_exist.quantity + int(cart['quantity'])
 			cart_exist.save()
-			result_dict['cart_product_total'] = cart_exist.get_total()
-			result_dict['sub_total'] = cart_exist.cart.get_sub_total()
+			#result_dict['cart_product_total'] = cart_exist.get_total()
+			#result_dict['sub_total'] = cart_exist.cart.get_sub_total()
+			if not set_cart_product_quantity(quantity,cart_exist,result_dict):
+				return JsonResponse(result_dict)
 
 		elif cart['method'] == 'sub':
 			quantity = cart_exist.quantity - int(cart['quantity'])
@@ -222,6 +224,7 @@ def set_cart_product_quantity(quantity,cart_exist,result_dict):
 			cart_exist.quantity = quantity
 			cart_exist.save()
 			result_dict['cart_product_total'] = cart_exist.get_total()
+			result_dict['cart_product_price'] = cart_exist.get_product_price()
 			result_dict['sub_total'] = cart_exist.cart.get_sub_total()
 			return True
 		else:

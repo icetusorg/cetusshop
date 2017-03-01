@@ -80,6 +80,7 @@ def detail(request,id):
 		try:
 			article = Article.objects.get(id=id)
 			ctx['article'] = article
+						
 			return render(request,System_Config.get_template_name('admin') + '/article_detail.html',ctx)
 		except Exception as err:
 			logger.error("Can not find artice which id is %s . \n Error message: %s" % (id,err))
@@ -128,6 +129,10 @@ def article_basic_edit(request):
 				
 			except Exception as err:
 				logger.error('Can not find article which id is %s. The error message is %s' % (id,err))
+				
+		#放入文章的业务分类
+		from .article_busi_category import get_all_category
+		ctx['category_list'] = get_all_category()		
 		return render(request,System_Config.get_template_name('admin') + '/article_detail.html',ctx)
 	elif request.method == 'POST':
 		try:

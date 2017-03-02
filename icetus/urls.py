@@ -151,6 +151,10 @@ urlpatterns = patterns("",
 	url('^admin/product-para-edit/$', 'shopcart.myadmin.product.product_para_edit',name='admin_product_para_edit'),
 	url('^admin/product-para-delete/$', 'shopcart.myadmin.product.product_para_delete',name='admin_product_para_delete'),
 	
+	url('^admin/product-para-detail-edit/$', 'shopcart.myadmin.product.product_para_detail_edit',name='admin_product_para_detail_edit'),
+	url('^admin/product-para-detail-create/$', 'shopcart.myadmin.product.product_para_detail_create',name='admin_product_para_detail_create'),
+
+	
 	url('^admin/user-admin-edit/$', 'shopcart.myadmin.user.admin_edit',name='admin_user_admin_edit'),
 	url('^admin/user-list/$', 'shopcart.myadmin.user.user_list',name='admin_user_list'),
 	url('^admin/user-delete/$', 'shopcart.myadmin.user.user_delete',name='admin_user_delete'),

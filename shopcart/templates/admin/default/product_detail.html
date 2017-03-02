@@ -21,8 +21,8 @@
         <ul class="tag">
             <li class="active" data="tag_basic_info">基本信息</li>
             <li data="tag_detail_info">详细信息</li>
-            <li data="tag_attribute">属性</li>
-            <li data="tag_picture">SKU</li>
+            <li data="tag_product_para">属性</li>
+            <li data="tag_sku">SKU</li>
         </ul>
         <div class="add-content detail-info active" id="tag_basic_info">
             <form id="product-basic-info-form" method="POST">
@@ -31,7 +31,7 @@
                     <label>选择属性：</label>
 
                     <div class="btn-group normal">
-                        <button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{product.type}}</span>
+                        <button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{product.type|default:"B2B"}}</span>
                         </button>
                         <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
                             <span class="caret"></span>
@@ -42,7 +42,7 @@
                             <li class="dropdown-item" data-value="B2C">B2C</li>
                             <li class="dropdown-item" data-value="B2B+B2C">B2B+B2C</li>
                         </ul>
-                        <input class="dropdown-item-input" type="hidden" name="attribute-group" value="{{product.type}}">
+                        <input class="dropdown-item-input" type="hidden" name="type" value="{{product.type|default:"B2B"}}">
                     </div>
                 </div>
                 <div class="item">
@@ -70,28 +70,28 @@
                         <ul>
                             {% for cat in top_cat_list%}
                             <li class="tree1">
-                                <input name="category_check" data-cat-id="{{cat.id}}" type="checkbox"
+                                <input name="category_check" value="{{cat.id}}" data-cat-id="{{cat.id}}" type="checkbox"
                                        class="three-check category-selection-checkbox"
                                        {{product_category_id_list|check_if_in_categorys:cat}}>
                                 <p>{{cat.name}}</p>
                             </li>
                             {% for cat2 in cat.childrens.all%}
                             <li class="tree2">
-                                <input name="category_check" data-cat-id="{{cat2.id}}" type="checkbox"
+                                <input name="category_check" value="{{cat2.id}}" data-cat-id="{{cat2.id}}" type="checkbox"
                                        class="three-check category-selection-checkbox"
                                        {{product_category_id_list|check_if_in_categorys:cat2}}>
                                 <p>{{cat2.name}}</p>
                             </li>
                             {% for cat3 in cat2.childrens.all%}
                             <li class="tree3">
-                                <input name="category_check" data-cat-id="{{cat3.id}}" type="checkbox"
+                                <input name="category_check" value="{{cat3.id}}" data-cat-id="{{cat3.id}}" type="checkbox"
                                        class="three-check category-selection-checkbox"
                                        {{product_category_id_list|check_if_in_categorys:cat3}}>
                                 <p>{{cat3.name}}</p>
                             </li>
                             {% for cat4 in cat3.childrens.all%}
                             <li class="tree4">
-                                <input name="category_check" data-cat-id="{{cat4.id}}" type="checkbox"
+                                <input name="category_check" value="{{cat4.id}}" data-cat-id="{{cat4.id}}" type="checkbox"
                                        class="three-check category-selection-checkbox"
                                        {{product_category_id_list|check_if_in_categorys:cat4}}>
                                 <p>{{cat4.name}}</p>
@@ -104,6 +104,11 @@
                         <input type="hidden" name="product_category_list" value="{{product_category_id_list|join:" ,"}}"/>
                     </div>
                 </div>
+                <div class="item">
+                    <label>Youtube：</label>
+                    <input type="text" class="form-control" value="{{product.youtube}}" name="youtube">
+                </div>				
+				
                 <div class="item">
                     <label>排序：</label>
                     <input type="text" class="form-control-sort" value="{{product.sort_order}}" name="sort_order">
@@ -120,141 +125,146 @@
             </form>
         </div>
         <div class="add-content attr" id="tag_detail_info">
-            <div class="item">
-                <label>市场价：</label>
-                <input type="text" name="market_price" value="{{product.market_price}}" class="form-control-product-content form-control">
-            </div>
-            <div class="item">
-                <label>售价1：</label>
-                <input type="text" class="form-control-product-content form-control" name="price_levle_0" value="{{product|admin_product_price:"0"}}">
-                <label class="form-control-product-content-up">起订量区间：</label>
-                <input type="text" name="price_levle_0" value="{{product|admin_product_price_quantity:"0"}}"  class="form-control-product-content form-control">
-            </div>
-            <div class="item">
-                <label>售价2：</label>
-                <input type="text" class="form-control-product-content form-control" name="price_levle_1" value="{{product|admin_product_price:"1"}}">
-                <label class="form-control-product-content-up">起订量区间：</label>
-                <input type="text" name="price_levle_1" value="{{product|admin_product_price_quantity:"1"}}" class="form-control-product-content form-control">
-            </div>
-            <div class="item">
-                <label>售价3：</label>
-                <input type="text" class="form-control-product-content form-control" name="price_levle_2" value="{{product|admin_product_price:"2"}}">
-                <label class="form-control-product-content-up">起订量区间：</label>
-                <input type="text" name="price_levle_2" value="{{product|admin_product_price_quantity:"2"}}" class="form-control-product-content form-control">
-            </div>
-            <div class="item">
-                <label>库存：</label>
-                <input type="text" name="quantity" value="{{product.quantity}}" class="form-control-product-content form-control">
-            </div>
-            <div class="item">
-                <label>最小起订量：</label>
-                <input type="text" name="min_order_quantity" value="{{product.min_order_quantity}}"  class="form-control-product-content form-control">
-            </div>
-            <div class="item form-control-product-volume">
-                <label>体积：</label>
-                <label class="form-control-product-volume-lable">长：</label>
-                <input type="text" name="cuboid_long" value="{{product.cuboid_long|floatformat:"0"}}"   class="form-control-product-content form-control">
-                <span>mm</span>
-                <label class="form-control-product-volume-lable">宽：</label>
-                <input type="text" name="cuboid_width" value="{{product.cuboid_width|floatformat:"0"}}" class="form-control-product-content form-control">
-                <span>mm</span>
-                <label class="form-control-product-volume-lable">高：</label>
-                <input type="text" name="cuboid_height" value="{{product.cuboid_height|floatformat:"0"}}" class="form-control-product-content form-control">
-                <span>mm</span>
-            </div>
-            <div class="item">
-                <label>重量：</label>
-                <input type="text" name="weight" value="{{product.weight|floatformat:"0"}}"  class="form-control-product-content form-control">
-                <span>g</span>
-            </div>
-            <div class="item">
-                <label>自定义模板：</label>
-                <div class="btn-group normal">
-                    <button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{product.detail_template|default:"无需自定义"}}</span>
-                    </button>
-                    <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
-                        <span class="caret"></span>
-                        <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu" id="detail_template-selection">
-                        <li class="dropdown-item" data-value="">无需自定义</li>
-                        {% for t in custmize_template %}
-                        <li class="dropdown-item" data-value="{{t}}">{{t}}</li>
-                        {% endfor %}
-                    </ul>
-                    <input class="dropdown-item-input" type="hidden" name="detail_template" value=""/>
-                </div>
-            </div>
-
-
-            <div class="item">
-                <p class="form-control-product-images-title">产品主图</p>
-                <button type="button" class="btn btn-primary edit-sku-from-button">添加主图</button>
-            </div>
-            <form id="product_picture_manage_form">
-                <!--{% csrf_token %}-->
-                <div class="item product-images">
-                    <!--{% for image in image_list %}-->
-                    <div class="images">
-                        <a href='{{image.image}}' target="_blank"><img src='images/album.png' alt='{{product.name}}'></a>
-                        <div class="image-operaion">
-                            <a href=' '>替换</a> |
-                            <a href='{{file_delete_url}}/{{image.id}}/{{product.id}}/?return_url=/admin/product-edit/%3fid={{product.id}}%26tab_name=tag_picture'>
-                                清除 </a>
-                        </div>
-                    </div>
-                    <!--{% empty %}-->
-                    <!--There is no image at all.-->
-                    <!--{% endfor %}-->
-                </div>
-            </form>
-
-
-            <div class="item">
-                <label>详细描述：</label>
-            </div>
-
-            <div class="item item-area">
-                <textarea type="text" id="product_desc_editor" name="description" class="form-control">{{product.description}}</textarea>
-            </div>
-            <div class="submit-item">
-                <input type="hidden" name="id" value="{{product.id}}">
-                <button id="product-detail-info-submit-btn" type="button" class="btn btn-primary next-steep">保存</button>
-            </div>
-        </div>
-        <div class="add-content attr" id="tag_attribute">
-            <div class="item-free attr-first-array item">
-                <label>选择属性：</label>
-
-                <div class="btn-group normal">
-                    <button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{product|admin_product_para_group:"zh_CN"}}</span>
-                    </button>
-                    <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
-                        <span class="caret"></span>
-                        <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu" id="category-selection">
-                        <li class="dropdown-item" data-value="">请选择一个属性组</li>
-                        {% for group in product_para_group_list %}
-							<li class="dropdown-item" data-value="{{group.id}}">{{group.name}}</li>
-                        {% endfor %}
-                    </ul>
-                    <input class="dropdown-item-input" type="hidden" name="attribute-group" value="{{product.parameters.product_para.group.id}}"/>
-                </div>
-				
-				<button  type="button" class="btn btn-primary">确定</button>
-            </div>
-			{%for para in product.parameters.all%}
-				<div class="item tag_attribute-input">
-					<label>{{para.product_para.name}}</label>
-					<input type="text" name="product_para_id_{{para.product_para.id}}" class="form-control" value="{{para.value}}">
+			<form id="product-detail-info-form" method="POST">
+				{% csrf_token %}
+				<div class="item">
+					<label>市场价：</label>
+					<input type="text" name="market_price" value="{{product.market_price}}" class="form-control-product-content form-control">
 				</div>
-			{%endfor%}
-            <div class="submit-item">
-                <button type="button" class="btn btn-primary next-steep">下一步</button>
-            </div>
+				<div class="item">
+					<label>售价1：</label>
+					<input type="text" class="form-control-product-content form-control" name="price_level_0" value="{{product|admin_product_price:"0"}}">
+					<label class="form-control-product-content-up">起订量区间：</label>
+					<input type="text" name="quantity_level_0" value="{{product|admin_product_price_quantity:"0"}}"  class="form-control-product-content form-control">
+				</div>
+				<div class="item">
+					<label>售价2：</label>
+					<input type="text" class="form-control-product-content form-control" name="price_level_1" value="{{product|admin_product_price:"1"}}">
+					<label class="form-control-product-content-up">起订量区间：</label>
+					<input type="text" name="quantity_level_1" value="{{product|admin_product_price_quantity:"1"}}" class="form-control-product-content form-control">
+				</div>
+				<div class="item">
+					<label>售价3：</label>
+					<input type="text" class="form-control-product-content form-control" name="price_level_2" value="{{product|admin_product_price:"2"}}">
+					<label class="form-control-product-content-up">起订量区间：</label>
+					<input type="text" name="quantity_level_2" value="{{product|admin_product_price_quantity:"2"}}" class="form-control-product-content form-control">
+				</div>
+				<div class="item">
+					<label>库存：</label>
+					<input type="text" name="quantity" value="{{product.quantity}}" class="form-control-product-content form-control">
+				</div>
+				<div class="item">
+					<label>最小起订量：</label>
+					<input type="text" name="min_order_quantity" value="{{product.min_order_quantity}}"  class="form-control-product-content form-control">
+				</div>
+				<div class="item form-control-product-volume">
+					<label>体积：</label>
+					<label class="form-control-product-volume-lable">长：</label>
+					<input type="text" name="cuboid_long" value="{{product.cuboid_long|floatformat:"0"}}"   class="form-control-product-content form-control">
+					<span>mm</span>
+					<label class="form-control-product-volume-lable">宽：</label>
+					<input type="text" name="cuboid_width" value="{{product.cuboid_width|floatformat:"0"}}" class="form-control-product-content form-control">
+					<span>mm</span>
+					<label class="form-control-product-volume-lable">高：</label>
+					<input type="text" name="cuboid_height" value="{{product.cuboid_height|floatformat:"0"}}" class="form-control-product-content form-control">
+					<span>mm</span>
+				</div>
+				<div class="item">
+					<label>重量：</label>
+					<input type="text" name="weight" value="{{product.weight|floatformat:"0"}}"  class="form-control-product-content form-control">
+					<span>g</span>
+				</div>
+				<div class="item">
+					<label>自定义模板：</label>
+					<div class="btn-group normal">
+						<button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{product.detail_template|default:"无需自定义"}}</span>
+						</button>
+						<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
+							<span class="caret"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+						</button>
+						<ul class="dropdown-menu" role="menu" id="detail_template-selection">
+							<li class="dropdown-item" data-value="">无需自定义</li>
+							{% for t in custmize_template %}
+							<li class="dropdown-item" data-value="{{t}}">{{t}}</li>
+							{% endfor %}
+						</ul>
+						<input class="dropdown-item-input" type="hidden" name="detail_template" value=""/>
+					</div>
+				</div>
+	
+	
+				<div class="item">
+					<p class="form-control-product-images-title">产品主图</p>
+					<button type="button" class="btn btn-primary edit-sku-from-button">添加主图</button>
+				</div>
+	
+					<div class="item product-images">
+						<!--{% for image in image_list %}-->
+						<div class="images">
+							<a href='{{image.image}}' target="_blank"><img src='images/album.png' alt='{{product.name}}'></a>
+							<div class="image-operaion">
+								<a href=' '>替换</a> |
+								<a href='{{file_delete_url}}/{{image.id}}/{{product.id}}/?return_url=/admin/product-edit/%3fid={{product.id}}%26tab_name=tag_picture'>
+									清除 </a>
+							</div>
+						</div>
+						<!--{% empty %}-->
+						<!--There is no image at all.-->
+						<!--{% endfor %}-->
+					</div>
+	
+	
+	
+				<div class="item">
+					<label>详细描述：</label>
+				</div>
+	
+				<div class="item item-area">
+					<textarea type="text" id="product_desc_editor" name="description" class="form-control">{{product.description}}</textarea>
+				</div>
+				<div class="submit-item">
+					<input type="hidden" name="id" value="{{product.id}}">
+					<button id="product-detail-info-submit-btn" type="button" class="btn btn-primary next-steep">保存</button>
+				</div>
+			</form>
         </div>
-        <div class="add-content photo " id="tag_picture">
+        <div class="add-content attr" id="tag_product_para">
+			<form id="product_para_detail_form">
+				<input name="product_id" value="{{product.id}}" type="hidden" />
+				<div class="item-free attr-first-array item">
+					<label>选择属性：</label>
+	
+					<div class="btn-group normal">
+						<button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{product|admin_product_para_group:"name"}}</span>
+						</button>
+						<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
+							<span class="caret"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+						</button>
+						<ul class="dropdown-menu" role="menu" id="category-selection">
+							<li class="dropdown-item" data-value="">请选择一个属性组</li>
+							{% for group in product_para_group_list %}
+								<li class="dropdown-item" data-value="{{group.id}}">{{group.name}}</li>
+							{% endfor %}
+						</ul>
+						<input class="dropdown-item-input" type="hidden" name="product_para_group" value="{{product|admin_product_para_group:"id"}}"/>
+					</div>
+					
+					<button  type="button" id="make_product_para" class="btn btn-primary">确定</button>
+				</div>
+				{%for para in product.parameters.all%}
+					<div class="item tag_attribute-input">
+						<label>{{para.product_para.name}}</label>
+						<input type="text" name="product_para_id_{{para.id}}" class="form-control" value="{{para.value}}">
+					</div>
+				{%endfor%}
+				<div class="submit-item">
+					<button type="button" id="product_para_value_submit" class="btn btn-primary next-steep">保存</button>
+				</div>
+			</form>
+        </div>
+        <div class="add-content photo " id="tag_sku">
             <div class="item-free  item product-choose-attribute">
                 <label>选择属性：</label>
 
@@ -274,8 +284,8 @@
                     <input class="dropdown-item-input" type="hidden" name="attribute-group" value=""/>
 
                 </div>
-                <button type="button" class="btn btn-primary next-steep">添加</button>
-                <button type="button" class="btn btn-primary next-steep">生成SKU</button>
+                <button type="button" class="btn btn-primary add-attribute-group">添加</button>
+                <button type="button" class="btn btn-primary make-sku-list">生成SKU</button>
                 <div class="message">
                     <span>?</span>
                     <div class="ico">
@@ -310,49 +320,50 @@
 				{% endfor %}
 				</div>
 			</form>
-
-            <div class="item product-choose-sku-title2 product-choose-sku-title">
-                <h2>SKU列表</h2>
-            </div>
-            <div class="  box-body no-padding ">
-                <table class="table  product-choose-sku-table">
-                    <tbody>
-                    <tr>
-                        <th>SKU序号</th>
-                        <th>SKU属性组合</th>
-                        <th>产品编号</th>
-                        <th>库存</th>
-                        <th>图片</th>
-                        <th></th>
-                        <th>操作</th>
-                    </tr>
-					{% for pa in product.attributes.all %}
+			<form id="sku_attribute_form">
+				<div class="item product-choose-sku-title2 product-choose-sku-title">
+					<h2>SKU列表</h2>
+				</div>
+				<div class="  box-body no-padding ">
+					<table class="table  product-choose-sku-table">
+						<tbody>
 						<tr>
-							<td>{{forloop.counter}}</td>
-							<td>{{pa.get_grouped_attribute_desc}}</td>
-							<td>
-								<input type="text" name="pa-sub_item_number-{{pa.id}}" value="{{pa.sub_item_number}}">
-								<input type="hidden" name="pa_id" value="{{pa.id}}" />
-							</td>
-							<td><input type="text" name="pa-quantity-{{pa.id}}" value="{{pa.quantity}}"></td>
-							<td><img src="images/edit-sku-img.png" alt=""></td>
-							<td>
-								<a href="#0" class="cd-popup-trigger">
-									<button type="button" class="btn btn-primary">上传</button>
-								</a>
-							</td>
-							<td>
-								<button type="button" class="btn btn-danger sku_delete_link" data-sku-id="{{pa.id}}">删除</button>
-							</td>
+							<th>SKU序号</th>
+							<th>SKU属性组合</th>
+							<th>产品编号</th>
+							<th>库存</th>
+							<th>图片</th>
+							<th></th>
+							<th>操作</th>
 						</tr>
-					{% endfor %}
-                    </tbody>
-                </table>
-            </div>
+						{% for pa in product.attributes.all %}
+							<tr>
+								<td>{{forloop.counter}}</td>
+								<td>{{pa.get_grouped_attribute_desc}}</td>
+								<td>
+									<input type="text" name="pa-sub_item_number-{{pa.id}}" value="{{pa.sub_item_number}}">
+									<input type="hidden" name="pa_id" value="{{pa.id}}" />
+								</td>
+								<td><input type="text" name="pa-quantity-{{pa.id}}" value="{{pa.quantity}}"></td>
+								<td><img src="images/edit-sku-img.png" alt=""></td>
+								<td>
+									<a href="#0" class="cd-popup-trigger">
+										<button type="button" class="btn btn-primary">上传</button>
+									</a>
+								</td>
+								<td>
+									<button type="button" class="btn btn-danger sku_delete_link" data-sku-id="{{pa.id}}">删除</button>
+								</td>
+							</tr>
+						{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</form>
 
             <div class="submit-item product-choose-sku-button">
-                <button type="button" class="btn btn-primary next-steep">保存</button>
-                <button type="button" class="btn btn-primary next-steep">清除SKU</button>
+                <button type="button" id="product-attribute-submit-btn" class="btn btn-primary next-steep">保存</button>
+                <button type="button" id="product-attribute-clear-btn" class="btn btn-primary next-steep">清除SKU</button>
             </div>
         </div>
     </div>

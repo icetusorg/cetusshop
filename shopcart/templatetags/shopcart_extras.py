@@ -100,10 +100,22 @@ def admin_order_quert_item(value,arg):
 		
 @register.filter
 def admin_product_para_group(value,arg):
-	if  value.parameters.all().count() > 0:
-		return value.parameters.all()[0].product_para.group.name										
+	if value:
+		if  value.parameters.all().count() > 0:
+			if arg == 'name':
+				return value.parameters.all()[0].product_para.group.name
+			else:
+				return value.parameters.all()[0].product_para.group.id
+		else:
+			if arg=='name':
+				return '请选择一个属性组'
+			else:
+				return ''
 	else:
-		return '请选择一个属性组'
+		if arg=='name':
+			return '请选择一个属性组'
+		else:
+			return ''
 		
 @register.filter
 def admin_product_price(value,arg):
@@ -112,10 +124,13 @@ def admin_product_price(value,arg):
 	except:
 		return None
 		
-	if value.prices.all().count()>0:
-		return value.prices.all()[index].price
+	if value:	
+		if value.prices.all().count()>0:
+			return value.prices.all()[index].price
+		else:
+			return 0.00
 	else:
-		return None
+		return 0.00
 		
 @register.filter
 def admin_product_price_quantity(value,arg):
@@ -123,11 +138,14 @@ def admin_product_price_quantity(value,arg):
 		index = int(arg)
 	except:
 		return None
-		
-	if value.prices.all().count()>0:
-		return value.prices.all()[index].quantity
+	
+	if value:
+		if value.prices.all().count()>0:
+			return value.prices.all()[index].quantity
+		else:
+			return 0
 	else:
-		return None
+		return 0
 		
 		
 @register.filter

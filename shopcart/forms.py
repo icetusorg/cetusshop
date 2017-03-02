@@ -54,9 +54,26 @@ class product_add_form(forms.ModelForm):
 		fields = ('item_number','name')
 		
 class product_basic_info_form(forms.ModelForm):
+	keywords = forms.CharField(required=False)
+	youtube = forms.CharField(required=False)
+	static_file_name = forms.CharField(required=False)
+	page_title = forms.CharField(required=False)
+	short_desc = forms.CharField(required=False)
+	type = forms.CharField(required=False)
+	sort_order = forms.CharField(required=False)
 	class Meta:
 		model = Product
-		fields = ('item_number','name','is_publish','price','market_price','quantity','min_order_quantity')
+		#fields = ('item_number','name','is_publish','price','market_price','quantity','min_order_quantity')
+		fields = ('item_number','name','youtube','keywords','page_title','static_file_name','type','short_desc','sort_order','is_publish')
+		
+class product_detail_info_form(forms.ModelForm):
+	market_price = forms.CharField(required=False)
+	detail_template = forms.CharField(required=False)
+	description = forms.CharField(required=False)
+
+	class Meta:
+		model = Product
+		fields = ('market_price','quantity','min_order_quantity','weight','cuboid_long','cuboid_width','cuboid_height','detail_template','description')		
 		
 class article_basic_info_form(forms.ModelForm):
 	class Meta:
@@ -75,16 +92,6 @@ class article_detail_info_form(forms.ModelForm):
 		model = Product
 		fields = ('content','keywords','page_title','short_desc','static_file_name','breadcrumbs','detail_template')		
 		
-class product_detail_info_form(forms.ModelForm):
-	keywords = forms.CharField(required=False)
-	page_title = forms.CharField(required=False)
-	static_file_name = forms.CharField(required=False)
-	detail_template = forms.CharField(required=False)
-	short_desc = forms.CharField(required=False)
-	description = forms.CharField(required=False)
-	class Meta:
-		model = Product
-		fields = ('keywords','page_title','static_file_name','detail_template','short_desc','description')
 
 class order_shippment_form(forms.ModelForm):		
 	shipper_name = forms.CharField(required=False)

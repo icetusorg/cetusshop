@@ -1,6 +1,6 @@
 #coding=utf-8
 from django.shortcuts import render,redirect
-from shopcart.models import Product,System_Config,Category,Attribute,Attribute_Group,Product_Attribute,Product_Images,ProductParaGroup,ProductPara
+from shopcart.models import Product,System_Config,Category,Attribute,Attribute_Group,Product_Attribute,Product_Images,ProductParaGroup,ProductPara,ProductPrice,ProductParaDetail
 from shopcart.forms import product_add_form,product_basic_info_form,product_detail_info_form
 from shopcart.utils import System_Para,handle_uploaded_file,my_pagination
 from django.http import Http404,HttpResponse,JsonResponse
@@ -120,6 +120,65 @@ def product_para_edit(request):
 	else:
 		raise Http404
 		
+		
+@staff_member_required
+@transaction.atomic()	
+def product_para_detail_create(request):
+	result = {}
+	result['success'] = False
+	result['message'] = ''
+	
+	if request.method == 'POST':
+		product_id = request.POST.get('product_id')
+		group_id = request.POST.get('product_para_group')
+	
+		try:
+			product = Product.objects.get(id=product_id)
+			group = ProductParaGroup.objects.get(id=group_id)
+		except Exception as err:
+			logger.error("Can not find product [%s] or group [%s] \n Error message:%s" % (product_id,group_id,err))
+			result['message'] = '生成参数组失败，请重试。'
+			return JsonResponse(result)
+		
+		if product.parameters.all():
+			result['message'] = '该商品已经存在参数值，如要重新设置，请先执行“清除”操作！';
+			return JsonResponse(result)
+		
+		for para in group.paras.all():
+			ProductParaDetail.objects.create(product_para=para,product=product,value='')
+			
+		result['success'] = True
+		result['message'] = '参数组生成成功，请填入相关数据。'
+		return JsonResponse(result)
+
+@staff_member_required
+@transaction.atomic()	
+def product_para_detail_edit(request):
+	result = {}
+	result['success'] = False
+	result['message'] = ''
+	
+	if request.method == 'POST':
+		#遍历POST中的参数，找出product_para_id_开头的参数
+		for key in request.POST.keys():
+			if key.startswith('product_para_id_'):
+				value = request.POST[key]
+				db_key = key[len('product_para_id_'):len(key)]
+				
+				try:
+					prd = ProductParaDetail.objects.get(id=db_key)
+					prd.value = value
+					prd.save()
+				except Exception as err:
+					logger.error('Can not find parameter [%s]. \n Error Message:%s' %(db_key,err))
+					result['message'] = '参数保存失败'
+					return JsonResponse(result)
+			
+		result['success'] = True
+		result['message'] = '参数组保存成功'
+		return JsonResponse(result)		
+		
+		
 @staff_member_required
 @transaction.atomic()
 def product_para_delete(request):
@@ -151,6 +210,7 @@ def product_para_delete(request):
 
 
 @staff_member_required
+@transaction.atomic()
 def product_opration(request,opration,id):
 	ctx = {}
 	ctx['system_para'] = System_Para.get_default_system_parameters()
@@ -176,6 +236,7 @@ def product_opration(request,opration,id):
 		
 
 @staff_member_required
+@transaction.atomic()
 def product_basic_edit(request):
 	ctx = {}
 	ctx['system_para'] = System_Para.get_default_system_parameters()
@@ -240,15 +301,35 @@ def product_basic_edit(request):
 				logger.error('Can not find product which id is %s. The error message is %s' % (id,err))
 		return render(request,System_Config.get_template_name('admin') + '/product_detail.html',ctx)
 	elif request.method == 'POST':
+		is_new = False
 		try:
 			product = Product.objects.get(id=request.POST['id'])
 			form = product_basic_info_form(request.POST,instance=product)
 		except:
 			form = product_basic_info_form(request.POST)
+			is_new = True
 			logger.info('New product to store.')
 		
 		if form.is_valid():
 			product = form.save()
+			#处理商品分段价格
+			if is_new:
+				logger.debug('New product.Create price list.')
+				for n in [0,1,2]:
+					p = ProductPrice.objects.create(product=product,sort_order=n,price=0.0,quantity=0)
+			
+			
+			#处理商品归属的分类
+			category_id_list = request.POST.getlist('category_check')
+			if category_id_list:
+				category_list = Category.objects.filter(id__in=category_id_list)
+				logger.debug('category_list:%s' % category_list)
+				product.categorys = category_list
+				product.save()
+			else:
+				product.categorys = []
+				product.save()
+			
 			result['success'] = True
 			result['message'] = '商品保存成功'
 			data = {}
@@ -270,7 +351,7 @@ def product_basic_edit(request):
 def product_detail_info_manage(request):
 	result = {}
 	result['success'] = False
-	result['message'] = ''
+	result['message'] = '商品详细信息保存失败'
 	if request.method == 'POST':
 		try:
 			product = Product.objects.get(id=request.POST['id'])
@@ -281,16 +362,25 @@ def product_detail_info_manage(request):
 		
 		if form.is_valid():
 			product = form.save()
-			#处理商品归属的分类
-			category_id_list = request.POST.get('product_category_list','')
-			if category_id_list:
-				category_list = Category.objects.filter(id__in=category_id_list.split(","))
-				logger.debug('category_list:%s' % category_list)
-				product.categorys = category_list
-				product.save()
-			else:
-				product.categorys = []
-				product.save()
+			
+			#处理商品分段价格
+			if not product.prices.all(): #兼容老版本，可能有存量商品没有加过存量价格
+				logger.debug('Create price list.')
+				for n in [0,1,2]:
+					p = ProductPrice.objects.create(product=product,sort_order=n,price=0.0,quantity=0)
+					
+			#遍历POST中的参数，找出quantity_leve 和 price_level开头的参数
+			for n in [0,1,2]:
+				quantity = request.POST['quantity_level_%s' % n]
+				price = request.POST['price_level_%s' % n]
+				try:
+					p = ProductPrice.objects.get(product=product,sort_order=n)
+					p.quantity = quantity
+					p.price = price
+					p.save()
+				except Exception as err:
+					logger.error('Can not find price list in product [%s]. \n Error Message:%s' % (product.id,err))
+					return JsonResponse(result)
 			
 			result['success'] = True
 			result['message'] = '商品详细信息保存成功'
@@ -407,8 +497,8 @@ def product_sku_attribute_manage(request):
 			pa = Product_Attribute.objects.get(id=pa_id)
 			pa.sub_item_number = request.POST.get('pa-sub_item_number-%s' % pa_id)
 			pa.quantity = request.POST.get('pa-quantity-%s' % pa_id)
-			pa.price_adjusment = request.POST.get('pa-price_adjusment-%s' % pa_id)
-			pa.min_order_quantity = request.POST.get('pa-min_order_quantity-%s' % pa_id)
+			#pa.price_adjusment = request.POST.get('pa-price_adjusment-%s' % pa_id)
+			#pa.min_order_quantity = request.POST.get('pa-min_order_quantity-%s' % pa_id)
 			pa.save()
 			logger.debug("pa.quantity:%s" % pa.quantity)
 	

@@ -207,9 +207,8 @@
 							<div class="images">
 								<a href='{{image.image}}' target="_blank"><img src='{{image.thumb}}' alt='{{image.alt_value}}'></a>
 								<div class="image-operaion">
-									<a href=' '>替换</a> |
-									<a href='{{file_delete_url}}/{{image.id}}/{{product.id}}/?return_url=/admin/product-edit/%3fid={{product.id}}%26tab_name=tag_picture'>
-										清除 </a>
+									<a href="#" class="set-picture-attr" data-method="delete" data-id="{{image.id}}" data-product-id="{{product.id}}" data-image-type="product">删除 </a> |
+									<a href="#" class="set-picture-attr" data-method="set_main" data-id="{{image.id}}" data-product-id="{{product.id}}" data-image-type="product">主图 </a>
 								</div>
 							</div>
 						{% empty %}
@@ -407,46 +406,46 @@
 				url = url + ".html";
 			}
 			$("input[name=static_file_name]").val(url);
-		});		
+		});
+
+		
 	});
 	function reload_picture_list(){
 			//从服务器查询图片列表
 			
-			var url = "/product/get-product-images/main/";
-			var postdata = {"id":"2"};
+		var url = "/product/get-product-images/main/";
+		var postdata = {"id":"2"};
 			
-			$.ajax({
-				cache: false,
-				type: "POST",
-				url:url,
-				data:postdata,
-				async: false,
-				error: function(request) {
-					alert("System error");
-				},
-				success: function(data) {
-					if(data.success==true){
-						//逐个插入图片
-						var tmpHtml = "";
-						$.each( data.image_list, function( key, val ) {
-							//console.log( key, val, this );
-							console.log(this.image);
-							tmpHtml = tmpHtml
-							+ '<div class="images">'
-							+	'<a href="' + this.image + '" target="_blank"><img src="' + this.thumb + '" alt="' + this.alt + '"></a>'
-							+	'<div class="image-operaion">'
-							+		'<a href="#">替换</a> |'
-							+		'<a href="#">清除</a>'
-							+	'</div>'
-							+ '</div>';
-						});
-						$("#product_main_picture_show").html(tmpHtml);
-					}
+		$.ajax({
+			cache: false,
+			type: "POST",
+			url:url,
+			data:postdata,
+			async: false,
+			error: function(request) {
+				alert("System error");
+			},
+			success: function(data) {
+				if(data.success==true){
+					//逐个插入图片
+					var tmpHtml = "";
+					$.each( data.image_list, function( key, val ) {
+						//console.log( key, val, this );
+						console.log(this.image);
+						tmpHtml = tmpHtml
+						+ '<div class="images">'
+						+	'<a href="' + this.image + '" target="_blank"><img src="' + this.thumb + '" alt="' + this.alt + '"></a>'
+						+	'<div class="image-operaion">'
+						+		'<a href="#" class="set-picture-attr" data-method="delete" data-id="' + this.id + '" data-product-id="'+this.product_id+'" data-image-type="product">删除 </a> |'
+						+		'<a href="#" class="set-picture-attr" data-method="set_main" data-id="' + this.id + '" data-product-id="'+this.product_id+'" data-image-type="product">主图 </a>'
+						+	'</div>'
+						+ '</div>';
+					});
+					$("#product_main_picture_show").html(tmpHtml);
 				}
-			});
-	};
-			
-	
+			}
+		});
+	};	
 	</script>
 	
 {% endblock %}

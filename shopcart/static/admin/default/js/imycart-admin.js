@@ -875,24 +875,36 @@ jQuery(".sku_delete_link").click(function(event){
 //商品图片管理
 
 //设为主图
-jQuery(".set-to-main-picture-link").click(function(event){
+jQuery("#product_main_picture_show").on('click',".set-picture-attr",function(event){
 	event.preventDefault();
 	var img_url = $(this).data("image-url");
-	
-	//兼容产品与文章
 	var type = $(this).data("image-type");
-	if(!type){
-		type = "product";
-	}
-	if(type=="product"){
-		$("input[name=product_image]").val(img_url);
-		$("#product_main_image").attr("src",img_url);
+	product_id = $(this).data("product-id");
+	picture_id = $(this).data("id");
+	method = $(this).data("method");
+	
+	var url = "";
+	if (type = "product"){
+		url = "/admin/product-set-image/";
 	}
 	
-	if(type=="article"){
-		$("input[name=article_image]").val(img_url);
-		$("#article_main_image").attr("src",img_url);
-	}
+	var postdata = {"product_id":product_id,"picture_id":picture_id,"method":method};
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:postdata,
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);			
+			$("#myModal").modal('toggle');
+			reload_picture_list();
+		}
+	});
+	
 });
 
 //保存主图设置和SKU图设置

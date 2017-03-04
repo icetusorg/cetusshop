@@ -208,6 +208,62 @@ def product_para_delete(request):
 		raise Http404
 			
 
+@staff_member_required
+@transaction.atomic()
+def set_image(request):
+	ctx = {}
+	ctx['system_para'] = System_Para.get_default_system_parameters()
+	ctx['page_name'] = '商品图片管理'
+
+	if request.method == 'POST':
+		result = {}
+		result['success'] = False
+		result['message'] = '商品图片信息保存失败'
+		
+		method = request.POST.get('method','')
+		if method == 'set_main':
+			try:
+				product_id = request.POST.get('product_id','')
+				picture_id = request.POST.get('picture_id','')
+				product = Product.objects.get(id=product_id)
+				picture = Product_Images.objects.get(id=picture_id)
+			except Exception as err:
+				logger.info('Can not find product [%s] or picture [%s]. \n Error Message: %s' %(product_id,picture_id,err))
+			
+			product.image = picture.image
+			product.thumb = picture.thumb
+			product.save()	
+			
+			result['success'] = True
+			result['message'] = '商品图片信息保存成功'
+			return JsonResponse(result)
+		elif method == 'delete':
+			picture_id = request.POST.get('picture_id','')
+			picture = None
+			
+			try:
+				picture = Product_Images.objects.get(id=picture_id)
+			except Exception as err:
+				logger.info('Can not find  picture [%s] in Product_Images. \n Error Message: %s' %(picture_id,err))
+				
+			if not picture:
+				try:
+					picture = Album.objects.get(id=picture_id)
+				except Exception as err:
+					logger.info('Can not find  picture [%s] in Album. \n Error Message: %s' %(picture_id,err))
+			
+			if picture:
+				picture.delete()
+				result['success'] = True
+				result['message'] = '商品图片信息保存成功'
+			else:
+				result['message'] = '商品图片信息保存失败，可能图片已经被删除了。'
+			
+			return JsonResponse(result)
+	else:
+		raise Http404
+			
+			
 
 @staff_member_required
 @transaction.atomic()

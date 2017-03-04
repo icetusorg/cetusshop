@@ -326,6 +326,7 @@ def ajax_get_product_images(request,method='main'):
 			image['thumb'] = img.thumb
 			image['id'] = img.id
 			image['alt'] = img.alt_value
+			image['product_id'] = product.id
 			data.append(image)
 		
 		result['success'] = True

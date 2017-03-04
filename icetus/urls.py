@@ -57,6 +57,7 @@ urlpatterns = patterns("",
 	url(r'^product/get-product-description/(\d+)/$', 'shopcart.product.ajax_get_product_description',name='product_ajax_get_product_description'),
 	url(r'^product/get-product-images/(.+)/$', 'shopcart.product.ajax_get_product_images',name='product_ajax_get_product_images'),
 	
+	
 	url(r'^article/(\d+)/$', 'shopcart.article.detail',name='article_detail'),
 	url(r'^blog/$', 'shopcart.article.view_blog_list',name='article_view_blog_list'),
 	url(r'^blog/(\d+)/$', 'shopcart.article.view_blog_list',name='article_view_blog_list'),
@@ -158,6 +159,8 @@ urlpatterns = patterns("",
 	
 	url('^admin/product-para-detail-edit/$', 'shopcart.myadmin.product.product_para_detail_edit',name='admin_product_para_detail_edit'),
 	url('^admin/product-para-detail-create/$', 'shopcart.myadmin.product.product_para_detail_create',name='admin_product_para_detail_create'),
+	
+	url(r'^admin/product-set-image/$', 'shopcart.myadmin.product.set_image',name='admin_product_set_image'),
 
 	
 	url('^admin/user-admin-edit/$', 'shopcart.myadmin.user.admin_edit',name='admin_user_admin_edit'),

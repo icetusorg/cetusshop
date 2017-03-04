@@ -74,6 +74,7 @@ def file_upload(request,item_type,item_id):
 		ctx['result_message'] = '文件上传成功'
 		manual_name = request.POST.get('manual_name','noname')	
 		same_name_handle = request.POST.get('same_name_handle','reject')
+		alt_value = request.POST.get('alt_value','')
 	
 		if item_type == 'product' or item_type == 'product_album':
 			try:
@@ -94,22 +95,22 @@ def file_upload(request,item_type,item_id):
 			is_show = request.POST.get('is_show_in_product_detail',False)
 			
 			if item_type == 'product':
-				pi = Product_Images.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],product=item,sort=sort,is_show_in_product_detail=is_show)
+				pi = Product_Images.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],product=item,sort=sort,is_show_in_product_detail=is_show,alt_value=alt_value)
 			else:
-				ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id)
+				ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id,alt_value=alt_value)
 		elif item_type == 'article':
 			try:
 				item = Article.objects.get(id=item_id)
 			except:
 				raise Http404
-			filenames = handle_uploaded_file(request.FILES['upload'],item_type,item_id,request.POST['filename_type'],manual_name,same_name_handle)
+			filenames = handle_uploaded_file(request.FILES['upload'],item_type,item_id,request.POST['filename_type'],manual_name,same_name_handle,alt_value)
 			if filenames['upload_result'] == False:
 				#return HttpResponse(filenames['upload_error_msg'])
 				ctx['result_message'] = filenames['upload_error_msg']
 				return render(request,System_Config.get_template_name('admin') + '/file_upload.html',ctx)				
 		
 			logger.debug('Upload success!!!')
-			ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id)
+			ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id,alt_value=alt_value)
 			logger.debug('ai success!!!')
 		else:
 			raise Http404

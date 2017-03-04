@@ -233,6 +233,17 @@ class Product(models.Model):
 		elif sort_by == 'create_time':
 			image_list = sorted(image_list,key= lambda image:image.create_time,reverse=True)
 			
+		main_image_url = self.image
+		main_image = None
+		for img in image_list:
+			if img.image == main_image_url:
+				logger.debug('Find the main image. Remove it to top.')
+				main_image = img
+				break
+
+		image_list.remove(main_image)
+		image_list.insert(0,main_image)
+			
 		if method == 'single':
 			return image_list[0]
 		else:

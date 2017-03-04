@@ -874,13 +874,14 @@ jQuery(".sku_delete_link").click(function(event){
 
 //商品图片管理
 
+//文件上传与相册
 //设为主图
 jQuery("#product_main_picture_show").on('click',".set-picture-attr",function(event){
 	event.preventDefault();
 	var img_url = $(this).data("image-url");
 	var type = $(this).data("image-type");
-	product_id = $(this).data("product-id");
-	picture_id = $(this).data("id");
+	var product_id = $(this).data("product-id");
+	var picture_id = $(this).data("id");
 	method = $(this).data("method");
 	
 	var url = "";
@@ -904,8 +905,50 @@ jQuery("#product_main_picture_show").on('click',".set-picture-attr",function(eve
 			reload_picture_list();
 		}
 	});
+});
+
+
+
+
+
+//相册里删除图片
+jQuery(".album-image-show").on('click',".set-picture-attr",function(event){
+	event.preventDefault();
+	var type = $(this).data("image-type");
+	var product_id = $(this).data("product-id");
+	var picture_id = $(this).data("id");
+	method = $(this).data("method");
+	
+	var url = "";
+	if (type = "product"){
+		url = "/admin/product-set-image/";
+	}
+	
+	var postdata = {"product_id":product_id,"picture_id":picture_id,"method":method};
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:postdata,
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			if(data.success==true){
+				$('#myModal').on('hidden.bs.modal', function (e) {
+					var newurl = location.href;
+					location.href = newurl;
+				})
+			}			
+			$("#myModal").modal('toggle');
+			
+		}
+	});
 	
 });
+
 
 //保存主图设置和SKU图设置
 jQuery("#product-picture-manage-submit-btn").click(function(){

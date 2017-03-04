@@ -17,6 +17,15 @@ jQuery(document).ready(function($){
 			return;
 		}
 		
+		var sku_id = $(this).data("sku-id");
+		//alert("sku_id:" + sku_id);
+		if (sku_id != "undefined"){
+			$("#album_trigger_sku_id").val(sku_id);
+		}else{
+			$("#album_trigger_sku_id").val("");
+		}
+		
+		
 		$("#file_upload_iframe").attr("src",'/admin/file-upload/' + type +'/' + id + '/');
 		$("#picture_album_iframe").attr("src",'/admin/file-list/' + type +'/' + id + '/'); 
 		$('.cd-popup').addClass('is-visible');

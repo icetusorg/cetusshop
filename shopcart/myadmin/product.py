@@ -260,6 +260,39 @@ def set_image(request):
 				result['message'] = '商品图片信息保存失败，可能图片已经被删除了。'
 			
 			return JsonResponse(result)
+		elif method == 'set_sku':
+			picture_id = request.POST.get('picture_id','')
+			sku_id = request.POST.get('sku_id','')
+			try:
+				sku = Product_Attribute.objects.get(id=sku_id)
+			except Exception as err:
+				logger.info('Can not find  sku [%s] . \n Error Message: %s' %(sku_id,err))
+				result['message'] = '商品图片信息保存失败，找不到对应的SKU'
+				return JsonResponse(result)
+
+			
+			try:
+				picture = Product_Images.objects.get(id=picture_id)
+			except Exception as err:
+				logger.info('Can not find  picture [%s] in Product_Images. \n Error Message: %s' %(picture_id,err))
+				
+			if not picture:
+				try:
+					picture = Album.objects.get(id=picture_id)
+				except Exception as err:
+					logger.info('Can not find  picture [%s] in Album. \n Error Message: %s' %(picture_id,err))
+					
+			if picture:
+				sku.image = picture
+				sku.save()
+				result['thumb'] = picture.thumb
+				result['image'] = picture.image
+				result['success'] = True
+				result['message'] = '商品图片信息保存成功'
+			else:
+				result['message'] = '商品图片信息保存失败，可能图片已经被删除了。'		
+			
+			return JsonResponse(result)
 	else:
 		raise Http404
 			

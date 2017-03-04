@@ -345,11 +345,11 @@
 									<input type="hidden" name="pa_id" value="{{pa.id}}" />
 								</td>
 								<td><input type="text" name="pa-quantity-{{pa.id}}" value="{{pa.quantity}}"></td>
-								<td><img src="images/edit-sku-img.png" alt=""></td>
+								<td><img id="img_{{pa.id}}" src="{{pa.image.thumb}}" alt=""></td>
 								<td>
-									<a href="#0" class="cd-popup-trigger">
-										<button type="button" class="btn btn-primary">上传</button>
-									</a>
+									
+									<button type="button" data-type="product" data-id="{{product.id}}" data-sku-id="{{pa.id}}" class="btn btn-primary cd-popup-trigger">上传</button>
+									
 								</td>
 								<td>
 									<button type="button" class="btn btn-danger sku_delete_link" data-sku-id="{{pa.id}}">删除</button>
@@ -367,6 +367,7 @@
             </div>
         </div>
     </div>
+	<input type="hidden" id="album_trigger_sku_id" value="" />
 </section>
 
 <!--弹出-->
@@ -445,7 +446,40 @@
 				}
 			}
 		});
-	};	
+	};
+	
+	function album_dblclick_callback(id){
+		var type = 'product';
+		var sku_id = $("#album_trigger_sku_id").val();
+	
+		method = "set_sku";
+	
+		var url = "";
+		if (type = "product"){
+			url = "/admin/product-set-image/";
+		}
+		
+		var postdata = {"sku_id":sku_id,"picture_id":id,"method":method};
+		$.ajax({
+			cache: false,
+			type: "POST",
+			url:url,
+			data:postdata,
+			async: false,
+			error: function(request) {
+				alert("System error");
+			},
+			success: function(data) {
+				if(data.success==true){
+					$("#img_"+sku_id).attr("src",data.thumb);
+					$(".cd-popup").removeClass("is-visible");
+				}			
+			}
+		});
+	
+		
+	};
+	
 	</script>
 	
 {% endblock %}

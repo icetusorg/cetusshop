@@ -1,0 +1,61 @@
+{% extends "admin/default/content_base.html" %}
+
+{% block main %}
+{% load i18n %}
+
+{% load staticfiles %}
+{% load shopcart_extras %}
+<div style="height:350px">
+<div class="row">
+	{%for image in image_list%}
+		<div class="tab-pane-album col-md-2 col-xs-2">
+			<img src="{{image.thumb}}" alt="{{image.alt|default:""}}">
+			<p></p>
+			<a href="{{image.iamge}}">预览</a>|<a href="###">删除</a>
+		</div>
+	{%endfor%}
+</div>
+
+<div class="box-footer clearfix tab-pane-footer">
+
+    <div class="xy-pages-jump">
+        <button type="button" class="btn btn-primary page-jump">跳转</button>
+        <input type="text" name="page_number_to_jump" class="form-control">
+        <p>跳转到：</p>
+    
+            <ul class="pagination pagination-sm no-margin pull-right">
+               {% if image_list.has_previous %}
+					<li><a name="pageChange" data-tag="Previous" class="pageChage prev" data-page="{{ image_list.previous_page_number }}">&lt;</a></li>
+				{% else %}
+					<li><a>&lt;</a></li>
+				{% endif %}	
+						
+				{% for p in page_range %}
+					{% ifequal p objects.number %}
+						<li class="active">{{p}}</li>
+					{% else %}
+						<li><a class="pageChage"  data-page = "{{p}}" href="#" title="{{p}}">{{p}}</a></li>
+					{% endifequal %}
+				{% endfor %}
+                    {% if image_list.has_next %}
+						<li><a name="pageChange" class="pageChage next" data-page = "{{p}}" data-page-range="{{page_range}}" data-tag="Next">&gt;</a></li>
+					{% else %}
+						<li><a>&gt;</a></li>
+					{% endif %}
+           </ul>
+           <p>共{{item_count}}条记录 , 共{{page_range|last}}页，每页显示：{{page_size}}条</p>
+    </div>
+</div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+	{% load staticfiles %}
+	<script>
+	function reload_myself(){
+		location.reload(true);
+	};
+	</script>
+
+{% endblock %}
+

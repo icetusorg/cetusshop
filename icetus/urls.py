@@ -55,6 +55,8 @@ urlpatterns = patterns("",
 	url(r'^product/$', 'shopcart.product.view_list',name='product_view_list'),
 	url(r'^product/get-product-extra/$', 'shopcart.product.ajax_get_product_info',name='product_ajax_get_product_info'),
 	url(r'^product/get-product-description/(\d+)/$', 'shopcart.product.ajax_get_product_description',name='product_ajax_get_product_description'),
+	url(r'^product/get-product-images/(.+)/$', 'shopcart.product.ajax_get_product_images',name='product_ajax_get_product_images'),
+	
 	url(r'^article/(\d+)/$', 'shopcart.article.detail',name='article_detail'),
 	url(r'^blog/$', 'shopcart.article.view_blog_list',name='article_view_blog_list'),
 	url(r'^blog/(\d+)/$', 'shopcart.article.view_blog_list',name='article_view_blog_list'),
@@ -86,6 +88,9 @@ urlpatterns = patterns("",
 	
 	url('^admin/menu/$', 'shopcart.myadmin.index.menu_view',name='admin_index_menu_view'),
 	#url('^admin/order/$', 'shopcart.myadmin.order.view',name='admin_order_view'),
+	
+	url(r'^admin/file-list/(.+)/(.+)/$', 'shopcart.myadmin.file.file_list_show',name='admin_file_list_show'),
+	
 	
 	url('^admin/order-list/$', 'shopcart.myadmin.order.list_view',name='admin_order_list_view'),
 	url('^admin/order-detail/(\d+)/$', 'shopcart.myadmin.order.detail',name='admin_order_detail'),

@@ -2549,12 +2549,36 @@ iframe {
     width: 30% !important;
     margin-right: 15px;
 }
-
+.tab-pane-item-checkbox{
+    width: 15px!important;
+}
+.tab-pane-item-file{
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+    border: 1px solid #ccc;
+    padding: 0 10px 0;
+    border-radius: 5px;
+}
+.tab-pane-item-file input{
+    position: absolute;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    top: 0;
+    right: 0;
+    width:100%;
+    height:100%;
+}
 .btn-popup-submit {
     margin: 20px 0 20px 20px;
 }
-
-.cd-popup-container p {
+.image-operaion{
+    text-align: center;
+}
+.modal-pag{
+    margin-top: 8px;
+}
+.tab-pane-album p {
     padding: 10px 0 5px;
     margin-bottom: 0px;
     font-size: 12px;
@@ -2565,16 +2589,27 @@ iframe {
     font-size: 12px;
     padding: 0 5px;
 }
-
+.image-operaion a{
+    cursor: pointer;
+}
 .tab-pane-album {
     margin-top: 20px;
+    text-align: center;
 }
-
+.modal-button{
+    width: 13%;
+}
+.products-add-cate-btn{
+    margin-left: 15px;
+}
 .tab-pane-footer {
     border-top: none !important;
     padding: 20px 0 10px !important;
 }
-
+.tab-pane iframe{
+    width: 100%;
+    height: 500px;
+}
 .tab-pane-footer p {
     float: right;
     line-height: 30px;

@@ -43,6 +43,7 @@ $(function(){
     });
 });
 
+
 //公共的调用ajax方法
 function imycartAjaxCall(url,object,is_show_message_box,message){
 	var encodedata = $.toJSON(object);

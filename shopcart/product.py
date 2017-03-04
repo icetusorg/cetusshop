@@ -301,6 +301,39 @@ def ajax_get_product_info(request):
 	result_dict['not_selected'] = not_selected_attr_list#返回可以选择的attribute_id列表
 	result_dict['selected'] = selected_attr_list #返回已经选择了的attribute_id列表
 	return JsonResponse(result_dict)
+	
+def ajax_get_product_images(request,method='main'):
+	if request.is_ajax():
+		result = {}
+		result['success'] = False
+		id = request.POST.get('id')
+		try:
+			product = Product.objects.get(id=id)
+		except Exception as err:
+			logger.error('Can not find product [%s].\n Error Message:%s' % (id,err))
+			result['message'] = 'Can not find product.'
+			return JsonResponse(result)
+			
+		if method == 'main':
+			img_list = product.get_main_image_list()
+		else:
+			img_list = product.get_all_image_list()
+		
+		data = []
+		for img in img_list:
+			image = {}
+			image['image'] = img.image
+			image['thumb'] = img.thumb
+			image['id'] = img.id
+			image['alt'] = img.alt_value
+			data.append(image)
+		
+		result['success'] = True
+		result['image_list'] = data
+		return JsonResponse(result)
+	else:
+		raise Http404
+		
 
 def ajax_get_product_description(request,id):
 	logger.info('Entered the ajax_get_product_description function')

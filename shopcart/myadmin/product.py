@@ -291,7 +291,7 @@ def product_basic_edit(request):
 					
 				
 				try:
-					ctx['image_list'] = Product_Images.objects.filter(product=product).order_by('create_time').reverse()
+					ctx['image_list'] = Product_Images.objects.filter(product=product).filter(is_show_in_product_detail=True).order_by('create_time').reverse()
 					logger.debug("ctx['image_list']:%s" % ctx['image_list'])
 				except Exception as err:
 					logger.error("Error:%s" % err)

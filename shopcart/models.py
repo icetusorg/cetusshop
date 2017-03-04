@@ -212,6 +212,31 @@ class Product(models.Model):
 	
 	create_time = models.DateTimeField(auto_now_add = True)
 	update_time = models.DateTimeField(auto_now = True)
+	
+	
+	def get_main_image(self):
+		return self.get_images(method='single')
+		
+	def get_main_image_list(self):
+		return self.get_images(method='main')
+		
+	def get_all_image_list(self):
+		return self.get_images(method='all')
+		
+	def get_images(self,method,sort_by='sort_order'):
+		image_list = self.images.all()
+		if method == 'main':
+			image_list = image_list.filter(is_show_in_product_detail=True) 
+		
+		if sort_by == 'sort_order':
+			image_list = sorted(image_list,key= lambda image:image.sort,reverse=True)
+		elif sort_by == 'create_time':
+			image_list = sorted(image_list,key= lambda image:image.create_time,reverse=True)
+			
+		if method == 'single':
+			return image_list[0]
+		else:
+			return image_list
 
 	def get_attributes(self):
 		pa_list = self.attributes.all()
@@ -324,6 +349,7 @@ class Product_Images(models.Model):
 	product = models.ForeignKey(Product,default=None,related_name='images',verbose_name='关联的商品')
 	is_show_in_product_detail = models.BooleanField(default=False,verbose_name='是否在商品详情中展示')
 	sort = models.IntegerField(default=0,verbose_name='排序序号')
+	alt_value = models.CharField(max_length = 100,default='',verbose_name='Alt值')
 	create_time = models.DateTimeField(auto_now_add = True)
 	update_time = models.DateTimeField(auto_now = True)
 	
@@ -868,6 +894,7 @@ class Album(models.Model):
 	item_id = models.IntegerField(default=0,verbose_name = '对象ID')
 	image = models.URLField(verbose_name = '图片链接')
 	thumb = models.URLField(verbose_name = '缩略图链接')
+	alt_value = models.CharField(max_length = 100,default='',verbose_name='Alt值')
 	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
 	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
 	

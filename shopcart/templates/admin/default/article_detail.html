@@ -69,7 +69,7 @@
 
         <div class="item add-product-tree article-add-title">
             <h2>文章主图：</h2>
-            <button type="button" class="btn btn-primary cd-popup-trigger">添加主图</button>
+            <button type="button" class="btn btn-primary cd-popup-trigger" data-type="article" data-id="{{article.id}}">添加主图</button>
         </div>
         <div class="item product-images">
             <div class="images article-images-list col-md-1">
@@ -90,170 +90,14 @@
         </div>
     </div>
     <!--弹出-->
-    <div class="cd-popup" role="alert">
-        <div class="cd-popup-container">
-            <div class="popup-content">
-                <ul class="nav nav-tabs" id="myTab">
-                    <li class="active"><a href="#popup-content-uploading">图片上传</a></li>
-                    <li class=""><a href="#popup-content-album">相册</a></li>
-                </ul>
-                <div class="tab-content tab-content-content">
-                    <div class="popup-content-uploading tab-pane active" id="popup-content-uploading">
-                        <div class="tab-pane-item">
-                            <label>文章类型：</label>
-                            <input type="text" value=" "/>
-                            <button type="button" class="btn btn-primary btn-popup">浏览</button>
-                        </div>
-                        <div class="tab-pane-item">
-                            <label>文件名生成方式：</label>
-                            <div class="btn-group normal product-button-search">
-                                <button type="button" class="btn btn-default inputBtn"><span class="selected-text">原始文件名</span></button>
-                                <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown" aria-expanded="false">
-                                    <span class="caret"></span>
-                                    <span class="sr-only">Toggle Dropdown</span>
-                                </button>
-                                <ul class="dropdown-menu" role="menu" id="selectOption">
-                                    <li class="dropdown-item" data-value="图片1">原始文件名1</li>
-                                    <li class="dropdown-item" data-value="图片2">原始文件名2</li>
-                                    <li class="dropdown-item" data-value="图片3">原始文件名3</li>
-                                </ul>
-                                <input type="hidden" class="dropdown-item-input" name="" value="">
-                            </div>
-                            <div class="message">
-                                <span>?</span>
-                                <div class="ico">
-                                    <div class="text">
-                                        <h4>描述</h4>
-                                        <p>若选择“自定义” 请填写下方的自定义文件名名称。</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane-item">
-                            <label>自定义文件名：</label>
-                            <input type="text" value=" "/>
-                        </div>
-                        <div class="tab-pane-item">
-                            <label>重名处理：</label>
-                            <div class="btn-group normal product-button-search">
-                                <button type="button" class="btn btn-default inputBtn"><span class="selected-text">拒绝</span></button>
-                                <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown" aria-expanded="false">
-                                    <span class="caret"></span>
-                                    <span class="sr-only">Toggle Dropdown</span>
-                                </button>
-                                <ul class="dropdown-menu" role="menu" id="selectOption">
-                                    <li class="dropdown-item" data-value="图片1">拒绝</li>
-                                    <li class="dropdown-item" data-value="图片2">同意</li>
-                                </ul>
-                                <input type="hidden" class="dropdown-item-input" name="" value="">
-                            </div>
-                        </div>
-                        <div class="tab-pane-item">
-                            <label>alt值：</label>
-                            <input class="tab-pane-item-alt-input" type="text" value=" "/>
-                            <div class="message">
-                                <span>?</span>
-                                <div class="ico">
-                                    <div class="text">
-                                        <h4>描述</h4>
-                                        <p>alt值有利于SEO，可填写与图片相关的描述的词。</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-primary btn-popup btn-popup-submit">浏览</button>
-                    </div>
-                    <div class="popup-content-album tab-pane" id="popup-content-album">
-                        <div class="row">
-                            <div class="tab-pane-album col-md-2">
-                                <img src="images/album.png" alt="">
-                                <p>feedoioaergrgrgr.jpg</p>
-                                <a href="###">预览</a >|<a href="###">删除</a>
-                            </div>
-                            <div class="tab-pane-album col-md-2">
-                                <img src="images/album.png" alt="">
-                                <p>feedoioaergrgrgr.jpg</p>
-                                <a href="###">预览</a >|<a href="###">删除</a>
-                            </div>
-                            <div class="tab-pane-album col-md-2">
-                                <img src="images/album.png" alt="">
-                                <p>feedoioaergrgrgr.jpg</p>
-                                <a href="###">预览</a >|<a href="###">删除</a>
-                            </div>
-                            <div class="tab-pane-album col-md-2">
-                                <img src="images/album.png" alt="">
-                                <p>feedoioaergrgrgr.jpg</p>
-                                <a href="###">预览</a >|<a href="###">删除</a>
-                            </div>
-                            <div class="tab-pane-album col-md-2">
-                                <img src="images/album.png" alt="">
-                                <p>feedoioaergrgrgr.jpg</p>
-                                <a href="###">预览</a >|<a href="###">删除</a>
-                            </div>
-                            <div class="tab-pane-album col-md-2">
-                                <img src="images/album.png" alt="">
-                                <p>feedoioaergrgrgr.jpg</p>
-                                <a href="###">预览</a >|<a href="###">删除</a>
-                            </div>
-                            <div class="tab-pane-album col-md-2">
-                                <img src="images/album.png" alt="">
-                                <p>feedoioaergrgrgr.jpg</p>
-                                <a href="###">预览</a >|<a href="###">删除</a>
-                            </div>
-                            <div class="tab-pane-album col-md-2">
-                                <img src="images/album.png" alt="">
-                                <p>feedoioaergrgrgr.jpg</p>
-                                <a href="###">预览</a >|<a href="###">删除</a>
-                            </div>
-                            <div class="tab-pane-album col-md-2">
-                                <img src="images/album.png" alt="">
-                                <p>feedoioaergrgrgr.jpg</p>
-                                <a href="###">预览</a >|<a href="###">删除</a>
-                            </div>
-                            <div class="tab-pane-album col-md-2">
-                                <img src="images/album.png" alt="">
-                                <p>feedoioaergrgrgr.jpg</p>
-                                <a href="###">预览</a >|<a href="###">删除</a>
-                            </div>
-                            <div class="tab-pane-album col-md-2">
-                                <img src="images/album.png" alt="">
-                                <p>feedoioaergrgrgr.jpg</p>
-                                <a href="###">预览</a >|<a href="###">删除</a>
-                            </div>
-                            <div class="tab-pane-album col-md-2">
-                                <img src="images/album.png" alt="">
-                                <p>feedoioaergrgrgr.jpg</p>
-                                <a href="###">预览</a >|<a href="###">删除</a>
-                            </div>
-                        </div>
-
-                        <div class="box-footer clearfix tab-pane-footer">
-                            <div class="xy-pages-jump">
-                                <button type="submit" class="btn btn-primary tab-pane-footer-normal-btn">跳转</button>
-                                <input  type="text" class="form-control tab-pane-footer-normal">
-                                <p>跳转到：</p>
-
-                                <ul class="pagination pagination-sm tab-pane-footer-normal pull-right">
-                                    <li><a href="#">&lt;</a></li>
-                                    <li class="active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">&gt;</a></li>
-                                </ul>
-                                <p>共7条记录 , 共3页，每页显示：15条</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <a href="#0" class="cd-popup-close img-replace">Close</a>
-        </div>
-        <!-- cd-popup-container -->
+	{% include 'admin/default/album_modal_win.html' %}
+    <!-- cd-popup-container -->
     </div>
 </section>
 {% endblock %}
 {% block scripts %}
 	{% load staticfiles %}
+	<script src="{% static 'admin/default/js/upload.1.0.0.js' %}"></script>
 	<script src="{% static 'admin/default/js/ckeditor.js' %}" type="text/javascript"></script>
 	<script>	
 	$(document).ready(function() {

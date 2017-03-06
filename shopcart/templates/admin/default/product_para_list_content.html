@@ -20,7 +20,7 @@
         <div class="col-md-12">
             <div class="box xy-list page-list-content ">
                 <div class="box-body no-padding">
-					<form id="product_batch_form">
+					<form id="product_para_group_batch_form">
 						<table id="main-content-table" class="table table-striped page-table-list add-sku-list">
 							<tbody>
 							<tr>
@@ -30,9 +30,9 @@
 							</tr>
 							{%for para in product_para_list%}
 								<tr id="message_list1">
-									<td><input name="is_oper" data-order-id="{{para.id}}" value="{{para.id}}" type="checkbox"></td>
-									<td><a href="###">{{para.name}}</a></td>
-									<td><a class="deleteCategory message-delete">删除</a> / <a href="/admin/product-para-group-edit/?id={{para.id}}">修改</a></td>
+									<td><input name="is_oper" data-order-id="{{para.id}}" id="checkbox_{{para.id}}" value="{{para.id}}" type="checkbox"></td>
+									<td><a href="/admin/product-para-group-edit/?id={{para.id}}">{{para.name}}</a></td>
+									<td><a class="deleteCategory message-delete product—para-group-batch-oper" data-method="delete" data-id="{{para.id}}">删除</a> / <a href="/admin/product-para-group-edit/?id={{para.id}}">修改</a></td>
 								</tr>
 							{%endfor%}
 							</tbody>
@@ -43,7 +43,7 @@
                     <div class="xy-box-select">
                         <input class=" product-list-input-checkbox-all" type="checkbox" id="main-content-checkbox-all">
                         <a id="main-content-btn-all" href="#">全选</a>
-                        <button type="button" class="btn btn-danger">删除</button>
+                        <button type="button" class="btn btn-danger product—para-group-batch-oper" data-method="delete">删除</button>
                         <a href="/admin/product-para-group-add/" id="product-para-group-add-new" class="btn btn-primary">新增</a>
                     </div>
                     <div class="xy-pages-jump">

@@ -1,7 +1,7 @@
 #coding=utf-8
 from django.shortcuts import render,redirect
 from shopcart.models import Product,System_Config,Category,Attribute,Attribute_Group,Product_Attribute,Product_Images,ProductParaGroup,ProductPara,ProductPrice,ProductParaDetail
-from shopcart.forms import product_add_form,product_basic_info_form,product_detail_info_form
+from shopcart.forms import product_add_form,product_basic_info_form,product_detail_info_form,product_para_group_form,product_sku_group_form
 from shopcart.utils import System_Para,handle_uploaded_file,my_pagination
 from django.http import Http404,HttpResponse,JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -12,6 +12,53 @@ from shopcart.templatetags import shopcart_extras
 import logging
 # Get an instance of a logger
 logger = logging.getLogger('icetus.shopcart')
+
+
+@staff_member_required
+@transaction.atomic()
+def product_sku_group_edit(request):
+	ctx = {}
+	ctx['system_para'] = System_Para.get_default_system_parameters()
+	ctx['page_name'] = '商品SKU组管理'
+	
+	if request.method == 'GET':
+		try:
+			id = request.GET.get('id','')
+			sku_group = Attribute_Group.objects.get(id=id)
+		except Exception as err:
+			logger.error('Can not find Attribute_Group which id is [%s].\n Error Message: %s' % (id,err))
+			sku_group = None
+		
+		ctx['sku_group'] = sku_group
+		return render(request,System_Config.get_template_name('admin') + '/product_sku_group_detail.html',ctx)
+	elif request.method == 'POST':
+		result = {}
+		result['success'] = False
+		result['message'] = '商品SKU组保存失败'
+		
+		sku_group = None
+		
+		try:
+			id = request.POST.get('sku_group_id','')
+			sku_group = Attribute_Group.objects.get(id=id)
+		except Exception as err:
+			logger.info('Can not find Attribute_Group which id is [%s]. Create one. \n Error Message: %s' %(id,err))
+			
+		if sku_group:
+			form = product_sku_group_form(request.POST,instance=sku_group)
+		else:
+			form = product_sku_group_form(request.POST)
+			
+		if form.is_valid():
+			sku_group = form.save()
+			
+			result['success'] = True
+			result['message'] = '商品SKU组保存成功'
+			result['sku_group_id'] = sku_group.id
+		return JsonResponse(result)		
+	else:
+		raise Http404		
+
 
 
 @staff_member_required
@@ -57,7 +104,7 @@ def product_para_group_edit(request):
 		para_group = None
 		
 		try:
-			id = request.POST.get('id','')
+			id = request.POST.get('para_group_id','')
 			para_group = ProductParaGroup.objects.get(id=id)
 		except Exception as err:
 			logger.info('Can not find para_group which id is [%s]. Create one. \n Error Message: %s' %(id,err))
@@ -75,7 +122,37 @@ def product_para_group_edit(request):
 			result['para_group_id'] = para_group.id
 		return JsonResponse(result)		
 	else:
-		raise Http404		
+		raise Http404
+		
+@staff_member_required
+@transaction.atomic()
+def product_para_group_delete(request):
+	ctx = {}
+	ctx['system_para'] = System_Para.get_default_system_parameters()
+	ctx['page_name'] = '商品参数组管理'
+	
+	if request.method == 'POST':
+		result = {}
+		result['success'] = False
+		result['message'] = '商品参数组删除失败'
+		
+		
+		try:
+			id_list = request.POST.getlist('is_oper')
+			for id in id_list:
+				para_group = ProductParaGroup.objects.get(id=id)
+				para_group.delete()
+		except Exception as err:
+			logger.info('Can not find para_group which id is [%s]. Create one. \n Error Message: %s' %(id,err))
+			return JsonResponse(result)
+			
+
+		result['success'] = True
+		result['message'] = '商品参数组删除成功'
+		return JsonResponse(result)		
+	else:
+		raise Http404			
+		
 
 @staff_member_required
 @transaction.atomic()

@@ -1,9 +1,20 @@
 # -*- coding:utf-8 -*-
 from django import forms
-from shopcart.models import MyUser,Address,Product,Inquiry,OrderShippment,Email,Article,Express,ExpressType,Category,CustomizeURL,ArticleBusiCategory
+from shopcart.models import MyUser,Address,Product,Inquiry,OrderShippment,Email,Article,Express,ExpressType,Category,CustomizeURL,ArticleBusiCategory,ProductParaGroup,Attribute_Group
 from captcha.fields import CaptchaField
 from django.utils.translation import ugettext as _
 from django.core.exceptions import ValidationError 	
+
+
+class product_sku_group_form(forms.ModelForm):
+	class Meta:
+		model=Attribute_Group
+		fields=('name','code','group_type')
+		
+class product_para_group_form(forms.ModelForm):
+	class Meta:
+		model = ProductParaGroup
+		fields = ('name',)
 		
 class article_busi_category_form(forms.ModelForm):
 	name = forms.CharField(required=False)

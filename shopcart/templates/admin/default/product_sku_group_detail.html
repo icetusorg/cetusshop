@@ -1,0 +1,106 @@
+{% extends "admin/default/content_base.html" %}
+{% block breadcrumbs %}
+<section class="content-header">
+    <h1>编辑参数组</h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+        <li class="active"><a href="#">编辑参数组</a></li>
+    </ol>
+</section>
+{% endblock %}
+
+{% block main %}
+{% load i18n %}
+{% load shopcart_extras %}
+<section class="content">
+    <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box xy-search">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div>
+                                <form method="POST" id="product_sku_group_detail_form">
+                                    <div class="form-group edit-sku-from-div">
+                                        <label>SKU组名称 :</label>
+                                        <input type="text" name="name" value="{{sku_group.name}}" class="form-control">
+                                    </div>
+                                    <div class="form-group edit-sku-from-div">
+                                        <label>SKU组代码（用于区分同名的SKU组） :</label>
+                                        <input type="text" name="code" value="{{sku_group.code}}" class="form-control">
+                                    </div>
+
+
+                                    <div class="form-group edit-sku-from-div">
+                                        <label>SKU类型:</label>
+                                        <div class="btn-group normal product-button-search">
+                                            <button type="button" class="btn btn-default inputBtn"><span
+                                                    class="selected-text">{{sku_group.group_type|is_equal:"image"|yesno:"图片,文字"}}</span></button>
+                                            <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn"
+                                                    data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu" id="selectOption">
+                                                <li class="dropdown-item" data-value="image">图片</li>
+                                                <li class="dropdown-item" data-value="text">文字</li>
+                                            </ul>
+                                            <input type="hidden" class="dropdown-item-input" name="group_type" value="{{sku_group.group_type|is_equal:"image"|yesno:"image,text"}}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group edit-sku-from-div">
+										<input type="hidden" name="sku_group_id" value="{{sku_group.id}}" />
+                                        <button type="button" id="product_sku_group_detail_submit" class="btn btn-primary edit-sku-from-button">保存SKU组</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="box xy-list-product">
+                <div class="box-body  edit-sku-from-projuct">
+                    <h3>SKU项目</h3>
+                    <div class="form-group edit-sku-from-div">
+                        <button type="submit" class="btn btn-primary edit-sku-from-button">新增</button>
+						<button type="submit" class="btn btn-primary edit-sku-from-button">保存</button>
+                    </div>
+                    <div class="box-body no-padding">
+                        <table class="table  edit-sku-from-table">
+                            <tbody>
+                            <!--多余th为了调整表格色块-->
+                            <tr>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <th>SKU项目名称</th>
+								<th>内部代码</th>
+                                <th>图片</th>
+                                <th>序号</th>
+                                <th>操作</th>
+                            </tr>
+							{%for sku in sku_group.attributes.all%}
+                            <tr>
+                                <td><input type="text" value="{{sku.name}}"></td>
+								<td>{{sku.code}}</td>
+                                <td><img src="{{sku.thumb}}" alt=""></td>
+                                <td>{{sku.position}}</td>
+                                <td><a href="#">上传</a> | <a href="#">删除</a></td>
+                            </tr>
+							{%endfor%}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div><!-- /.box -->
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+	{% load staticfiles %}
+{% endblock %}

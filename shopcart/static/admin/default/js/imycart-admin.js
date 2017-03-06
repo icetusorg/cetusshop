@@ -863,6 +863,94 @@ jQuery(".sku_delete_link").click(function(event){
 });
 
 
+//商品参数组管理
+jQuery(".product—para-group-batch-oper").click(function(e){
+	var url = "/admin/product-para-group-";
+	url =  url + $(this).data("method") + "/";
+	
+	id = $(this).data("id");
+	if(id != undefined){
+		$("#checkbox_"+id).prop("checked", true);
+	}
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#product_para_group_batch_form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			if(data.success==true){
+				$('#myModal').on('hidden.bs.modal', function (e) {
+					var newurl = location.href;
+					location.href = newurl;
+				})
+			}
+			$("#myModal").modal('toggle');
+		}
+	});
+});
+
+//商品参数组保存
+jQuery("#product_para_group_detail_submit").click(function(event){
+	event.preventDefault();//阻止A标签跳转
+	var url = "/admin/product-para-group-edit/"
+
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#product_para_group_detail_form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			$('#myModal').on('hidden.bs.modal', function (e) {
+				var url = location.href;
+				location.href = url;//跳转到对应的页面
+			});
+			
+			$("#myModal").modal('toggle');
+			
+		}
+	});
+});
+
+//商品SKU组保存
+jQuery("#product_sku_group_detail_submit").click(function(event){
+	event.preventDefault();//阻止A标签跳转
+	var url = "/admin/product-sku-group-edit/"
+
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#product_sku_group_detail_form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			$('#myModal').on('hidden.bs.modal', function (e) {
+				var url = location.href;
+				location.href = url + "?id=" + data.sku_group_id;
+			});
+			
+			$("#myModal").modal('toggle');
+			
+		}
+	});
+});
+
+
+
 //商品图片管理
 
 //文件上传与相册

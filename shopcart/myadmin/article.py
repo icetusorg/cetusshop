@@ -20,6 +20,55 @@ def get_page_size():
 
 @staff_member_required
 @transaction.atomic()
+def set_image(request):
+	ctx = {}
+	ctx['system_para'] = System_Para.get_default_system_parameters()
+	ctx['page_name'] = '文章图片管理'
+
+	if request.method == 'POST':
+		result = {}
+		result['success'] = False
+		result['message'] = '文章图片信息保存失败'
+		
+		method = request.POST.get('method','')
+		if method == 'set_main':
+			try:
+				article_id = request.POST.get('article_id','')
+				picture_id = request.POST.get('picture_id','')
+				article = Article.objects.get(id=article_id)
+				picture = Album.objects.get(id=picture_id)
+			except Exception as err:
+				logger.info('Can not find article [%s] or picture [%s]. \n Error Message: %s' %(article_id,picture_id,err))
+			
+			article.image = picture.image
+			article.save()	
+			
+			result['success'] = True
+			result['message'] = '文章图片信息保存成功'
+			return JsonResponse(result)
+		elif method == 'delete':
+			picture_id = request.POST.get('picture_id','')
+			picture = None
+			
+			try:
+				picture = Album.objects.get(id=picture_id)
+			except Exception as err:
+				logger.info('Can not find  picture [%s] in Product_Images. \n Error Message: %s' %(picture_id,err))
+			
+			if picture:
+				picture.delete()
+				result['success'] = True
+				result['message'] = '文章图片信息删除成功'
+			else:
+				result['message'] = '文章图片信息删除失败，可能图片已经被删除了。'
+			
+			return JsonResponse(result)
+	else:
+		raise Http404	
+	
+	
+@staff_member_required
+@transaction.atomic()
 def article_make_static(request):
 	ctx = {}
 	ctx['article_list'] = Article.objects.all()

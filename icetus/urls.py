@@ -59,6 +59,8 @@ urlpatterns = patterns("",
 	
 	
 	url(r'^article/(\d+)/$', 'shopcart.article.detail',name='article_detail'),
+	url(r'^article/get-article-images/$', 'shopcart.article.get_article_images',name='article_get_article_images'),
+	
 	url(r'^blog/$', 'shopcart.article.view_blog_list',name='article_view_blog_list'),
 	url(r'^blog/(\d+)/$', 'shopcart.article.view_blog_list',name='article_view_blog_list'),
 	url(r'^captcha/', include('captcha.urls')),
@@ -110,6 +112,9 @@ urlpatterns = patterns("",
 	url('^admin/article-edit/$', 'shopcart.myadmin.article.article_basic_edit',name='admin_article_basic_edit'),
 	url('^admin/article-detail-manage/$', 'shopcart.myadmin.article.article_detail_info_manage',name='admin_article_detail_info_manage'),
 	url('^admin/article-picture-manage/$', 'shopcart.myadmin.article.article_picture_manage',name='admin_article_picture_manage'),
+	url(r'^admin/article-set-image/$', 'shopcart.myadmin.article.set_image',name='admin_article_set_image'),
+
+	
 	
 	url('^admin/article-busi-category-edit/$', 'shopcart.myadmin.article_busi_category.edit',name='admin_article_busi_category_edit'),
 	url('^admin/article-busi-category-list/$', 'shopcart.myadmin.article_busi_category.list',name='admin_article_busi_category_list'),

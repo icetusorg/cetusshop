@@ -74,6 +74,37 @@ def detail(request,id):
 				f.close()
 		return JsonResponse(result_dict)
 		
+def get_article_images(request):
+	if request.is_ajax():
+		result = {}
+		result['success'] = False
+		id = request.POST.get('id')
+		try:
+			article = Article.objects.get(id=id)
+		except Exception as err:
+			logger.error('Can not find article [%s].\n Error Message:%s' % (id,err))
+			result['message'] = 'Can not find article.'
+			return JsonResponse(result)
+			
+		img_list = article.get_image_list()
+		
+		data = []
+		for img in img_list:
+			image = {}
+			image['image'] = img.image
+			image['thumb'] = img.thumb
+			image['id'] = img.id
+			image['alt'] = img.alt_value
+			image['article_id'] = article.id
+			data.append(image)
+		
+		result['success'] = True
+		result['image_list'] = data
+		return JsonResponse(result)
+	else:
+		raise Http404		
+		
+		
 def view_blog_list(request,category_id=None):
 	ctx = {}
 	ctx['system_para'] = get_system_parameters()

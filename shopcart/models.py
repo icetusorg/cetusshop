@@ -905,6 +905,20 @@ class Article(models.Model):
 		from shopcart.functions.article_util_func import get_url
 		return get_url(self)		
 
+	def get_image_list(self):
+		image_list = Album.objects.filter(item_type='article',item_id=self.id)
+		main_image = None
+		for img in image_list:
+			if img.image == self.image:
+				main_image = img
+				
+		image_list = list(image_list)
+		if main_image:
+			image_list.remove(main_image)
+			image_list.insert(0,main_image)
+		
+		return image_list
+		
 	class Meta:
 		verbose_name = '文章'
 		verbose_name_plural = '文章'

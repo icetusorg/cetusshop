@@ -16,84 +16,98 @@
 {% load shopcart_extras %}
 <section class="content">
     <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
-    <div class="col-md-12 add-product add-content active">
-        <div class="item item2">
-            <label>文章名称<span class="point">*</span>：</label>
-            <input type="text" value="{{article.title}}" name="title" class="form-control ">
+    <div class="col-md-12 add-product ">
+        <ul class="tag">
+            <li class="active" data="tag_basic_info">基本信息</li>
+            <li data="tag_detail_info">详细信息</li>
+        </ul>
+        <div class="add-content active" id="tag_basic_info">
+            <div class="item item2">
+				<label>文章名称<span class="point">*</span>：</label>
+				<input type="text" value="{{article.title}}" name="title" class="form-control ">
+			</div>
+			<div class="item btn-item btn-item2">
+				<label>自定义URL<span class="point">*</span>：</label><input type="text" name="static_file_name" value="{{article.static_file_name|default:""}}" class="form-control">
+				<button type="button" id="static_file_name_advice" class="btn btn-primary">推荐</button>
+			</div>
+			<div class="item item2"><label>关键字：</label><input type="text" name="keywords" value="{{article.keywords|default:""}}" class="form-control"></div>
+			<div class="item item-area item2"><label>简要描述：</label><textarea type="text" name="short_desc" class="form-control" >{{article.short_desc|default:""}}</textarea>
+			</div>
+			<div class="item add-product-tree">
+				<label>分类：（<a href="#">新增分类</a>）</label>
+				<div class="btn-group normal">
+					<button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{article.busi_category}}</span>
+					</button>
+					<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown"
+							aria-expanded="false">
+						<span class="caret"></span>
+						<span class="sr-only">Toggle Dropdown</span>
+					</button>
+					<ul class="dropdown-menu" role="menu" id="category-selection">
+						{%for cat in category_list%}
+						<li class="dropdown-item" data-value="{{cat.id}}">{{cat.name}}</li>
+						{%endfor%}
+					</ul>
+					<input class="dropdown-item-input" type="hidden" name="busi_category" value="{{article.busi_category}}">
+				</div>
+			</div>
+			<div class="item item2"><label>排序号：</label><input type="text" class="form-control"></div>
+			<div class="item">
+				<label>自定义模板：</label>
+	
+				<div class="btn-group normal">
+					<button type="button" class="btn btn-default inputBtn"><span class="selected-text">请选择模板</span>
+					</button>
+					<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown"
+							aria-expanded="false">
+						<span class="caret"></span>
+						<span class="sr-only">Toggle Dropdown</span>
+					</button>
+					<ul class="dropdown-menu" role="menu" id="category-selection">
+						<li class="dropdown-item" data-value="">模板1</li>
+						<li class="dropdown-item" data-value="">模板2</li>
+						<li class="dropdown-item" data-value="">模板3</li>
+					</ul>
+					<input class="dropdown-item-input" type="hidden" name="attribute-group" value="">
+				</div>
+			</div>
         </div>
-        <div class="item btn-item btn-item2">
-            <label>自定义URL<span class="point">*</span>：</label><input type="text" name="static_file_name" value="{{article.static_file_name|default:""}}" class="form-control">
-            <button type="button" id="static_file_name_advice" class="btn btn-primary">推荐</button>
-        </div>
-        <div class="item item2"><label>关键字：</label><input type="text" name="keywords" value="{{article.keywords|default:""}}" class="form-control"></div>
-        <div class="item item-area item2"><label>简要描述：</label><textarea type="text" name="short_desc" class="form-control" >{{article.short_desc|default:""}}</textarea>
-        </div>
-        <div class="item add-product-tree">
-            <label>分类：（<a href="#">新增分类</a>）</label>
-            <div class="btn-group normal">
-                <button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{article.busi_category}}</span>
-                </button>
-                <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown"
-                        aria-expanded="false">
-                    <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                </button>
-                <ul class="dropdown-menu" role="menu" id="category-selection">
-					{%for cat in category_list%}
-                    <li class="dropdown-item" data-value="{{cat.id}}">{{cat.name}}</li>
-					{%endfor%}
-                </ul>
-                <input class="dropdown-item-input" type="hidden" name="busi_category" value="{{article.busi_category}}">
-            </div>
-        </div>
-        <div class="item item2"><label>排序号：</label><input type="text" class="form-control"></div>
-        <div class="item">
-            <label>自定义模板：</label>
 
-            <div class="btn-group normal">
-                <button type="button" class="btn btn-default inputBtn"><span class="selected-text">请选择模板</span>
-                </button>
-                <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown"
-                        aria-expanded="false">
-                    <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                </button>
-                <ul class="dropdown-menu" role="menu" id="category-selection">
-                    <li class="dropdown-item" data-value="">模板1</li>
-                    <li class="dropdown-item" data-value="">模板2</li>
-                    <li class="dropdown-item" data-value="">模板3</li>
-                </ul>
-                <input class="dropdown-item-input" type="hidden" name="attribute-group" value="">
-            </div>
-        </div>
-
-        <div class="item add-product-tree article-add-title">
-            <h2>文章主图：</h2>
-            <button type="button" class="btn btn-primary cd-popup-trigger" data-type="article" data-id="{{article.id}}">添加主图</button>
-        </div>
-        <div class="item product-images">
-            <div class="images article-images-list col-md-1">
-                <a href="images/product.jpg" target="new"><img src="images/product.jpg"></a>
-                <p>feedoioaergrgrgr.jpg</p>
-                <a href="###">预览</a> | <a href="###" class="point">删除</a>
-            </div>
-        </div>
-        <div class="item item-area">
-            <label>详细描述:</label>
-        </div>
-		<div class="item item-area">
-			<textarea type="text" id="article_content_editor"  name="content" class="form-control">{{article.content|default:""}}</textarea>
-		</div>
-
-        <div class="submit-item item">
-            <button type="button" class="btn btn-primary addPSubmit">提交</button>
+        <div class="add-content" id="tag_detail_info">
+			<div class="item add-product-tree article-add-title">
+				<h2>文章主图：</h2>
+				<button type="button" class="btn btn-primary cd-popup-trigger" data-type="article" data-id="{{article.id}}">添加主图</button>
+			</div>
+			<div id="article_main_picture_show" class="item product-images ">
+						{% for image in article.get_image_list %}
+							<div class="images">
+								<a href='{{image.image}}' target="_blank"><img src='{{image.thumb}}' alt='{{image.alt_value}}'></a>
+								<div class="image-operaion">
+									<a href="#" class="set-picture-attr" data-method="delete" data-id="{{image.id}}" data-article-id="{{article.id}}" data-image-type="article">删除 </a> |
+									<a href="#" class="set-picture-attr" data-method="set_main" data-id="{{image.id}}" data-article-id="{{article.id}}" data-image-type="article">主图 </a>
+								</div>
+							</div>
+						{% empty %}
+							<p>There is no image at all.</p>
+						{% endfor %}
+			</div>
+			<div class="item item-area">
+				<label>详细描述:</label>
+			</div>
+			<div class="item item-area">
+				<textarea type="text" id="article_content_editor"  name="content" class="form-control">{{article.content|default:""}}</textarea>
+			</div>
+	
+			<div class="submit-item item">
+				<button type="button" class="btn btn-primary addPSubmit">提交</button>
+			</div>
         </div>
     </div>
-    <!--弹出-->
-	{% include 'admin/default/album_modal_win.html' %}
-    <!-- cd-popup-container -->
-    </div>
+
 </section>
+{% include 'admin/default/album_modal_win.html' %}
+
+
 {% endblock %}
 {% block scripts %}
 	{% load staticfiles %}
@@ -135,5 +149,47 @@
 			$("input[name=static_file_name]").val(url);
 		});
 	});
+	
+	function reload_picture_list(){
+			//从服务器查询图片列表
+			
+		var url = "/article/get-article-images/";
+		var postdata = {"id":{{article.id}}};
+			
+		$.ajax({
+			cache: false,
+			type: "POST",
+			url:url,
+			data:postdata,
+			async: false,
+			error: function(request) {
+				alert("System error");
+			},
+			success: function(data) {
+				if(data.success==true){
+					//逐个插入图片
+					var tmpHtml = "";
+					$.each( data.image_list, function( key, val ) {
+						//console.log( key, val, this );
+						console.log(this.image);
+						tmpHtml = tmpHtml
+						+ '<div class="images">'
+						+	'<a href="' + this.image + '" target="_blank"><img src="' + this.thumb + '" alt="' + this.alt + '"></a>'
+						+	'<div class="image-operaion">'
+						+		'<a href="#" class="set-picture-attr" data-method="delete" data-id="' + this.id + '" data-article-id="'+this.article_id+'" data-image-type="article">删除 </a> |'
+						+		'<a href="#" class="set-picture-attr" data-method="set_main" data-id="' + this.id + '" data-article-id="'+this.article_id+'" data-image-type="article">主图 </a>'
+						+	'</div>'
+						+ '</div>';
+					});
+					$("#article_main_picture_show").html(tmpHtml);
+				}
+			}
+		});
+	};
+	
+	function album_dblclick_callback(id){
+		
+	};
+	
 	</script>
 {% endblock %}

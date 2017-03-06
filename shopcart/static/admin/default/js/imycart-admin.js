@@ -954,7 +954,7 @@ jQuery("#product_sku_group_detail_submit").click(function(event){
 //商品图片管理
 
 //文件上传与相册
-//设为主图
+//文章类型的设为主图
 jQuery("#product_main_picture_show").on('click',".set-picture-attr",function(event){
 	event.preventDefault();
 	var img_url = $(this).data("image-url");
@@ -986,6 +986,36 @@ jQuery("#product_main_picture_show").on('click',".set-picture-attr",function(eve
 	});
 });
 
+jQuery("#article_main_picture_show").on('click',".set-picture-attr",function(event){
+	event.preventDefault();
+	var img_url = $(this).data("image-url");
+	var type = $(this).data("image-type");
+	var article_id = $(this).data("article-id");
+	var picture_id = $(this).data("id");
+	method = $(this).data("method");
+	
+	var url = "";
+	if (type = "article"){
+		url = "/admin/article-set-image/";
+	}
+	
+	var postdata = {"article_id":article_id,"picture_id":picture_id,"method":method};
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:postdata,
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);			
+			$("#myModal").modal('toggle');
+			reload_picture_list();
+		}
+	});
+});
 
 
 

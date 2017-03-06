@@ -68,7 +68,7 @@ def file_upload(request,item_type,item_id):
 	ctx['host_item_id'] = item_id
 	
 	if request.method == 'GET':
-
+		ctx['item_type'] = item_type
 		return render(request,System_Config.get_template_name('admin') + '/file_upload.html',ctx)
 	else:
 		ctx['result_message'] = '文件上传成功'
@@ -110,7 +110,7 @@ def file_upload(request,item_type,item_id):
 				item = Article.objects.get(id=item_id)
 			except:
 				raise Http404
-			filenames = handle_uploaded_file(request.FILES['upload'],item_type,item_id,request.POST['filename_type'],manual_name,same_name_handle,alt_value)
+			filenames = handle_uploaded_file(request.FILES['upload'],item_type,item_id,request.POST['filename_type'],manual_name,same_name_handle)
 			if filenames['upload_result'] == False:
 				#return HttpResponse(filenames['upload_error_msg'])
 				ctx['result_message'] = filenames['upload_error_msg']

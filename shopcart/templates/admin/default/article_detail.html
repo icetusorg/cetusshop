@@ -21,56 +21,68 @@
             <li class="active" data="tag_basic_info">基本信息</li>
             <li data="tag_detail_info">详细信息</li>
         </ul>
+
+		
         <div class="add-content active" id="tag_basic_info">
-            <div class="item item2">
-				<label>文章名称<span class="point">*</span>：</label>
-				<input type="text" value="{{article.title}}" name="title" class="form-control ">
-			</div>
-			<div class="item btn-item btn-item2">
-				<label>自定义URL<span class="point">*</span>：</label><input type="text" name="static_file_name" value="{{article.static_file_name|default:""}}" class="form-control">
-				<button type="button" id="static_file_name_advice" class="btn btn-primary">推荐</button>
-			</div>
-			<div class="item item2"><label>关键字：</label><input type="text" name="keywords" value="{{article.keywords|default:""}}" class="form-control"></div>
-			<div class="item item-area item2"><label>简要描述：</label><textarea type="text" name="short_desc" class="form-control" >{{article.short_desc|default:""}}</textarea>
-			</div>
-			<div class="item add-product-tree">
-				<label>分类：（<a href="#">新增分类</a>）</label>
-				<div class="btn-group normal">
-					<button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{article.busi_category}}</span>
-					</button>
-					<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown"
-							aria-expanded="false">
-						<span class="caret"></span>
-						<span class="sr-only">Toggle Dropdown</span>
-					</button>
-					<ul class="dropdown-menu" role="menu" id="category-selection">
-						{%for cat in category_list%}
-						<li class="dropdown-item" data-value="{{cat.id}}">{{cat.name}}</li>
-						{%endfor%}
-					</ul>
-					<input class="dropdown-item-input" type="hidden" name="busi_category" value="{{article.busi_category}}">
+			<form id="article-basic-info-form">
+				<div class="item item2">
+					<label>文章名称<span class="point">*</span>：</label>
+					<input type="text" value="{{article.title}}" name="title" class="form-control ">
 				</div>
-			</div>
-			<div class="item item2"><label>排序号：</label><input type="text" class="form-control"></div>
-			<div class="item">
-				<label>自定义模板：</label>
-	
-				<div class="btn-group normal">
-					<button type="button" class="btn btn-default inputBtn"><span class="selected-text">请选择模板</span>
-					</button>
-					<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown"
-							aria-expanded="false">
-						<span class="caret"></span>
-						<span class="sr-only">Toggle Dropdown</span>
-					</button>
-					<ul class="dropdown-menu" role="menu" id="category-selection">
-						<li class="dropdown-item" data-value="">模板1</li>
-						<li class="dropdown-item" data-value="">模板2</li>
-						<li class="dropdown-item" data-value="">模板3</li>
-					</ul>
-					<input class="dropdown-item-input" type="hidden" name="attribute-group" value="">
+				<div class="item btn-item btn-item2">
+					<label>自定义URL<span class="point">*</span>：</label><input type="text" name="static_file_name" value="{{article.static_file_name|default:""}}" class="form-control">
+					<button type="button" id="static_file_name_advice" class="btn btn-primary">推荐</button>
 				</div>
-			</div>
+				<div class="item item2"><label>关键字：</label><input type="text" name="keywords" value="{{article.keywords|default:""}}" class="form-control"></div>
+				<div class="item item-area item2"><label>简要描述：</label><textarea type="text" name="short_desc" class="form-control" >{{article.short_desc|default:""}}</textarea>
+				</div>
+				<div class="item add-product-tree">
+					<label>分类：（<a href="#">新增分类</a>）</label>
+					<div class="btn-group normal">
+						<button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{article.busi_category}}</span>
+						</button>
+						<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown"
+								aria-expanded="false">
+							<span class="caret"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+						</button>
+						<ul class="dropdown-menu" role="menu" id="category-selection">
+							{%for cat in category_list%}
+							<li class="dropdown-item" data-value="{{cat.id}}">{{cat.name}}</li>
+							{%endfor%}
+						</ul>
+						<input class="dropdown-item-input" type="hidden" name="busi_category" value="{{article.busi_category}}">
+					</div>
+				</div>
+				<div class="item item2"><label>排序号：</label><input type="text" name="sort_order" value="{{article.sort_order}}" class="form-control"></div>
+				<div class="item">
+					<label>自定义模板：</label>
+		
+					<div class="btn-group normal">
+						<button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{article.detail_template|default:"无需自定义"}}</span>
+						</button>
+						<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown"
+								aria-expanded="false">
+							<span class="caret"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+						</button>
+						<ul class="dropdown-menu" role="menu" id="category-selection">
+							<li class="dropdown-item" data-value="">无需自定义</li>
+							{%for template in custmize_template%}
+							<li class="dropdown-item" data-value="{{template}}">{{template}}</li>
+							{%endfor%}
+						</ul>
+						<input class="dropdown-item-input" type="hidden" name="detail_template" value="{{article.detail_template}}">
+					</div>
+				</div>
+				<div class="submit-item item">
+					<input type="hidden" name="page_title" value=""/>
+					<input type="hidden" name="breadcrumbs" value=""/>
+					<input type="hidden" name="id" value="{{article.id}}"/>
+					<button type="button" id="article-basic-info-submit-btn" class="btn btn-primary addPSubmit">保存</button>
+				</div>	
+			</form>
+
         </div>
 
         <div class="add-content" id="tag_detail_info">
@@ -91,16 +103,19 @@
 							<p>There is no image at all.</p>
 						{% endfor %}
 			</div>
-			<div class="item item-area">
-				<label>详细描述:</label>
-			</div>
-			<div class="item item-area">
-				<textarea type="text" id="article_content_editor"  name="content" class="form-control">{{article.content|default:""}}</textarea>
-			</div>
-	
-			<div class="submit-item item">
-				<button type="button" class="btn btn-primary addPSubmit">提交</button>
-			</div>
+			<form id="article-detail-info-form">
+				<div class="item item-area">
+					<label>详细描述:</label>
+				</div>
+				<div class="item item-area">
+					<textarea type="text" id="article_content_editor"  name="content" class="form-control">{{article.content|default:""}}</textarea>
+				</div>
+		
+				<div class="submit-item item">
+					<input type="hidden" name="id" value="{{article.id}}"/>
+					<button type="button" id="article-detail-info-submit-btn" class="btn btn-primary addPSubmit">提交</button>
+				</div>
+			</form>
         </div>
     </div>
 

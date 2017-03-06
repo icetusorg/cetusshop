@@ -87,21 +87,22 @@ class product_detail_info_form(forms.ModelForm):
 		fields = ('market_price','quantity','min_order_quantity','weight','cuboid_long','cuboid_width','cuboid_height','detail_template','description')		
 		
 class article_basic_info_form(forms.ModelForm):
-	class Meta:
-		model = Article
-		fields = ('title','category')	
-		
-class article_detail_info_form(forms.ModelForm):
-	content = forms.CharField(required=False)
 	keywords = forms.CharField(required=False)
 	page_title = forms.CharField(required=False)
+	sort_order = forms.CharField(required=False)
 	short_desc = forms.CharField(required=False)
 	static_file_name = forms.CharField(required=False)
 	detail_template = forms.CharField(required=False)
 	breadcrumbs = forms.CharField(required=False)
 	class Meta:
+		model = Article
+		fields = ('title','sort_order','keywords','page_title','short_desc','static_file_name','breadcrumbs','detail_template')	
+		
+class article_detail_info_form(forms.ModelForm):
+	content = forms.CharField(required=False)
+	class Meta:
 		model = Product
-		fields = ('content','keywords','page_title','short_desc','static_file_name','breadcrumbs','detail_template')		
+		fields = ('content',)		
 		
 
 class order_shippment_form(forms.ModelForm):		

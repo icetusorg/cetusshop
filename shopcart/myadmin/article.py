@@ -189,10 +189,27 @@ def article_basic_edit(request):
 			form = article_basic_info_form(request.POST,instance=article)
 		except:
 			form = article_basic_info_form(request.POST)
-			logger.info('New product to store.')
+			logger.info('New article to store.')
 		
+		
+
 		if form.is_valid():
 			article = form.save()
+			
+			category_id = request.POST.get('busi_category')
+			try:
+				category = ArticleBusiCategory.objects.get(id=category_id)
+			except Exception as err:
+				logger.error('Can not find article_busi_category [%s].\nError Message:%s' % (category_id,err))
+				result['success'] = False
+				result['message'] = '文章保存失败'
+				result['data'] = {}
+				return JsonResponse(result)
+				
+				
+			article.busi_category = category
+			article.save()
+			
 			result['success'] = True
 			result['message'] = '文章保存成功'
 			data = {}
@@ -202,6 +219,7 @@ def article_basic_edit(request):
 			result['success'] = False
 			result['message'] = '文章保存失败'
 			result['data'] = {}
+
 		return JsonResponse(result)
 	else:
 		raise Http404	

@@ -1,0 +1,65 @@
+{% extends "admin/default/content_base.html" %}
+
+{% block main %}
+{% load i18n %}
+
+{% load staticfiles %}
+{% load shopcart_extras %}
+<div class="modal popup-content order-detail-alert-body" style="display: block">
+    <div class="modal-content modal-price">
+        <div class="modal-header">
+            <h4 class="modal-title">调整价格</h4>
+        </div>
+        <div class="modal-body ">
+            <input type="text" id="order_price_adjusment">
+			<button type="button" id="order-price-adjusment-btn" class="btn btn-primary">确定</button>
+            <p>请填写你要改动的价格，正数为价格上浮，负数为价格下调</p>
+        </div>
+        <div class="modal-footer">
+			<input type="hidden" id="oder_id_input" value="{{order_id}}" />
+            <!--<button type="button" id="order-price-adjusment-btn" class="btn btn-primary">确定</button>-->
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+	{% load staticfiles %}
+<script>
+    $(window.parent.document).find("#common-pop-frame").load(function(){
+        var main = $(window.parent.document).find("#common-pop-frame");
+        var thisheight = $(document).height()+30;
+        main.height(thisheight);
+    });
+	
+	$(document).ready(function($){
+		//点击确定按钮
+		jQuery("#order-price-adjusment-btn").click(function(){
+			var url = "/admin/order-price-adjusment/";
+			var order_id = $("#oder_id_input").val();
+			var price = $("#order_price_adjusment").val();
+			
+			var postdata = {"price_adjusment":price,"order_id":order_id};
+		
+			$.ajax({
+				cache: false,
+				type: "POST",
+				url:url,
+				data:postdata,
+				async: false,
+				error: function(request) {
+					alert("System error");
+				},
+				success: function(data) {
+					$("#infoMessage").html(data.message);
+					$('#myModal').on('hidden.bs.modal', function (e) {
+						window.parent.price_adjusment_popwin_callback();
+					});
+					
+					$("#myModal").modal('toggle');
+					
+				}
+			});
+		});
+	});
+</script>
+{% endblock %}

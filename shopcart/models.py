@@ -632,6 +632,8 @@ class Order(models.Model):
 	ORDER_STATUS_PAYED_SUCCESS = '10'
 	# 订单已备货
 	ORDER_STATUS_COLLECT_SUCCESS = '15'
+	# 订单部分发货
+	ORDER_STATUS_PART_SHIPPING = '18'
 	# 订单已发货
 	ORDER_STATUS_SHIPPING = '20'
 	# 订单已完成
@@ -648,6 +650,7 @@ class Order(models.Model):
 		(ORDER_STATUS_PAYED_UNCONFIRMED,'已付款未确认'),
 		(ORDER_STATUS_PAYED_SUCCESS,'已付款'),
 		(ORDER_STATUS_COLLECT_SUCCESS,'已备货'),
+		(ORDER_STATUS_PART_SHIPPING,'部分发货'),
 		(ORDER_STATUS_SHIPPING,'已发货'),
 		(ORDER_STATUS_COMPLETE,'已完成'),
 		(ORDER_STATUS_CANCLED,'已取消'),
@@ -682,6 +685,7 @@ class Order(models.Model):
 	pay_name = models.CharField(max_length = 100,default='',blank=True)
 	products_amount = models.FloatField(default=0.00)
 	shipping_fee = models.FloatField(default=0.00)
+	price_adjusment = models.FloatField(default=0.00,verbose_name="管理员调整价格")
 	discount = models.FloatField(default=0.00)
 	order_amount = models.FloatField(default=0.00,verbose_name='订单总价')
 	money_paid = models.FloatField(default=0.00)
@@ -694,6 +698,11 @@ class Order(models.Model):
 
 	def __str__(self):
 		return self.order_number
+		
+	def calculate_total_price(self):
+		price = self.products_amount + self.shipping_fee + self.discount + self.price_adjusment
+		self.order_amount = price
+		return self.order_amount
 	
 	def get_human_status(self):
 		dict = {'0':'Wait For Payment','10':'Wait For Shipment','15':'Wait For Shippment','20':'Shipping','30':'Complete','40':'Canceled','90':'Payment Error','99':'Closed'}

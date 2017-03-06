@@ -25,24 +25,9 @@ jQuery(document).ready(function($){
 			$("#album_trigger_sku_id").val("");
 		}
 		
-		
 		$("#file_upload_iframe").attr("src",'/admin/file-upload/' + type +'/' + id + '/');
 		$("#picture_album_iframe").attr("src",'/admin/file-list/' + type +'/' + id + '/'); 
-		$('.cd-popup').addClass('is-visible');
-	});
-
-	//close popup
-	$('.cd-popup').on('click', function(event){
-		if( $(event.target).is('.cd-popup-close') || $(event.target).is('.cd-popup') || $(event.target).is('.cd-popup-close-btn') ) {
-			event.preventDefault();
-			$(this).removeClass('is-visible');
-		}
-	});
-	//close popup when clicking the esc keyboard button
-	$(document).keyup(function(event){
-		if(event.which=='27'){
-			$('.cd-popup').removeClass('is-visible');
-		}
+		$('.cd-popup.album-modal-win').addClass('is-visible');
 	});
 	
 	$('#upload_picture_album a').click(function (e) {

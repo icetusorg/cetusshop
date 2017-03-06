@@ -98,6 +98,23 @@ function imycartAjaxCallWithCallback(url,object,callback,triggerControl,extraInf
 
 //公共方法
 
+//通用弹出窗口
+
+jQuery(".common-popup-trigger").click(function () {
+    $("#common-pop-frame").attr("src", $(this).attr("data-target-url"));    // 设定当前框架iframe 的地址为 该链接地址
+	$('.cd-popup.common-pop-win').addClass('is-visible');
+});
+
+//close popup
+jQuery('.cd-popup').on('click', function(event){
+	if( $(event.target).is('.cd-popup-close') || $(event.target).is('.cd-popup') || $(event.target).is('.cd-popup-close-btn') ) {
+		event.preventDefault();
+		$(this).removeClass('is-visible');
+	}
+});
+
+
+
 //下拉菜单选项切换
 jQuery(".dropdown-item").click(function(){
 	var select_text = $(this).text();	
@@ -290,8 +307,8 @@ function modify_order_status(order_status,order_id){
 			$("#infoMessage").html(data.message);
 			$('#myModal').on('hidden.bs.modal', function (e) {
 				var url = location.href;
-				var newurl = changeURLArg(url,"tab_name","tag_remark");
-				location.href = newurl;//跳转到对应的页面
+				//var newurl = changeURLArg(url,"tab_name","tag_remark");
+				location.href = url;//跳转到对应的页面
 			});
 			
 			$("#myModal").modal('toggle');
@@ -336,32 +353,6 @@ jQuery(".tag li").on("click", function () {
     $("#" + contentId).addClass("active");
 });
 
-//发货
-jQuery("#shippment_submit_btn").click(function(){
-	var url = "/admin/order-shippment-manage/";
-
-	$.ajax({
-		cache: false,
-		type: "POST",
-		url:url,
-		data:$("#shippment_form").serialize(),
-		async: false,
-		error: function(request) {
-			alert("System error");
-		},
-		success: function(data) {
-			$("#infoMessage").html(data.message);
-			$('#myModal').on('hidden.bs.modal', function (e) {
-				var url = location.href;
-				var newurl = changeURLArg(url,"tab_name","tag_shippment");
-				location.href = newurl;//跳转到对应的页面
-			});
-			
-			$("#myModal").modal('toggle');
-			
-		}
-	});	
-});
 
 //发货记录删除
 jQuery(".delete-ship-record").click(function(){

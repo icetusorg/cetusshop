@@ -154,6 +154,8 @@ def admin_order_status(value,arg):
 		return '已下单'
 	elif value == '10':	
 		return '已付款'
+	elif value == '18':
+		return '部分发货'
 	elif value == '20':
 		return '已发货'
 	elif value == '30':

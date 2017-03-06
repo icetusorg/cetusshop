@@ -34,27 +34,7 @@ def detail(request,id=None):
 		order = Order.objects.get(id=id)
 	except Exception as err:
 		logger.error("Can not find order which id is %s" % id)
-		raise Http404
-	
-	#快递列表
-	express_list = Express.objects.filter(is_in_use=True).filter(is_delete=False)
-	express_type_list = ExpressType.objects.filter(is_in_use=True).filter(is_delete=False)
-	ctx['express_type_list'] = express_type_list
-	
-	#logger.debug('express_id:%s' % order.express_type_id)
-	
-	express_list_result = express_list
-	if order.express_type_id != 0 :
-		try:
-			logger.debug("1.1")
-			express_list_result = express_list.filter(express_type=order.express_type_id)
-			logger.debug("1.2 : %s " % express_list_result)
-		except Exception as err:
-			logger.debug('1.3 : %s ' % err)
-			
-			
-	ctx['express_list'] = express_list_result
-	
+		raise Http404	
 	
 	ctx['order'] = order
 	return render(request,System_Config.get_template_name('admin') + '/order_detail.html',ctx)
@@ -157,6 +137,14 @@ def remark_add(request):
 			result_dict['success'] = False
 			result_dict['message'] = '订单备注保存失败'
 		return JsonResponse(result_dict)
+	else:
+		ctx = {}
+		ctx['system_para'] = get_system_parameters()
+		ctx['page_name'] = '发货管理'
+		
+		order_id = request.GET.get('order_id','')
+		ctx['order_id'] = order_id
+		return render(request,System_Config.get_template_name('admin') + '/order_remark.html',ctx)
 		
 @staff_member_required
 @transaction.atomic()		
@@ -192,7 +180,11 @@ def ship_out(request):
 			order_shippment.express = express
 			order_shippment.save()
 			#修改订单状态
-			order.status = Order.ORDER_STATUS_SHIPPING
+			is_all_shipped = request.POST.get('is_all_shipped','true')
+			if is_all_shipped == 'false':
+				order.status = Order.ORDER_STATUS_PART_SHIPPING
+			else:	
+				order.status = Order.ORDER_STATUS_SHIPPING
 			order.save()
 			
 			result_dict['success'] = True
@@ -202,6 +194,72 @@ def ship_out(request):
 			result_dict['success'] = False
 			result_dict['message'] = '表单填写的内容不合法，请检查。'
 			return JsonResponse(result_dict)
+	else:
+		ctx = {}
+		ctx['system_para'] = get_system_parameters()
+		ctx['page_name'] = '发货管理'
+		
+		order_id = request.GET.get('order_id','')
+		try:
+			order = Order.objects.get(id=order_id)
+		except Exception as err:
+			logger.error('Can not find order [%s]. \n Error Message:%s' %(order_id,err))
+			raise Http404
+			
+		#快递列表
+		express_list = Express.objects.filter(is_in_use=True).filter(is_delete=False)
+		express_type_list = ExpressType.objects.filter(is_in_use=True).filter(is_delete=False)
+		ctx['express_type_list'] = express_type_list	
+		
+		express_list_result = express_list
+		if order.express_type_id != 0 :
+			try:
+				logger.debug("1.1")
+				express_list_result = express_list.filter(express_type=order.express_type_id)
+				logger.debug("1.2 : %s " % express_list_result)
+			except Exception as err:
+				logger.debug('1.3 : %s ' % err)
+				
+				
+		ctx['express_list'] = express_list_result	
+			
+		ctx['order'] = order
+		return render(request,System_Config.get_template_name('admin') + '/order_shippment_detail.html',ctx)
+
+
+@staff_member_required
+@transaction.atomic()		
+def price_adjusment(request):
+	result_dict = {}
+	if request.method == 'POST':
+		order_id = request.POST.get('order_id','')
+		price = request.POST.get('price_adjusment','0')
+		
+		logger.debug('price_adjusment:%s' % price)
+		
+		try:
+			order = Order.objects.get(id=order_id)
+			price = float(price)
+		except Exception as err:
+			logger.error('Can not find order [%s] \n Error Message:%s' %(order_id,err))
+			result_dict['success'] = False
+			result_dict['message'] = '价格调整失败'
+			return JsonResponse(result_dict)
+		
+		
+		order.price_adjusment = price
+		order.calculate_total_price()
+		order.save()
+		result_dict['success'] = True
+		result_dict['message'] = '价格调整成功'
+		return JsonResponse(result_dict)
+	else:
+		ctx = {}
+		ctx['system_para'] = get_system_parameters()
+		ctx['page_name'] = '价格调整'
+		ctx['order_id'] = request.GET.get('order_id')
+		return render(request,System_Config.get_template_name('admin') + '/order_price_adjusment.html',ctx)
+			
 			
 
 @staff_member_required

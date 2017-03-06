@@ -96,6 +96,13 @@ def file_upload(request,item_type,item_id):
 			
 			if item_type == 'product':
 				pi = Product_Images.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],product=item,sort=sort,is_show_in_product_detail=is_show,alt_value=alt_value)
+				'''
+				如果改商品原来没有图片，则自动把第一张作为主图
+				'''
+				if not item.image:
+					item.image = pi.image
+					item.thumb = pi.thumb
+					item.save()
 			else:
 				ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id,alt_value=alt_value)
 		elif item_type == 'article':
@@ -111,6 +118,14 @@ def file_upload(request,item_type,item_id):
 		
 			logger.debug('Upload success!!!')
 			ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id,alt_value=alt_value)
+			'''
+			如果改文章原来没有图片，则自动把第一张作为主图
+			'''
+			if not item.image:
+				item.image = ai.image
+				item.thumb = ai.thumb
+				item.save()
+			
 			logger.debug('ai success!!!')
 		else:
 			raise Http404

@@ -80,6 +80,7 @@
                        <div class="carts-end">
                            <h4><span>Subtotal</span><span>${{order.products_amount|floatformat:"2"}}</span></h4>
                            <h4><span>Shipping & Handling</span><span>${{order.shipping_fee|floatformat:"2"}}</span></h4>
+						   <h4><span>Discount</span><span>${{order.price_adjusment|floatformat:"2"}}</span></h4>
                            <h3><span>Grand Total</span><span>${{order.order_amount|floatformat:"2"}}</span></h3>
                        </div>
 

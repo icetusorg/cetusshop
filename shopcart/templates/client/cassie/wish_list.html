@@ -28,7 +28,7 @@
 								<div class="carts-item" id="product-list-top-div-{{wish.id}}">
 									<div class="carts-goods-img"><a href="{{wish.product.get_url}}"><img src="{{wish.product.thumb}}" alt="{{wish.product.name}}"></a></div>
 									<div class="carts-goods-name"><div><a href="{{wish.product.get_url}}">{{wish.product.name}}</a></div></div>
-									<div class="carts-goods-price">${{wish.product.price}}</div>
+									<div class="carts-goods-price">${{wish.product.get_price}}</div>
 									<div class="carts-goods-move">
 										<a class="remove-from-wishlist" data-wishlistid="{{wish.id}}" data-top-div-id="product-list-top-div-{{wish.id}}" name="remove-from-wishlist" href="#"><span class="glyphicon glyphicon-remove cartmoveico"></span></a>
 									</div>

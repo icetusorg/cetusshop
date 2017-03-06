@@ -240,9 +240,9 @@ class Product(models.Model):
 				logger.debug('Find the main image. Remove it to top.')
 				main_image = img
 				break
-
-		image_list.remove(main_image)
-		image_list.insert(0,main_image)
+		if main_image:
+			image_list.remove(main_image)
+			image_list.insert(0,main_image)
 			
 		if method == 'single':
 			return image_list[0]

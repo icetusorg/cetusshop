@@ -415,7 +415,7 @@
 			//从服务器查询图片列表
 			
 		var url = "/product/get-product-images/main/";
-		var postdata = {"id":"2"};
+		var postdata = {"id":{{product.id}}};
 			
 		$.ajax({
 			cache: false,

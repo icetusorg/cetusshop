@@ -957,7 +957,6 @@ ul, li, dl, ol {
 .modal-price p{
     font-size: 14px!important;
     color: #333!important;
-    width: 180px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 0px;
@@ -1792,7 +1791,16 @@ iframe {
 .user-table-list tr td:nth-child(9) {
     width: 20%;
 }
-
+.cd-popup-container iframe{
+    width: 100%;
+    height: 560px;
+}
+.modal-content{
+    height: 560px;
+}
+.modal-header{
+    height: 20%;
+}
 .cd-popup-container-user {
     width: 450px !important;
 }
@@ -2189,7 +2197,16 @@ iframe {
     font-size: 12px;
     color: #3f92fa;
 }
-
+.item-product-image{
+    height: 65px!important;
+}
+#test_btn{
+    border-radius: 3px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border: 1px solid #3c8dbc;
+    background-color: #3c8dbc;
+}
 .item-hint {
     margin-top: 0px !important;
     color: #888888 !important;
@@ -2695,6 +2712,7 @@ iframe {
     font-size: 18px;
     color: #333;
     margin-bottom: 0px;
+    text-align: center;
 }
 
 .order-detail-pop-btn {
@@ -2726,7 +2744,7 @@ Main components
 
 @media only screen and (min-width: 1170px) {
     .cd-popup-trigger {
-        margin: 6em auto;
+        /*margin: 6em auto;*/
     }
 }
 

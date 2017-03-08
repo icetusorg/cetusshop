@@ -188,12 +188,28 @@ def article_basic_edit(request):
 			article = Article.objects.get(id=request.POST['id'])
 			form = article_basic_info_form(request.POST,instance=article)
 		except:
+			article = None
 			form = article_basic_info_form(request.POST)
 			logger.info('New article to store.')
 		
 		
+		
 
 		if form.is_valid():
+			#判断自定义文件名是否重复
+			url = form.cleaned_data['static_file_name']
+			if url:
+				try:
+					a = Article.objects.get(static_file_name=url)
+				except Exception as err:
+					a = None
+					
+				if a and a != article:
+					#能找到，说明重名了
+					result['success'] = False
+					result['message'] = '自定义URL与%s商品重复！' % a.title
+					return JsonResponse(result)
+		
 			article = form.save()
 			
 			category_id = request.POST.get('busi_category')
@@ -202,7 +218,7 @@ def article_basic_edit(request):
 			except Exception as err:
 				logger.error('Can not find article_busi_category [%s].\nError Message:%s' % (category_id,err))
 				result['success'] = False
-				result['message'] = '文章保存失败'
+				result['message'] = '文章保存失败，请选择文章分类。'
 				result['data'] = {}
 				return JsonResponse(result)
 				

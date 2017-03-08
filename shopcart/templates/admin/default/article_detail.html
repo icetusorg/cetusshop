@@ -37,9 +37,9 @@
 				<div class="item item-area item2"><label>简要描述：</label><textarea type="text" name="short_desc" class="form-control" >{{article.short_desc|default:""}}</textarea>
 				</div>
 				<div class="item add-product-tree">
-					<label>分类：（<a href="#">新增分类</a>）</label>
+					<label>分类：（<a href="/admin/article-busi-category-list/" target="_blank">新增分类</a>）</label>
 					<div class="btn-group normal">
-						<button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{article.busi_category}}</span>
+						<button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{article.busi_category|default:"请选择一个分类"}}</span>
 						</button>
 						<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown"
 								aria-expanded="false">
@@ -47,6 +47,7 @@
 							<span class="sr-only">Toggle Dropdown</span>
 						</button>
 						<ul class="dropdown-menu" role="menu" id="category-selection">
+							<li class="dropdown-item" data-value="">请选择一个分类</li>
 							{%for cat in category_list%}
 							<li class="dropdown-item" data-value="{{cat.id}}">{{cat.name}}</li>
 							{%endfor%}

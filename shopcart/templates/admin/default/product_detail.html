@@ -65,7 +65,7 @@
                     <textarea type="text" class="form-control" name="short_desc">{{product.short_desc}}</textarea>
                 </div>
                 <div class="item add-product-tree">
-                    <label>分类：（<a href="#">新增分类</a>）</label>
+                    <label>分类：（<a href="/admin/category-list/" target='_blank'>新增分类</a>）</label>
                     <div class="trees" id="product_category_selection">
                         <ul>
                             {% for cat in top_cat_list%}
@@ -196,7 +196,7 @@
 	
 				<div class="item">				
 					<p class="form-control-product-images-title">产品主图</p>
-					<button type="button" class="btn btn-primary cd-popup-trigger" data-type="product" data-id="{{product.id}}">添加主图</button>
+					<button type="button" class="btn btn-primary cd-popup-trigger" data-type="product" data-trigger-name="main" data-id="{{product.id}}">添加主图</button>
 				</div>
 				<div class="clearfix"></div>
 	
@@ -346,7 +346,7 @@
 								<td><img id="img_{{pa.id}}" src="{{pa.image.thumb}}" alt=""></td>
 								<td>
 									
-									<button type="button" data-type="product" data-id="{{product.id}}" data-sku-id="{{pa.id}}" class="btn btn-primary cd-popup-trigger">上传</button>
+									<button type="button" data-type="product" data-trigger-name="sku" data-id="{{product.id}}" data-sku-id="{{pa.id}}" class="btn btn-primary cd-popup-trigger">上传</button>
 									
 								</td>
 								<td>
@@ -365,6 +365,7 @@
             </div>
         </div>
     </div>
+	<input type="hidden" id="open_file_upload_trigger" value="" />
 	<input type="hidden" id="album_trigger_sku_id" value="" />
 </section>
 
@@ -383,14 +384,11 @@
 		if (tab_name){
 			$(".product-info-tag li,.add-content").removeClass("active");
 			$("#" + tab_name).addClass("active");
-		}
+		};
 		
-		CKEDITOR.replace('product_desc_editor',{
-			filebrowserUploadUrl: '{{upload_url}}'
-		});
-		
-		$(".url_advise_btn").click(function(){
+		$(".url_advise_btn").click(function(){		
 			title = $("input[name=name]").val();
+			
 			arr = new Array();
 			arr = title.split(" ");
 			url = "";
@@ -406,14 +404,16 @@
 			}
 			$("input[name=static_file_name]").val(url);
 		});
-
-		
+				
+		CKEDITOR.replace('product_desc_editor',{
+			filebrowserUploadUrl: '{{upload_url}}'
+		});		
 	});
 	function reload_picture_list(){
 			//从服务器查询图片列表
 			
 		var url = "/product/get-product-images/main/";
-		var postdata = {"id":{{product.id}}};
+		var postdata = {"id":{{product.id|default:"0"}}};
 			
 		$.ajax({
 			cache: false,
@@ -450,14 +450,27 @@
 		var type = 'product';
 		var sku_id = $("#album_trigger_sku_id").val();
 	
-		method = "set_sku";
-	
+		
+
+		var method = "set_sku";
+		var trigger = $("#open_file_upload_trigger").val();
+
+		
+		if (trigger=='main'){
+			var method = "set_main";
+		}
+		
+		if (trigger=='sku'){
+			var method = "set_sku";
+		}
+		
+
 		var url = "";
 		if (type = "product"){
 			url = "/admin/product-set-image/";
 		}
 		
-		var postdata = {"sku_id":sku_id,"picture_id":id,"method":method};
+		var postdata = {"sku_id":sku_id,"picture_id":id,"product_id":{{product.id|default:"0"}},"method":method};
 		$.ajax({
 			cache: false,
 			type: "POST",
@@ -469,7 +482,13 @@
 			},
 			success: function(data) {
 				if(data.success==true){
-					$("#img_"+sku_id).attr("src",data.thumb);
+					if (trigger=='main'){
+						reload_picture_list();
+					}
+					
+					if (trigger=='sku'){
+						$("#img_"+sku_id).attr("src",data.thumb);
+					}
 					$(".cd-popup").removeClass("is-visible");
 				}			
 			}

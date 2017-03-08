@@ -56,7 +56,7 @@
 		<div class="tab-pane-item">
 			<label>重名处理：</label>
 			<div class="btn-group normal product-button-search">
-				<button type="button" class="btn btn-default inputBtn"><span class="selected-text">拒绝</span></button>
+				<button type="button" class="btn btn-default inputBtn"><span class="selected-text">覆盖</span></button>
 				<button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown"
 						aria-expanded="false">
 					<span class="caret"></span>
@@ -64,9 +64,9 @@
 				</button>
 				<ul class="dropdown-menu" role="menu" id="selectOption">
 					<li class="dropdown-item" data-value="reject">拒绝</li>
-					<li class="dropdown-item" data-value="rewrite">同意</li>
+					<li class="dropdown-item" data-value="rewrite">覆盖</li>
 				</ul>
-				<input type="hidden" class="dropdown-item-input" name="same_name_handle" value="reject">
+				<input type="hidden" class="dropdown-item-input" name="same_name_handle" value="rewrite">
 			</div>
 		</div>
 		{%if item_type == 'product'%}

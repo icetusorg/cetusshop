@@ -472,11 +472,26 @@ def product_basic_edit(request):
 			product = Product.objects.get(id=request.POST['id'])
 			form = product_basic_info_form(request.POST,instance=product)
 		except:
+			product = None
 			form = product_basic_info_form(request.POST)
 			is_new = True
 			logger.info('New product to store.')
 		
 		if form.is_valid():
+			#判断自定义文件名是否重复
+			url = form.cleaned_data['static_file_name']
+			if url:
+				try:
+					p = Product.objects.get(static_file_name=url)
+				except Exception as err:
+					p = None
+					
+				if p and p != product:
+					#能找到，说明重名了
+					result['success'] = False
+					result['message'] = '自定义URL与%s商品重复！' % p.name
+					return JsonResponse(result)
+		
 			product = form.save()
 			#处理商品分段价格
 			if is_new:
@@ -810,11 +825,11 @@ def product_list(request):
 		
 		from django.db.models import Q
 		if query_item == 'item_name':
-			product_list = Product.objects.filter(Q(name__icontains=item_value))
+			product_list = Product.objects.filter(Q(name__icontains=item_value)).order_by('update_time').reverse()
 		elif query_item == 'item_number':
-			product_list = Product.objects.filter(Q(item_number__icontains=item_value))
+			product_list = Product.objects.filter(Q(item_number__icontains=item_value)).order_by('update_time').reverse()
 		else:
-			product_list = Product.objects.all()
+			product_list = Product.objects.all().order_by('update_time').reverse()
 		#icontains是大小写不敏感的，contains是大小写敏感的
 			
 		if 'page_size' in request.GET:

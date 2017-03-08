@@ -135,7 +135,7 @@ def view_list(request,category_id=None):
 				product_list = Product.objects.filter(is_publish=True).order_by(request.GET['sort_by'])
 		else:
 			logger.debug("all products")
-			product_list = Product.objects.filter(is_publish=True)
+			product_list = Product.objects.filter(is_publish=True).order_by('update_time').reverse()
 			logger.debug('Products count in product_list : [%s]' % len(product_list))
 		
 		#按分类筛选
@@ -157,6 +157,7 @@ def view_list(request,category_id=None):
 					template = '/custmize/category/' + category.category_template
 				product_list = product_list.filter(categorys__in = cat_list)
 				product_list = list(set(product_list))
+				product_list = sorted(product_list,key= lambda product:product.update_time,reverse=True)
 				logger.debug('Products count in product_list : [%s]' % len(product_list))
 			except Exception as err:
 				logger.error('Can not find category which id is %s. Error message is %s ' % (category_id,err))

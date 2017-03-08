@@ -17,6 +17,9 @@ jQuery(document).ready(function($){
 			return;
 		}
 		
+		
+		$("#open_file_upload_trigger").val($(this).data('trigger-name'));
+		
 		var sku_id = $(this).data("sku-id");
 		//alert("sku_id:" + sku_id);
 		if (sku_id != "undefined"){

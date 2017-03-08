@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 {% load staticfiles %}
+{% load shopcart_extras %}
 <html>
 <head>
     <meta charset="UTF-8">
@@ -22,7 +23,7 @@
             <h2>欢迎登陆</h2>
             <input id="id_username" maxlength="254" name="username" type="text" placeholder="邮箱">
             <input id="id_password" name="password" type="password" type="text" placeholder="密码">
-			<input type="hidden" name="next" value="{{ next }}" />
+			<input type="hidden" name="next" value="{{ next|admin_login_url:'/admin/index/' }}" />
             <button>登陆</button>
         </div>
     </form>

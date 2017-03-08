@@ -913,7 +913,8 @@ jQuery("#product_para_group_detail_submit").click(function(event){
 			$("#infoMessage").html(data.message);
 			$('#myModal').on('hidden.bs.modal', function (e) {
 				var url = location.href;
-				location.href = url;//跳转到对应的页面
+				var newurl = changeURLArg(url,"id",data.para_group_id);
+				location.href = newurl;//跳转到对应的页面
 			});
 			
 			$("#myModal").modal('toggle');
@@ -1049,6 +1050,7 @@ jQuery(".album-image-show").on('click',".set-picture-attr",function(event){
 				$('#myModal').on('hidden.bs.modal', function (e) {
 					var newurl = location.href;
 					location.href = newurl;
+					reload_picture_list();
 				})
 			}			
 			$("#myModal").modal('toggle');

@@ -167,6 +167,15 @@ def admin_order_status(value,arg):
 	else:
 		return value
 		
+		
+@register.filter		
+def admin_login_url(value,arg):
+	if value == '/admin/' or value == '/admin' or next == '':
+		return '/admin/index/'
+	else:
+		return value
+		
+		
 @register.filter
 def admin_article_category(value,arg):
 	if  value == '0':

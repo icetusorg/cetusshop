@@ -1,10 +1,10 @@
 {% extends "admin/default/content_base.html" %}
 {% block breadcrumbs %}
 <section class="content-header">
-    <h1>参数设置</h1>
+    <h1>SKU设置</h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
-        <li class="active"><a href="#">参数设置</a></li>
+        <li class="active"><a href="#">SKU设置</a></li>
     </ol>
 </section>
 {% endblock %}
@@ -20,20 +20,20 @@
         <div class="col-md-12">
             <div class="box xy-list page-list-content ">
                 <div class="box-body no-padding">
-					<form id="product_para_group_batch_form">
+					<form id="product_sku_group_batch_form">
 						<table id="main-content-table" class="table table-striped page-table-list add-sku-list">
 							<tbody>
 							<tr>
 								<th>选择</th>
-								<th>属性组名称</th>
+								<th>SKU组名称</th>
 								<th>操作</th>
 							</tr>
-							{%for para in product_para_list%}
-								<tr id="message_list1">
-									<td><input name="is_oper" data-order-id="{{para.id}}" id="checkbox_{{para.id}}" value="{{para.id}}" type="checkbox"></td>
-									<td><a href="/admin/product-para-group-edit/?id={{para.id}}">{{para.name}}</a></td>
-									<td><a class="deleteCategory message-delete product—para-group-batch-oper" data-method="delete" data-id="{{para.id}}">删除</a> / <a href="/admin/product-para-group-edit/?id={{para.id}}">修改</a></td>
-								</tr>
+							{%for group in group_list%}
+							<tr id="message_list1">
+								<td><input type="checkbox" data-order-id="{{group.id}}" id="checkbox_{{group.id}}" name="is_oper" value="{{group.id}}"></td>
+								<td><a href="/admin/product-sku-group-edit/?id={{group.id}}">{{group.name}}</a></td>
+								<td><a class="deleteCategory message-delete product—sku-group-batch-oper" data-method="delete" data-id="{{group.id}}">删除</a> / <a href="/admin/product-sku-group-edit/?id={{group.id}}">修改</a></td>
+							</tr>
 							{%endfor%}
 							</tbody>
 						</table>
@@ -43,8 +43,8 @@
                     <div class="xy-box-select">
                         <input class=" product-list-input-checkbox-all" type="checkbox" id="main-content-checkbox-all">
                         <a id="main-content-btn-all" href="#">全选</a>
-                        <button type="button" class="btn btn-danger product—para-group-batch-oper" data-method="delete">删除</button>
-                        <a href="/admin/product-para-group-edit/" id="product-para-group-add-new" class="btn btn-primary">新增</a>
+                        <button type="button" class="btn btn-danger product—sku-group-batch-oper" data-method="delete">删除</button>
+                        <a href="/admin/product-sku-group-edit/" id="product-para-group-add-new" class="btn btn-primary">新增</a>
                     </div>
                     <div class="xy-pages-jump">
                         <button type="button" class="btn btn-primary page-jump">跳转</button>
@@ -52,8 +52,8 @@
                         <p>跳转到：</p>
 
                         <ul class="pagination pagination-sm no-margin pull-right">
-                            {% if product_para_list.has_previous %}
-								<li><a name="pageChange" data-tag="Previous" class="pageChage prev" data-page="{{ product_para_list.previous_page_number }}">&lt;</a></li>
+                            {% if group_list.has_previous %}
+								<li><a name="pageChange" data-tag="Previous" class="pageChage prev" data-page="{{ group_list.previous_page_number }}">&lt;</a></li>
 							{% else %}
 								<li><a>&lt;</a></li>
 							{% endif %}	
@@ -65,7 +65,7 @@
 									<li><a class="pageChage"  data-page = "{{p}}" href="#" title="{{p}}">{{p}}</a></li>
 								{% endifequal %}
 							{% endfor %}
-                            {% if product_para_list.has_next %}
+                            {% if group_list.has_next %}
 								<li><a name="pageChange" class="pageChage next" data-page = "{{p}}" data-page-range="{{page_range}}" data-tag="Next">&gt;</a></li>
 							{% else %}
 								<li><a>&gt;</a></li>

@@ -1,6 +1,6 @@
 #coding=utf-8
 from django.shortcuts import render,redirect
-from shopcart.models import Product,System_Config,Product_Images,Album,Article
+from shopcart.models import Product,System_Config,Product_Images,Album,Article,Attribute,Attribute_Group
 from shopcart.forms import product_add_form
 from shopcart.utils import System_Para,handle_uploaded_file,my_pagination
 from django.http import Http404,HttpResponse
@@ -18,6 +18,7 @@ def file_list_show(request,item_type,item_id):
 	ctx['action_url'] = '/admin/file-upload/' + item_type + '/' + item_id + "/"
 	ctx['file_delete_url'] = '/file-delete/' + item_type
 	ctx['host_item_id'] = item_id
+	ctx['item_type'] = item_type
 	if request.method == 'GET':
 		if item_type == 'product' or item_type == 'product_album':
 			try:
@@ -34,6 +35,16 @@ def file_list_show(request,item_type,item_id):
 		elif item_type == 'article':
 			try:
 				item = Article.objects.get(id=item_id)
+				ctx['item'] = item
+				try:
+					image_list = Album.objects.filter(item_type=item_type,item_id=item.id).order_by('create_time').reverse()
+				except:
+					image_list = []
+			except:
+				raise Http404
+		elif item_type == 'attribute':
+			try:
+				item = Attribute_Group.objects.get(id=item_id)
 				ctx['item'] = item
 				try:
 					image_list = Album.objects.filter(item_type=item_type,item_id=item.id).order_by('create_time').reverse()
@@ -75,6 +86,8 @@ def file_upload(request,item_type,item_id):
 		manual_name = request.POST.get('manual_name','noname')	
 		same_name_handle = request.POST.get('same_name_handle','reject')
 		alt_value = request.POST.get('alt_value','')
+		filename_type = request.POST.get('filename_type','random')
+	
 	
 		if item_type == 'product' or item_type == 'product_album':
 			try:
@@ -83,8 +96,8 @@ def file_upload(request,item_type,item_id):
 				raise Http404
 			
 
-			logger.debug("filename_type:%s" % request.POST['filename_type'])
-			filenames = handle_uploaded_file(request.FILES['upload'],item_type,item_id,request.POST['filename_type'],manual_name,same_name_handle)
+			logger.debug("filename_type:%s" % filename_type)
+			filenames = handle_uploaded_file(request.FILES['upload'],item_type,item_id,filename_type,manual_name,same_name_handle)
 			if filenames['upload_result'] == False:
 				ctx['result_message'] = filenames['upload_error_msg']
 				return render(request,System_Config.get_template_name('admin') + '/file_upload.html',ctx)
@@ -112,7 +125,6 @@ def file_upload(request,item_type,item_id):
 				raise Http404
 			filenames = handle_uploaded_file(request.FILES['upload'],item_type,item_id,request.POST['filename_type'],manual_name,same_name_handle)
 			if filenames['upload_result'] == False:
-				#return HttpResponse(filenames['upload_error_msg'])
 				ctx['result_message'] = filenames['upload_error_msg']
 				return render(request,System_Config.get_template_name('admin') + '/file_upload.html',ctx)				
 		
@@ -127,8 +139,22 @@ def file_upload(request,item_type,item_id):
 				item.save()
 			
 			logger.debug('ai success!!!')
+			
+		elif item_type == 'attribute':
+			try:
+				item = Attribute_Group.objects.get(id=item_id)
+			except:
+				raise Http404
+			filenames = handle_uploaded_file(request.FILES['upload'],item_type,item_id,request.POST['filename_type'],manual_name,same_name_handle)
+			if filenames['upload_result'] == False:
+				ctx['result_message'] = filenames['upload_error_msg']
+				return render(request,System_Config.get_template_name('admin') + '/file_upload.html',ctx)
+			ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id,alt_value=alt_value)
+			logger.info('Attribute_Group image upload success')
 		else:
 			raise Http404
+			
+		logger.info('come in')	
 		#判断是否是从CKEDITER传上来的
 		if 'CKEditorFuncNum' in request.GET:
 			logger.debug('请求来自CKEDITER.')

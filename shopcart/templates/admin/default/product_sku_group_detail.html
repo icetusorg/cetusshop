@@ -27,10 +27,18 @@
                                         <input type="text" name="name" value="{{sku_group.name}}" class="form-control">
                                     </div>
                                     <div class="form-group edit-sku-from-div">
-                                        <label>SKU组代码（用于区分同名的SKU组） :</label>
+                                        <label>SKU组代码 :</label>
                                         <input type="text" name="code" value="{{sku_group.code}}" class="form-control">
+                                        <div class="message">
+                                            <span>?</span>
+                                            <div class="ico">
+                                                <div class="text">
+                                                    <h4>描述</h4>
+                                                    <p>用于区分同名的SKU组</p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-
 
                                     <div class="form-group edit-sku-from-div">
                                         <label>SKU类型:</label>
@@ -65,10 +73,6 @@
             <div class="box xy-list-product">
                 <div class="box-body  edit-sku-from-projuct">
                     <h3>SKU项目</h3>
-                    <div class="form-group edit-sku-from-div">
-                        <button type="submit" class="btn btn-primary edit-sku-from-button">新增</button>
-						<button type="submit" class="btn btn-primary edit-sku-from-button">保存</button>
-                    </div>
                     <div class="box-body no-padding">
                         <table class="table  edit-sku-from-table">
                             <tbody>
@@ -78,20 +82,37 @@
                             </tr>
                             <tr>
                                 <th>SKU项目名称</th>
-								<th>内部代码</th>
+                                <th>内部代码</th>
                                 <th>图片</th>
                                 <th>序号</th>
                                 <th>操作</th>
                             </tr>
 							{%for sku in sku_group.attributes.all%}
-                            <tr>
-                                <td><input type="text" value="{{sku.name}}"></td>
-								<td>{{sku.code}}</td>
-                                <td><img src="{{sku.thumb}}" alt=""></td>
-                                <td>{{sku.position}}</td>
-                                <td><a href="#">上传</a> | <a href="#">删除</a></td>
-                            </tr>
+								<tr>
+									<form id="{{sku.id}}_sku_item_detail_form">
+										<td><input type="text" name="name" value="{{sku.name}}"></td>
+										<td><input type="text" name="code" value="{{sku.code}}"></td>
+										<td><img id="img_{{sku.id}}" src="{{sku.thumb}}" alt=""></td>
+										<td><input type="text" name="position" value="{{sku.position}}"></td>
+										<td><input type="hidden" name="attribute_id" value="{{sku.id}}" />
+										<a href="#" class="btn btn-primary sku-item-save-btn" data-id="{{sku.id}}">保存</a>  <a href="#" data-type="attribute" data-trigger-name="sku_item" data-sku-id="{{sku.id}}"  data-id="{{sku_group.id}}" class="btn btn-primary cd-popup-trigger">上传</a> <a href="#" class="btn btn-danger">删除</a> </td>
+									</form>
+								</tr>
 							{%endfor%}
+							
+							<tr>
+								<form id="sku_item_detail_form">
+									<td><input type="text" name="name" value="" placeholder="新增SKU项目名称" /></td>
+									<td><input type="text" name="code" value="" placeholder="新增SKU项目代码" /></td>
+									<td><img src="" alt=""></td>
+									<td><input type="text" name="position" value="" placeholder="序号"/></td>
+									<td>
+										<input type="hidden" name="attribute_id" value="" />
+										<input type="hidden" name="group_id" value="{{sku_group.id}}" />
+										<a href="#" class="btn btn-primary sku-item-save-btn" data-id="createnew">保存</a> <a href="#" data-type="attribute" data-trigger-name="sku_item"  data-id="" class="btn btn-primary cd-popup-trigger">上传</a> 
+									</td>
+								</form>
+							</tr>
                             </tbody>
                         </table>
                     </div>
@@ -100,7 +121,55 @@
         </div>
     </div>
 </section>
+<input type="hidden" id="open_file_upload_trigger" value="" />
+<input type="hidden" id="album_trigger_sku_id" value="" />
+<!--弹出-->
+{% include 'admin/default/album_modal_win.html' %}
+<!-- cd-popup-container -->
+
 {% endblock %}
 {% block scripts %}
 	{% load staticfiles %}
+	<script src="{% static 'admin/default/js/upload.1.0.2.js' %}" type="text/javascript"></script>
+	<script>
+	function reload_picture_list(){
+		//无需处理
+	};
+	
+	function album_dblclick_callback(id){
+		var type = 'attribute';
+		var method = "set_sku";
+		var sku_id = $("#album_trigger_sku_id").val();
+		var trigger = $("#open_file_upload_trigger").val();
+		
+		var url = "";
+		if (type = "product"){
+			url = "/admin/product-sku-item-set-image/";
+		}
+		
+		var postdata = {"sku_id":sku_id,"picture_id":id,"method":method};
+		$.ajax({
+			cache: false,
+			type: "POST",
+			url:url,
+			data:postdata,
+			async: false,
+			error: function(request) {
+				alert("System error");
+			},
+			success: function(data) {
+				if(data.success==true){
+
+					if (trigger=='sku_item'){
+						$("#img_"+sku_id).attr("src",data.thumb);
+					}
+					$(".cd-popup").removeClass("is-visible");
+				}			
+			}
+		});
+	
+		
+	};
+	
+	</script>
 {% endblock %}

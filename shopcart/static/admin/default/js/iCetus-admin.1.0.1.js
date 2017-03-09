@@ -923,6 +923,39 @@ jQuery("#product_para_group_detail_submit").click(function(event){
 	});
 });
 
+
+//商品SKU组批量操作
+jQuery(".product—sku-group-batch-oper").click(function(e){
+	var url = "/admin/product-sku-group-";
+	url =  url + $(this).data("method") + "/";
+	
+	id = $(this).data("id");
+	if(id != undefined){
+		$("#checkbox_"+id).prop("checked", true);
+	}
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#product_sku_group_batch_form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			if(data.success==true){
+				$('#myModal').on('hidden.bs.modal', function (e) {
+					var newurl = location.href;
+					location.href = newurl;
+				})
+			}
+			$("#myModal").modal('toggle');
+		}
+	});
+});
+
 //商品SKU组保存
 jQuery("#product_sku_group_detail_submit").click(function(event){
 	event.preventDefault();//阻止A标签跳转
@@ -950,6 +983,40 @@ jQuery("#product_sku_group_detail_submit").click(function(event){
 	});
 });
 
+//商品SKU项目保存
+jQuery(".sku-item-save-btn").click(function(event){
+	event.preventDefault();//阻止A标签跳转
+	var url = "/admin/product-sku-item-edit/"
+	var sku_id = $(this).data("id");
+	if (sku_id == 'createnew'){
+		var formname = "#sku_item_detail_form";
+	}else{
+		var formname = "#" + sku_id + "_sku_item_detail_form";
+	}
+	
+	console.log("form:" + formname);
+
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$(formname).serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			$('#myModal').on('hidden.bs.modal', function (e) {
+				var url = location.href;
+				location.href = url;
+			});
+			
+			$("#myModal").modal('toggle');
+			
+		}
+	});
+});
 
 
 //商品图片管理
@@ -960,16 +1027,16 @@ jQuery("#product_main_picture_show").on('click',".set-picture-attr",function(eve
 	event.preventDefault();
 	var img_url = $(this).data("image-url");
 	var type = $(this).data("image-type");
-	var product_id = $(this).data("product-id");
+	var product_id = $(this).data("item-id");
 	var picture_id = $(this).data("id");
 	method = $(this).data("method");
 	
 	var url = "";
-	if (type = "product"){
+	if (type == "product"){
 		url = "/admin/product-set-image/";
 	}
 	
-	var postdata = {"product_id":product_id,"picture_id":picture_id,"method":method};
+	var postdata = {"item_id":product_id,"picture_id":picture_id,"method":method};
 	$.ajax({
 		cache: false,
 		type: "POST",
@@ -1025,16 +1092,27 @@ jQuery("#article_main_picture_show").on('click',".set-picture-attr",function(eve
 jQuery(".album-image-show").on('click',".set-picture-attr",function(event){
 	event.preventDefault();
 	var type = $(this).data("image-type");
-	var product_id = $(this).data("product-id");
+	var item_id = $(this).data("item-id");
 	var picture_id = $(this).data("id");
 	method = $(this).data("method");
 	
 	var url = "";
-	if (type = "product"){
+	if (type == "product"){
 		url = "/admin/product-set-image/";
 	}
 	
-	var postdata = {"product_id":product_id,"picture_id":picture_id,"method":method};
+	if (type=="article"){
+		url = "/admin/article-set-image/";
+	}
+	
+	if (type=="attribute"){
+		url = "/admin/product-sku-item-set-image/";
+	}
+	
+	console.log("Url:" + url);
+	console.log("Item Type:" + type + " item_id:" + item_id + " picture_id:" + picture_id + " method:" + method);
+	
+	var postdata = {"item_id":item_id,"picture_id":picture_id,"method":method};
 	$.ajax({
 		cache: false,
 		type: "POST",

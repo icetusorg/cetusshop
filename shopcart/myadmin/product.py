@@ -1,6 +1,6 @@
 #coding=utf-8
 from django.shortcuts import render,redirect
-from shopcart.models import Product,System_Config,Category,Attribute,Attribute_Group,Product_Attribute,Product_Images,ProductParaGroup,ProductPara,ProductPrice,ProductParaDetail
+from shopcart.models import Product,System_Config,Category,Attribute,Attribute_Group,Product_Attribute,Product_Images,ProductParaGroup,ProductPara,ProductPrice,ProductParaDetail,Album
 from shopcart.forms import product_add_form,product_basic_info_form,product_detail_info_form,product_para_group_form,product_sku_group_form
 from shopcart.utils import System_Para,handle_uploaded_file,my_pagination
 from django.http import Http404,HttpResponse,JsonResponse
@@ -60,6 +60,24 @@ def product_sku_group_edit(request):
 		raise Http404		
 
 
+@staff_member_required
+@transaction.atomic()
+def product_sku_group_list(request):
+	ctx = {}
+	ctx['system_para'] = System_Para.get_default_system_parameters()
+	if request.method == 'GET':
+		group_list = Attribute_Group.objects.all()
+		
+		page_size = 12
+		group_list, page_range = my_pagination(request=request, queryset=group_list,display_amount=page_size)
+		ctx['group_list'] = group_list
+		ctx['page_range'] = page_range
+		ctx['item_count'] = ProductParaGroup.objects.all().count()
+		ctx['page_size'] = page_size
+		return render(request,System_Config.get_template_name('admin') + '/product_sku_group_list.html',ctx)
+	else:
+			raise Http404		
+		
 
 @staff_member_required
 @transaction.atomic()
@@ -123,7 +141,38 @@ def product_para_group_edit(request):
 		return JsonResponse(result)		
 	else:
 		raise Http404
+	
+@staff_member_required
+@transaction.atomic()
+def product_sku_group_delete(request):
+	ctx = {}
+	ctx['system_para'] = System_Para.get_default_system_parameters()
+	ctx['page_name'] = '商品SKU组管理'
+	
+	if request.method == 'POST':
+		result = {}
+		result['success'] = False
+		result['message'] = '商品SKU组删除失败'
 		
+		
+		try:
+			id_list = request.POST.getlist('is_oper')
+			for id in id_list:
+				group = Attribute_Group.objects.get(id=id)
+				group.delete()
+		except Exception as err:
+			logger.info('Can not find Attribute_Group which id is [%s]. \n Error Message: %s' %(id,err))
+			return JsonResponse(result)
+			
+
+		result['success'] = True
+		result['message'] = '商品SKU组删除成功'
+		return JsonResponse(result)		
+	else:
+		raise Http404	
+
+
+	
 @staff_member_required
 @transaction.atomic()
 def product_para_group_delete(request):
@@ -152,6 +201,116 @@ def product_para_group_delete(request):
 		return JsonResponse(result)		
 	else:
 		raise Http404			
+		
+		
+@staff_member_required
+@transaction.atomic()
+def product_sku_item_edit(request):
+	ctx = {}
+	ctx['system_para'] = System_Para.get_default_system_parameters()
+	ctx['page_name'] = 'SKU项目管理'
+	
+	if request.method == 'GET':
+		raise Http404
+	elif request.method == 'POST':
+		result = {}
+		result['success'] = False
+		result['message'] = 'SKU项目保存失败'
+		
+		attribute = None
+		name = request.POST.get('name','')
+		code = request.POST.get('code','')
+		position = request.POST.get('position','0')
+		try:
+			attribute = Attribute.objects.get(id=request.POST.get('attribute_id',''))
+		except Exception as err:
+			logger.info('Can not find attribute which id is [%s]. Create One. \n Error Message: %s' %(attribute,err))
+		
+		if attribute:
+			attribute.name = name
+			attribute.code = code
+			attribute.position = position
+			attribute.save()
+		else:
+			group_id = request.POST.get('group_id','')
+			try:
+				group = Attribute_Group.objects.get(id=group_id)
+			except Exception as err:
+				logger.info('Can not find Attribute_Group which id is [%s].  \n Error Message: %s' %(group_id,err))
+				result['message'] = '无法找到编号为%s的SKU组，可能已经被删除。' % group_id
+				return JsonResponse(result)
+				
+			attribute = Attribute.objects.create(group=group,name=name,code=code,position=position)
+
+		
+		result['success'] = True
+		result['message'] = 'SKU项目保存成功'
+		result['new_id'] = attribute.id
+		result['attribute_id'] = attribute.id
+		return JsonResponse(result)		
+	else:
+		raise Http404		
+		
+
+		
+@staff_member_required
+@transaction.atomic()
+def product_sku_item_set_image(request):
+	ctx = {}
+	ctx['system_para'] = System_Para.get_default_system_parameters()
+	ctx['page_name'] = 'SKU项目图片管理'
+
+	if request.method == 'POST':
+		result = {}
+		result['success'] = False
+		result['message'] = 'SKU项目图片保存失败'
+		
+		method = request.POST.get('method','')
+
+		if method == 'set_sku':
+			picture_id = request.POST.get('picture_id','')
+			sku_id = request.POST.get('sku_id','')
+			try:
+				sku = Attribute.objects.get(id=sku_id)
+			except Exception as err:
+				logger.info('Can not find  sku [%s] . \n Error Message: %s' %(sku_id,err))
+				result['message'] = 'SKU项目图片信息保存失败，找不到对应的SKU'
+				return JsonResponse(result)
+
+			try:
+				picture = Album.objects.get(id=picture_id)
+			except Exception as err:
+				logger.info('Can not find  picture [%s] in Album. \n Error Message: %s' %(picture_id,err))
+				picture = None
+					
+			if picture:
+				sku.thumb = picture.thumb
+				sku.save()
+				result['thumb'] = picture.thumb
+				result['image'] = picture.image
+				result['success'] = True
+				result['message'] = 'SKU项目图片信息保存成功'
+			else:
+				result['message'] = 'SKU项目图片信息保存失败，可能图片已经被删除了。'		
+			
+			return JsonResponse(result)
+		elif method == 'delete':
+			picture_id = request.POST.get('picture_id','')
+			try:
+				picture = Album.objects.get(id=picture_id)
+				picture.delete()
+				result['success'] = True
+				result['message'] = 'SKU项目图片信息删除成功'
+			except Exception as err:
+				logger.info('Can not find  picture [%s] in Album. \n Error Message: %s' %(picture_id,err))
+				result['success'] = True
+				result['message'] = 'SKU项目图片信息删除失败'
+			
+			return JsonResponse(result)
+			
+	else:
+		raise Http404		
+		
 		
 
 @staff_member_required
@@ -300,12 +459,13 @@ def set_image(request):
 		method = request.POST.get('method','')
 		if method == 'set_main':
 			try:
-				product_id = request.POST.get('product_id','')
+				product_id = request.POST.get('item_id','')
 				picture_id = request.POST.get('picture_id','')
 				product = Product.objects.get(id=product_id)
 				picture = Product_Images.objects.get(id=picture_id)
 			except Exception as err:
 				logger.info('Can not find product [%s] or picture [%s]. \n Error Message: %s' %(product_id,picture_id,err))
+				picture = None
 			
 			product.image = picture.image
 			product.thumb = picture.thumb
@@ -450,10 +610,10 @@ def product_basic_edit(request):
 					
 					
 				#图片处理URL
-				ctx['action_url'] = '/admin/file-upload/product/%s/' % id
-				logger.debug('action_url:%s' % ctx['action_url'])
+				ctx['upload_url'] = '/admin/file-upload/product/%s/' % id
+				logger.debug('upload_url:%s' % ctx['upload_url'])
 				
-				ctx['file_delete_url'] = '/file-delete/product'
+				#ctx['file_delete_url'] = '/file-delete/product'
 					
 				
 				try:

@@ -1,5 +1,3 @@
-
-
 ul, li, dl, ol {
     list-style-type: none;
     margin: 0;
@@ -2107,10 +2105,57 @@ iframe {
     padding-bottom: 10px;
 }
 
-.edit-sku-from-table {
-    width: 35%;
+.edit-sku-from-table{
+    width: 40%;
 }
+.edit-sku-from-div{
 
+}
+.edit-sku-from-div .message {
+    display: inline-flex;
+    margin: 8px 0 0px 10px;
+}
+.edit-sku-from-div .message span {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #00c0ef;
+    padding: 0 5px;
+    color: #fff;
+    float: left;
+    line-height: 16px;
+    margin-right: 10px;
+}
+.edit-sku-from-div .message .ico {
+    display: none;
+    width: 380px;
+    float: left;
+    height: 85px;
+    padding-left: 11px;
+    background: url(../images/product-message.png) no-repeat;
+    color: #fff;
+    z-index: 999;
+}
+.edit-sku-from-div .message .text {
+    padding: 10px;
+    background: #00c0ef;
+    line-height: 22px;
+    overflow: hidden;
+}
+.edit-sku-from-div .message .ico h4 {
+    margin: 0;
+    font-size: 15px;
+    padding-bottom: 8px;
+}
+.edit-sku-from-div .message .ico p {
+    padding: 0px;
+}
+.edit-sku-from-div{
+    height: 40px;
+}
+.edit-sku-from-div .message:hover .ico {
+    display: flex;
+}
 .xy-list-product .edit-sku-from-table th:nth-child(1), .xy-list-product .edit-sku-from-table tr td:nth-child(1) {
     width: 5%;
     text-align: left;
@@ -2118,7 +2163,7 @@ iframe {
 }
 
 .xy-list-product .edit-sku-from-table th:nth-child(2), .xy-list-product .edit-sku-from-table tr td:nth-child(2) {
-    width: 15%;
+    width: 10%;
     border-top: none;
 }
 
@@ -2131,13 +2176,27 @@ iframe {
     border-top: none;
     text-align: center;
 }
-
+.xy-list-product .edit-sku-from-table th:nth-child(3) input, .xy-list-product .edit-sku-from-table tr td:nth-child(3) input{
+    width: 100%;
+}
 .xy-list-product .edit-sku-from-table th:nth-child(4), .xy-list-product .edit-sku-from-table tr td:nth-child(4) {
-    width: 5%;
+    width: 10%;
     border-top: none;
 }
-
+.xy-list-product .edit-sku-from-table th:nth-child(4) input, .xy-list-product .edit-sku-from-table tr td:nth-child(4) input {
+    width: 50%;
+}
 .xy-list-product .edit-sku-from-table th:nth-child(5), .xy-list-product .edit-sku-from-table tr td:nth-child(5) {
+    width: 5%;
+    border-top: none;
+    text-align: left;
+}
+.xy-list-product .edit-sku-from-table th:nth-child(6), .xy-list-product .edit-sku-from-table tr td:nth-child(6) {
+    width: 5%;
+    border-top: none;
+    text-align: center;
+}
+.xy-list-product .edit-sku-from-table th:nth-child(7), .xy-list-product .edit-sku-from-table tr td:nth-child(7) {
     width: 5%;
     border-top: none;
     text-align: center;

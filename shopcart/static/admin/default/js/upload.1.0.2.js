@@ -12,6 +12,16 @@ jQuery(document).ready(function($){
 		type = $(this).data("type");
 		id = $(this).data("id");
 		
+		which_page = $(this).data("which-page");
+		console.log("which-page:" + which_page);
+		if (which_page=="" || which_page==undefined){
+			which_page = 'NotSet';
+		}else{
+			which_page = "popup-content-" + which_page;
+		}
+		
+		console.log('which_page:' + which_page);
+		
 		if(id == ""){
 			alert("请先保存。然后再上传图片。");
 			return;
@@ -22,7 +32,7 @@ jQuery(document).ready(function($){
 		
 		var sku_id = $(this).data("sku-id");
 		//alert("sku_id:" + sku_id);
-		if (sku_id != "undefined"){
+		if (sku_id != undefined){
 			$("#album_trigger_sku_id").val(sku_id);
 		}else{
 			$("#album_trigger_sku_id").val("");
@@ -30,6 +40,14 @@ jQuery(document).ready(function($){
 		
 		$("#file_upload_iframe").attr("src",'/admin/file-upload/' + type +'/' + id + '/');
 		$("#picture_album_iframe").attr("src",'/admin/file-list/' + type +'/' + id + '/'); 
+		
+		if (which_page != 'NotSet'){
+			tab_name = "#upload_picture_album a[href='#" + which_page +"']";
+			console.log('tab_name:' + tab_name);
+			$(tab_name).tab('show');
+		}
+		
+		
 		$('.cd-popup.album-modal-win').addClass('is-visible');
 	});
 	

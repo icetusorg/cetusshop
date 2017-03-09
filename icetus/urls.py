@@ -158,6 +158,12 @@ urlpatterns = patterns("",
 	url('^admin/product-sku-delete/(\d+)/$', 'shopcart.myadmin.product.product_sku_delete',name='admin_product_sku_delete'),
 	url('^admin/product-sku-attribute-manage/$', 'shopcart.myadmin.product.product_sku_attribute_manage',name='admin_product_sku_attribute_manage'),
 	url('^admin/product-sku-group-edit/$', 'shopcart.myadmin.product.product_sku_group_edit',name='admin_product_sku_group_edit'),
+	url('^admin/product-sku-group-list/$', 'shopcart.myadmin.product.product_sku_group_list',name='admin_product_sku_group_list'),
+	url('^admin/product-sku-group-delete/$', 'shopcart.myadmin.product.product_sku_group_delete',name='admin_product_sku_group_delete'),
+	
+	url('^admin/product-sku-item-edit/$', 'shopcart.myadmin.product.product_sku_item_edit',name='admin_product_sku_item_edit'),
+	url('^admin/product-sku-item-set-image/$', 'shopcart.myadmin.product.product_sku_item_set_image',name='admin_product_sku_item_set_image'),
+	
 	
 	
 	url('^admin/product-para-list/$', 'shopcart.myadmin.product.product_para_list',name='admin_product_para_list'),

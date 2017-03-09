@@ -13,8 +13,11 @@
 		<div class="tab-pane-album col-md-2 col-xs-2">
 			<img class="album-image" data-id="{{image.id}}" src="{{image.thumb}}" alt="{{image.alt_value|default:""}}">
 			<p></p>
-			<a href="#" class="select_picture" data-id="{{image.id}}">选择</a>
-			<a href="#" class="set-picture-attr" data-method="delete" data-id="{{image.id}}" data-product-id="{{product.id}}" data-image-type="product">删除</a>
+			{%if item_type != 'article'%}
+				<a href="#" class="select_picture" data-id="{{image.id}}">选择</a>
+			{%endif%}
+
+			<a href="#" class="set-picture-attr" data-method="delete" data-id="{{image.id}}" data-item-id="{{host_item_id}}" data-image-type="{{item_type}}">删除</a>
 		</div>
 	{%endfor%}
 </div>
@@ -58,6 +61,11 @@
 	$(document).ready(function($){
 			//相册中双击图片
 			jQuery(".album-image").on('dblclick',function(event){
+				var picture_id = $(this).data("id");
+				window.parent.album_dblclick_callback(picture_id);
+			});
+			
+			$(".select_picture").click(function(event){
 				var picture_id = $(this).data("id");
 				window.parent.album_dblclick_callback(picture_id);
 			});

@@ -18,8 +18,9 @@
 		<div class="tab-pane-item ">
 			<label>选择文件：</label>
 			<div class="tab-pane-item-file">
-				<span>上传文件</span>
-				<input type="file" name="upload" />
+				<span>选择文件</span>
+				<input type="file" name="upload" onchange=""/>
+				<span id="filename_to_upload"></span>
 			</div>
 		</div>
 
@@ -105,7 +106,14 @@
 			reload_picture_list();
 			location.href = "{{action_url}}";
 		});
+		
+		$("input[name=upload]").change(function (e){
+			filename = $(this).val();
+			console.log("filename:" + filename);
+			$("#filename_to_upload").text(" : " + filename);
+		});
 	});
+	
 	function reload_picture_list(){
 		window.parent.document.getElementById("picture_album_iframe").contentWindow.reload_myself();
 		window.parent.reload_picture_list();

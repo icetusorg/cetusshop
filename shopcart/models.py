@@ -308,7 +308,8 @@ class Product(models.Model):
 		if self.prices.all().count()>0:
 			
 			for p in self.prices.all():
-				price_list.append(p.price)
+				if p.price > 0:
+					price_list.append(p.price)
 			price_min = min(price_list)
 			price_max = max(price_list)
 		else:
@@ -529,11 +530,15 @@ class Cart_Products(models.Model):
 	
 	def get_product_price(self):
 		price_list = self.product.prices.all()
+		
 		if price_list.count()>0:
+			price_list = sorted(price_list,key= lambda price:price.quantity,reverse=False)
+			logger.debug('price_list: %s' % price_list)
 			price = price_list[0].price
 			for p in price_list:
-				if self.quantity > p.quantity:
+				if self.quantity >= p.quantity:
 					price = p.price
+			logger.debug('price:%s' % price)
 			return price
 		else:
 			if self.product_attribute is None:

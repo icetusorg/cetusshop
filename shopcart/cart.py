@@ -209,14 +209,17 @@ def set_cart_product_quantity(quantity,cart_exist,result_dict):
 	quantity_left = 0
 	current_quantity = cart_exist.quantity
 	if cart_exist.product_attribute:	
-		min_order_quantity = cart_exist.product_attribute.min_order_quantity
+		#min_order_quantity = cart_exist.product_attribute.min_order_quantity
+		#将最小下单量控制从sku转移到商品
+		min_order_quantity = cart_exist.product.min_order_quantity
+		
 		quantity_left = cart_exist.product_attribute.quantity
-		logger.debug('cart_exist.product_attribute:%s' % (cart_exist.product_attribute.min_order_quantity))
+		#logger.debug('cart_exist.product_attribute:%s' % (cart_exist.product_attribute.min_order_quantity))
 	else:
 		min_order_quantity = cart_exist.product.min_order_quantity
 		quantity_left = cart_exist.product.quantity
 		logger.debug('cart_exist.product:%s' % (cart_exist.product.min_order_quantity))
-	logger.debug('at least:' + str(min_order_quantity))
+	#logger.debug('at least:' + str(min_order_quantity))
 	
 	
 	if quantity >= min_order_quantity:

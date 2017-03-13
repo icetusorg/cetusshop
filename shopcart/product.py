@@ -254,7 +254,9 @@ def ajax_get_product_info(request):
 				product_extra['pa_id'] = pa.id
 				#20160523，添加最小购买量
 				
-				product_extra['min_order_quantity'] = pa.min_order_quantity
+				#product_extra['min_order_quantity'] = pa.min_order_quantity
+				#最小下单量控制到商品层
+				product_extra['min_order_quantity'] = product.min_order_quantity
 				
 				if pa.image:
 					product_extra['image_url'] = pa.image.image

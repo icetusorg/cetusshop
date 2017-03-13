@@ -191,6 +191,10 @@ def merge_cart(request):
 def logout(request):
 	auth.logout(request)
 	return redirect(reverse('myuser_login'))
+	
+def admin_logout(request):
+	auth.logout(request)
+	return redirect(reverse('admin_index_view'))
 
 	
 def forget_password(request):

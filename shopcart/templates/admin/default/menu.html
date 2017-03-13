@@ -17,39 +17,50 @@
     <section class="sidebar">
         <div class="user-panel">
             <div class="pull-left image"><img src="{% static 'admin/default/images/user2-160x160.jpg' %}" class="img-circle" alt="User Image" /></div>
-            <div class="pull-left info"><p>番茄白玉</p><a href="#"><i class="fa fa-circle text-success"></i> 已登录</a></div>
+            <div class="pull-left info"><p>{{user.firstname}} {{user.lastname}}</p><a href="#"><i class="fa fa-circle text-success"></i> 已登录</a></div>
         </div>
         <ul class="sidebar-menu">
-            <li class="header">菜单</li>
-            <li class="active treeview">
+            <li class="treeview">
                 <a href="#"><i class="fa fa-dashboard"></i> <span>商品管理</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <li class="active"><a href="../product/" target="content-frame"><i class="fa"></i> 商品列表</a></li>
-                    <li><a href="../product-edit/" target="content-frame"><i class="fa"></i> 添加新商品</a></li>
-					
-					<li><a href="../product-para-list/" target="content-frame"><i class="fa"></i> 商品参数管理</a></li>
-					<li><a href="../product-sku-group-list/" target="content-frame"><i class="fa"></i> 商品SKU管理</a></li>
+                    <li><a href="../product-edit/" target="content-frame"><i class="fa"></i> 添加商品</a></li>
+					<li class="active"><a href="../product/" target="content-frame"><i class="fa"></i> 商品列表</a></li>
+					<li><a href="../category-list/" target="content-frame"><i class="fa"></i> 分类管理</a></li>
+					<li><a href="../product-para-list/" target="content-frame"><i class="fa"></i> 属性管理</a></li>
+					<li><a href="../product-sku-group-list/" target="content-frame"><i class="fa"></i> SKU管理</a></li>
                 </ul>
             </li>
-            <li class="treeview">
+			<li class="treeview">
                 <a href="#"><i class="fa fa-files-o"></i> <span>订单管理</span><i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="../order-list/" target="content-frame"><i class="fa"></i> 订单列表</a></li>
                 </ul>
             </li>
 			<li class="treeview">
-                <a href="#"><i class="fa fa-files-o"></i> <span>分类管理</span><i class="fa fa-angle-left pull-right"></i></a>
-                <ul class="treeview-menu">
-                    <li><a href="../category-list/" target="content-frame"><i class="fa"></i> 分类列表</a></li>
-                </ul>
-            </li>
-            <li class="treeview">
                 <a href="#"><i class="fa fa-dashboard"></i> <span>文章管理</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="../article-list/" target="content-frame"><i class="fa"></i> 文章列表</a></li>
-                    <li><a href="../article-edit/" target="content-frame"><i class="fa"></i> 添加新文章</a></li>
-					
-					<li><a href="../article-busi-category-list/" target="content-frame"><i class="fa"></i> 文章分类管理</a></li>
+                    <li><a href="../article-edit/" target="content-frame"><i class="fa"></i> 添加文章</a></li>
+					<li><a href="../article-busi-category-list/" target="content-frame"><i class="fa"></i> 分类管理</a></li>
+                </ul>
+            </li>
+			<li class="treeview">
+                <a href="#"><i class="fa fa-dashboard"></i> <span>单页面管理</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <li><a href="../customize-url-list/" target="content-frame"><i class="fa"></i> 单页面列表</a></li>
+                </ul>
+            </li>
+			<li class="treeview">
+                <a href="#"><i class="fa fa-th"></i> <span>留言管理</span><i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <li><a href="../inquiry-list/" target="content-frame"><i class="fa"></i> 留言列表</a></li>
+                </ul>
+            </li>
+			<li class="treeview">
+                <a href="#"><i class="fa fa-th"></i> <span>用户管理</span><i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <li><a href="../user-list/" target="content-frame"><i class="fa"></i> 用户列表</a></li>
+                    <li><a href="../user-admin-edit/" target="content-frame"><i class="fa"></i> 添加管理员</a></li>
                 </ul>
             </li>
 			<li class="treeview">
@@ -57,38 +68,15 @@
                 <ul class="treeview-menu">
                     <li><a href="../delivery-type-list/" target="content-frame"><i class="fa"></i> 配送方式列表</a></li>
 					<li><a href="../delivery-type-edit/" target="content-frame"><i class="fa"></i> 配送方式添加</a></li>
-                    <li><a href="../express-list/" target="content-frame"><i class="fa"></i> 快递公司列表</a></li>
-					<li><a href="../express-edit/" target="content-frame"><i class="fa"></i> 快递公司添加</a></li>
+                    <li><a href="../express-list/" target="content-frame"><i class="fa"></i> 物流公司列表</a></li>
+					<li><a href="../express-edit/" target="content-frame"><i class="fa"></i> 物流公司添加</a></li>
                 </ul>
             </li>
 			<li class="treeview">
-                <a href="#"><i class="fa fa-dashboard"></i> <span>支付管理</span> <i class="fa fa-angle-left pull-right"></i></a>
-                <ul class="treeview-menu">
-                    <li><a href="../pay-config/paypal/" target="content-frame"><i class="fa"></i> Paypal设置</a></li>
-                </ul>
-            </li>
-			
-			<li class="treeview">
-                <a href="#"><i class="fa fa-th"></i> <span>留言管理</span><i class="fa fa-angle-left pull-right"></i></a>
-                <ul class="treeview-menu">
-                    <li><a href="../inquiry-list/" target="content-frame"><i class="fa"></i> 留言列表</a></li>
-                </ul>
-            </li>
-			
-			
-            <li class="treeview">
-                <a href="#"><i class="fa fa-th"></i> <span>用户管理</span><i class="fa fa-angle-left pull-right"></i></a>
-                <ul class="treeview-menu">
-                    <li><a href="../user-list/" target="content-frame"><i class="fa"></i> 会员列表</a></li>
-                    <li><a href="#" target="content-frame"><i class="fa"></i> 会员审核</a></li>
-                    <li><a href="../user-admin-edit/" target="content-frame"><i class="fa"></i> 管理员管理</a></li>
-                </ul>
-            </li>
-            <li class="treeview">
                 <a href="#"><i class="fa fa-laptop"></i> <span>系统管理</span><i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="../system-config/site_config/" target="content-frame"><i class="fa"></i> 系统参数</a></li>
-					<li><a href="../customize-url-list/" target="content-frame"><i class="fa"></i> 自定义URL</a></li>
+					<li><a href="../pay-config/paypal/" target="content-frame"><i class="fa"></i> Paypal设置</a></li>
                 </ul>
             </li>
         </ul>

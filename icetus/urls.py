@@ -87,6 +87,7 @@ urlpatterns = patterns("",
 	
 	url('^admin/index/$', 'shopcart.myadmin.index.view',name='admin_index_view'),
 	url('^admin/index-content/$', 'shopcart.myadmin.index.content_view',name='admin_index_content_view'),
+	url('^admin/admin_logout/$', 'shopcart.myuser.admin_logout',name='myuser_admin_logout'),
 	
 	
 	url('^admin/menu/$', 'shopcart.myadmin.index.menu_view',name='admin_index_menu_view'),

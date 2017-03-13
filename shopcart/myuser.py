@@ -38,7 +38,12 @@ def register(request):
 	else:
 		form = register_form(request.POST) # 获取Post表单数据
 		if form.is_valid():# 验证表单
+			from .utils import get_remote_ip
+			ip = get_remote_ip(request)
 			myuser = MyUser.objects.create_user(username=None,email=form.cleaned_data['email'].lower(),password=form.cleaned_data['password'],first_name=form.cleaned_data['first_name'],last_name=form.cleaned_data['last_name'])
+			myuser.reg_ip = ip
+			myuser.last_ip = ip
+			myuser.save()
 			
 			#触发用户注册成功的事件
 			signals.user_registration_success.send(sender='MyUser',user=myuser)
@@ -46,7 +51,7 @@ def register(request):
 			
 			#准备登陆
 			myuser.password = form.cleaned_data['password']
-			return inner_login(request,myuser)
+			return inner_login(request,myuser,ctx)
 		else:
 			logger.error('form is not valid')
 			ctx['reg_result'] = _('Registration faild.')
@@ -83,9 +88,13 @@ def info(request):
 		myuser.save()
 		return redirect('/user/info/?success=true')
 
-def do_login(request,myuser):
+def do_login(request,myuser,ctx):
 	if myuser is not None:
 		auth.login(request,myuser)
+		from .utils import get_remote_ip
+		ip = get_remote_ip(request)
+		myuser.last_ip = ip
+		myuser.save()
 		mycart = merge_cart(request)
 		redirect_url = reverse('product_view_list')
 		if 'next' in request.POST:
@@ -101,11 +110,11 @@ def do_login(request,myuser):
 		ctx['login_result'] = _('Your account name or password is incorrect.')
 		return render(request,System_Config.get_template_name() + '/login.html',ctx)	
 
-def inner_login(request,login_user):
+def inner_login(request,login_user,ctx=None):
 	myuser = None
 	if login_user:
 		myuser = auth.authenticate(username = login_user.email, password = login_user.password)
-	return do_login(request,myuser)
+	return do_login(request,myuser,ctx)
 
 def login(request,tdk=None):
 	ctx = {}
@@ -128,7 +137,7 @@ def login(request,tdk=None):
 			
 		#if form.is_valid():# 验证表单,会自动验证验证码，（新版不要验证码了）
 		myuser = auth.authenticate(username = request.POST['email'].lower(), password = request.POST['password'])
-		return do_login(request,myuser)
+		return do_login(request,myuser,ctx)
 		#else:
 		#	ctx['login_result'] = _('Please check you input.')
 		#	return render(request,System_Config.get_template_name() + '/login.html',ctx)

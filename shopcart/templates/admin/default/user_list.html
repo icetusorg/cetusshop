@@ -67,7 +67,7 @@
 									<td>{{user.last_login|date:"Y-m-d H:i:s"}}</td>
 									<td>{{user.create_time|date:"Y-m-d H:i:s"}}</td>
 									<td>{{user.is_active|yesno:"正常,冻结,"}}</td>
-									<td>暂时没有IP</td>
+									<td>{{user.reg_ip|default:"未能获取"}}</td>
 									<td><a href="#" class="user-batch-oper" data-user-id="{{user.id}}" data-method='reset-password'>重置密码</a> /
 									{%if user.is_active%}
 									<a href="#" class="user-batch-oper"  data-method='active' data-status="off" data-user-id="{{user.id}}">冻结</a>

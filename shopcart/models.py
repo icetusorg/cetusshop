@@ -46,6 +46,8 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
 	birthday = models.DateField(null=True)
 	is_staff = models.BooleanField('staff status', default=False)
 	is_active = models.BooleanField('active', default=True)
+	reg_ip = models.CharField(max_length=32,null=True,blank=True,verbose_name='注册IP地址')
+	last_ip = models.CharField(max_length=32,null=True,blank=True,verbose_name='最后登陆IP地址')
 	create_time = models.DateTimeField(auto_now_add = True,null=True)
 	update_time = models.DateTimeField(auto_now = True,null=True)
 

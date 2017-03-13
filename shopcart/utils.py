@@ -36,6 +36,17 @@ def customize_tdk(ctx,tdk):
 	return ctx
 	
 
+#获取客户端ip	
+def get_remote_ip(request):
+	if 'HTTP_X_FORWARDED_FOR' in request.META:
+		ip =  request.META['HTTP_X_FORWARDED_FOR']
+		logger.debug('There is HTTP_X_FORWARDED_FOR in request.META,ip is:%s' % ip)
+	else:  
+		ip = request.META['REMOTE_ADDR']
+		logger.debug('Get ip from REMOTE_ADDR is:%s' % ip)
+	return ip
+	
+
 def add_captcha(ctx):
 	hashkey = CaptchaStore.generate_key()  
 	imgage_url = captcha_image_url(hashkey)

@@ -32,12 +32,8 @@ def add(request):
 				inquiry.name = 'None'
 			#logger.debug('request.META:%s' % request.META)
 			
-			if 'HTTP_X_FORWARDED_FOR' in request.META:
-				ip =  request.META['HTTP_X_FORWARDED_FOR']
-				logger.debug('There is HTTP_X_FORWARDED_FOR in request.META,ip is:%s' % ip)
-			else:  
-				ip = request.META['REMOTE_ADDR']
-				logger.debug('Get ip from REMOTE_ADDR is:%s' % ip)
+			from .utils import get_remote_ip
+			ip = get_remote_ip(request)
 			
 			inquiry.ip_address = ip
 			inquiry.save()

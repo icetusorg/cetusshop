@@ -6,7 +6,7 @@
 {% load staticfiles %}
 {% load shopcart_extras %}
 <div class="modal popup-content order-remark-body" style="display: block">
-    <div class="modal-content">
+    <div class="modal-content modal-content-order">
         <div class="modal-header">
             <h4 class="modal-title">备注</h4>
         </div>
@@ -61,58 +61,3 @@
 	});
 </script>
 {% endblock %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>aside</title>
-    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-    <!-- ICO -->
-    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-    <link href="css/AdminLTE.min.css" rel="stylesheet" type="text/css"/>
-    <!--自定义CSS-->
-    <link href="css/style.css" rel="stylesheet" type="text/css"/>
-</head>
-
-<body>
-<!--备注-->
-<div class="modal popup-content order-detail-alert-body" style="display: block">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h4 class="modal-title">备注</h4>
-        </div>
-        <div class="modal-body">
-            <textarea> </textarea>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
-        </div>
-    </div>
-</div>
-<script src="js/jQuery-2.1.4.min.js"></script>
-<script src="js/bootstrap.min.js" type="text/javascript"></script>
-<script src="js/app.min.js" type="text/javascript"></script>
-<script src="js/main.js" type="text/javascript"></script>
-<script>
-    $(window.parent.document).find("#fame").load(function(){
-        var main = $(window.parent.document).find("#fame");
-        var thisheight = $(document).height()+30;
-        main.height(thisheight);
-    });
-</script>
-</body>
-</html>

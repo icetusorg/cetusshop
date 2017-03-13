@@ -58,6 +58,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
 	'django.middleware.locale.LocaleMiddleware',#使用i18n需要的中间件
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+	'shopcart.my_login_check.MyLoginCheckMiddleware',#添加自定义中间件，检查用户是否被冻结
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',

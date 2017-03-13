@@ -90,22 +90,26 @@ def info(request):
 
 def do_login(request,myuser,ctx):
 	if myuser is not None:
-		auth.login(request,myuser)
-		from .utils import get_remote_ip
-		ip = get_remote_ip(request)
-		myuser.last_ip = ip
-		myuser.save()
-		mycart = merge_cart(request)
-		redirect_url = reverse('product_view_list')
-		if 'next' in request.POST:
-			if len(request.POST['next']) > 0:
-				redirect_url = request.POST['next']
-			
-		response = redirect(redirect_url)
-		response.set_cookie('cart_id',mycart.id,max_age = 3600*24*365)
-		response.set_cookie('cart_item_type_count',mycart.cart_products.all().count(),max_age = 3600*24*365)
-		response.set_cookie('icetususer',myuser.email)
-		return response
+		if myuser.is_active == True:
+			auth.login(request,myuser)
+			from .utils import get_remote_ip
+			ip = get_remote_ip(request)
+			myuser.last_ip = ip
+			myuser.save()
+			mycart = merge_cart(request)
+			redirect_url = reverse('product_view_list')
+			if 'next' in request.POST:
+				if len(request.POST['next']) > 0:
+					redirect_url = request.POST['next']
+				
+			response = redirect(redirect_url)
+			response.set_cookie('cart_id',mycart.id,max_age = 3600*24*365)
+			response.set_cookie('cart_item_type_count',mycart.cart_products.all().count(),max_age = 3600*24*365)
+			response.set_cookie('icetususer',myuser.email)
+			return response
+		else:
+			ctx['login_result'] = _('Your account has been banned!')
+			return render(request,System_Config.get_template_name() + '/login.html',ctx)
 	else:
 		ctx['login_result'] = _('Your account name or password is incorrect.')
 		return render(request,System_Config.get_template_name() + '/login.html',ctx)	

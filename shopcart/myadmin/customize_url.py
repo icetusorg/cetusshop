@@ -1,7 +1,7 @@
 #coding=utf-8
 from django.shortcuts import render,redirect,render_to_response
 from django.core.urlresolvers import reverse
-from shopcart.models import System_Config,CustomizeURL
+from shopcart.models import System_Config,CustomizeURL,Article
 from shopcart.utils import System_Para,my_pagination,get_system_parameters
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse,JsonResponse,Http404
@@ -61,19 +61,19 @@ def list_view(request):
 	ctx['page_name'] = '自定义URL管理'
 	
 	if request.method == 'GET':
-		url_list = CustomizeURL.objects.all()
-		
-		count = url_list.count()
-			
-		page_size = get_page_size()
-		url_list, page_range = my_pagination(request=request, queryset=url_list,display_amount=page_size)	
-		
+		url_list = CustomizeURL.objects.all().order_by('-update_time')
+		article_list = Article.objects.exclude(category=Article.ARTICLE_CATEGORY_BLOG).order_by('-update_time')
 
-		ctx['page_range'] = page_range
-		ctx['page_size'] = page_size
-		ctx['page_count'] = count
+		#count = url_list.count()
+		#page_size = get_page_size()
+		#url_list, page_range = my_pagination(request=request, queryset=url_list,display_amount=page_size)	
+
+		#ctx['page_range'] = page_range
+		#ctx['page_size'] = page_size
+		#ctx['page_count'] = count
 		
 		ctx['url_list'] = url_list
+		ctx['article_list'] = article_list
 		return render(request,System_Config.get_template_name('admin') + '/cust_url_list.html',ctx)
 	else:
 		raise Http404

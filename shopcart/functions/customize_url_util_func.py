@@ -9,14 +9,11 @@ import logging
 logger = logging.getLogger('icetus.shopcart')
 
 def get_url(object):
-	from shopcart.models import System_Config,Article
+	from shopcart.models import System_Config,CustomizeURL
 	url = url_with_out_slash(System_Config.objects.get(name='base_url').val)
 	
-	if isinstance(object,Article):
-		if object.static_file_name == None or object.static_file_name == '':
-			return ('%s/article/%s' % (url,object.id))
-		else:
-			return ('%s/%s' % (url,object.static_file_name))
+	if isinstance(object,CustomizeURL):
+		return ('%s/%s' % (url,object.url))
 	else:
 		return '#'
 		

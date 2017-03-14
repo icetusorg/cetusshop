@@ -96,7 +96,7 @@ class article_basic_info_form(forms.ModelForm):
 	breadcrumbs = forms.CharField(required=False)
 	class Meta:
 		model = Article
-		fields = ('title','sort_order','keywords','page_title','short_desc','static_file_name','breadcrumbs','detail_template')	
+		fields = ('title','sort_order','keywords','page_title','short_desc','static_file_name','breadcrumbs','detail_template','category')	
 		
 class article_detail_info_form(forms.ModelForm):
 	content = forms.CharField(required=False)

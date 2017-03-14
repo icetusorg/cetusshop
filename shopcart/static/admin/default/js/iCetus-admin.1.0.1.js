@@ -1588,6 +1588,35 @@ jQuery("#customize_url_detail_submit_btn").click(function(event){
 	});
 });
 
+//自定义URL删除
+jQuery(".delete-cust-page-article").on('click',function(event){
+	event.preventDefault();
+	var id = $(this).data("id");
+	var url = "/admin/article-delete/";
+	
+	var postdata = {"is_oper":id};
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:postdata,
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+	$("#infoMessage").html(data.message);
+			if(data.success==true){
+				$('#myModal').on('hidden.bs.modal', function (e) {
+					var newurl = location.href;
+					location.href = newurl;
+				})
+			}
+			$("#myModal").modal('toggle');
+		}
+	});
+});
+
 //通用函数
 /* 
 * url 目标url 

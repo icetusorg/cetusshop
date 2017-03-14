@@ -1,10 +1,11 @@
 {% extends "admin/default/content_base.html" %}
 {% block breadcrumbs %}
+{% load shopcart_extras %}
 <section class="content-header">
-    <h1>文章管理</h1>
+    <h1>{{is_blog|yesno:"文章管理,页面管理"}}</h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
-        <li class="active"><a href="#">文章管理</a></li>
+        <li class="active"><a href="#">{{is_blog|yesno:"文章管理,页面管理"}}</a></li>
     </ol>
 </section>
 {% endblock %}
@@ -26,16 +27,19 @@
         <div class="add-content active" id="tag_basic_info">
 			<form id="article-basic-info-form">
 				<div class="item item2">
-					<label>文章名称<span class="point">*</span>：</label>
+					<label>{{is_blog|yesno:"文章名称,页面名称"}}<span class="point">*</span>：</label>
 					<input type="text" value="{{article.title}}" name="title" class="form-control ">
 				</div>
 				<div class="item btn-item btn-item2">
 					<label>自定义URL<span class="point">*</span>：</label><input type="text" name="static_file_name" value="{{article.static_file_name|default:""}}" class="form-control">
 					<button type="button" id="static_file_name_advice" class="btn btn-primary">推荐</button>
 				</div>
+				
+				<div class="item item2"><label>网页标题：</label><input type="text" name="page_title" class="form-control" value="{{article.page_title}}"></div>
 				<div class="item item2"><label>关键字：</label><input type="text" name="keywords" value="{{article.keywords|default:""}}" class="form-control"></div>
 				<div class="item item-area item2"><label>简要描述：</label><textarea type="text" name="short_desc" class="form-control" >{{article.short_desc|default:""}}</textarea>
 				</div>
+				{%if is_blog%}
 				<div class="item add-product-tree">
 					<label>分类：（<a href="/admin/article-busi-category-list/" target="_blank">新增分类</a>）</label>
 					<div class="btn-group normal">
@@ -55,6 +59,7 @@
 						<input class="dropdown-item-input" type="hidden" name="busi_category" value="{{article.busi_category}}">
 					</div>
 				</div>
+				{%endif%}
 				<div class="item item2"><label>排序号：</label><input type="text" name="sort_order" value="{{article.sort_order}}" class="form-control"></div>
 				<div class="item">
 					<label>自定义模板：</label>
@@ -77,9 +82,9 @@
 					</div>
 				</div>
 				<div class="submit-item item">
-					<input type="hidden" name="page_title" value=""/>
 					<input type="hidden" name="breadcrumbs" value=""/>
 					<input type="hidden" name="id" value="{{article.id}}"/>
+					<input type="hidden" name="category" value="{{is_blog|yesno:"0,20"}}"/>
 					<button type="button" id="article-basic-info-submit-btn" class="btn btn-primary addPSubmit">保存</button>
 				</div>	
 			</form>

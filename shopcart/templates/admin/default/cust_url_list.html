@@ -18,51 +18,36 @@
         <div class="col-md-12">
             <div class="box xy-list page-list-content">
                 <div class="box-body no-padding">
-                    <table class="table table-striped page-table-list">
-                        <tbody>
-                        <tr>
-                            <th>页面名称</th>
-							<th>网页标题</th>
-                            <th>URL</th>
-                            <th>操作</th>
-                        </tr>
-						{% for url in url_list %}
+						<table class="table table-striped page-table-list">
+							<tbody>
 							<tr>
-								<td><a href="../customize-url-detail/{{url.id}}/">{{url.name}}</a></td>
-								<td><a href="../customize-url-detail/{{url.id}}/">{{url.page_name}}</a></td>
-								<td><a href="../customize-url-detail/{{url.id}}/">{{url.url}}</a></td>
-								<td data="message_list1"><a href="../customize-url-detail/{{url.id}}/">修改</a></td>
+								<th>页面类型</th>
+								<th>页面名称</th>
+								<th>网页标题</th>
+								<th>URL</th>
+								<th>操作</th>
 							</tr>
-						{% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-                <div class="box-footer clearfix">
-                    <div class="xy-pages-jump">
-                        <ul class="pagination pagination-sm no-margin pull-right">
-							{% if url_list.has_previous %}
-								<li><a name="pageChange" data-tag="Previous" class="pageChage prev" data-page="{{ url_list.previous_page_number }}">&lt;</a></li>
-							{% else %}
-								<li><a>&lt;</a></li>
-							{% endif %}	
-							
-							{% for p in page_range %}
-								{% ifequal p objects.number %}
-									<li class="active">{{p}}</li>
-								{% else %}
-									<li><a class="pageChage"  data-page = "{{p}}" href="#" title="{{p}}">{{p}}</a></li>
-								{% endifequal %}
+							{% for url in url_list %}
+								<tr>
+									<td>系统默认</td>
+									<td><a href="../customize-url-detail/{{url.id}}/">{{url.name}}</a></td>
+									<td><a href="../customize-url-detail/{{url.id}}/">{{url.page_name}}</a></td>
+									<td><a href="../customize-url-detail/{{url.id}}/">{{url.url}}</a></td>
+									<td data="message_list1"><a href="../customize-url-detail/{{url.id}}/">修改</a> | <a href="{{url.get_url}}" target="_blank">预览</a></td>
+								</tr>
 							{% endfor %}
-                            {% if url_list.has_next %}
-								<li><a name="pageChange" class="pageChage next" data-page = "{{p}}" data-page-range="{{page_range}}" data-tag="Next">&gt;</a></li>
-							{% else %}
-								<li><a>&gt;</a></li>
-							{% endif %}
-                        </ul>
-                        <p>共 {{page_count}} 条记录 , 共 {{page_range|last}} 页，每页显示： {{page_size}} 条</p>
-                    </div>
+							{% for article in article_list %}
+								<tr>
+									<td>自定义页面</td>
+									<td><a href="../article-edit/?id={{article.id}}">{{article.title}}</a></td>
+									<td><a href="../article-edit/?id={{article.id}}">{{article.page_title}}</a></td>
+									<td><a href="../article-edit/?id={{article.id}}">{{article.static_file_name}}</a></td>
+									<td data="message_list1"><a href="../article-edit/?id={{article.id}}" class="article-edit-link" data-article-id="{{article.id}}">修改</a> | <a href="{{article.get_url}}" target="_blank">预览</a> | <a href="#" class="delete-cust-page-article" data-id="{{article.id}}">删除</a></td>
+								</tr>
+							{% endfor %}				
+							</tbody>
+						</table>
                 </div>
-            </div><!-- /.box -->
         </div>
     </div>
 </section>

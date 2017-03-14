@@ -2,6 +2,21 @@ from django import template
 register = template.Library()
 
 @register.filter
+def is_blog(value,arg):
+	if value:
+		from shopcart.models import Article
+		if value.category == Article.ARTICLE_CATEGORY_BLOG:
+			return True
+		else:
+			return False
+	else:
+		if arg == Article.ARTICLE_CATEGORY_BLOG:
+			return True
+		else:
+			return False
+		
+
+@register.filter
 def check_if_in_categorys(value,arg):
 	cat = arg
 	if arg and value:	

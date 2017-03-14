@@ -129,7 +129,7 @@ def detail(request,id):
 		try:
 			article = Article.objects.get(id=id)
 			ctx['article'] = article
-						
+			ctx['method'] = artice.category
 			return render(request,System_Config.get_template_name('admin') + '/article_detail.html',ctx)
 		except Exception as err:
 			logger.error("Can not find artice which id is %s . \n Error message: %s" % (id,err))
@@ -156,6 +156,7 @@ def article_basic_edit(request):
 		
 	if request.method == 'GET':
 		id = request.GET.get('id','')
+		method = request.GET.get('method','blog')
 		if id != '':
 			try:
 				article = Article.objects.get(id=id)
@@ -174,13 +175,29 @@ def article_basic_edit(request):
 				except Exception as err:
 					logger.error("Error:%s" % err)
 					ctx['image_list'] = []
+					
+				logger.debug('article category:%s' % article.category)
 				
+				if article.category == Article.ARTICLE_CATEGORY_BLOG:
+					ctx['is_blog'] = True
+				else:
+					ctx['is_blog'] = False
 				
 			except Exception as err:
 				logger.error('Can not find article which id is %s. The error message is %s' % (id,err))
+				if method == 'blog':
+					ctx['is_blog'] = True
+				else:
+					ctx['is_blog'] = False
+		else:
+			if method == 'blog':
+				ctx['is_blog'] = True
+			else:
+				ctx['is_blog'] = False
 				
 		#放入文章的业务分类
 		from .article_busi_category import get_all_category
+		
 		ctx['category_list'] = get_all_category()		
 		return render(request,System_Config.get_template_name('admin') + '/article_detail.html',ctx)
 	elif request.method == 'POST':
@@ -191,9 +208,6 @@ def article_basic_edit(request):
 			article = None
 			form = article_basic_info_form(request.POST)
 			logger.info('New article to store.')
-		
-		
-		
 
 		if form.is_valid():
 			#判断自定义文件名是否重复
@@ -212,19 +226,19 @@ def article_basic_edit(request):
 		
 			article = form.save()
 			
-			category_id = request.POST.get('busi_category')
-			try:
-				category = ArticleBusiCategory.objects.get(id=category_id)
-			except Exception as err:
-				logger.error('Can not find article_busi_category [%s].\nError Message:%s' % (category_id,err))
-				result['success'] = False
-				result['message'] = '文章保存失败，请选择文章分类。'
-				result['data'] = {}
-				return JsonResponse(result)
-				
-				
-			article.busi_category = category
-			article.save()
+			#只有属于博客类的文章才需要保存分类
+			if article.category == Article.ARTICLE_CATEGORY_BLOG:
+				category_id = request.POST.get('busi_category')
+				try:
+					category = ArticleBusiCategory.objects.get(id=category_id)
+				except Exception as err:
+					logger.error('Can not find article_busi_category [%s].\nError Message:%s' % (category_id,err))
+					result['success'] = False
+					result['message'] = '文章保存失败，请选择文章分类。'
+					result['data'] = {}
+					return JsonResponse(result)
+				article.busi_category = category
+				article.save()
 			
 			result['success'] = True
 			result['message'] = '文章保存成功'

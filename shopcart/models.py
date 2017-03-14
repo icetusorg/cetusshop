@@ -832,6 +832,10 @@ class CustomizeURL(models.Model):
 	
 	def __str__(self):
 		return self.url
+		
+	def get_url(self):
+		from shopcart.functions.customize_url_util_func import get_url
+		return get_url(self)		
 	
 	class Meta:
 		verbose_name = '自定义URL'

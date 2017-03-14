@@ -40,7 +40,7 @@ def user_list(request):
 	result_dict['message'] = '用户信息保存失败'
 
 	if request.method == 'GET':
-		user_list = MyUser.objects.filter(is_staff=False).filter(is_superuser=False)
+		user_list = MyUser.objects.filter(is_staff=False).filter(is_superuser=False).order_by('-update_time')
 		
 		item_value = request.GET.get('item_value','')
 		

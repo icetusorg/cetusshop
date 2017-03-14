@@ -29,7 +29,7 @@ def list(request):
 	ctx['page_name'] = '文章分类管理'
 	
 	if request.method == 'GET':
-		category_list = ArticleBusiCategory.objects.all()
+		category_list = ArticleBusiCategory.objects.all().order_by('-update_time')
 		
 		count = category_list.count()
 

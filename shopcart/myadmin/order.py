@@ -58,7 +58,7 @@ def list_view(request):
 		query_status = request.GET.get('query_status','')
 		ctx['query_status'] = query_status
 		
-		all = Order.objects.all()
+		all = Order.objects.all().order_by('-update_time')
 		
 		if query_item == 'order_number':
 			if item_value:

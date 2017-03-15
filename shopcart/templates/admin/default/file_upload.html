@@ -77,6 +77,22 @@
 		</div>
 		{%endif%}
 		
+		{%if item_type == 'slider'%}
+		<div class="tab-pane-item">
+			<label>链接地址：</label>
+			<input class="tab-pane-item-alt-input" type="text" name="href" value="http://">
+			<div class="message">
+				<span>?</span>
+				<div class="ico">
+					<div class="text">
+						<h4>描述</h4>
+						<p>用于幻灯片图片被点击之后的跳转链接，填写以“http://”开头的完整链接地址。</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		{%endif%}
+		
 		<div class="tab-pane-item">
 			<label>alt值：</label>
 			<input class="tab-pane-item-alt-input" type="text" name="alt_value" value=" ">

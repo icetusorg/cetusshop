@@ -940,6 +940,7 @@ class Album(models.Model):
 	image = models.URLField(verbose_name = '图片链接')
 	thumb = models.URLField(verbose_name = '缩略图链接')
 	alt_value = models.CharField(max_length = 100,default='',verbose_name='Alt值')
+	href = models.CharField(max_length = 254,default='',verbose_name='自定义链接地址')
 	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
 	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
 	

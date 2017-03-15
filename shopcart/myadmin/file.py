@@ -97,6 +97,7 @@ def file_upload(request,item_type,item_id):
 		same_name_handle = request.POST.get('same_name_handle','reject')
 		alt_value = request.POST.get('alt_value','')
 		filename_type = request.POST.get('filename_type','random')
+		href = request.POST.get('href','')
 	
 	
 		if item_type == 'product' or item_type == 'product_album':
@@ -170,7 +171,7 @@ def file_upload(request,item_type,item_id):
 			if filenames['upload_result'] == False:
 				ctx['result_message'] = filenames['upload_error_msg']
 				return render(request,System_Config.get_template_name('admin') + '/file_upload.html',ctx)
-			ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id,alt_value=alt_value)
+			ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id,alt_value=alt_value,href=href)
 			logger.info('Slider image upload success')	
 		
 		else:

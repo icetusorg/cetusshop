@@ -10,11 +10,71 @@
 {% load staticfiles %}
 {% load shopcart_extras %}
 <section class="content">
-    <div class="col-md-12 add-product">
-		首页驾驶舱功能开发中，请从菜单选择相应的功能。
+    <div class="col-md-12 row">		
+		<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+		<div id="order_number" style="width: 600px;height:400px;"></div>
+		<div id="order_not_pay" style="width: 600px;height:400px;"></div>
     </div>
 </section>
 {% endblock %}
 {% block scripts %}
 	{% load staticfiles %}
+	
+	<script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var order_number_chart = echarts.init(document.getElementById('order_number'));
+
+        // 指定图表的配置项和数据
+        var option = {
+			tooltip : {
+				formatter: "{a} <br/>{b} : {c}%"
+			},
+			toolbox: {
+				feature: {
+					restore: {},
+					saveAsImage: {}
+				}
+			},
+			series: [
+				{
+				name: '业务指标',
+				type: 'gauge',
+				detail: {formatter:'{value}'},
+				data: [{value: {{order_count_today}}, name: '今日订单'}]
+				}
+			]
+		};
+
+        // 使用刚指定的配置项和数据显示图表。
+        order_number_chart.setOption(option);
+		
+		// 基于准备好的dom，初始化echarts实例
+        var not_pay_chart = echarts.init(document.getElementById('order_not_pay'));
+
+        // 指定图表的配置项和数据
+        var option = {
+			tooltip : {
+				formatter: "{a} <br/>{b} : {c}%"
+			},
+			toolbox: {
+				feature: {
+					restore: {},
+					saveAsImage: {}
+				}
+			},
+			series: [
+				{
+				name: '业务指标',
+				type: 'gauge',
+				detail: {formatter:'{value}'},
+				data: [{value: {{order_not_pay_count_today}}, name: '未付款订单'}]
+				}
+			]
+		};
+
+        // 使用刚指定的配置项和数据显示图表。
+        not_pay_chart.setOption(option);
+		
+		
+    </script>
 {% endblock %}

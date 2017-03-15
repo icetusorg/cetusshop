@@ -1,6 +1,6 @@
 #coding=utf-8
 from django.shortcuts import render,redirect
-from shopcart.models import System_Config
+from shopcart.models import System_Config,Order
 from shopcart.utils import get_system_parameters
 from django.http import HttpResponse
 
@@ -27,6 +27,13 @@ def content_view(request):
 	ctx = {}
 	ctx['system_para'] = get_system_parameters()
 	if request.method == 'GET':
+		import datetime
+		#start_date = datetime.date(2017, 3, 15)
+		#end_date = datetime.date(2017, 3, 16)
+		now = datetime.datetime.now()
+		start = now - datetime.timedelta(hours=23,minutes=59,seconds=59)
+		ctx['order_count_today'] = Order.objects.filter(create_time__gt=start).count()
+		ctx['order_not_pay_count_today'] = Order.objects.filter(create_time__gt=start).filter(status=Order.ORDER_STATUS_PLACE_ORDER).count()
 		return render(request,System_Config.get_template_name('admin') + '/index_content.html',ctx)
 		
 def login(request):

@@ -1,6 +1,6 @@
 #coding=utf-8
 from django.shortcuts import render,redirect
-from shopcart.models import Product,System_Config,Product_Images,Album,Article,Attribute,Attribute_Group
+from shopcart.models import Product,System_Config,Product_Images,Album,Article,Attribute,Attribute_Group,Slider
 from shopcart.forms import product_add_form
 from shopcart.utils import System_Para,handle_uploaded_file,my_pagination
 from django.http import Http404,HttpResponse
@@ -45,6 +45,16 @@ def file_list_show(request,item_type,item_id):
 		elif item_type == 'attribute':
 			try:
 				item = Attribute_Group.objects.get(id=item_id)
+				ctx['item'] = item
+				try:
+					image_list = Album.objects.filter(item_type=item_type,item_id=item.id).order_by('create_time').reverse()
+				except:
+					image_list = []
+			except:
+				raise Http404
+		elif item_type == 'slider':
+			try:
+				item = Slider.objects.get(id=item_id)
 				ctx['item'] = item
 				try:
 					image_list = Album.objects.filter(item_type=item_type,item_id=item.id).order_by('create_time').reverse()
@@ -151,6 +161,18 @@ def file_upload(request,item_type,item_id):
 				return render(request,System_Config.get_template_name('admin') + '/file_upload.html',ctx)
 			ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id,alt_value=alt_value)
 			logger.info('Attribute_Group image upload success')
+		elif item_type == 'slider':
+			try:
+				item = Slider.objects.get(id=item_id)
+			except:
+				raise Http404
+			filenames = handle_uploaded_file(request.FILES['upload'],item_type,item_id,request.POST['filename_type'],manual_name,same_name_handle)
+			if filenames['upload_result'] == False:
+				ctx['result_message'] = filenames['upload_error_msg']
+				return render(request,System_Config.get_template_name('admin') + '/file_upload.html',ctx)
+			ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id,alt_value=alt_value)
+			logger.info('Slider image upload success')	
+		
 		else:
 			raise Http404
 			

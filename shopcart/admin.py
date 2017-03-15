@@ -1,11 +1,21 @@
 from django.contrib import admin
 from django.contrib.auth.models import Permission
 
-from shopcart.models import Product,Order,Order_Products,Category,System_Config,Attribute,Attribute_Group,Article,Email_List,Product_Attribute,Express,ExpressType,Inquiry,Product_Images,Promotion,OrderRemark,MyUser,Email,OrderShippment,CustomizeURL,ArticleBusiCategory,ProductParaGroup,ProductPara,ProductParaDetail,ProductPrice,ClientMenu
+from shopcart.models import Product,Order,Order_Products,Category,System_Config,Attribute,Attribute_Group,Article,Email_List,Product_Attribute,Express,ExpressType,Inquiry,Product_Images,Promotion,OrderRemark,MyUser,Email,OrderShippment,CustomizeURL,ArticleBusiCategory,ProductParaGroup,ProductPara,ProductParaDetail,ProductPrice,ClientMenu,Slider,Album
 
 # Register your models here.
+class AlbumAdmin(admin.ModelAdmin):
+	list_display = ('item_type','item_id','image','alt_value','create_time','update_time') 
+admin.site.register(Album,AlbumAdmin)
+
+
+class SliderMenuAdmin(admin.ModelAdmin):
+	list_display = ('name','code','create_time','update_time') 
+admin.site.register(Slider,SliderMenuAdmin)
+
+
 class ClientMenuAdmin(admin.ModelAdmin):
-	list_display = ('name','content','create_time','update_time') 
+	list_display = ('name','code','content','create_time','update_time') 
 admin.site.register(ClientMenu,ClientMenuAdmin)
 
 

@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.shortcuts import render,redirect
-from shopcart.models import System_Config,CustomizeURL,ClientMenu
+from shopcart.models import System_Config,CustomizeURL,ClientMenu,Slider
 from captcha.models import CaptchaStore
 from captcha.helpers import captcha_image_url
 from django.http import HttpResponse
@@ -48,16 +48,33 @@ def refresh_captcha(request):
 
 		
 def get_menu(request):
-	name = request.GET.get('menu_name','common_header')
+	code = request.GET.get('menu_name','common_header')
 	try:
-		menu = ClientMenu.objects.get(name=name)
+		menu = ClientMenu.objects.get(code=code)
 	except Exception as err:
-		logger.error('Can not find menu %s. \n Error Message:%s' %(name,err))
+		logger.error('Can not find menu %s. \n Error Message:%s' %(code,err))
 		menu = ''
 		
 	result_dict = {}
 	result_dict['success'] = True
 	result_dict['data_menu'] = menu.content
+	return JsonResponse(result_dict)
+	
+	
+def get_slider_images(request):
+	code = request.GET.get('slider_name','')
+	try:
+		slider = Slider.objects.get(code=code)
+	except Exception as err:
+		logger.error('Can not find slider %s. \n Error Message:%s' %(code,err))
+		slider = None
+	
+	result_dict = {}
+	result_dict['success'] = True
+	image_list = []
+	for img in slider.get_image_list():
+		image_list.append(img.image)
+	result_dict['image_list'] = image_list
 	return JsonResponse(result_dict)
 		
 		

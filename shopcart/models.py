@@ -943,6 +943,9 @@ class Album(models.Model):
 	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
 	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
 	
+	def __str__(self):
+		return self.item_type + ' ' + str(self.item_id)
+	
 	class Meta:
 		verbose_name = '相册'
 		verbose_name_plural = '相册'
@@ -1014,6 +1017,7 @@ class Promotion(models.Model):
 @python_2_unicode_compatible		
 class ClientMenu(models.Model):
 	name = models.CharField(max_length=100,null=True,verbose_name = '菜单用途')
+	code = models.CharField(max_length=100,null=True,verbose_name = '菜单代码')
 	content = models.TextField(null=True,blank=True,verbose_name = '菜单内容')
 	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
 	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
@@ -1023,7 +1027,25 @@ class ClientMenu(models.Model):
 	
 	class Meta:
 		verbose_name = '菜单信息'
-		verbose_name_plural = '菜单信息'		
+		verbose_name_plural = '菜单信息'	
+
+@python_2_unicode_compatible		
+class Slider(models.Model):
+	name = models.CharField(max_length=100,null=True,verbose_name = '幻灯用途')
+	code = models.CharField(max_length=100,null=True,verbose_name = '幻灯代码')
+	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
+	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
+	
+	def __str__(self):
+		return self.name
+		
+	def get_image_list(self):
+		image_list = Album.objects.filter(item_type='slider',item_id=self.id).order_by('-update_time')
+		return image_list	
+	
+	class Meta:
+		verbose_name = '幻灯信息'
+		verbose_name_plural = '幻灯信息'		
 		
 		
 		

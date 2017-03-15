@@ -804,22 +804,40 @@ def product_sku_manage(request,id=None):
 		
 @staff_member_required
 @transaction.atomic()	
-def product_sku_delete(request,id=None):
+def product_sku_delete(request,method='delete',id=None):
 	result = {}
 	result['success'] = False
 	result['message'] = ''
 	
 	if request.method == 'GET':
-		try:
-			sku = Product_Attribute.objects.get(id=id)
-			sku.delete()
+		if method == 'delete':
+			try:
+				sku = Product_Attribute.objects.get(id=id)
+				sku.delete()
+				
+				result['success'] = True
+				result['message'] = 'SKU删除成功'
+				
+			except Exception as err:
+				logger.error("Delete sku failed. \n Error message:%s" % err)
+				result['message'] = 'SKU删除失败，请重试。'
+				return JsonResponse(result)
+		elif method == 'clear':
+			try:
+				product = Product.objects.get(id=id)
+			except Exception as err:
+				product = None
+				logger.error("Can not find product [%s] \n Error message:%s" % (id,err))
+				result['message'] = '清除SKU删除失败，商品不存在或已被删除。'
+				return JsonResponse(result)
+				
+			if product:
+				for sku in product.attributes.all():
+					sku.delete()
+				product.save()
 			
 			result['success'] = True
-			result['message'] = 'SKU删除成功'
-			
-		except Exception as err:
-			logger.error("Delete sku failed. \n Error message:%s" % err)
-			result['message'] = 'SKU删除失败，请重试。'
+			result['message'] = '清除SKU成功'
 		
 		return JsonResponse(result)		
 		

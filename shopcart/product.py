@@ -223,7 +223,7 @@ def ajax_get_product_info(request):
 	if not product.attributes.all():
 		#没有额外属性
 		logger.info('Product has no extra attributes.')
-		result_dict['success'] = True
+		result_dict['success'] = False
 		result_dict['message'] = null
 		return result_dict	
 
@@ -236,12 +236,12 @@ def ajax_get_product_info(request):
 	para_list = product_to_get['attr_list']
 	para_list = [int(attr) for attr in para_list]#转换成数值型
 	para_list.sort() #排序
-	logger.debug('>>>>para_list:' + str(para_list))
+	#logger.debug('>>>>para_list:' + str(para_list))
 	
-	attr_avaliable_set = set([])
+	#attr_avaliable_set = set([])
 	for pa in product.attributes.all():
 		attr_id_list = [attr.id for attr in pa.attribute.all()]
-		logger.debug('>>>>attr_id_list:' + str(attr_id_list))
+		#logger.debug('>>>>attr_id_list:' + str(attr_id_list))
 		if set(para_list) <= set(attr_id_list):#判断para_list是否是attr_id_list的子集
 			temp = set(attr_id_list) - set(para_list) #求差集
 			if len(temp) == 0:
@@ -265,23 +265,12 @@ def ajax_get_product_info(request):
 					product_extra['show_image'] = False
 					product_extra['image_url'] = ''
 				result_dict['message'] = product_extra
-				return JsonResponse(result_dict)
-			else:
-				attr_avaliable_set = attr_avaliable_set | temp #求并集
+				result_dict['success'] = True
+				#return JsonResponse(result_dict)
+			#else:
+			#	attr_avaliable_set = attr_avaliable_set | temp #求并集
 	#进入到这里，说明前面没有选择全
-	result_dict['success'] = False
-	not_selected_attr_list = []
-	selected_attr_list = []
-	for id in list(attr_avaliable_set):
-		#logger.debug('id:%s' % id)
-		attr = Attribute.objects.get(id=id)
-		not_selected_attr_list.append('%s|%s' % (id,attr.group.group_type))
-		
-	for id in list(para_list):
-		#logger.debug('id:%s' % id)
-		attr = Attribute.objects.get(id=id)
-		selected_attr_list.append('%s|%s' % (id,attr.group.group_type))
-	
+	#result_dict['success'] = False
 	
 	#组建可以选择的列表和不可选择的列表
 	'''
@@ -300,10 +289,68 @@ def ajax_get_product_info(request):
 		第三步：逐个分析与A或者E同组的选项，比如B，查找是否存在 BE的组合，存在则亮起，不存在则灰掉；同样，也要逐个分析与E同组的选项，比如F，不存在AF组合的话，就要将F灰掉。
 		经过上面的筛选，应该可以找到当前组合条件下，可以点选的选项了。
 	'''
-	
-	result_dict['not_selected'] = not_selected_attr_list#返回可以选择的attribute_id列表
-	result_dict['selected'] = selected_attr_list #返回已经选择了的attribute_id列表
+	available_set = check_available_attributes(para_list,product)
+	available_ret = []
+	for attr in available_set:
+		tmp = '%s|%s' % (attr.id,attr.group.group_type)
+		available_ret.append(tmp)
+	result_dict['available_set'] = available_ret
+
 	return JsonResponse(result_dict)
+	
+def check_available_attributes(para_list,product):
+	available_list = set()
+
+	attribute_list = Attribute.objects.filter(id__in=para_list)
+	
+	
+	logger.debug('attribute_list:%s' % attribute_list)
+	pa_list = product.attributes.all()
+	#logger.debug('pa_list:%s' % pa_list)
+	
+	#1 先找出PA中，带有attribute_list的中每一个属性的所有组合
+	pa_with_selected_list = pa_list.filter(attribute__in = attribute_list)
+	#logger.debug('pa_with_selected_list:%s' % pa_with_selected_list)
+	
+	#2 在上一步的结果中找出含有所有组合的选项
+	pa_with_selected_combined_list = pa_with_selected_list
+	for attr in attribute_list:
+		pa_with_selected_combined_list = pa_with_selected_combined_list.filter(attribute=attr)
+	pa_with_selected_combined_list = list(set(pa_with_selected_combined_list))
+	#logger.debug('pa_with_selected_combined_list:%s' % pa_with_selected_combined_list)
+	
+	#3 将pa_with_selected_combined_list中还没有选择的选项加入到available_list中
+	tmp_attr_list = set()
+	for pa in pa_with_selected_combined_list:
+		for attr in pa.attribute.all():
+			tmp_attr_list.add(attr)
+	#logger.debug('tmp_attr_list:%s' % tmp_attr_list)
+	for attr in tmp_attr_list:
+		available_list.add(attr)
+	#logger.debug('available_list:%s' % available_list)
+	
+	#4 将attribute_list的元素拿出来，逐个分析其同族的元素，是否在pa中存在相应的组合，存在则加入available_list
+	for attr in attribute_list:
+		#找出同族元素
+		group_members_set = set(attr.group.attributes.all())
+		group_members_set.remove(attr)
+		logger.debug('the members in attr %s group is: %s' %(attr,group_members_set))
+		#逐个查找是否存在 group_members_set中元素与attribute_list其它元素组合的pa
+		attribute_set = set(attribute_list)
+		attribute_set.remove(attr)
+		for attr in group_members_set:
+			tmp = pa_list.filter(attribute=attr)
+			for attr_other in attribute_set:
+				tmp = tmp.filter(attribute=attr_other)
+			if tmp.count() > 0:
+				available_list.add(attr)
+			logger.debug('当前同族的元素是：%s , 筛选后的组合为：%s .' % (attr,tmp))
+		
+	logger.debug('available_list:%s' % available_list)	
+	return available_list
+	
+	
+	
 	
 def ajax_get_product_images(request,method='main'):
 	if request.is_ajax():

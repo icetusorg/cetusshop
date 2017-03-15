@@ -466,7 +466,7 @@ class Product_Attribute(models.Model):
 	update_time = models.DateTimeField(auto_now = True)
 	
 	def __str__(self):
-		return self.name
+		return self.get_grouped_attribute_desc()
 	
 	def get_grouped_attribute_desc(self):
 		attr_list = []

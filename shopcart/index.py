@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.shortcuts import render,redirect
-from shopcart.models import System_Config,CustomizeURL
+from shopcart.models import System_Config,CustomizeURL,ClientMenu
 from captcha.models import CaptchaStore
 from captcha.helpers import captcha_image_url
 from django.http import HttpResponse
@@ -9,6 +9,7 @@ import json
 from django.utils.translation import ugettext as _
 from shopcart.functions.product_util_func import get_menu_products
 from django.http import Http404
+from django.http import HttpResponse,JsonResponse
 # import the logging library
 import logging
 # Get an instance of a logger
@@ -44,3 +45,21 @@ def refresh_captcha(request):
 		to_json_response['new_cptch_key'] = CaptchaStore.generate_key()  
 		to_json_response['new_cptch_image'] = captcha_image_url(to_json_response['new_cptch_key'])  
 		return HttpResponse(json.dumps(to_json_response), content_type='application/json')
+
+		
+def get_menu(request):
+	name = request.GET.get('menu_name','common_header')
+	try:
+		menu = ClientMenu.objects.get(name=name)
+	except Exception as err:
+		logger.error('Can not find menu %s. \n Error Message:%s' %(name,err))
+		menu = ''
+		
+	result_dict = {}
+	result_dict['success'] = True
+	result_dict['data_menu'] = menu.content
+	return JsonResponse(result_dict)
+		
+		
+		
+		

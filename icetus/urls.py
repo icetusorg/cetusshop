@@ -21,6 +21,8 @@ from django.conf import settings
 urlpatterns = patterns("",
 	url(r'^$', 'shopcart.index.view_index',name='view_index'),
 	url(r'^refresh-captcha$', 'shopcart.index.refresh_captcha',name='refresh_captcha'),	
+	url(r'^common/get-menu/$', 'shopcart.index.get_menu',name='common_get_menu'),
+	
 	url(r'^user/register$', 'shopcart.myuser.register',name='myuser_register'),
 	url(r'^user/login/$', 'shopcart.myuser.login',name='myuser_login'),
 	url(r'^user/logout/$', 'shopcart.myuser.logout',name='myuser_logout'),

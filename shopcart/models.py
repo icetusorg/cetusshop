@@ -1010,3 +1010,21 @@ class Promotion(models.Model):
 	class Meta:
 		verbose_name = '促销代码'
 		verbose_name_plural = '促销代码'
+		
+@python_2_unicode_compatible		
+class ClientMenu(models.Model):
+	name = models.CharField(max_length=100,null=True,verbose_name = '菜单用途')
+	content = models.TextField(null=True,blank=True,verbose_name = '菜单内容')
+	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
+	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
+	
+	def __str__(self):
+		return self.name
+	
+	class Meta:
+		verbose_name = '菜单信息'
+		verbose_name_plural = '菜单信息'		
+		
+		
+		
+		

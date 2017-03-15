@@ -42,7 +42,7 @@
 									<td><a href="../article-edit/?id={{article.id}}">{{article.title}}</a></td>
 									<td><a href="../article-edit/?id={{article.id}}">{{article.page_title}}</a></td>
 									<td><a href="../article-edit/?id={{article.id}}">{{article.static_file_name}}</a></td>
-									<td data="message_list1"><a href="../article-edit/?id={{article.id}}" class="article-edit-link" data-article-id="{{article.id}}">修改</a> | <a href="{{article.get_url}}" target="_blank">预览</a> | <a href="#" class="delete-cust-page-article" data-id="{{article.id}}">删除</a></td>
+									<td data="message_list1"><a href="../article-edit/?id={{article.id}}" class="article-edit-link" data-article-id="{{article.id}}">修改</a> | <a href="{{article.get_url}}" target="_blank">预览</a> | <a href="#" class="delete-cust-page-article deleteCategory message-delete" data-id="{{article.id}}">删除</a></td>
 								</tr>
 							{% endfor %}				
 							</tbody>

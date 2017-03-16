@@ -399,7 +399,7 @@ def ajax_get_product_description(request,id):
 	
 def get_push_product(request):
 	type = request.GET.get('type','')
-	product_list = ProductPush.objects.filter(type=type).order_by('sort_order')
+	product_list = ProductPush.objects.filter(type=type).order_by('-sort_order')
 	products = []
 	for p in product_list:
 		products.append(p.serialization())

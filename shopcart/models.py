@@ -1058,7 +1058,7 @@ class ProductPush(models.Model):
 	PUSH_TYPE_HOT = 'hotest'
 	
 	sort_order = models.IntegerField(default=0,verbose_name='排序序号')
-	
+	title = models.CharField(max_length=254,null=True,default='',verbose_name = '定制的标题')
 	type = models.CharField(max_length=100,null=True,verbose_name = '推送用途')
 	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
 	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
@@ -1069,6 +1069,7 @@ class ProductPush(models.Model):
 	def serialization(self):
 		p = {}
 		p['name'] = self.product.name
+		p['title'] = self.title
 		p['url'] = self.product.get_url()
 		p['image'] = self.product.image
 		p['thumb'] = self.product.thumb

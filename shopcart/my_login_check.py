@@ -32,5 +32,8 @@ class MyLoginCheckMiddleware:
 			
 		response.context_data['customize_var'] = vars
 		
+		from shopcart.utils import get_system_parameters
+		response.context_data['system_para'] = get_system_parameters()
+		
 		#logger.debug("Look up: %s" % response.context_data['customize_var'])
 		return response

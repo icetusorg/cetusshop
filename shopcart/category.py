@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from shopcart.models import System_Config,Category
-from shopcart.utils import System_Para,my_pagination,get_system_parameters
+from shopcart.utils import my_pagination,get_system_parameters
 import json,os
 from django.http import JsonResponse
 from django.http import Http404

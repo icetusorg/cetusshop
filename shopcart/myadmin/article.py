@@ -2,7 +2,7 @@
 from django.shortcuts import render,redirect
 from shopcart.models import Article,System_Config,Album,ArticleBusiCategory
 from shopcart.forms import article_basic_info_form,article_detail_info_form
-from shopcart.utils import System_Para,my_pagination,get_serial_number,get_system_parameters
+from shopcart.utils import my_pagination,get_serial_number,get_system_parameters
 from django.http import HttpResponse,JsonResponse,Http404
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.admin.views.decorators import staff_member_required
@@ -23,7 +23,6 @@ def get_page_size():
 @transaction.atomic()
 def set_image(request):
 	ctx = {}
-	ctx['system_para'] = System_Para.get_default_system_parameters()
 	ctx['page_name'] = '文章图片管理'
 
 	if request.method == 'POST':
@@ -142,7 +141,6 @@ def detail(request,id):
 @staff_member_required
 def article_basic_edit(request):
 	ctx = {}
-	ctx['system_para'] = System_Para.get_default_system_parameters()
 	
 	result = {}
 	result['success'] = False

@@ -2,7 +2,7 @@
 from django.shortcuts import render,redirect,render_to_response
 from django.core.urlresolvers import reverse
 from shopcart.models import System_Config,Email
-from shopcart.utils import System_Para,get_system_parameters
+from shopcart.utils import get_system_parameters
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse,JsonResponse,Http404
 import logging,json

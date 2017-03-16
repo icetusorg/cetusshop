@@ -111,35 +111,6 @@ def my_pagination(request, queryset, display_amount=10, after_range_num = 5,bevo
 		page_range = paginator.page_range[0:page+bevor_range_num]
 	return objects,page_range
 
-class System_Para:
-	def __init__(self,_page_title='',_site_name='',_default_welcome_message='',_logo_image='',_base_url='',_contact_address='',_thumb_width=128,_service_email='',_copyright=''):
-		self.page_title = _page_title
-		self.site_name = _site_name
-		self.default_welcome_message = _default_welcome_message
-		self.logo_image = _logo_image
-		self.base_url = _base_url
-		self.contact_address = _contact_address
-		self.thumb_width = _thumb_width
-		self.service_email = _service_email
-		self.copyright = _copyright
-	
-	@staticmethod	
-	def get_default_system_parameters():
-		hashMap={'site_name':'','default_welcome_message':'','logo_image':'','base_url':'','contact_address':'','thumb_width':'','service_email':'','copyright':''}
-		list= System_Config.objects.all()
-		for item in list:
-			hashMap[item.name]=item.val
-			
-		return System_Para(
- 			_site_name = hashMap['site_name'],
- 			_default_welcome_message = hashMap['default_welcome_message'],
- 			_logo_image = hashMap['logo_image'],
- 			_base_url = hashMap['base_url'],
- 			_contact_address = hashMap['contact_address'],
- 			_thumb_width = hashMap['thumb_width'],
- 			_service_email = hashMap['service_email'],
- 			_copyright = hashMap['copyright']
-		)
 
 def get_system_parameters():
 	parameter_list = System_Config.objects.all()

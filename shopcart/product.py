@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from shopcart.models import System_Config,Product,Product_Images,Category,Attribute,ProductPush
-from shopcart.utils import System_Para,my_pagination,get_system_parameters
+from shopcart.utils import my_pagination,get_system_parameters
 import json,os
 from django.http import JsonResponse
 from django.utils.translation import ugettext as _

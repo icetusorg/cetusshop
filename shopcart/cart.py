@@ -5,7 +5,7 @@ from django.core.context_processors import csrf
 from django.http import HttpResponse,JsonResponse
 import json,uuid
 from django.db import transaction
-from shopcart.utils import System_Para,get_system_parameters
+from shopcart.utils import get_system_parameters
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from shopcart.functions.product_util_func import get_menu_products

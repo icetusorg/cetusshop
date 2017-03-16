@@ -2,7 +2,7 @@
 from django.shortcuts import render,redirect
 from shopcart.models import Product,System_Config,Category,Attribute,Attribute_Group,Product_Attribute,Product_Images,ProductParaGroup,ProductPara,ProductPrice,ProductParaDetail,Album
 from shopcart.forms import product_add_form,product_basic_info_form,product_detail_info_form,product_para_group_form,product_sku_group_form
-from shopcart.utils import System_Para,handle_uploaded_file,my_pagination
+from shopcart.utils import handle_uploaded_file,my_pagination
 from django.http import Http404,HttpResponse,JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.admin.views.decorators import staff_member_required
@@ -18,7 +18,7 @@ logger = logging.getLogger('icetus.shopcart')
 @transaction.atomic()
 def product_sku_group_edit(request):
 	ctx = {}
-	ctx['system_para'] = System_Para.get_default_system_parameters()
+	
 	ctx['page_name'] = '商品SKU组管理'
 	
 	if request.method == 'GET':
@@ -64,7 +64,7 @@ def product_sku_group_edit(request):
 @transaction.atomic()
 def product_sku_group_list(request):
 	ctx = {}
-	ctx['system_para'] = System_Para.get_default_system_parameters()
+	
 	if request.method == 'GET':
 		group_list = Attribute_Group.objects.all()
 		
@@ -83,7 +83,7 @@ def product_sku_group_list(request):
 @transaction.atomic()
 def product_para_list(request):
 	ctx = {}
-	ctx['system_para'] = System_Para.get_default_system_parameters()
+	
 	if request.method == 'GET':
 		product_para_list = ProductParaGroup.objects.all()
 		
@@ -101,7 +101,7 @@ def product_para_list(request):
 @transaction.atomic()
 def product_para_group_edit(request):
 	ctx = {}
-	ctx['system_para'] = System_Para.get_default_system_parameters()
+	
 	ctx['page_name'] = '商品参数组管理'
 	
 	if request.method == 'GET':
@@ -146,7 +146,7 @@ def product_para_group_edit(request):
 @transaction.atomic()
 def product_sku_group_delete(request):
 	ctx = {}
-	ctx['system_para'] = System_Para.get_default_system_parameters()
+	
 	ctx['page_name'] = '商品SKU组管理'
 	
 	if request.method == 'POST':
@@ -177,7 +177,7 @@ def product_sku_group_delete(request):
 @transaction.atomic()
 def product_para_group_delete(request):
 	ctx = {}
-	ctx['system_para'] = System_Para.get_default_system_parameters()
+	
 	ctx['page_name'] = '商品参数组管理'
 	
 	if request.method == 'POST':
@@ -207,7 +207,7 @@ def product_para_group_delete(request):
 @transaction.atomic()
 def product_sku_item_edit(request):
 	ctx = {}
-	ctx['system_para'] = System_Para.get_default_system_parameters()
+	
 	ctx['page_name'] = 'SKU项目管理'
 	
 	if request.method == 'GET':
@@ -257,7 +257,7 @@ def product_sku_item_edit(request):
 @transaction.atomic()
 def product_sku_item_set_image(request):
 	ctx = {}
-	ctx['system_para'] = System_Para.get_default_system_parameters()
+	
 	ctx['page_name'] = 'SKU项目图片管理'
 
 	if request.method == 'POST':
@@ -317,7 +317,7 @@ def product_sku_item_set_image(request):
 @transaction.atomic()
 def product_para_edit(request):
 	ctx = {}
-	ctx['system_para'] = System_Para.get_default_system_parameters()
+	
 	ctx['page_name'] = '商品参数管理'
 	
 	if request.method == 'GET':
@@ -419,7 +419,7 @@ def product_para_detail_edit(request):
 @transaction.atomic()
 def product_para_delete(request):
 	ctx = {}
-	ctx['system_para'] = System_Para.get_default_system_parameters()
+	
 	ctx['page_name'] = '商品参数管理'
 	
 	if request.method == 'GET':
@@ -448,7 +448,7 @@ def product_para_delete(request):
 @transaction.atomic()
 def set_image(request):
 	ctx = {}
-	ctx['system_para'] = System_Para.get_default_system_parameters()
+	
 	ctx['page_name'] = '商品图片管理'
 
 	if request.method == 'POST':
@@ -539,7 +539,7 @@ def set_image(request):
 @transaction.atomic()
 def product_opration(request,opration,id):
 	ctx = {}
-	ctx['system_para'] = System_Para.get_default_system_parameters()
+	
 	if request.method == 'GET':
 		if opration == 'add':
 			if id != '0':
@@ -565,7 +565,7 @@ def product_opration(request,opration,id):
 @transaction.atomic()
 def product_basic_edit(request):
 	ctx = {}
-	ctx['system_para'] = System_Para.get_default_system_parameters()
+	
 	
 	result = {}
 	result['success'] = False
@@ -992,7 +992,7 @@ def oper(request):
 @staff_member_required
 def product_list(request):
 	ctx = {}
-	ctx['system_para'] = System_Para.get_default_system_parameters()
+	
 	if request.method == 'GET':
 		
 		#name_condition = request.GET.get('name','')

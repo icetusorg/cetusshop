@@ -2,7 +2,7 @@
 from django.shortcuts import render,redirect
 from shopcart.models import Product,System_Config,Product_Images,Album,Article,Attribute,Attribute_Group,Slider
 from shopcart.forms import product_add_form
-from shopcart.utils import System_Para,handle_uploaded_file,my_pagination
+from shopcart.utils import handle_uploaded_file,my_pagination
 from django.http import Http404,HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.admin.views.decorators import staff_member_required
@@ -14,7 +14,6 @@ logger = logging.getLogger('icetus.shopcart')
 @csrf_exempt
 def file_list_show(request,item_type,item_id):
 	ctx = {}
-	ctx['system_para'] = System_Para.get_default_system_parameters()
 	ctx['action_url'] = '/admin/file-upload/' + item_type + '/' + item_id + "/"
 	ctx['file_delete_url'] = '/file-delete/' + item_type
 	ctx['host_item_id'] = item_id
@@ -83,7 +82,6 @@ def file_list_show(request,item_type,item_id):
 @csrf_exempt
 def file_upload(request,item_type,item_id):
 	ctx = {}
-	ctx['system_para'] = System_Para.get_default_system_parameters()
 	ctx['action_url'] = '/admin/file-upload/' + item_type + '/' + item_id + "/"
 	ctx['file_delete_url'] = '/file-delete/' + item_type
 	ctx['host_item_id'] = item_id
@@ -196,7 +194,6 @@ def file_upload(request,item_type,item_id):
 @staff_member_required
 def file_delete(request,item_type,item_id,host_item_id):
 	ctx = {}
-	ctx['system_para'] = System_Para.get_default_system_parameters()
 	ctx['file_delete_url'] = '/file-delete/' + item_type
 	if request.method == 'GET':
 		try:
@@ -245,7 +242,6 @@ def file_list(path,filetype):
 @staff_member_required
 def ckediter(request,item_type,item_id):
 	ctx = {}
-	ctx['system_para'] = System_Para.get_default_system_parameters()
 	ctx['upload_url'] = '/admin/file-upload/' + item_type + '/' + item_id + '/'
 	ctx['article_content'] = ''
 	ctx['id'] = item_id

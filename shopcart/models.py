@@ -306,12 +306,16 @@ class Product(models.Model):
 		price_list = []
 		
 		if self.prices.all().count()>0:
-			
 			for p in self.prices.all():
 				if p.price > 0:
 					price_list.append(p.price)
-			price_min = min(price_list)
-			price_max = max(price_list)
+
+			if len(price_list) > 0:	
+				price_min = min(price_list)
+				price_max = max(price_list)
+			else:
+				price_min = self.price
+				price_max = self.price
 		else:
 			price_min = self.price
 			price_max = self.price

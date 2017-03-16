@@ -1,7 +1,7 @@
 #coding=utf-8
 from django.shortcuts import render
 from django.template.loader import render_to_string
-from shopcart.models import System_Config,Product,Product_Images,Category,Attribute
+from shopcart.models import System_Config,Product,Product_Images,Category,Attribute,ProductPush
 from shopcart.utils import System_Para,my_pagination,get_system_parameters
 import json,os
 from django.http import JsonResponse
@@ -396,4 +396,15 @@ def ajax_get_product_description(request,id):
 		except Exception as err:
 			logger.error('检索id为%s的商品不存在.' % [id])
 	return HttpResponse(product_desc)
+	
+def get_push_product(request):
+	type = request.GET.get('type','')
+	product_list = ProductPush.objects.filter(type=type).order_by('sort_order')
+	products = []
+	for p in product_list:
+		products.append(p.serialization())
+	result_dict = {}
+	result_dict['success'] = True
+	result_dict['products'] = products
+	return JsonResponse(result_dict)
 

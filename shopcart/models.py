@@ -1046,8 +1046,39 @@ class Slider(models.Model):
 	
 	class Meta:
 		verbose_name = '幻灯信息'
-		verbose_name_plural = '幻灯信息'		
+		verbose_name_plural = '幻灯信息'
+
 		
+@python_2_unicode_compatible		
+class ProductPush(models.Model):
+	product = models.ForeignKey(Product,null=True,related_name='push_channels')
+	
+	PUSH_TYPE_INDEX = 'index' 
+	PUSH_TYPE_NEW = 'newest'
+	PUSH_TYPE_HOT = 'hotest'
+	
+	sort_order = models.IntegerField(default=0,verbose_name='排序序号')
+	
+	type = models.CharField(max_length=100,null=True,verbose_name = '推送用途')
+	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
+	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
+	
+	def __str__(self):
+		return '%s : %s' % (self.type,self.product)
+		
+	def serialization(self):
+		p = {}
+		p['name'] = self.product.name
+		p['url'] = self.product.get_url()
+		p['image'] = self.product.image
+		p['thumb'] = self.product.thumb
+		p['price'] = self.product.get_min_price()
+		return p
+		
+	
+	class Meta:
+		verbose_name = '商品推荐'
+		verbose_name_plural = '商品推荐'		
 		
 		
 		

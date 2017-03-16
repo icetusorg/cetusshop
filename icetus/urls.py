@@ -23,6 +23,7 @@ urlpatterns = patterns("",
 	url(r'^refresh-captcha$', 'shopcart.index.refresh_captcha',name='refresh_captcha'),	
 	url(r'^common/get-menu/$', 'shopcart.index.get_menu',name='common_get_menu'),
 	url(r'^common/get-slider-images/$', 'shopcart.index.get_slider_images',name='common_get_slider_images'),
+	url(r'^common/get-push-product/$', 'shopcart.product.get_push_product',name='common_get_push_product'),
 	
 	
 	url(r'^user/register$', 'shopcart.myuser.register',name='myuser_register'),

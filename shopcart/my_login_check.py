@@ -32,5 +32,5 @@ class MyLoginCheckMiddleware:
 			
 		response.context_data['customize_var'] = vars
 		
-		logger.debug("Look up: %s" % response.context_data['customize_var'])
+		#logger.debug("Look up: %s" % response.context_data['customize_var'])
 		return response

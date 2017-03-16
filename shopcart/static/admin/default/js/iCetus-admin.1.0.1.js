@@ -1138,6 +1138,10 @@ jQuery(".album-image-show").on('click',".set-picture-attr",function(event){
 		url = "/admin/product-sku-item-set-image/";
 	}
 	
+	if (type=="slider"){
+		url = "/admin/slider-set-image/";
+	}
+	
 	console.log("Url:" + url);
 	console.log("Item Type:" + type + " item_id:" + item_id + " picture_id:" + picture_id + " method:" + method);
 	

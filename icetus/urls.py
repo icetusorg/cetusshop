@@ -127,6 +127,9 @@ urlpatterns = patterns("",
 	url('^admin/article-busi-category-delete/$', 'shopcart.myadmin.article_busi_category.delete',name='admin_article_busi_category_delete'),
 	url('^admin/article-busi-category-sort/$', 'shopcart.myadmin.article_busi_category.sort',name='admin_article_busi_category_sort'),
 	
+	url(r'^admin/slider-set-image/$', 'shopcart.myadmin.slider.set_image',name='admin_slider_set_image'),
+	
+	
 	url('^admin/category-list/$', 'shopcart.myadmin.category.list_view',name='admin_category_list_view'),
 	url('^admin/category-edit/$', 'shopcart.myadmin.category.edit',name='admin_category_edit'),
 	url('^admin/category-detele/(\d+)/$', 'shopcart.myadmin.category.delete',name='admin_category_delete'),

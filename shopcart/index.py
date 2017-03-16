@@ -10,6 +10,7 @@ from django.utils.translation import ugettext as _
 from shopcart.functions.product_util_func import get_menu_products
 from django.http import Http404
 from django.http import HttpResponse,JsonResponse
+from django.template.response import TemplateResponse
 # import the logging library
 import logging
 # Get an instance of a logger
@@ -35,7 +36,7 @@ def view_index(request,tdk=None):
 	except Exception as err:
 		logger.info('Can not find the index.html TDK parameter.')
 	
-	return render(request,System_Config.get_template_name() + '/index.html',ctx)
+	return TemplateResponse(request,System_Config.get_template_name() + '/index.html',ctx)
 	
 	
 #刷新验证码  

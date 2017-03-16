@@ -7,6 +7,7 @@ from django.http import HttpResponse,JsonResponse,Http404
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.admin.views.decorators import staff_member_required
 from django.db import transaction
+from django.template.response import TemplateResponse
 import logging
 logger = logging.getLogger('icetus.shopcart')
 
@@ -72,7 +73,7 @@ def set_image(request):
 def article_make_static(request):
 	ctx = {}
 	ctx['article_list'] = Article.objects.all()
-	return render(request,'admin/article/make_static.html',ctx)
+	return TemplateResponse(request,'admin/article/make_static.html',ctx)
 
 @staff_member_required
 @transaction.atomic()
@@ -130,7 +131,7 @@ def detail(request,id):
 			article = Article.objects.get(id=id)
 			ctx['article'] = article
 			ctx['method'] = artice.category
-			return render(request,System_Config.get_template_name('admin') + '/article_detail.html',ctx)
+			return TemplateResponse(request,System_Config.get_template_name('admin') + '/article_detail.html',ctx)
 		except Exception as err:
 			logger.error("Can not find artice which id is %s . \n Error message: %s" % (id,err))
 			raise Http404
@@ -199,7 +200,7 @@ def article_basic_edit(request):
 		from .article_busi_category import get_all_category
 		
 		ctx['category_list'] = get_all_category()		
-		return render(request,System_Config.get_template_name('admin') + '/article_detail.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/article_detail.html',ctx)
 	elif request.method == 'POST':
 		try:
 			article = Article.objects.get(id=request.POST['id'])
@@ -376,7 +377,7 @@ def list_view(request):
 		ctx['page_range'] = page_range
 		ctx['page_size'] = page_size
 		ctx['article_count'] = all.count()
-		return render(request,System_Config.get_template_name('admin') + '/article_list.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/article_list.html',ctx)
 	else:
 		raise Http404
 	

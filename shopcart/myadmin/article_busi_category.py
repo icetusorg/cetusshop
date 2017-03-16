@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.admin.views.decorators import staff_member_required
 from django.db import transaction
 from shopcart.forms import article_busi_category_form
+from django.template.response import TemplateResponse
 import logging
 logger = logging.getLogger('icetus.shopcart')
 
@@ -42,7 +43,7 @@ def list(request):
 		ctx['page_size'] = page_size
 		ctx['count'] = count
 
-		return render(request,System_Config.get_template_name('admin') + '/article_busi_category_list.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/article_busi_category_list.html',ctx)
 	elif request.method=='POST':
 		raise Http404
 	else:
@@ -137,7 +138,7 @@ def edit(request):
 		ctx['custmize_template'] = template_list
 
 			
-		return render(request,System_Config.get_template_name('admin') + '/article_busi_category_detail.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/article_busi_category_detail.html',ctx)
 	elif request.method=='POST':
 		result = {}
 		result['success'] = False

@@ -11,6 +11,7 @@ from django.core.urlresolvers import reverse
 from shopcart.functions.product_util_func import get_menu_products
 from django.utils.translation import ugettext as _
 from django.http import Http404
+from django.template.response import TemplateResponse
 # import the logging library
 import logging
 # Get an instance of a logger
@@ -273,7 +274,7 @@ def view_cart(request):
 		ctx['page_name'] = 'My Cart'
 		if request.method =='GET':
 			ctx['cart'] = cart
-			response = render(request,System_Config.get_template_name() + '/cart_detail.html',ctx)
+			response = TemplateResponse(request,System_Config.get_template_name() + '/cart_detail.html',ctx)
 			response.set_cookie('cart_id',cart.id ,max_age = 3600*24*365)
 			return response
 
@@ -322,7 +323,7 @@ def check_out(request):
 				logger.debug('Do not a default address.')
 				ctx['default_address'] = addresses_list[0]
 			
-		return render(request,System_Config.get_template_name() + '/check_out.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name() + '/check_out.html',ctx)
 	else:
 		return redirect(reverse('cart_view_cart'))
 

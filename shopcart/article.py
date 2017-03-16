@@ -8,6 +8,7 @@ from django.http import JsonResponse
 from django.http import Http404
 from shopcart.functions.product_util_func import get_menu_products
 from django.utils.translation import ugettext as _
+from django.template.response import TemplateResponse
 # import the logging library
 import logging
 # Get an instance of a logger
@@ -41,7 +42,7 @@ def detail(request,id):
 	logger.info('The template name is %s' % template)
 	
 	if request.method =='GET': #正常访问，返回动态页面
-		return render(request,System_Config.get_template_name() + template, ctx)
+		return TemplateResponse(request,System_Config.get_template_name() + template, ctx)
 	elif request.method == 'POST':#通过ajax访问，生成静态文件
 		content = render_to_string(System_Config.get_template_name() + template, ctx)
 		result_dict = {}
@@ -159,4 +160,4 @@ def view_blog_list(request,category_id=None):
 		ctx['article_list'] = article_list
 		ctx['page_range'] = page_range
 		logger.info('template : ' + template)
-		return render(request,System_Config.get_template_name() + '/' + template,ctx)
+		return TemplateResponse(request,System_Config.get_template_name() + '/' + template,ctx)

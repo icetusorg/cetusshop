@@ -8,6 +8,7 @@ from django.db import transaction
 from shopcart.utils import System_Para,my_pagination,get_system_parameters
 from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import login_required
+from django.template.response import TemplateResponse
 from shopcart.functions.product_util_func import get_menu_products
 
 # import the logging library
@@ -55,7 +56,7 @@ def view_wishlist(request):
 		wish_list, page_range = my_pagination(request, wish_list,display_amount=page_size)
 		ctx['wish_list'] = wish_list
 		ctx['page_range'] = page_range
-		return render(request,System_Config.get_template_name() + '/wish_list.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name() + '/wish_list.html',ctx)
 		
 @login_required()
 def remove_from_wishlist(request):

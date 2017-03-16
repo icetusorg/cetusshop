@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from shopcart.functions.product_util_func import get_menu_products
 from django.utils.translation import ugettext as _
 from django.db import transaction
+from django.template.response import TemplateResponse
 # Get an instance of a logger
 import logging
 logger = logging.getLogger('icetus.shopcart')
@@ -45,12 +46,12 @@ def place_order(request):
 			address = Address.objects.get(id=request.POST['address_id'])
 		except:
 			ctx['content'] = _('Address is not correct')
-			return render(request,System_Config.get_template_name() + '/info_show.html',ctx)
+			return TemplateResponse(request,System_Config.get_template_name() + '/info_show.html',ctx)
 			
 		if address not in request.user.addresses.all():
 			#如果这个地址不是这个用户的，报错
 			ctx['content'] = 'System Error.Please try again.'
-			return render(request,System_Config.get_template_name() + '/info_show.html',ctx)
+			return TemplateResponse(request,System_Config.get_template_name() + '/info_show.html',ctx)
 		
 		#金额
 		sub_total,shipping,discount,total,remark,express_type = request.POST['sub_total'],request.POST['shipping'],request.POST['discount'],request.POST['total'],request.POST['remark'],request.POST['express']
@@ -95,7 +96,7 @@ def place_order(request):
 				if product_attribute.quantity < 0:
 					ctx['content'] = 'The product "%s" is sold out.' % product_attribute.product.name
 					ctx['backurl'] = '/cart/show/'
-					return render(request,System_Config.get_template_name() + '/info_show.html',ctx)
+					return TemplateResponse(request,System_Config.get_template_name() + '/info_show.html',ctx)
 				
 					#raise Exception('The product "%s" is sold out.' % product_attribute.product.name)
 				product_attribute.save()
@@ -105,7 +106,7 @@ def place_order(request):
 				if product.quantity < 0:
 					ctx['content'] = 'The product "%s" is sold out.' % product.name
 					ctx['backurl'] = '/cart/show/'
-					return render(request,System_Config.get_template_name() + '/info_show.html',ctx)
+					return TemplateResponse(request,System_Config.get_template_name() + '/info_show.html',ctx)
 					#raise Exception('The product "%s" is sold out.' % product.name)
 				product.save()
 			
@@ -154,7 +155,7 @@ def payment(request,order_id):
 	else:
 		ctx['paypal_action_url'] = 'https://www.sandbox.paypal.com/cgi-bin/websc'
 	
-	return render(request,System_Config.get_template_name() + '/payment.html',ctx)		
+	return TemplateResponse(request,System_Config.get_template_name() + '/payment.html',ctx)		
 
 	
 from paypal.standard.ipn.signals import valid_ipn_received
@@ -225,7 +226,7 @@ def show_order(request):
 		order_list, page_range = my_pagination(request, order_list,display_amount=order_list_page_size)
 		ctx['order_list'] = order_list
 		ctx['page_range'] = page_range
-		return render(request,System_Config.get_template_name() + '/orders.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name() + '/orders.html',ctx)
 		
 		
 @login_required()
@@ -242,7 +243,7 @@ def order_detail(request,id):
 			raise Http404
 
 		ctx['order'] = order
-		return render(request,System_Config.get_template_name() + '/order_view.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name() + '/order_view.html',ctx)
 		
 		
 @login_required()		

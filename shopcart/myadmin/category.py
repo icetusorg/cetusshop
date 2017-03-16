@@ -8,6 +8,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.db import transaction
 from shopcart import category as category_util
 from shopcart.forms import category_form,category_simple_form
+from django.template.response import TemplateResponse
 import logging
 logger = logging.getLogger('icetus.shopcart')
 
@@ -27,7 +28,7 @@ def list_view(request):
 		top_category_list = category_util.get_all_top_categorys()
 		
 		ctx['category_list'] = top_category_list
-		return render(request,System_Config.get_template_name('admin') + '/category_list.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/category_list.html',ctx)
 	else:
 		raise Http404
 	
@@ -135,7 +136,7 @@ def edit(request):
 			category = None
 		
 		ctx['category'] = category
-		return render(request,System_Config.get_template_name('admin') + '/category_detail.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/category_detail.html',ctx)
 	elif request.method == 'POST':
 		result = {}
 		result['success'] = False

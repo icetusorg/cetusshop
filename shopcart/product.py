@@ -9,6 +9,7 @@ from django.utils.translation import ugettext as _
 from django.http import Http404
 from django.http import HttpResponse
 from shopcart.functions.product_util_func import get_menu_products
+from django.template.response import TemplateResponse
 # import the logging library
 import logging
 # Get an instance of a logger
@@ -79,7 +80,7 @@ def detail(request,id):
 			else:
 				template = '/custmize/product/' + product.detail_template
 		
-		return render(request,System_Config.get_template_name() + template, ctx)
+		return TemplateResponse(request,System_Config.get_template_name() + template, ctx)
 	elif request.method == 'POST':#通过ajax访问，生成静态文件
 		content = render_to_string(System_Config.get_template_name() + '/product_detail.html', ctx)
 		result_dict = {}
@@ -179,7 +180,7 @@ def view_list(request,category_id=None):
 		
 		ctx['product_list'] = product_list
 		ctx['page_range'] = page_range
-		return render(request,System_Config.get_template_name() + template,ctx)
+		return TemplateResponse(request,System_Config.get_template_name() + template,ctx)
 
 
 def query_product_show(request):
@@ -202,7 +203,7 @@ def query_product_show(request):
 		
 		ctx['product_list'] = product_list
 		ctx['page_range'] = page_range
-		return render(request,System_Config.get_template_name() + '/product_list.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name() + '/product_list.html',ctx)
 		
 		
 def ajax_get_product_info(request):

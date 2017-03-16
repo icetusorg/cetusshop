@@ -10,6 +10,7 @@ from django.http import HttpResponse,JsonResponse
 from django.contrib.auth.decorators import login_required
 from shopcart.forms import register_form,captcha_form,address_form,user_info_form
 import json,uuid,datetime
+from django.template.response import TemplateResponse
 from django.db import transaction
 import requests
 from six import b
@@ -34,7 +35,7 @@ def register(request):
 	logger.debug('Enter register function.')
 	if request.method == 'GET':
 		#GET请求，直接返回页面
-		return render(request,System_Config.get_template_name() + '/register.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name() + '/register.html',ctx)
 	else:
 		form = register_form(request.POST) # 获取Post表单数据
 		if form.is_valid():# 验证表单
@@ -55,7 +56,7 @@ def register(request):
 		else:
 			logger.error('form is not valid')
 			ctx['reg_result'] = _('Registration faild.')
-			return render(request,System_Config.get_template_name() + '/register.html',ctx)			
+			return TemplateResponse(request,System_Config.get_template_name() + '/register.html',ctx)			
 			
 
 			
@@ -68,7 +69,7 @@ def info(request):
 	ctx['menu_products'] = get_menu_products()
 	if request.method == 'GET':
 		#GET请求，直接返回页面
-		return render(request,System_Config.get_template_name() + '/user_info.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name() + '/user_info.html',ctx)
 	else:
 		logger.debug("Modify User Info")
 		form = user_info_form(request.POST) # 获取Post表单数据
@@ -109,10 +110,10 @@ def do_login(request,myuser,ctx):
 			return response
 		else:
 			ctx['login_result'] = _('Your account has been banned!')
-			return render(request,System_Config.get_template_name() + '/login.html',ctx)
+			return TemplateResponse(request,System_Config.get_template_name() + '/login.html',ctx)
 	else:
 		ctx['login_result'] = _('Your account name or password is incorrect.')
-		return render(request,System_Config.get_template_name() + '/login.html',ctx)	
+		return TemplateResponse(request,System_Config.get_template_name() + '/login.html',ctx)	
 
 def inner_login(request,login_user,ctx=None):
 	myuser = None
@@ -131,7 +132,7 @@ def login(request,tdk=None):
 		#GET请求，直接返回页面
 		if 'next' in request.GET:
 			ctx['next'] = request.GET['next']
-		return render(request,System_Config.get_template_name() + '/login.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name() + '/login.html',ctx)
 	else:	
 		ctx.update(csrf(request))
 		form = captcha_form(request.POST) # 获取Post表单数据
@@ -219,7 +220,7 @@ def forget_password(request):
 	if request.method == 'GET':
 		ctx['form_display'] = ''
 		ctx['success_display'] = 'display:none;'
-		return render(request,System_Config.get_template_name() + '/forget_password.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name() + '/forget_password.html',ctx)
 	else:
 		form = captcha_form(request.POST) # 获取Post表单数据
 		if form.is_valid():
@@ -238,7 +239,7 @@ def forget_password(request):
 			ctx['success_display'] = ''
 		else:
 			ctx['apply_message'] = _('Please check your verify code.')
-		return render(request,System_Config.get_template_name() + '/forget_password.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name() + '/forget_password.html',ctx)
 
 def reset_password(request):
 	ctx = {}
@@ -253,7 +254,7 @@ def reset_password(request):
 			reset_password = Reset_Password.objects.filter(expirt_time__gt=datetime.datetime.now()).get(email=request.GET['email'],validate_code=request.GET['validate_code'],is_active=True)
 			ctx['email'] = reset_password.email
 			ctx['validate_code'] = reset_password.validate_code
-			return render(request,System_Config.get_template_name() + '/reset_password.html',ctx)
+			return TemplateResponse(request,System_Config.get_template_name() + '/reset_password.html',ctx)
 		except:
 			raise Http404
 			#ctx['form_display'] = 'none'
@@ -277,7 +278,7 @@ def reset_password(request):
 			ctx['success_display'] = ''
 			ctx['form_display'] = 'display:none;'
 			ctx['reset_message'] = _('Opration faild.')		
-		return render(request,System_Config.get_template_name() + '/reset_password.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name() + '/reset_password.html',ctx)
 		
 @login_required
 @transaction.atomic()
@@ -365,7 +366,7 @@ def address(request,method,id=''):
 			return redirect('/user/address/show/')
 		else:
 			raise Http404
-		return render(request,System_Config.get_template_name() + '/address_detail.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name() + '/address_detail.html',ctx)
 	
 	result_dict['success'] = result
 	result_dict['message'] = message
@@ -385,7 +386,7 @@ def address_list(request):
 		myuser = request.user
 		address_list = Address.objects.filter(user=myuser)
 		ctx['address_list'] = address_list
-		return render(request,System_Config.get_template_name() + '/address.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name() + '/address.html',ctx)
 	else:
 		raise Http404
 	

@@ -1079,7 +1079,22 @@ class ProductPush(models.Model):
 	
 	class Meta:
 		verbose_name = '商品推荐'
-		verbose_name_plural = '商品推荐'		
+		verbose_name_plural = '商品推荐'
+		
+@python_2_unicode_compatible		
+class CustomizeVar(models.Model):
+	name = models.CharField(max_length=64,null=True,default='',verbose_name = '变量名称')
+	value = models.CharField(max_length=254,null=True,verbose_name = '变量值')
+	desc = models.CharField(max_length=254,null=True,verbose_name = '变量描述')
+	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
+	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
+	
+	def __str__(self):
+		return '%s : %s' % (self.name,self.value)
+	
+	class Meta:
+		verbose_name = '自定义变量'
+		verbose_name_plural = '自定义变量'
 		
 		
 		

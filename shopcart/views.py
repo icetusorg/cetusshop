@@ -6,6 +6,7 @@ from shopcart.models import System_Config,Product,Product_Images,Category,MyUser
 from shopcart.utils import my_send_mail,get_serial_number,customize_tdk
 from django.db import transaction
 from django.utils.translation import ugettext as _
+from django.template.response import TemplateResponse
 import datetime
 import requests
 from shopcart.utils import get_system_parameters
@@ -24,7 +25,7 @@ def contact_page(request,tdk=None):
 	
 	customize_tdk(ctx,tdk)
 	
-	return render(request,System_Config.get_template_name() + '/contact.html',ctx)
+	return TemplateResponse(request,System_Config.get_template_name() + '/contact.html',ctx)
 
 def url_dispatch(request,url):
 	logger.debug('Url to dispatch:' + url)

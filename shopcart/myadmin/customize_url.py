@@ -9,6 +9,7 @@ import logging,json
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import permission_required
 from django.utils.translation import ugettext as _
+from django.template.response import TemplateResponse
 from django.db import transaction
 from shopcart.myadmin.utils import NO_PERMISSION_PAGE
 
@@ -37,7 +38,7 @@ def detail(request,id=None):
 	
 	if request.method == 'GET':
 		ctx['customize_url'] = customize_url
-		return render(request,System_Config.get_template_name('admin') + '/cust_url_detail.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/cust_url_detail.html',ctx)
 	else:
 		result = {}
 		result['success'] = False
@@ -74,7 +75,7 @@ def list_view(request):
 		
 		ctx['url_list'] = url_list
 		ctx['article_list'] = article_list
-		return render(request,System_Config.get_template_name('admin') + '/cust_url_list.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/cust_url_list.html',ctx)
 	else:
 		raise Http404
 

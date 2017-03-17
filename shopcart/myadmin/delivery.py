@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.admin.views.decorators import staff_member_required
 from django.db import transaction
 from shopcart.forms import express_form,express_type_form
+from django.template.response import TemplateResponse
 import logging
 logger = logging.getLogger('icetus.shopcart')
 
@@ -28,7 +29,7 @@ def type_list_view(request):
 		
 		
 		ctx['express_type_list'] = express_type_list
-		return render(request,System_Config.get_template_name('admin') + '/delivery_type_list.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/delivery_type_list.html',ctx)
 	else:
 		raise Http404
 	
@@ -50,7 +51,7 @@ def type_edit(request):
 		
 		ctx['express_type'] = express_type
 		ctx['express_list'] = Express.objects.filter(is_delete=False)
-		return render(request,System_Config.get_template_name('admin') + '/delivery_type_detail.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/delivery_type_detail.html',ctx)
 	elif request.method == 'POST':
 		result = {}
 		result['success'] = False
@@ -127,7 +128,7 @@ def express_list_view(request):
 		ctx['page_size'] = 15
 		
 		
-		return render(request,System_Config.get_template_name('admin') + '/express_list.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/express_list.html',ctx)
 	else:
 		raise Http404
 		
@@ -149,7 +150,7 @@ def express_edit(request):
 		express_type_list = ExpressType.objects.filter(is_delete=False)
 		ctx['express_type_list'] = express_type_list
 		ctx['express'] = express
-		return render(request,System_Config.get_template_name('admin') + '/express_detail.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/express_detail.html',ctx)
 	elif request.method == 'POST':
 		result = {}
 		result['success'] = False

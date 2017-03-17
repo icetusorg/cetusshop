@@ -8,6 +8,7 @@ from django.http import HttpResponse,JsonResponse,Http404
 import logging,json
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import permission_required
+from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _
 from django.db import transaction
 from shopcart.myadmin.utils import NO_PERMISSION_PAGE
@@ -31,7 +32,7 @@ def view(request,type='site_config'):
 	
 	
 	template_name = '/system_%s.html' % type
-	return render(request,System_Config.get_template_name('admin') + template_name ,ctx)
+	return TemplateResponse(request,System_Config.get_template_name('admin') + template_name ,ctx)
 
 @staff_member_required
 @transaction.atomic()	
@@ -80,7 +81,7 @@ def pay_config(request,pay_type):
 			ctx['paypal_account'] = account
 			ctx['paypal_env'] = env
 		
-			return render(request,System_Config.get_template_name('admin') + '/payment/paypal.html' ,ctx)
+			return TemplateResponse(request,System_Config.get_template_name('admin') + '/payment/paypal.html' ,ctx)
 		else:
 			raise Http404
 	elif request.method == 'POST':
@@ -171,7 +172,7 @@ def email_config_manage(request):
 			logger.error('Can not find email setting which id is [%s]' % id)
 			raise Http404
 			
-		return render(request,System_Config.get_template_name('admin') + '/system_email_detail_config.html' ,ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/system_email_detail_config.html' ,ctx)
 	else:
 		raise Http404	
 		

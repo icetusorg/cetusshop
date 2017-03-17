@@ -5,6 +5,7 @@ from shopcart.models import System_Config,Express,Order,OrderRemark,ExpressType,
 from shopcart.utils import my_pagination,get_serial_number,get_system_parameters
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse,JsonResponse,Http404
+from django.template.response import TemplateResponse
 import logging,json
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import permission_required
@@ -37,7 +38,7 @@ def detail(request,id=None):
 		raise Http404	
 	
 	ctx['order'] = order
-	return render(request,System_Config.get_template_name('admin') + '/order_detail.html',ctx)
+	return TemplateResponse(request,System_Config.get_template_name('admin') + '/order_detail.html',ctx)
 		
 
 @staff_member_required
@@ -81,7 +82,7 @@ def list_view(request):
 		ctx['page_range'] = page_range
 		ctx['page_size'] = page_size
 		ctx['order_count'] = all.count()
-		return render(request,System_Config.get_template_name('admin') + '/order_list_content.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/order_list_content.html',ctx)
 	else:
 		raise Http404
 
@@ -144,7 +145,7 @@ def remark_add(request):
 		
 		order_id = request.GET.get('order_id','')
 		ctx['order_id'] = order_id
-		return render(request,System_Config.get_template_name('admin') + '/order_remark.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/order_remark.html',ctx)
 		
 @staff_member_required
 @transaction.atomic()		
@@ -224,7 +225,7 @@ def ship_out(request):
 		ctx['express_list'] = express_list_result	
 			
 		ctx['order'] = order
-		return render(request,System_Config.get_template_name('admin') + '/order_shippment_detail.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/order_shippment_detail.html',ctx)
 
 
 @staff_member_required
@@ -258,7 +259,7 @@ def price_adjusment(request):
 		ctx['system_para'] = get_system_parameters()
 		ctx['page_name'] = '价格调整'
 		ctx['order_id'] = request.GET.get('order_id')
-		return render(request,System_Config.get_template_name('admin') + '/order_price_adjusment.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/order_price_adjusment.html',ctx)
 			
 			
 

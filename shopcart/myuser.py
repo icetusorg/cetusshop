@@ -14,6 +14,7 @@ from django.template.response import TemplateResponse
 from django.db import transaction
 import requests
 from six import b
+from django.template.response import TemplateResponse
 from django.core.urlresolvers import reverse
 from shopcart import signals
 from shopcart.functions.product_util_func import get_menu_products

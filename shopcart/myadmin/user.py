@@ -8,6 +8,7 @@ from django.http import HttpResponse,JsonResponse,Http404
 import logging,json
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import permission_required
+from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _
 from django.db import transaction
 from shopcart.myadmin.utils import NO_PERMISSION_PAGE
@@ -55,7 +56,7 @@ def user_list(request):
 		ctx['page_range'] = page_range
 		ctx['page_size'] = page_size
 		ctx['inquiry_count'] = MyUser.objects.all().count()
-		return render(request,System_Config.get_template_name('admin') + '/user_list.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/user_list.html',ctx)
 	else:
 		raise Http404		
 		
@@ -176,7 +177,7 @@ def admin_edit(request):
 		return JsonResponse(result_dict)
 	elif request.method == 'GET':
 	
-		return render(request,System_Config.get_template_name('admin') + '/user_admin_detail.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/user_admin_detail.html',ctx)
 	else:
 		raise Http404
 	

@@ -5,6 +5,7 @@ from shopcart.models import System_Config,Inquiry,Product
 from shopcart.utils import my_pagination,get_system_parameters
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse,JsonResponse,Http404
+from django.template.response import TemplateResponse
 import logging,json
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import permission_required
@@ -38,7 +39,7 @@ def detail(request,id=None):
 	get_product_detail_for_inquiry(inquiry)		
 	ctx['inquiry'] = inquiry
 	
-	return render(request,System_Config.get_template_name('admin') + '/inquiry_detail.html',ctx)
+	return TemplateResponse(request,System_Config.get_template_name('admin') + '/inquiry_detail.html',ctx)
 
 
 def get_product_detail_for_inquiry(inquiry):
@@ -85,7 +86,7 @@ def list_view(request):
 		ctx['page_range'] = page_range
 		ctx['page_size'] = page_size
 		ctx['inquiry_count'] = count
-		return render(request,System_Config.get_template_name('admin') + '/inquiry_list.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/inquiry_list.html',ctx)
 	else:
 		raise Http404
 

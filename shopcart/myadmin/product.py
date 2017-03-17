@@ -6,6 +6,7 @@ from shopcart.utils import handle_uploaded_file,my_pagination
 from django.http import Http404,HttpResponse,JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.admin.views.decorators import staff_member_required
+from django.template.response import TemplateResponse
 from django.db import transaction
 
 from shopcart.templatetags import shopcart_extras
@@ -30,7 +31,7 @@ def product_sku_group_edit(request):
 			sku_group = None
 		
 		ctx['sku_group'] = sku_group
-		return render(request,System_Config.get_template_name('admin') + '/product_sku_group_detail.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/product_sku_group_detail.html',ctx)
 	elif request.method == 'POST':
 		result = {}
 		result['success'] = False
@@ -74,7 +75,7 @@ def product_sku_group_list(request):
 		ctx['page_range'] = page_range
 		ctx['item_count'] = ProductParaGroup.objects.all().count()
 		ctx['page_size'] = page_size
-		return render(request,System_Config.get_template_name('admin') + '/product_sku_group_list.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/product_sku_group_list.html',ctx)
 	else:
 			raise Http404		
 		
@@ -93,7 +94,7 @@ def product_para_list(request):
 		ctx['page_range'] = page_range
 		ctx['item_count'] = ProductParaGroup.objects.all().count()
 		ctx['page_size'] = page_size
-		return render(request,System_Config.get_template_name('admin') + '/product_para_list_content.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/product_para_list_content.html',ctx)
 	else:
 			raise Http404
 
@@ -113,7 +114,7 @@ def product_para_group_edit(request):
 			para_group = None
 		
 		ctx['para_group'] = para_group
-		return render(request,System_Config.get_template_name('admin') + '/product_para_detail.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/product_para_detail.html',ctx)
 	elif request.method == 'POST':
 		result = {}
 		result['success'] = False
@@ -545,7 +546,7 @@ def product_opration(request,opration,id):
 			if id != '0':
 				ctx['image_upload_url'] = '/admin/file-upload/product/%s/' % id
 				ctx['edit_url'] = '/admin/shopcart/product/%s/change/' % id
-			return render(request,'admin/product/add.html',ctx)
+			return TemplateResponse(request,'admin/product/add.html',ctx)
 		else:
 			raise Http404
 	elif request.method == 'POST':
@@ -625,7 +626,7 @@ def product_basic_edit(request):
 				
 			except Exception as err:
 				logger.error('Can not find product which id is %s. The error message is %s' % (id,err))
-		return render(request,System_Config.get_template_name('admin') + '/product_detail.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/product_detail.html',ctx)
 	elif request.method == 'POST':
 		is_new = False
 		try:
@@ -1025,7 +1026,7 @@ def product_list(request):
 		ctx['page_size'] = page_size
 		ctx['query_item'] = query_item
 		ctx['item_value'] = item_value
-		return render(request,System_Config.get_template_name('admin') + '/product_list_content.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/product_list_content.html',ctx)
 	else:
 			raise Http404
 	
@@ -1035,7 +1036,7 @@ def product_list(request):
 def product_make_static(request):
 	ctx = {}
 	ctx['product_list'] = Product.objects.all()
-	return render(request,'admin/product/make_static.html',ctx)
+	return TemplateResponse(request,'admin/product/make_static.html',ctx)
 	
 def product_edit(request,id):
 	logger.info('Enter into the product_edit function.')

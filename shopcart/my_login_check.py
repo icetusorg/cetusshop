@@ -1,6 +1,8 @@
 #coding=utf-8
 from django.conf import settings 
 from django.http import HttpResponseRedirect
+import sys
+from django.views.debug import technical_500_response
 import logging
 logger = logging.getLogger('icetus.shopcart')
 
@@ -10,6 +12,7 @@ class MyLoginCheckMiddleware:
 		myuser = request.user
 		if myuser.is_anonymous():
 			#匿名用户，不控制
+			#path = request.path
 			pass
 		else:
 			#logger.debug('%s' % myuser)
@@ -30,7 +33,11 @@ class MyLoginCheckMiddleware:
 		for var in CustomizeVar.objects.all():
 			vars[var.name] = var.value
 			
+		vars['full_path'] = request.get_full_path()
+		vars['path'] = request.path
 		response.context_data['customize_var'] = vars
+		#logger.debug('customize_var:%s' % vars)
+		
 		
 		from shopcart.utils import get_system_parameters
 		response.context_data['system_para'] = get_system_parameters()

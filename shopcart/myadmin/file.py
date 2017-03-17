@@ -5,6 +5,7 @@ from shopcart.forms import product_add_form
 from shopcart.utils import handle_uploaded_file,my_pagination
 from django.http import Http404,HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.template.response import TemplateResponse
 from django.contrib.admin.views.decorators import staff_member_required
 import logging
 # Get an instance of a logger
@@ -71,7 +72,7 @@ def file_list_show(request,item_type,item_id):
 		ctx['page_range'] = page_range
 		ctx['page_size'] = page_size
 		ctx['item_count'] = count
-		return render(request,System_Config.get_template_name('admin') + '/picture_list.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/picture_list.html',ctx)
 	else:
 		raise Http404
 
@@ -88,7 +89,7 @@ def file_upload(request,item_type,item_id):
 	
 	if request.method == 'GET':
 		ctx['item_type'] = item_type
-		return render(request,System_Config.get_template_name('admin') + '/file_upload.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/file_upload.html',ctx)
 	else:
 		ctx['result_message'] = '文件上传成功'
 		manual_name = request.POST.get('manual_name','noname')	
@@ -109,7 +110,7 @@ def file_upload(request,item_type,item_id):
 			filenames = handle_uploaded_file(request.FILES['upload'],item_type,item_id,filename_type,manual_name,same_name_handle)
 			if filenames['upload_result'] == False:
 				ctx['result_message'] = filenames['upload_error_msg']
-				return render(request,System_Config.get_template_name('admin') + '/file_upload.html',ctx)
+				return TemplateResponse(request,System_Config.get_template_name('admin') + '/file_upload.html',ctx)
 				#return HttpResponse(filenames['upload_error_msg'])
 				
 			#加入到对象的图片列表中去
@@ -135,7 +136,7 @@ def file_upload(request,item_type,item_id):
 			filenames = handle_uploaded_file(request.FILES['upload'],item_type,item_id,request.POST['filename_type'],manual_name,same_name_handle)
 			if filenames['upload_result'] == False:
 				ctx['result_message'] = filenames['upload_error_msg']
-				return render(request,System_Config.get_template_name('admin') + '/file_upload.html',ctx)				
+				return TemplateResponse(request,System_Config.get_template_name('admin') + '/file_upload.html',ctx)				
 		
 			logger.debug('Upload success!!!')
 			ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id,alt_value=alt_value)
@@ -157,7 +158,7 @@ def file_upload(request,item_type,item_id):
 			filenames = handle_uploaded_file(request.FILES['upload'],item_type,item_id,request.POST['filename_type'],manual_name,same_name_handle)
 			if filenames['upload_result'] == False:
 				ctx['result_message'] = filenames['upload_error_msg']
-				return render(request,System_Config.get_template_name('admin') + '/file_upload.html',ctx)
+				return TemplateResponse(request,System_Config.get_template_name('admin') + '/file_upload.html',ctx)
 			ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id,alt_value=alt_value)
 			logger.info('Attribute_Group image upload success')
 		elif item_type == 'slider':
@@ -168,7 +169,7 @@ def file_upload(request,item_type,item_id):
 			filenames = handle_uploaded_file(request.FILES['upload'],item_type,item_id,request.POST['filename_type'],manual_name,same_name_handle)
 			if filenames['upload_result'] == False:
 				ctx['result_message'] = filenames['upload_error_msg']
-				return render(request,System_Config.get_template_name('admin') + '/file_upload.html',ctx)
+				return TemplateResponse(request,System_Config.get_template_name('admin') + '/file_upload.html',ctx)
 			ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id,alt_value=alt_value,href=href)
 			logger.info('Slider image upload success')	
 		
@@ -187,7 +188,7 @@ def file_upload(request,item_type,item_id):
 		if 'return_url' in request.POST:
 			return_url = request.POST.get('return_url')
 			return redirect(return_url)
-		return render(request,System_Config.get_template_name('admin') + '/file_upload.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/file_upload.html',ctx)
 		
 		
 
@@ -255,4 +256,4 @@ def ckediter(request,item_type,item_id):
 				raise Http404
 		except:
 			raise Http404
-		return render(request,'admin/ckediter.html',ctx)
+		return TemplateResponse(request,'admin/ckediter.html',ctx)

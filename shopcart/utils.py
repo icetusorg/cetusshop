@@ -11,6 +11,7 @@ from django.utils.translation import ugettext as _
 import datetime,uuid
 from django.core.serializers import serialize,deserialize
 from django.db.models.query import QuerySet
+from django.template.response import TemplateResponse
 from django.db import models
 # import the logging library
 import logging

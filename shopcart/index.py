@@ -25,7 +25,6 @@ def view_index(request,tdk=None):
 	ctx['page_name'] = 'Home'
 	ctx['page_key_words'] = ''
 	ctx['page_description'] = ''
-	
 	try:
 		cust = CustomizeURL.objects.get(url = 'index.html')
 		

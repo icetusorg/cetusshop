@@ -999,18 +999,38 @@ def product_list(request):
 		#name_condition = request.GET.get('name','')
 		#item_number_condition = request.GET.get('item_number','')
 		
+		#加载分类树信息
+		from shopcart.category import get_all_categorys
+		cat_list = get_all_categorys()
+		ctx['cat_list'] = cat_list
+		
+		
 		query_item = request.GET.get('query_item','')
 		item_value = request.GET.get('item_value','')
-		
+		query_category = request.GET.get('query_category','')
+				
 		from django.db.models import Q
 		if query_item == 'item_name':
-			product_list = Product.objects.filter(Q(name__icontains=item_value)).order_by('update_time').reverse()
+			product_list = Product.objects.filter(Q(name__icontains=item_value))
 		elif query_item == 'item_number':
-			product_list = Product.objects.filter(Q(item_number__icontains=item_value)).order_by('update_time').reverse()
+			product_list = Product.objects.filter(Q(item_number__icontains=item_value))
 		else:
-			product_list = Product.objects.all().order_by('update_time').reverse()
+			product_list = Product.objects.all().order_by('update_time')
 		#icontains是大小写不敏感的，contains是大小写敏感的
-			
+
+		cat = None
+		try:
+			cat = Category.objects.get(id=query_category)
+			ctx['query_category'] = cat.id
+			ctx['query_category_name'] = cat.name
+		except Exception as err:
+			logger.info('Can not find category %s .\n Error Message: %s' % (query_category,err))
+		
+		if cat:
+			product_list = product_list.filter(categorys__id=query_category).order_by('update_time').reverse()
+		else:
+			product_list = product_list.order_by('update_time').reverse()
+		
 		if 'page_size' in request.GET:
 			page_size = request.GET['page_size']
 		else:
@@ -1026,6 +1046,7 @@ def product_list(request):
 		ctx['page_size'] = page_size
 		ctx['query_item'] = query_item
 		ctx['item_value'] = item_value
+		
 		return TemplateResponse(request,System_Config.get_template_name('admin') + '/product_list_content.html',ctx)
 	else:
 			raise Http404

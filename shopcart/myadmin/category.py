@@ -92,7 +92,7 @@ def delete(request,id):
 		
 		if product_count > 0:
 			result['success'] = False
-			result['message'] = '该分类下存在商品，请先将商品移动到其它分类。'
+			result['message'] = '该分类下存在 %s 件商品，请先将商品移动到其它分类。' % product_count
 			return JsonResponse(result)
 		
 		category.delete()

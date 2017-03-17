@@ -26,6 +26,8 @@ def view_index(request,tdk=None):
 	ctx['page_key_words'] = ''
 	ctx['page_description'] = ''
 	
+	raise Http404
+	
 	try:
 		cust = CustomizeURL.objects.get(url = 'index.html')
 		

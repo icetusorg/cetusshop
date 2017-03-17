@@ -25,7 +25,7 @@ SECRET_KEY = '(3lj3*1&2q)mbldx-pqj3mf2yjfk)ae_*+tsykzdwrf1gnrkf)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*',]
 
 SESSION_COOKIE_AGE = 1800
 #SESSION_COOKIE_AGE = 10

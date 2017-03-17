@@ -9,25 +9,8 @@
             <ol class="carousel-indicators">
                 <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
                 <li data-target="#myCarousel" data-slide-to="1"></li>
-                <li data-target="#myCarousel" data-slide-to="2"></li>
             </ol>
-            <div class="carousel-inner">
-                <div class="item active">
-					<a href="{{system_para.base_url}}/Products/bristle-detangler-hair-brush.html">
-						<img src="/media/index/bristle-detangler-hair-brush.jpg" style="width: 100%" data-src="" alt="First slide">
-					</a>
-                </div>
-                <div class="item">
-					<a href="{{system_para.base_url}}/Products/No-Tangle-Hairbrush-ball.html">
-						<img src="/media/index/No-Tangle-Hairbrush-ball.jpg" style="width: 100%" data-src="" alt="Second slide">
-					</a>
-                </div>
-                <div class="item">
-					<a href="{{system_para.base_url}}/Products/Plastic-Wet-Brush.html">
-						<img src="/media/index/Plastic-Wet-Brush.jpg" style="width: 100%" data-src="" alt="Third slide">
-					</a>	
-                </div>
-            </div>
+            <div class="carousel-inner"> </div>
             <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span
                     class="glyphicon glyphicon-chevron-left">
 	</span></a><a class="right carousel-control" href="#myCarousel" data-slide="next"><span
@@ -35,51 +18,8 @@
         </div>
         <!--</div>-->
         <div class="container">
-            <div class="row homeHot">
-                <div class="item col-xs-12">
-                    <div class="img">
-                        <a href="#"><img src="/media/index/p1.jpg" class="pc"><img src="/media/index/pz1.png" class="phone"></a>
-                    </div>
-                    <div class="des">
-                        <h3 class="name"><a href="/Products/Plastic-Wet-Brush.html">Top Sellers Plastic Detangling Hair Brush</a></h3>
-                        <p class="price">$9.90</p>
-                        <a class="cart delay" href="/Products/Plastic-Wet-Brush.html">Add to Cart</a>
-                    </div>
-                </div>
-                <div class="item col-xs-12">
-                    <div class="img">
-                        <a href="#"><img src="/media/index/p2.jpg" class="pc"><img src="/media/index/pz2.png" class="phone"></a>
-                    </div>
-                    <div class="des">
-                        <h3 class="name"><a href="/Products/bristle-detangler-hair-brush.html">Professional Colorful massage hair brush</a></h3>
-
-                        <p class="price">$9.90</p>
-                        <a class="cart delay" href="/Products/bristle-detangler-hair-brush.html">Add to Cart</a>
-                    </div>
-                </div>
-                <div class="item col-xs-12">
-                    <div class="img">
-                        <a href="#"><img src="/media/index/p3.jpg" class="pc"><img src="/media/index/pz3.png" class="phone"></a>
-                    </div>
-                    <div class="des">
-                        <h3 class="name"><a href="/Products/No-Tangle-Hairbrush-ball.html">Top-quality no tangle 360° hair brush ball</a></h3>
-
-                        <p class="price">$9.90</p>
-                        <a class="cart delay" href="/Products/No-Tangle-Hairbrush-ball.html">Add to Cart</a>
-                    </div>
-                </div>
-                <div class="item col-xs-12">
-                    <div class="img">
-                        <a href="#"><img src="/media/index/p4.jpg" class="pc"><img src="/media/index/pz4.png" class="phone"></a>
-                    </div>
-                    <div class="des">
-                        <h3 class="name">
-							<a href="/Products/Paddle-Brush-for-long-hair.html">Plastic Wet Purple Hair BrushAir-cushioned paddle detangling hair brush for hair extension</a>
-						</h3>
-                        <p class="price">$9.90</p>
-                        <a class="cart delay" href="/Products/Paddle-Brush-for-long-hair.html">Add to Cart</a>
-                    </div>
-                </div>
+            <div id = "product_push_index" class="row homeHot">
+				
             </div>
         </div>
 
@@ -127,4 +67,82 @@
 {%endblock%}    
 {% block scripts %}
 	{% load staticfiles %}
+<script>				
+$(document).ready(function(){
+	$.ajax({
+		cache: false,
+		type: "GET",
+		url:'/common/get-push-product/?type=index',
+		data:null,
+		async: false,
+		error: function(request) {
+			//alert('Sorry.An error occured.Please try again.');
+		},
+		success: function(data) {
+			if(data.success==true){
+				var innerHtml = "";
+				$.each(data.products,function(index,p){
+					console.log("product: " + this);
+					var tmp =   '<div class="item col-xs-12">'
+							+	'	<div class="img">'
+							+	'		<a href="' + this.url + '"><img src="' + this.image + '" class="pc"><img src="' + this.image + '" class="phone"></a>'
+							+	'	</div>'
+							+	'	<div class="des">'
+							+	'		<h3 class="name"><a href="' + this.url + '">' + this.title + '</a></h3>'
+							+	'		<p class="price">$' + this.price + '</p>'
+							+	'		<a class="cart delay" href="' + this.url + '">Add to Cart</a>'
+							+	'	</div>'
+							+	'</div>';
+							   
+							   
+					innerHtml = innerHtml + tmp;
+				});
+				console.log('innerHtml:' + innerHtml);
+				$("#product_push_index").html(innerHtml);
+			}
+		}
+	});
+});				
+				
+
+$(document).ready(function() {
+	$.ajax({
+		cache: false,
+		type: "GET",
+		url:'/common/get-slider-images/?slider_name=index',
+		data:null,
+		async: false,
+		error: function(request) {
+			//alert('Sorry.An error occured.Please try again.');
+		},
+		success: function(data) {
+			if(data.success==true){
+				var innerHtml = "";
+				$.each(data.image_list,function(index,id){
+					console.log('image:' + this + "index:" + index);
+					active = "";
+					if (index==0){
+						active = "active";
+					}
+					
+					var struct = this.split("|")
+					var imgsrc = struct[0];
+					var imghref = struct[1];
+					
+					if(imghref==""){
+						imghref = "#0";
+					}
+					console.log("imghref:" + imghref);
+					var tmp =   '<div class="item ' + active +'">'
+                              + '<a href="' + imghref + '" target="_blank"><img src=' + imgsrc + ' style="width: 100%" data-src=" " alt="First slide"></a>'
+                              + '</div>';
+					innerHtml = innerHtml + tmp;
+				});
+				console.log('innerHtml:' + innerHtml);
+				$(".carousel-inner").html(innerHtml);
+			}
+		}
+	});
+});
+</script>
 {% endblock %}

@@ -37,3 +37,8 @@ class MyLoginCheckMiddleware:
 		
 		#logger.debug("Look up: %s" % response.context_data['customize_var'])
 		return response
+		
+	#对超级用户，可以看到报错信息	
+	def process_exception(self, request, exception):
+		if request.user.is_superuser:
+			return technical_500_response(request, *sys.exc_info())	

@@ -498,6 +498,12 @@
 		});
 	};
 	
+	function reload_related_product_list(){
+		var url = location.href;
+		var newurl = changeURLArg(url,"tab_name","tag_correlation");
+		location.href = newurl; 
+	};
+	
 	function album_dblclick_callback(id){
 		var type = 'product';
 		var sku_id = $("#album_trigger_sku_id").val();

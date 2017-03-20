@@ -321,7 +321,7 @@ def related_product_list(request):
 	if request.method == 'GET':
 		host_id = request.GET.get('host_id','')
 		ctx['host_id'] = host_id
-		ctx = get_product_list(request,ctx)
+		ctx = get_product_list(request,ctx,exclude_id=host_id)
 		return TemplateResponse(request,System_Config.get_template_name('admin') + '/related_product_modal_win.html',ctx)
 		
 @staff_member_required
@@ -349,8 +349,25 @@ def related_product_oper(request):
 			rp_list = Product.objects.filter(id__in=related_p_list)
 			for rp in rp_list:
 				product.related_products.remove(rp)
-			result['success'] = False
+			result['success'] = True
 			result['message'] = '关联商品删除成功'
+			return JsonResponse(result)
+		elif method == 'set_relation':
+			host_id = request.POST.get('host_id','')
+			try:
+				product = Product.objects.get(id=host_id)
+			except Exception as err:
+				logger.error('Can not find product %s when delete related products.\n Error Message:%s' %(host_id,err))
+				result['success'] = False
+				result['message'] = '关联商品设置失败，原商品找不到，可能已经被删除了。'
+				return JsonResponse(result)
+				
+			related_p_list = request.POST.getlist('is_oper')
+			rp_list = Product.objects.filter(id__in=related_p_list)
+			for rp in rp_list:
+				product.related_products.add(rp)
+			result['success'] = True
+			result['message'] = '关联商品设置成功'
 			return JsonResponse(result)
 			
 		else:
@@ -1056,7 +1073,7 @@ def product_list(request):
 			raise Http404
 	
 		
-def get_product_list(request,ctx):
+def get_product_list(request,ctx,exclude_id = None):
 	query_item = request.GET.get('query_item','')
 	item_value = request.GET.get('item_value','')
 	query_category = request.GET.get('query_category','')
@@ -1082,6 +1099,10 @@ def get_product_list(request,ctx):
 		product_list = product_list.filter(categorys__id=query_category).order_by('update_time').reverse()
 	else:
 		product_list = product_list.order_by('update_time').reverse()
+	
+	logger.debug('exclude_id:%s' % exclude_id)
+	if exclude_id:
+		product_list = product_list.exclude(id = exclude_id)
 	
 	if 'page_size' in request.GET:
 		page_size = request.GET['page_size']

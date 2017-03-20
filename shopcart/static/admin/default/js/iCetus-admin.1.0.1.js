@@ -1104,10 +1104,33 @@ jQuery(".related-product-batch-oper").click(function(event){
 			
 		}
 	});
-	
-	
-	
 });
+
+//关联商品关系设置
+jQuery("#related_product_set_btn").click(function(event){
+	event.preventDefault();
+	var url = "/admin/related-product-oper/?method=" + 'set_relation';
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#product_relation_set_form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			$('#myModal').on('hidden.bs.modal', function (e) {
+				reload_related_product_list();
+			});
+			$("#myModal").modal('toggle');
+			
+		}
+	});	
+});
+
 
 
 //商品图片管理

@@ -7,7 +7,6 @@
 {% load shopcart_extras %}
 <!--content -->
 <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
-<input type="hidden" id="related_reoducts_host_id" value="{{host_id}}"/>
 <div class="box xy-search product-related-alter">
     <div class="box-header with-border">
         <h3 class="box-title">请选择产品</h3>
@@ -64,6 +63,7 @@
 <div class="col-md-12">
     <div class="box xy-list-product">
         <div class="box-body no-padding">
+			<form id="product_relation_set_form">
             <table class="table table-striped related-products-table">
                 <tbody>
                 <tr>
@@ -75,7 +75,7 @@
                 </tr>
 				{%for product in product_list%}
                 <tr>
-                    <td><input type="checkbox" name="selected"></td>
+                    <td><input type="checkbox" name="is_oper" value="{{product.id}}"></td>
                     <td><a href="#"><img src="{{product.thumb}}"></a></td>
                     <td>{{product.item_number}}</td>
                     <td>{{product.name}}</td>
@@ -90,24 +90,39 @@
 				{%endfor%}
                 </tbody>
             </table>
+			<input type="hidden" name="host_id"  value="{{host_id}}"/>
+			</form>
         </div>
         <div class="box-footer clearfix">
             <div class="xy-box-select">
-                <button id="add-new-sku" type="button" class="btn btn-primary">确定添加</button>
+                <button id="related_product_set_btn" type="button" class="btn btn-primary">确定添加</button>
             </div>
             <div class="xy-pages-jump">
-                <button type="submit" class="btn btn-primary">跳转</button>
-                <input type="text" class="form-control">
-                <p>跳转到：</p>
+                        <button type="button" class="btn btn-primary page-jump">跳转</button>
+                        <input type="text" name="page_number_to_jump" class="form-control">
+                        <p>跳转到：</p>
 
                 <ul class="pagination pagination-sm no-margin pull-right">
-                    <li><a href="#">&lt;</a></li>
-                    <li class="active"><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">&gt;</a></li>
-                </ul>
-                <p>共7条记录 , 共3页，每页显示：15条</p>
+                            {% if product_list.has_previous %}
+								<li><a name="pageChange" data-tag="Previous" class="pageChage prev" data-page="{{ product_list.previous_page_number }}">&lt;</a></li>
+							{% else %}
+								<li><a>&lt;</a></li>
+							{% endif %}	
+							
+							{% for p in page_range %}
+								{% ifequal p objects.number %}
+									<li class="active">{{p}}</li>
+								{% else %}
+									<li><a class="pageChage"  data-page = "{{p}}" href="#" title="{{p}}">{{p}}</a></li>
+								{% endifequal %}
+							{% endfor %}
+                            {% if product_list.has_next %}
+								<li><a name="pageChange" class="pageChage next" data-page = "{{p}}" data-page-range="{{page_range}}" data-tag="Next">&gt;</a></li>
+							{% else %}
+								<li><a>&gt;</a></li>
+							{% endif %}
+                        </ul>
+                        <p>共{{item_count}}条记录 , 共{{page_range|last}}页，每页显示：{{page_size}}条</p>
             </div>
         </div>
     </div><!-- /.box -->
@@ -117,36 +132,13 @@
 	{% load staticfiles %}
 <script>
 
+	function reload_related_product_list(){
+		window.parent.reload_related_product_list();
+	};
 	
 	$(document).ready(function($){
 		//点击确定按钮
-		jQuery("#order-price-adjusment-btn").click(function(){
-			var url = "/admin/order-price-adjusment/";
-			var order_id = $("#oder_id_input").val();
-			var price = $("#order_price_adjusment").val();
-			
-			var postdata = {"price_adjusment":price,"order_id":order_id};
 		
-			$.ajax({
-				cache: false,
-				type: "POST",
-				url:url,
-				data:postdata,
-				async: false,
-				error: function(request) {
-					alert("System error");
-				},
-				success: function(data) {
-					$("#infoMessage").html(data.message);
-					$('#myModal').on('hidden.bs.modal', function (e) {
-						window.parent.price_adjusment_popwin_callback();
-					});
-					
-					$("#myModal").modal('toggle');
-					
-				}
-			});
-		});
 	});
 </script>
 {% endblock %}

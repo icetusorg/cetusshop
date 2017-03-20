@@ -174,6 +174,9 @@ urlpatterns = patterns("",
 	url('^admin/product-sku-item-edit/$', 'shopcart.myadmin.product.product_sku_item_edit',name='admin_product_sku_item_edit'),
 	url('^admin/product-sku-item-set-image/$', 'shopcart.myadmin.product.product_sku_item_set_image',name='admin_product_sku_item_set_image'),
 	
+	url('^admin/related-product-list/$', 'shopcart.myadmin.product.related_product_list',name='admin_related_product_list'),
+	url('^admin/related-product-oper/$', 'shopcart.myadmin.product.related_product_oper',name='admin_related_product_oper'),
+	
 	
 	
 	url('^admin/product-para-list/$', 'shopcart.myadmin.product.product_para_list',name='admin_product_para_list'),

@@ -313,6 +313,53 @@ def product_sku_item_set_image(request):
 		raise Http404		
 		
 		
+@staff_member_required
+@transaction.atomic()		
+def related_product_list(request):
+	ctx = {}
+	ctx['page_name'] = '关联商品管理'
+	if request.method == 'GET':
+		host_id = request.GET.get('host_id','')
+		ctx['host_id'] = host_id
+		ctx = get_product_list(request,ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/related_product_modal_win.html',ctx)
+		
+@staff_member_required
+@transaction.atomic()		
+def related_product_oper(request):
+	if request.method == 'POST':
+		result = {}
+		result['success'] = False
+		result['message'] = '关联商品保存失败'
+		method = request.GET.get('method','')
+		
+		logger.info('method:%s' % method)
+		
+		if method == 'delete':
+			host_id = request.POST.get('host_id','')
+			try:
+				product = Product.objects.get(id=host_id)
+			except Exception as err:
+				logger.error('Can not find product %s when delete related products.\n Error Message:%s' %(host_id,err))
+				result['success'] = False
+				result['message'] = '关联商品删除失败，原商品找不到，可能已经被删除了。'
+				return JsonResponse(result)
+			
+			related_p_list = request.POST.getlist('is_oper')
+			rp_list = Product.objects.filter(id__in=related_p_list)
+			for rp in rp_list:
+				product.related_products.remove(rp)
+			result['success'] = False
+			result['message'] = '关联商品删除成功'
+			return JsonResponse(result)
+			
+		else:
+			raise Http404
+		
+	else:
+		raise Http404
+		
+		
 
 @staff_member_required
 @transaction.atomic()
@@ -1003,54 +1050,55 @@ def product_list(request):
 		from shopcart.category import get_all_categorys
 		cat_list = get_all_categorys()
 		ctx['cat_list'] = cat_list
-		
-		
-		query_item = request.GET.get('query_item','')
-		item_value = request.GET.get('item_value','')
-		query_category = request.GET.get('query_category','')
-				
-		from django.db.models import Q
-		if query_item == 'item_name':
-			product_list = Product.objects.filter(Q(name__icontains=item_value))
-		elif query_item == 'item_number':
-			product_list = Product.objects.filter(Q(item_number__icontains=item_value))
-		else:
-			product_list = Product.objects.all().order_by('update_time')
-		#icontains是大小写不敏感的，contains是大小写敏感的
-
-		cat = None
-		try:
-			cat = Category.objects.get(id=query_category)
-			ctx['query_category'] = cat.id
-			ctx['query_category_name'] = cat.name
-		except Exception as err:
-			logger.info('Can not find category %s .\n Error Message: %s' % (query_category,err))
-		
-		if cat:
-			product_list = product_list.filter(categorys__id=query_category).order_by('update_time').reverse()
-		else:
-			product_list = product_list.order_by('update_time').reverse()
-		
-		if 'page_size' in request.GET:
-			page_size = request.GET['page_size']
-		else:
-			try:
-				page_size = int(System_Config.objects.get(name='admin_product_list_page_size').val)
-			except:
-				page_size = 12
-		
-		product_list, page_range = my_pagination(request=request, queryset=product_list,display_amount=page_size)
-		ctx['product_list'] = product_list
-		ctx['page_range'] = page_range
-		ctx['item_count'] = Product.objects.all().count()
-		ctx['page_size'] = page_size
-		ctx['query_item'] = query_item
-		ctx['item_value'] = item_value
-		
+		ctx = get_product_list(request,ctx)
 		return TemplateResponse(request,System_Config.get_template_name('admin') + '/product_list_content.html',ctx)
 	else:
 			raise Http404
 	
+		
+def get_product_list(request,ctx):
+	query_item = request.GET.get('query_item','')
+	item_value = request.GET.get('item_value','')
+	query_category = request.GET.get('query_category','')
+			
+	from django.db.models import Q
+	if query_item == 'item_name':
+		product_list = Product.objects.filter(Q(name__icontains=item_value))
+	elif query_item == 'item_number':
+		product_list = Product.objects.filter(Q(item_number__icontains=item_value))
+	else:
+		product_list = Product.objects.all().order_by('update_time')
+	#icontains是大小写不敏感的，contains是大小写敏感的
+
+	cat = None
+	try:
+		cat = Category.objects.get(id=query_category)
+		ctx['query_category'] = cat.id
+		ctx['query_category_name'] = cat.name
+	except Exception as err:
+		logger.info('Can not find category %s .\n Error Message: %s' % (query_category,err))
+	
+	if cat:
+		product_list = product_list.filter(categorys__id=query_category).order_by('update_time').reverse()
+	else:
+		product_list = product_list.order_by('update_time').reverse()
+	
+	if 'page_size' in request.GET:
+		page_size = request.GET['page_size']
+	else:
+		try:
+			page_size = int(System_Config.objects.get(name='admin_product_list_page_size').val)
+		except:
+			page_size = 12
+	
+	product_list, page_range = my_pagination(request=request, queryset=product_list,display_amount=page_size)
+	ctx['product_list'] = product_list
+	ctx['page_range'] = page_range
+	ctx['item_count'] = Product.objects.all().count()
+	ctx['page_size'] = page_size
+	ctx['query_item'] = query_item
+	ctx['item_value'] = item_value
+	return ctx
 		
 		
 @staff_member_required

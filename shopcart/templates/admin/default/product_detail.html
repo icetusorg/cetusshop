@@ -23,6 +23,7 @@
             <li data="tag_detail_info">详细信息</li>
             <li data="tag_product_para">属性</li>
             <li data="tag_sku">SKU</li>
+			<li data="tag_correlation">相关产品</li>
         </ul>
         <div class="add-content detail-info active" id="tag_basic_info">
             <form id="product-basic-info-form" method="POST">
@@ -365,13 +366,63 @@
                 <button type="button" id="product-attribute-clear-btn" data-product-id="{{product.id}}" class="btn btn-primary next-steep">清除SKU</button>
             </div>
         </div>
-    </div>
+		<div class="add-content correlation" id="tag_correlation">
+            <div class="box xy-list page-list-content product-correlation">
+                <div class="box-body no-padding">
+					<form id="related_product_form">
+                    <table id = "related-product-table" class="table table-striped page-table-list ">
+                        <tbody>
+                        <tr>
+                            <th>选择</th>
+                            <th>产品图片</th>
+                            <th>编号</th>
+                            <th>产品名称</th>
+                            <th>分类</th>
+                            <th>操作</th>
+                        </tr>
+						{%for p in product.get_related_products%}
+                        <tr>
+                            <td><input name="is_oper" id="rp_checkbox_{{p.id}}" value="{{p.id}}" type="checkbox"></td>
+                            <td><img src="{{p.thumb}}"></td>
+                            <td>{{p.item_number}}</td>
+                            <td>{{p.name}}</td>
+                            <td>
+								<ul>
+									{%for cat in p.categorys.all%}
+									<li>{{cat.name}}</li>
+									{%endfor%}
+								</ul>
+							</td>
+                            <td><a class="deleteCategory message-delete related-product-batch-oper" data-method="delete" data-id="{{p.id}}">删除</a></td>
+                        </tr>
+						{%endfor%}
+                        </tbody>
+                    </table>
+					<input name="host_id" type="hidden" value="{{product.id}}" />
+					</form>
+                </div>
+                <div class="box-footer clearfix">
+                    <div class="xy-box-select">
+                        <input type="checkbox" id="related-content-checkbox-all">
+                        <a id="related-content-btn-all" href="#">全选</a>
+                        <button type="button" data-method="delete" class="btn btn-danger related-product-batch-oper">删除
+                        </button>
+
+                        <button id="related_product_add_btn" type="button" class="btn btn-primary common-popup-trigger"  data-target-url="/admin/related-product-list/?host_id={{product.id}}&page_size=3">增加相关产品</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+	</div>	
 	<input type="hidden" id="open_file_upload_trigger" value="" />
 	<input type="hidden" id="album_trigger_sku_id" value="" />
 </section>
 
 <!--弹出-->
 {% include 'admin/default/album_modal_win.html' %}
+{% include 'admin/default/common_pop_win.html' %}
 <!-- cd-popup-container -->
 
 {% endblock %}

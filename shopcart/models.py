@@ -215,6 +215,9 @@ class Product(models.Model):
 	create_time = models.DateTimeField(auto_now_add = True)
 	update_time = models.DateTimeField(auto_now = True)
 	
+	def get_related_products(self):
+		return self.related_products.all()
+	
 	
 	def get_main_image(self):
 		return self.get_images(method='single')

@@ -1047,6 +1047,68 @@ jQuery(".sku-item-save-btn").click(function(event){
 	});
 });
 
+//关联商品管理
+
+//关联商品全选复选框选择
+jQuery("#related-content-checkbox-all").change(function(){
+	if($("#related-content-checkbox-all").is(":checked")){
+		//从没选中到选中
+		$("#related-product-table").find("input[type='checkbox']").each(function(){
+			$(this).prop("checked", true);//jQuery1.6以上，都要使用prop属性，不然会出现只能选中一次，第二次无效的问题。
+		});
+	}else{
+		$("#related-product-table").find("input[type='checkbox']").each(function(){
+			$(this).prop("checked", false);
+		});
+	}
+}); 
+
+jQuery("#related-content-btn-all").click(function(event){
+	event.preventDefault();
+	if($("#related-content-checkbox-all").is(":checked")){
+		$("#related-content-checkbox-all").prop("checked",false);
+	}else{
+		$("#related-content-checkbox-all").prop("checked",true);
+	}
+	$("#related-content-checkbox-all").trigger("change");
+});
+
+//关联商品批量操作
+jQuery(".related-product-batch-oper").click(function(event){
+	event.preventDefault();
+	var method = $(this).data("method");
+	var url = "/admin/related-product-oper/?method=" + method;
+	
+	id = $(this).data("id");
+	if(id != undefined){
+		$("#rp_checkbox_"+id).prop("checked", true);
+	}
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#related_product_form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			$('#myModal').on('hidden.bs.modal', function (e) {
+				var url = location.href;
+				var newurl = changeURLArg(url,"tab_name","tag_correlation");
+				location.href = newurl;
+			});
+			$("#myModal").modal('toggle');
+			
+		}
+	});
+	
+	
+	
+});
+
 
 //商品图片管理
 

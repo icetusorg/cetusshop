@@ -33,7 +33,6 @@ def get_page_size():
 @transaction.atomic()
 def user_list(request):
 	ctx = {}
-	ctx['system_para'] = get_system_parameters()
 	ctx['page_name'] = '用户管理'
 
 	result_dict = {}
@@ -55,7 +54,7 @@ def user_list(request):
 		ctx['user_list'] = user_list
 		ctx['page_range'] = page_range
 		ctx['page_size'] = page_size
-		ctx['inquiry_count'] = MyUser.objects.all().count()
+		ctx['item_count'] = MyUser.objects.all().count()
 		return TemplateResponse(request,System_Config.get_template_name('admin') + '/user_list.html',ctx)
 	else:
 		raise Http404		

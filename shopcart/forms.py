@@ -1,10 +1,16 @@
 # -*- coding:utf-8 -*-
 from django import forms
-from shopcart.models import MyUser,Address,Product,Inquiry,OrderShippment,Email,Article,Express,ExpressType,Category,CustomizeURL,ArticleBusiCategory,ProductParaGroup,Attribute_Group
+from shopcart.models import MyUser,Address,Product,Inquiry,OrderShippment,Email,Article,Express,ExpressType,Category,CustomizeURL,ArticleBusiCategory,ProductParaGroup,Attribute_Group,Slider
 from captcha.fields import CaptchaField
 from django.utils.translation import ugettext as _
 from django.core.exceptions import ValidationError 	
 
+
+class slider_detail_form(forms.ModelForm):
+	name = forms.CharField(required=False)
+	class Meta:
+		model=Slider
+		fields = ('name','code')
 
 class product_sku_group_form(forms.ModelForm):
 	class Meta:

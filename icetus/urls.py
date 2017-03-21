@@ -177,6 +177,10 @@ urlpatterns = patterns("",
 	url('^admin/related-product-list/$', 'shopcart.myadmin.product.related_product_list',name='admin_related_product_list'),
 	url('^admin/related-product-oper/$', 'shopcart.myadmin.product.related_product_oper',name='admin_related_product_oper'),
 	
+	url('^admin/slider-list/$', 'shopcart.myadmin.slider.list',name='admin_slider_list'),
+	url('^admin/slider-edit/$', 'shopcart.myadmin.slider.edit',name='admin_slider_edit'),
+	url('^admin/slider-oper/$', 'shopcart.myadmin.slider.oper',name='admin_slider_oper'),
+	
 	
 	
 	url('^admin/product-para-list/$', 'shopcart.myadmin.product.product_para_list',name='admin_product_para_list'),

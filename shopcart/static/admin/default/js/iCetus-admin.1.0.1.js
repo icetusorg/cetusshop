@@ -1133,6 +1133,100 @@ jQuery("#related_product_set_btn").click(function(event){
 
 
 
+//幻灯片详细信息提交
+jQuery("#slider_detail_submit_btn").click(function(event){
+	event.preventDefault();
+	var id = $(this).data("id");
+	var url = "/admin/slider-edit/?id=" + id;
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#slider_detail_form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			$('#myModal').on('hidden.bs.modal', function (e) {
+				location.href = changeURLArg(url,"id",data.data.slider_id);
+			});
+			$("#myModal").modal('toggle');
+			
+		}
+	});	
+	
+});
+
+
+//幻灯片详细信息提交
+jQuery(".slider-oper").click(function(event){
+	event.preventDefault();
+	var id = $(this).data("id");
+	var method = $(this).data("method");
+	var url = "/admin/slider-oper/";
+	
+	var postdata = {"id":id,"method":method};
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:postdata,
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			$('#myModal').on('hidden.bs.modal', function (e) {
+				var url = location.href;
+				location.href = url;
+			});
+			$("#myModal").modal('toggle');
+			
+		}
+	});	
+	
+});
+
+//幻灯片详情中删除图片
+jQuery("#slider_main_picture_show").on('click',".set-picture-attr",function(event){
+	event.preventDefault();
+	var img_url = $(this).data("image-url");
+	var type = $(this).data("image-type");
+	var slider_id = $(this).data("slider-id");
+	var picture_id = $(this).data("id");
+	method = $(this).data("method");
+	
+	var url = "";
+	if (type = "silder"){
+		url = "/admin/slider-set-image/";
+	}
+	
+	var postdata = {"slider_id":slider_id,"picture_id":picture_id,"method":method};
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:postdata,
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			$('#myModal').on('hidden.bs.modal', function (e) {
+				reload_picture_list();
+			});
+			$("#myModal").modal('toggle');
+		}
+	});
+});
+
+
 //商品图片管理
 
 //文件上传与相册

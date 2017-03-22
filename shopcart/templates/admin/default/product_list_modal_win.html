@@ -82,7 +82,7 @@
                     <td>
                         <ul>
 							{%for cat in product.categorys.all%}
-								<li>LED light</li>
+								<li>{{cat.name}}</li>
 							{%endfor%}
                         </ul>
                     </td>
@@ -95,7 +95,7 @@
         </div>
         <div class="box-footer clearfix">
             <div class="xy-box-select">
-                <button id="related_product_set_btn" type="button" class="btn btn-primary">确定添加</button>
+                <button id="product_list_modal_win_set_btn" data-host-type="{{type}}" type="button" class="btn btn-primary">确定添加</button>
             </div>
             <div class="xy-pages-jump">
                         <button type="button" class="btn btn-primary page-jump">跳转</button>

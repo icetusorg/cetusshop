@@ -101,9 +101,22 @@ function imycartAjaxCallWithCallback(url,object,callback,triggerControl,extraInf
 //通用弹出窗口
 
 jQuery(".common-popup-trigger").click(function () {
+	console.log('come into common-pop-trigger');
+	var can_open = $(this).data("reject-no-host");
+	var host_id = $(this).data("id");
+	if (can_open != "false"){
+		if (host_id == undefined || host_id==""){
+			$("#infoMessage").html("请先保存主信息。");
+			$("#myModal").modal('toggle');
+			return;
+		}
+	}
+	
     $("#common-pop-frame").attr("src", $(this).attr("data-target-url"));    // 设定当前框架iframe 的地址为 该链接地址
 	$('.cd-popup.common-pop-win').addClass('is-visible');
 });
+
+
 
 //close popup
 jQuery('.cd-popup').on('click', function(event){
@@ -1107,9 +1120,15 @@ jQuery(".related-product-batch-oper").click(function(event){
 });
 
 //关联商品关系设置
-jQuery("#related_product_set_btn").click(function(event){
+jQuery("#product_list_modal_win_set_btn").click(function(event){
 	event.preventDefault();
-	var url = "/admin/related-product-oper/?method=" + 'set_relation';
+	var host_type = $(this).data("host-type");
+	
+	if (host_type=='related_product'){
+		var url = "/admin/related-product-oper/?method=" + 'set_relation';	
+	}else if(host_type=='push_product'){
+		var url = "/admin/product-push-oper/?method=" + 'set_relation';
+	}
 	
 	$.ajax({
 		cache: false,
@@ -1130,6 +1149,198 @@ jQuery("#related_product_set_btn").click(function(event){
 		}
 	});	
 });
+
+
+
+//推荐商品种具体商品的批量操作
+jQuery(".product-push-detail-batch-oper").click(function(event){
+	event.preventDefault();
+	var url = "/admin/product-push-oper/";
+	var method = $(this).data("method");
+	url = url + "?method=" + method;
+	
+	var id = $(this).data("id");
+	if (id != undefined){
+		$("#checkbox_" + id).prop("checked", true);
+	}
+	
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#product_push_products_form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			$('#myModal').on('hidden.bs.modal', function (e) {
+				location.reload(true);
+			});
+			$("#myModal").modal('toggle');
+			
+		}
+	});	
+});
+
+
+//推荐商品种具体商品的批量操作
+jQuery(".product-push-detail-batch-save").click(function(event){
+	event.preventDefault();
+	var url = "/admin/product-push-oper/";
+	var method = $(this).data("method");
+	url = url + "?method=" + method;
+	var id = $(this).data("id");
+	var sort_order = $(this).parent().parent().find('input[name=sort_order]').val();
+	var title = $(this).parent().parent().find('input[name=title]').val();
+	
+	console.log("id:"+id + " sort_order:" + sort_order + " title:" + title);
+	
+	var postdata = {"id":id,"sort_order":sort_order,"title":title};
+	
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:postdata,
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			$('#myModal').on('hidden.bs.modal', function (e) {
+				//location.reload(true);
+			});
+			$("#myModal").modal('toggle');
+			
+		}
+	});	
+});
+
+
+
+//推荐商品批量操作
+jQuery(".product-push-group-batch-oper").click(function(event){
+	event.preventDefault();
+	var url = "/admin/product-push-oper/";
+	var method = $(this).data("method");
+	url = url + "?method=" + method;
+	
+	var id = $(this).data("id");
+	console.log("product push group id:" + id);
+	
+	var postdata = {"id":id};
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:postdata,
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			$('#myModal').on('hidden.bs.modal', function (e) {
+				location.reload(true);
+			});
+			$("#myModal").modal('toggle');
+			
+		}
+	});	
+});
+
+
+//推荐商品保存
+jQuery("#product_push_detail_submit_btn").click(function(event){
+	event.preventDefault();
+	var url = "/admin/product-push-edit/";
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#product_push_detail_form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			$('#myModal').on('hidden.bs.modal', function (e) {
+				location.href = changeURLArg(url,"id",data.data.push_group_id);
+			});
+			$("#myModal").modal('toggle');
+			
+		}
+	});	
+});
+
+
+
+//优惠码详情保存
+jQuery("#promotion_code_detail_submit_btn").click(function(event){
+	event.preventDefault();
+	var url = "/admin/promotion-edit/";
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#promotion_code_detail_form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			$('#myModal').on('hidden.bs.modal', function (e) {
+				location.href = changeURLArg(url,"id",data.data.promotion_id);
+			});
+			$("#myModal").modal('toggle');
+			
+		}
+	});	
+});
+
+//优惠码批量操作
+jQuery(".promotion-batch-oper").click(function(event){
+	event.preventDefault();
+	var url = "/admin/promotion-oper/";
+	var method = $(this).data("method");
+	url = url + method + "/";
+	
+	var id = $(this).data("id");
+	console.log("promotion id:" + id);
+	if (id!=undefined){
+		$("#checkbox_"+id).prop("checked", true);
+	}
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#promotion_batch_form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			$('#myModal').on('hidden.bs.modal', function (e) {
+				location.reload(true);
+			});
+			$("#myModal").modal('toggle');
+			
+		}
+	});	
+});
+
 
 
 

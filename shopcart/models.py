@@ -984,6 +984,7 @@ class Inquiry(models.Model):
 @python_2_unicode_compatible			
 class Promotion(models.Model):
 	code = models.CharField(max_length=100,db_index=True,verbose_name='促销码')
+	name = models.CharField(max_length=100,null=True,default='',verbose_name='促销码名称')
 	is_reuseable = models.BooleanField(verbose_name='可否重复使用')
 	is_valid = models.BooleanField(verbose_name='是否有效')
 	valid_date_begin = models.DateTimeField(verbose_name='有效期开始时间')
@@ -1055,23 +1056,32 @@ class Slider(models.Model):
 		verbose_name = '幻灯信息'
 		verbose_name_plural = '幻灯信息'
 
-		
-@python_2_unicode_compatible		
-class ProductPush(models.Model):
-	product = models.ForeignKey(Product,null=True,related_name='push_channels')
-	
-	PUSH_TYPE_INDEX = 'index' 
-	PUSH_TYPE_NEW = 'newest'
-	PUSH_TYPE_HOT = 'hotest'
-	
-	sort_order = models.IntegerField(default=0,verbose_name='排序序号')
-	title = models.CharField(max_length=254,null=True,default='',verbose_name = '定制的标题')
-	type = models.CharField(max_length=100,null=True,verbose_name = '推送用途')
+@python_2_unicode_compatible
+class ProductPushGroup(models.Model):
+	name = models.CharField(max_length=100,null=True,verbose_name = '推送组名称')
+	code = models.CharField(max_length=100,null=True,verbose_name = '推送组代码')
 	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
 	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
 	
 	def __str__(self):
-		return '%s : %s' % (self.type,self.product)
+		return '%s' % (self.name)
+		
+	class Meta:
+		verbose_name = '商品推荐组'
+		verbose_name_plural = '商品推荐组'	
+		
+		
+@python_2_unicode_compatible		
+class ProductPush(models.Model):
+	group = models.ForeignKey(ProductPushGroup,null=True,blank=True,related_name='products')
+	product = models.ForeignKey(Product,null=True,blank=True,related_name='push_channels')
+	sort_order = models.IntegerField(default=0,verbose_name='排序序号')
+	title = models.CharField(max_length=254,null=True,default='',verbose_name = '定制的标题')
+	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
+	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
+	
+	def __str__(self):
+		return '%s : %s' % (self.group,self.product)
 		
 	def serialization(self):
 		p = {}

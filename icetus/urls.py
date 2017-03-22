@@ -181,6 +181,18 @@ urlpatterns = patterns("",
 	url('^admin/slider-edit/$', 'shopcart.myadmin.slider.edit',name='admin_slider_edit'),
 	url('^admin/slider-oper/$', 'shopcart.myadmin.slider.oper',name='admin_slider_oper'),
 	
+	url('^admin/plug-in-list/$', 'shopcart.myadmin.plug_in.list',name='admin_plug_in_list'),
+	
+	url('^admin/promotion-list/$', 'shopcart.myadmin.promotion_code.list',name='admin_promotion_code_list'),
+	url('^admin/promotion-edit/$', 'shopcart.myadmin.promotion_code.detail',name='admin_promotion_code_detail'),
+	url('^admin/promotion-oper/(.+)/$', 'shopcart.myadmin.promotion_code.oper',name='admin_promotion_code_oper'),
+	
+	url('^admin/product-push-list/$', 'shopcart.myadmin.product_push.list',name='admin_promotion_push_list'),
+	url('^admin/product-push-edit/$', 'shopcart.myadmin.product_push.detail',name='admin_promotion_push_detail'),
+	url('^admin/product-push-detail-list/$', 'shopcart.myadmin.product.push_product_list',name='admin_push_product_list'),
+	
+	url('^admin/product-push-oper/$', 'shopcart.myadmin.product_push.oper',name='admin_promotion_push_oper'),
+	
 	
 	
 	url('^admin/product-para-list/$', 'shopcart.myadmin.product.product_para_list',name='admin_product_para_list'),

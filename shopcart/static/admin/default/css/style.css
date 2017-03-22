@@ -2099,7 +2099,7 @@ iframe {
     vertical-align:middle;
 }
 .product-related-alter .form-group input{
-    width: 525px!important; ;
+    width: 500px!important; ;
 }
 .single-page-add ,.submit-item{
     margin-top: 10px!important;
@@ -2111,14 +2111,77 @@ iframe {
     padding: 30px 15px 0 0px;
     float: left;
 }
+.plug-in-product-detail-sort input{
+    width: 3%!important;
+}
 
-
-
-
-
-
-
-
+.plug-in-product-detail-btn{
+    margin-bottom: 30px;
+}
+.plug-in-product-table-recommend th:nth-child(1), .plug-in-product-table-recommend tr td:nth-child(1) {
+    width: 10% !important;
+    text-align: left;
+    vertical-align:middle;
+}
+.plug-in-product-table-recommend tr td:nth-child(1) input{
+    width: 10% !important;
+    text-align: left;
+    vertical-align:middle;
+}
+.plug-in-product-table-recommend th:nth-child(2), .plug-in-product-table-recommend tr td:nth-child(2) {
+    width: 10% !important;
+    text-align: left;
+    vertical-align:middle;
+}
+.plug-in-product-table-recommend th:nth-child(3), .plug-in-product-table-recommend tr td:nth-child(3) {
+    width: 10% !important;
+    text-align: center;
+    vertical-align:middle;
+}
+.plug-in-product-table-recommend tr td:nth-child(2) input{
+    width: 30% !important;
+    text-align: center;
+    vertical-align:middle;
+}
+.plug-in-product-table-recommend tr td:nth-child(3) input{
+    width: 100% !important;
+    text-align: center;
+    vertical-align:middle;
+}
+.plug-in-product-table-recommend th:nth-child(4), .plug-in-product-table-recommend tr td:nth-child(4) {
+    width: 10% !important;
+    text-align: center;
+    vertical-align:middle;
+}
+.plug-in-product-table-recommend th:nth-child(5), .plug-in-product-table-recommend tr td:nth-child(5) {
+    width: 10% !important;
+    text-align: center;
+    vertical-align:middle;
+}
+.plug-in-product-table-recommend th:nth-child(6), .plug-in-product-table-recommend tr td:nth-child(6) {
+    width: 30% !important;
+    text-align: center;
+    vertical-align:middle;
+}
+.plug-in-product-table-recommend th:nth-child(7), .plug-in-product-table-recommend tr td:nth-child(7) {
+    width: 10% !important;
+    text-align: center;
+    vertical-align:middle;
+}
+.plug-in-product-table-recommend th:nth-child(8), .plug-in-product-table-recommend tr td:nth-child(8) {
+    width: 10% !important;
+    text-align: center;
+    vertical-align:middle;
+}
+.plug-in-product-table-recommend-checkbox{
+    width: auto!important;
+}
+.plug-in-product-table-recommend{
+    margin-top: 30px;
+}
+.plug-in-product-table-recommend-checkbox{
+    margin-left: 4px!important;
+}
 
 
 

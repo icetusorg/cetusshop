@@ -1,5 +1,7 @@
 from django import template
 register = template.Library()
+import logging
+logger = logging.getLogger('icetus.shopcart')
 
 @register.filter
 def is_blog(value,arg):
@@ -54,6 +56,21 @@ def currency_list(value,arg):
 		return '人民币'
 	elif value == 'EUR':
 		return '欧元'										
+	else:
+		return value	
+
+
+@register.filter		
+def promotion_type(value,arg):
+	from shopcart.models import Promotion
+	logger.debug('value: %s' % (value))
+	logger.debug('Promotion.DISCOUNT_TYPE_FIXED: %s' % (Promotion.DISCOUNT_TYPE_FIXED))
+	if  value == Promotion.DISCOUNT_TYPE_FIXED:
+		return '直减'
+	elif value == Promotion.DISCOUNT_TYPE_SCALE:	
+		return '折扣'
+	elif value == Promotion.DISCOUNT_TYPE_OFF_WHEN_UPTOX:
+		return '满减'										
 	else:
 		return value		
 		

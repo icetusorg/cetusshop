@@ -321,8 +321,21 @@ def related_product_list(request):
 	if request.method == 'GET':
 		host_id = request.GET.get('host_id','')
 		ctx['host_id'] = host_id
+		ctx['type'] = 'related_product'
 		ctx = get_product_list(request,ctx,exclude_id=host_id)
-		return TemplateResponse(request,System_Config.get_template_name('admin') + '/related_product_modal_win.html',ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/product_list_modal_win.html',ctx)
+		
+@staff_member_required
+@transaction.atomic()		
+def push_product_list(request):
+	ctx = {}
+	ctx['page_name'] = '推送商品管理'
+	if request.method == 'GET':
+		push_id = request.GET.get('push_id','')
+		ctx['host_id'] = push_id
+		ctx['type'] = 'push_product'
+		ctx = get_product_list(request,ctx)
+		return TemplateResponse(request,System_Config.get_template_name('admin') + '/product_list_modal_win.html',ctx)
 		
 @staff_member_required
 @transaction.atomic()		

@@ -1,0 +1,92 @@
+{% extends "admin/default/content_base.html" %}
+{% block breadcrumbs %}
+{% load shopcart_extras %}
+<section class="content-header">
+    <h1>优惠码管理</h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+        <li class="active"><a href="#">优惠码管理</a></li>
+    </ol>
+</section>
+{% endblock %}
+
+
+{% block main %}
+{% load i18n %}
+{% load staticfiles %}
+{% load shopcart_extras %}
+<section class="content ">
+    <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box xy-list page-list-content ">
+                <div class="box-body no-padding">
+					<form id="promotion_batch_form">
+                    <table id="main-content-table" class="table table-striped page-table-list plug-in-promotion-code-table">
+                        <tbody>
+                        <tr>
+                            <th>选择</th>
+                            <th>优惠码名称</th>
+                            <th>优惠码</th>
+                            <th>类型</th>
+                            <th>有效期</th>
+                            <th>操作</th>
+                        </tr>
+						{%for promotion in promotion_list%}
+                        <tr>
+                            <td><input id="checkbox_{{promotion.id}}" name="is_oper" value="{{promotion.id}}" type="checkbox"></td>
+                            <td>{{promotion.name}}</td>
+                            <td>{{promotion.code}}</td>
+                            <td>{{promotion.discount_type|promotion_type:"zh_CN"}}</td>
+                            <td>{{promotion.valid_date_begin|date:"Y-m-d H:i:s"}}至{{promotion.valid_date_end|date:"Y-m-d H:i:s"}}</td>
+                            <td><a class="deleteCategory message-delete promotion-batch-oper" data-method="delete" data-id="{{promotion.id}}">删除</a> | <a href="/admin/promotion-edit/?id={{promotion.id}}">修改</a></td>
+                        </tr>
+						{%endfor%}
+                        </tbody>
+                    </table>
+					</form>
+                </div>
+                <div class="box-footer clearfix">
+                    <div class="xy-box-select">
+                        <input type="checkbox" id="main-content-checkbox-all">
+                        <a id="main-content-btn-all" href="#" >全选</a>
+                        <button type="button" data-method="delete" class="btn btn-danger promotion-batch-oper">删除</button>
+                        <a href="/admin/promotion-edit/" class="btn btn-primary">增加优惠码</a>
+                    </div>
+                    <div class="xy-pages-jump">
+                        <button type="button" class="btn btn-primary page-jump">跳转</button>
+                        <input type="text" name="page_number_to_jump" class="form-control">
+                        <p>跳转到：</p>
+
+						
+						<ul class="pagination pagination-sm no-margin pull-right">
+							{% if promotion_list.has_previous %}
+								<li><a name="pageChange" data-tag="Previous" class="pageChage prev" data-page="{{ promotion_list.previous_page_number }}">&lt;</a></li>
+							{% else %}
+								<li><a>&lt;</a></li>
+							{% endif %}	
+							
+							{% for p in page_range %}
+								{% ifequal p objects.number %}
+									<li class="active">{{p}}</li>
+								{% else %}
+									<li><a class="pageChage"  data-page = "{{p}}" href="#" title="{{p}}">{{p}}</a></li>
+								{% endifequal %}
+							{% endfor %}
+                            {% if promotion_list.has_next %}
+								<li><a name="pageChange" class="pageChage next" data-page = "{{p}}" data-page-range="{{page_range}}" data-tag="Next">&gt;</a></li>
+							{% else %}
+								<li><a>&gt;</a></li>
+							{% endif %}
+                        </ul>
+                        <p>共 {{item_count}} 条记录 , 共 {{page_range|last}} 页，每页显示： {{page_size}} 条</p>
+                    </div>
+                </div>
+            </div><!-- /.box -->
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+	{% load staticfiles %}
+{% endblock %}

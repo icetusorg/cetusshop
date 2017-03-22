@@ -1,10 +1,23 @@
 # -*- coding:utf-8 -*-
 from django import forms
-from shopcart.models import MyUser,Address,Product,Inquiry,OrderShippment,Email,Article,Express,ExpressType,Category,CustomizeURL,ArticleBusiCategory,ProductParaGroup,Attribute_Group,Slider
+from shopcart.models import MyUser,Address,Product,Inquiry,OrderShippment,Email,Article,Express,ExpressType,Category,CustomizeURL,ArticleBusiCategory,ProductParaGroup,Attribute_Group,Slider,Promotion,ProductPushGroup
 from captcha.fields import CaptchaField
 from django.utils.translation import ugettext as _
 from django.core.exceptions import ValidationError 	
 
+
+class push_group_detail_form(forms.ModelForm):
+	name = forms.CharField(required=False)
+	class Meta:
+		model=ProductPushGroup
+		fields = ('name','code')
+
+
+class promotion_detail_form(forms.ModelForm):
+	name = forms.CharField(required=False)
+	class Meta:
+		model=Promotion
+		fields = ('name','code','discount_type','discount','valid_date_begin','valid_date_end','is_reuseable','is_valid')
 
 class slider_detail_form(forms.ModelForm):
 	name = forms.CharField(required=False)

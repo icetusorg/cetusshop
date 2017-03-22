@@ -1,0 +1,98 @@
+{% extends "admin/default/content_base.html" %}
+{% block breadcrumbs %}
+{% load shopcart_extras %}
+<section class="content-header">
+    <h1>优惠码管理详情</h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+        <li class="active"><a href="#">优惠码管理详情</a></li>
+    </ol>
+</section>
+{% endblock %}
+
+
+{% block main %}
+{% load i18n %}
+{% load staticfiles %}
+{% load shopcart_extras %}
+<section class="content">
+    <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+    <div class="col-md-12 add-product plug-in-code-detail">
+		<form id="promotion_code_detail_form">
+        <div class="item">
+            <label>优惠码名称：</label>
+            <input type="text" name="name" class="form-control plug-in-code-detail-input" value="{{promotion.name}}">
+        </div>
+        <div class="item">
+            <label>优惠码：</label>
+            <input type="text" name="code" class="form-control plug-in-code-detail-input" value="{{promotion.code}}">
+        </div>
+        <div class="item-free  item product-choose-attribute">
+            <label>类型：</label>
+
+            <div class="btn-group normal">
+                <button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{promotion.discount_type|promotion_type:"zh_CN"|default:"直减"}}</span>
+                </button>
+                <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu" role="menu" id="category-selection">
+                    <li class="dropdown-item" data-value="FIXED">直减</li>
+                    <li class="dropdown-item" data-value="SCALE">折扣</li>
+                </ul>
+                <input class="dropdown-item-input" type="hidden" name="discount_type" value="{{promotion.discount_type|default:"FIXED"}}">
+            </div>
+
+        </div>
+        <div class="item promotion-code-favorable product-choose-attribute">
+            <label>优惠幅度：</label>
+            <input type="text" name="discount" class="form-control" value="{{promotion.discount}}">
+            <div class="message">
+                <span>?</span>
+                <div class="ico">
+                    <div class="text">
+                        <h4>描述</h4>
+                        <p>填写10，代表减价10元，填写90%，表示9折优惠，请按格式填写。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="item promotion-code-time">
+            <label>有效期：</label>
+            <input type="text" name="valid_date_begin" class="form-control" value="{{promotion.valid_date_begin|date:"Y-m-d H:i:s"}}"> 
+			<span>至</span>
+			<input type="text" name="valid_date_end" class="form-control" value="{{promotion.valid_date_end|date:"Y-m-d H:i:s"}}"> 
+        </div>
+		
+
+		
+        <div class="submit-item">
+            <input type="hidden" name="id" value="{{promotion.id}}">
+			<input type="hidden" name="is_reuseable" value="{{promotion.is_reuseable|default:"true"}}" />
+			<input type="hidden" name="is_valid" value="{{promotion.is_valid|default:"true"}}" />
+            <button type="button" id="promotion_code_detail_submit_btn" class="btn btn-primary next-steep">保存
+            </button>
+        </div>
+		</form>
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+	{% load staticfiles %}
+	<script>
+	$(document).ready(function($){
+		//点击确定按钮
+		$('.form_date').datetimepicker({
+			language:  'zh-CN',
+			weekStart: 1,
+			todayBtn:  1,
+			autoclose: 1,
+			todayHighlight: 1,
+			startView: 2,
+			minView: 2,
+			forceParse: 0
+		});
+	});
+	</script>
+{% endblock %}

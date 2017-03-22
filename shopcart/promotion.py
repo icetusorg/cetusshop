@@ -32,5 +32,6 @@ def calculate(request):
 		
 		
 		return JsonResponse(promotion_impl.calculate(request,promotion)) 
-	
+
+
 		

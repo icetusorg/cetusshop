@@ -1,7 +1,7 @@
 #coding=utf-8
 from django.shortcuts import render
 from django.template.loader import render_to_string
-from shopcart.models import System_Config,Product,Product_Images,Category,Attribute,ProductPush
+from shopcart.models import System_Config,Product,Product_Images,Category,Attribute,ProductPush,ProductPushGroup
 from shopcart.utils import my_pagination,get_system_parameters
 import json,os
 from django.http import JsonResponse
@@ -400,11 +400,19 @@ def ajax_get_product_description(request,id):
 	
 def get_push_product(request):
 	type = request.GET.get('type','')
-	product_list = ProductPush.objects.filter(type=type).order_by('-sort_order')
+	result_dict = {}
+	try:
+		group = ProductPushGroup.objects.get(code=type)
+	except Exception as err:
+		logger.info('Can not find product push group %s' % type)
+		products = []
+		return JsonResponse(result_dict)
+	
+	product_list = ProductPush.objects.filter(group=group).order_by('-sort_order')
 	products = []
 	for p in product_list:
 		products.append(p.serialization())
-	result_dict = {}
+	
 	result_dict['success'] = True
 	result_dict['products'] = products
 	return JsonResponse(result_dict)

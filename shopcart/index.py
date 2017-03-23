@@ -73,8 +73,11 @@ def get_slider_images(request):
 	result_dict['success'] = True
 	image_list = []
 	for img in slider.get_image_list():
-		struct = '%s|%s' % (img.image,img.href)
-		image_list.append(struct)
+		image = {}
+		image['image'] = img.image
+		image['href'] = img.href
+		image['alt'] = img.alt_value
+		image_list.append(image)
 	result_dict['image_list'] = image_list
 	return JsonResponse(result_dict)
 		

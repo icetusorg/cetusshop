@@ -130,27 +130,46 @@
 													<a>{{express.name}}</a><span>${{express.price_infact|floatformat:"2"}}</span>
 												</div>
 											{%endfor%}
+											
+									<div class="discount-codes">
+                                            <h2>Discount-Codes</h2>
+                                            <p>Enter your coupon code: </p>
+                                            <input type="text" name="promotion_code_try" id="promotion_code_try">
+											<input type="hidden" name="promotion_code" id="promotion_code">
+                                            <a class="delay" id="promotion_code_apply">Apply</a>
+                                    </div>
 								</div>
 								<div class="col-md-6 col-xs-12">
 									<h2>Payment Method</h2>
 									<div class="check-pay-item">
 										<input type="radio" checked>
-										
 										<img src="{% static 'client/cassie/images/ico/icon_paypal.jpg' %}">
 									</div>
-									<div class="check-pay-count">
-										<input name="sub_total" type="hidden" value="{{sub_total}}" />
-										<input name="shipping" type="hidden" value="{{shipping}}" />
-										<input name="discount" type="hidden" value="{{discount}}" />
-										<input name="total" type="hidden" value="{{total}}" />
-										<input name="remark" type="hidden" value="" />
-										
-										<!-- <p>Discount<span>$</span><span id="discount_amount">{{discount|floatformat:"2"}}</span></p> -->
-										<p>Grand Total<span>$</span><span id="total_amount">{{total|floatformat:"2"}}</span></p>
-										
-										<!--<input id="promotion_code" name="promotion_code" type="text" value="" /> <a class="delay try-promotion-code">USE PROMOTION CODE</a>-->
-										<a class="delay btn-place-order">Place Order Now</a>
-									</div>
+									
+									
+                                    <div class="check-pay-count">
+											<div class="check-pay-discount">
+												<div>
+													<p>Discount</p>
+													<div><span>-$</span><span id="discount_amount">0.0</span></div>
+												</div>
+											</div>
+									
+                                            <input name="sub_total" type="hidden" value="{{sub_total}}"/>
+                                            <input name="shipping" type="hidden" value="{{shipping}}"/>
+                                            <input name="discount" type="hidden" value="{{discount}}"/>
+                                            <input name="total" type="hidden" value="{{total}}"/>
+                                            <input name="remark" type="hidden" value=""/>
+
+                                            <!-- <p>Discount<span>$</span><span id="discount_amount">{{discount|floatformat:"2"}}</span></p> -->
+                                            <div><p>Grand Total</p>
+                                                <div><span>US$</span><span id="total_amount">{{total|floatformat:"2"}}</span></div>
+                                            </div>
+
+
+                                            <!--<input id="promotion_code" name="promotion_code" type="text" value="" /> <a class="delay try-promotion-code">USE PROMOTION CODE</a>-->
+                                            <a class="delay btn-place-order">Place Order Now</a>
+                                    </div>
 								</div>
 							</div>
 							</div>

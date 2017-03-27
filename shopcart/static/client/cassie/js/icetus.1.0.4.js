@@ -164,10 +164,11 @@ jQuery(".add-to-emaillist").click(function(event){
 	imycartAjaxCall(url,email,true,null);
 });
 
-//快递公司选择
-jQuery(":radio[name='express']").click(function(){
+//快递公司选择（重新计算价格）
+jQuery(":radio[name='express'],#promotion_code_apply").click(function(){
 	//alert("express changed")
 	var url = '/cart/re-calculate-price/';
+	var code_try = $("#promotion_code_try").val();
 	$.ajax({
 		cache: false,
 		type: "GET",
@@ -179,37 +180,27 @@ jQuery(":radio[name='express']").click(function(){
 		},
 		success: function(data) {
 			if(data.success==true){
-				//alert(data.message.total);
-				//alert("data.message.total:" + data.message.total);
-				$("#sub_total_amount").text(data.message.sub_total.toFixed(2));
-				$("#total_amount").text(data.message.total.toFixed(2));
-				$("#discount_amount").text(data.message.discount.toFixed(2));
-				$("#shipping_amount").text(data.message.shipping.toFixed(2));
+				if (data.is_promotion_code_valid == true){
+					//优惠码有效
+					$("#promotion_code").val(code_try);
+					console.log("promotion_code:" + $("#promotion_code").val());
+				}else{
+					$("#promotion_code").val('');
+					$("#infoMessage").html(data.message);
+					$("#myModal").modal('toggle');
+				}
+				$("#sub_total_amount").text(data.prices.sub_total.toFixed(2));
+				$("#total_amount").text(data.prices.total.toFixed(2));
+				$("input[name=total]").val(data.prices.total.toFixed(2));
+				$("#discount_amount").text(data.prices.discount.toFixed(2));
+				$("input[name=discount]").val(data.prices.discount.toFixed(2));
+				$("#shipping_amount").text(data.prices.shipping.toFixed(2));
+				$("input[name=shipping]").val(data.prices.shipping.toFixed(2))
 			}
 		}
 	});
 });
 
-//输入优惠码
-jQuery(".try-promotion-code").click(function(e){
-	var url = "/promotion/?code="+$("#promotion_code").val();
-	$.ajax({
-		cache: false,
-		type: "POST",
-		url:url,
-		data:$("#place_order_form").serialize(),
-		async: false,
-		error: function(request) {
-			alert('Sorry.An error occured.Please try again.');
-		},
-		success: function(data) {
-			if(data.success==true){
-				$("#total_amount").text(data.total.toFixed(2));
-				$("#discount_amount").text(data.discount_amount.toFixed(2));
-			}
-		}
-	});
-});
 
 //每页显示数量设置
 jQuery(".pageSize").click(function(event){

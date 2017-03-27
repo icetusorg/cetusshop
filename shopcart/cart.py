@@ -297,8 +297,9 @@ def check_out(request):
 		ctx['express_list'] = express_list
 		
 		ctx['default_express'] = ExpressType.objects.all()[0]
+		promotion_code = request.POST.get('promotion_code','')
 		
-		prices = get_prices(cart_product_id_list=cart_product_id_list,express_type=ctx['default_express'])
+		prices,promotion = get_prices(cart_product_id_list=cart_product_id_list,express_type=ctx['default_express'],discount_code=promotion_code)
 		
 		ctx['product_list'] = prices['product_list']
 		ctx['sub_total'] =  prices['sub_total']
@@ -337,16 +338,22 @@ def re_calculate_price(request):
 	if request.method == 'GET':
 		cart_product_id_list = request.GET.getlist('cart_product_id',[])
 		express_id = request.GET.get('express','')
+		promotion_code = request.GET.get('promotion_code_try','')
 		try:
 			express_type = ExpressType.objects.get(id=express_id)
 		except Exception as err:
 			logger.error('Can not find express_type which id is %s.' % (express_id) + str(err))
 			return JsonResponse(ret_dict)
-		prices = get_prices(cart_product_id_list=cart_product_id_list,express_type=express_type)
-		#将商品详细情况去掉，不需要
+		prices,promotion = get_prices(cart_product_id_list=cart_product_id_list,express_type=express_type,discount_code=promotion_code)
+		if promotion:
+			ret_dict['is_promotion_code_valid'] = True
+		else:
+			ret_dict['is_promotion_code_valid'] = False
+			ret_dict['message'] = 'The promotion code is not valid.'
 		prices['product_list'] = None
+		
 		ret_dict['success'] = True
-		ret_dict['message'] = prices
+		ret_dict['prices'] = prices
 	return JsonResponse(ret_dict)
 	
 def calc_shipping_fee(cart_product_id_list,express_type):
@@ -384,24 +391,66 @@ def calc_shipping_fee(cart_product_id_list,express_type):
 	
 	
 		
-def get_prices(cart_product_id_list,discount=0.0,express_type=None):
+def get_prices(cart_product_id_list,discount_code='',express_type=None):
+	logger.debug("cart_product_id_list:%s" % cart_product_id_list)
 	cart_product_list = Cart_Products.objects.filter(id__in=cart_product_id_list)
 	ret_dict = {}
 	ret_dict['product_list'] = cart_product_list
 	ret_dict['sub_total'] = 0.00
 	ret_dict['shipping'] = 0.00
-	ret_dict['discount'] = discount
 	ret_dict['total'] = 0.00
 	
+	discount = 0
+	promotion = None
+	promotion_valid = False
 	
+	logger.debug('discount_code:%s' % discount_code)
+	if discount_code:
+		logger.debug('check discount code')
+		from shopcart.models import Promotion
+		try:
+			promotion = Promotion.objects.get(code=discount_code)
+			promotion_valid = promotion.valid()
+		except Exception as err:
+			logger.info('Can not find the promotion code %s.\n Error Message: %s' % (discount_code,err))
+	else:
+		promotion_valid = True
+	
+	sub_total = 0.00
 	
 	for cp in cart_product_list:
-		ret_dict['sub_total'] = ret_dict['sub_total'] + cp.get_total()
+		sub_total = sub_total + cp.get_total()
+		#ret_dict['sub_total'] = ret_dict['sub_total'] + cp.get_total()
+	
+	total = sub_total
+	logger.debug('sub_total:%s' % sub_total)
+	logger.debug('promotion:%s' % promotion)
+	
+	if promotion_valid and promotion:
+		if promotion.discount_type == Promotion.DISCOUNT_TYPE_SCALE:
+			discount = sub_total * float(promotion.discount) / 100
+			logger.debug('discount 1:%s' % discount)
+		elif promotion.discount_type == Promotion.DISCOUNT_TYPE_FIXED:
+			discount = float(promotion.discount)
+			logger.debug('discount 2:%s' % discount)
+		else:
+			logger.debug('discount 3:%s' % 0)
+			pass
+			
+	
+	
+	
+	total = total - discount
+	if total < 0:
+		total = 0
+	
+	ret_dict['sub_total'] = sub_total
+	ret_dict['discount'] = discount
 	
 	ret_dict['shipping'] = 	calc_shipping_fee(cart_product_id_list,express_type)
 	
-	ret_dict['total'] = ret_dict['sub_total'] + ret_dict['shipping'] - ret_dict['discount']
-	return ret_dict
+	ret_dict['total'] = total + ret_dict['shipping']
+	return ret_dict,promotion_valid
 		
 		
 		

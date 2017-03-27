@@ -541,10 +541,12 @@ class Cart_Products(models.Model):
 		if price_list.count()>0:
 			price_list = sorted(price_list,key= lambda price:price.quantity,reverse=False)
 			logger.debug('price_list: %s' % price_list)
-			price = price_list[0].price
+			#price = price_list[0].price
+			price = self.product.price
 			for p in price_list:
 				if self.quantity >= p.quantity:
-					price = p.price
+					if p.price > 0:
+						price = p.price
 			logger.debug('price:%s' % price)
 			return price
 		else:
@@ -700,6 +702,7 @@ class Order(models.Model):
 	products_amount = models.FloatField(default=0.00)
 	shipping_fee = models.FloatField(default=0.00)
 	price_adjusment = models.FloatField(default=0.00,verbose_name="管理员调整价格")
+	promotion_code = models.CharField(max_length = 100,default='',blank=True,verbose_name='使用的优惠码')
 	discount = models.FloatField(default=0.00)
 	order_amount = models.FloatField(default=0.00,verbose_name='订单总价')
 	money_paid = models.FloatField(default=0.00)
@@ -1018,6 +1021,20 @@ class Promotion(models.Model):
 	
 	def __str__(self):
 		return self.code
+		
+	def valid(self):
+		if not self.is_valid:
+			logger.info('The promotion code has been used.')
+			return False
+	
+		import datetime
+		now = datetime.datetime.now()
+	
+		if now.timestamp() > self.valid_date_begin.timestamp() and now.timestamp() < self.valid_date_end.timestamp():
+			return True
+		else:
+			logger.info('Promotion code is not valid,now:[%s],valid_date_begin:[%s],valid_date_end:[%s]' % (now.timestamp(),self.valid_date_begin.timestamp(),self.valid_date_end.timestamp()))
+			return False
 	
 	class Meta:
 		verbose_name = '促销代码'

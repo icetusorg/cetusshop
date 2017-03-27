@@ -52,29 +52,55 @@ def place_order(request):
 			#如果这个地址不是这个用户的，报错
 			ctx['content'] = 'System Error.Please try again.'
 			return TemplateResponse(request,System_Config.get_template_name() + '/info_show.html',ctx)
+			
 		
 		#金额
 		sub_total,shipping,discount,total,remark,express_type = request.POST['sub_total'],request.POST['shipping'],request.POST['discount'],request.POST['total'],request.POST['remark'],request.POST['express']
-		logger.debug('>>>>>0:sub_total=' + str(sub_total))
+		
+		
+		promotion_code = request.POST.get('promotion_code')
+		cart_product_id = request.POST.getlist('cart_product_id',[])
+		#logger.debug('>>>>>0:sub_total=' + str(sub_total))
+		
+		try:
+			express = ExpressType.objects.get(id=express_type)
+		except Exception as err:
+			logger.error('Can not find express_type %s. \n Error Message:%s' %(express_type,err))
+			ctx['content'] = 'System Error.Please try again.'
+			return TemplateResponse(request,System_Config.get_template_name() + '/info_show.html',ctx)
+			
+			
+		from .cart import get_prices
+		prices,promotion = get_prices(cart_product_id_list=cart_product_id,express_type=express,discount_code=promotion_code)
+		
+		if abs(float(shipping) - float(prices['shipping'])) > 0.01:
+			logger.error('Amount shipping check faild! Amount in client is [%s],but the server need [%s].' % (shipping,prices['shipping']))
+			raise Exception('System error.Please try again.')
+			
+		if abs(float(discount) - float(prices['discount'])) > 0.01:
+			logger.error('Amount discount check faild! Amount in client is [%s],but the server need [%s].' % (discount,prices['discount']))
+			raise Exception('System error.Please try again.')
+
+		if abs(float(total) - float(prices['total'])) > 0.01:
+			logger.error('Amount total check faild! Amount in client is [%s],but the server need [%s].' % (total,prices['total']))
+			raise Exception('System error.Please try again.')	
+			
+		logger.info('Amount check success!')
+			
+		
 		#生成主订单
-		logger.debug('>>>>>1')
+		#logger.debug('>>>>>1')
 		order = Order.objects.create(order_number=get_serial_number(),user=request.user,status=Order.ORDER_STATUS_PLACE_ORDER,country=address.country,province=address.province,city=address.city,district=address.district,address_line_1=address.address_line_1,
 			address_line_2=address.address_line_2,first_name=address.first_name,last_name=address.last_name,zipcode=address.zipcode,tel=address.tel,mobile=address.mobile,email=request.user.email,
-			products_amount = sub_total,shipping_fee=shipping,discount=discount,order_amount=total,to_seller=remark,express_type_name = ExpressType.objects.get(id=express_type).name)
-			
-		logger.debug('>>>>>2:order.id='+str(order.id))
-		cart_product_id = request.POST.getlist('cart_product_id',[])
-		logger.debug('>>>>>3:cart_product_id='+str(cart_product_id))
-		
-		#计算汇总金额
-		amount_to_check = 0.00
+			products_amount = sub_total,shipping_fee=shipping,discount=discount,order_amount=total,to_seller=remark,express_type_name = express.name,promotion_code=promotion_code)
+					
 		
 		for cp_id in cart_product_id:
 			cp = Cart_Products.objects.get(id=cp_id)
 			
-			amount_to_check = amount_to_check + cp.get_total()
+			#amount_to_check = amount_to_check + cp.get_total()
 			#向主订单加入商品
-			logger.debug('>>>>>5:product.id='+str(cp.product.id))
+			#logger.debug('>>>>>5:product.id='+str(cp.product.id))
 			
 			pa_id = None
 			pa_name = ''
@@ -88,7 +114,7 @@ def place_order(request):
 			op = Order_Products.objects.create(product_id=cp.product.id,product_attribute_id=pa_id,order=order,name=cp.product.name,short_desc=cp.product.short_desc,price=cp.get_product_price(),
 				thumb=cp.product.thumb,image=cp.product.image,quantity=cp.quantity,product_attribute_name = pa_name,product_attribute_item_number=pa_item_number)
 
-			logger.debug('>>>>>6:op.id='+str(op.id))
+			#logger.debug('>>>>>6:op.id='+str(op.id))
 			# 20160614，考拉，加入了扣减库存的逻辑
 			if cp.product_attribute:
 				product_attribute = cp.product_attribute
@@ -113,13 +139,8 @@ def place_order(request):
 			
 			#删除购物车中商品
 			cp.delete()
-			logger.debug('>>>>>8:cp.delete')
-		
-		#TODO:校验总金额是否正确，不正确则抛出异常
-		logger.debug('>>>>>9:amount_to_check=' + str(amount_to_check))
-		if abs(amount_to_check-float(sub_total)) > 0.01: #浮点数比较，没法直接用 ==
-			raise Exception('System error.Please try again.')
-		
+			#logger.debug('>>>>>8:cp.delete')
+			
 		return redirect('/cart/payment/' + str(order.id))
 
 		

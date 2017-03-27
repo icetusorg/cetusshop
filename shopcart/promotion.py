@@ -14,10 +14,14 @@ logger = logging.getLogger('icetus.shopcart')
 def calculate(request):
 	if request.method == 'POST':
 		code = request.GET.get('code','')
+			
 		try:
 			promotion = Promotion.objects.get(code=code)
 		except:
-			raise Http404
+			result = {}
+			result['success'] = False
+			result['message'] = 'The promotion code is not valid.'
+			return JsonResponse(result)
 		
 		import importlib
 		#装载优惠方法实现类
@@ -28,8 +32,6 @@ def calculate(request):
 		except Exception as err:
 			logger.error('Can not load module:[%s]' % (module))
 			raise Http404
-		
-		
 		
 		return JsonResponse(promotion_impl.calculate(request,promotion)) 
 

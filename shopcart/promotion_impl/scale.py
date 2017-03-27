@@ -40,7 +40,7 @@ def calculate(request,promotion):
 		
 		logger.debug('Total amount:%s' % (total) )
 		
-		discount_amount = total * float(promotion.discount)
+		discount_amount =total * float(promotion.discount) / 100
 		
 		total = total - discount_amount + shipping
 		ret['total'] = total 

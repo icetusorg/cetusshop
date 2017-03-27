@@ -26,8 +26,8 @@
             </ul>
             <ul class="operating">
                 <li><span>操作：</span></li>
-                <li><a href="#" class="common-popup-trigger" data-target-url="/admin/order-shippment-manage/?order_id={{order.id}}">发货</a></li>
-                <li><a href="#" class="common-popup-trigger" data-target-url="/admin/order-remark-add/?order_id={{order.id}}">备注</a></li>
+                <li><a href="#" class="common-popup-trigger" data-id="{{order.id}}" data-reject-no-host="true" data-target-url="/admin/order-shippment-manage/?order_id={{order.id}}">发货</a></li>
+                <li><a href="#" class="common-popup-trigger" data-id="{{order.id}}" data-reject-no-host="true" data-target-url="/admin/order-remark-add/?order_id={{order.id}}">备注</a></li>
                 <li><a href="#" id="close_order" data-order-id="{{order.id}}">关闭</a></li>
             </ul>
         </div>

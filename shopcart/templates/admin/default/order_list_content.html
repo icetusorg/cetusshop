@@ -96,7 +96,7 @@
 								{% for order in order_list%}
 									<tr>
 										<td><input name="is_oper" data-order-id="{{order.id}}" type="checkbox"></td>
-										<td><a href="#">{{order.order_number}}</a></td>
+										<td><a href="/admin/order-detail/{{order.id}}/">{{order.order_number}}</a></td>
 										<td>{{order.create_time|date:"Y-m-d H:i:s"}}</td>
 										<td>{{order.first_name}} &nbsp; {{order.last_name}}</td>
 										<td>

@@ -21,7 +21,7 @@
    <div class="spec-scroll">
           <div class="items">
               <ul>
-				 {% for image in product.get_product_detail_images %}
+				 {% for image in product.get_main_image_list %}
 					<li><img alt="" bimg="{{image.image}}" src="{{image.image}}" onMouseMove="preview(this);"></li>
 				{% endfor %}
               </ul>

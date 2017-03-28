@@ -172,6 +172,34 @@ def product_sku_group_delete(request):
 	else:
 		raise Http404	
 
+@staff_member_required
+@transaction.atomic()
+def product_sku_item_delete(request):
+	ctx = {}
+	
+	ctx['page_name'] = '商品SKU项目管理'
+	
+	if request.method == 'POST':
+		result = {}
+		result['success'] = False
+		result['message'] = '商品SKU项目删除失败'
+		
+		
+		try:
+			id = request.POST.get('id','')
+			item = Attribute.objects.get(id=id)
+			item.delete()
+		except Exception as err:
+			logger.info('Can not find Attribute which id is [%s]. \n Error Message: %s' %(id,err))
+			return JsonResponse(result)
+			
+
+		result['success'] = True
+		result['message'] = '商品SKU项目删除成功'
+		return JsonResponse(result)		
+	else:
+		raise Http404			
+		
 
 	
 @staff_member_required

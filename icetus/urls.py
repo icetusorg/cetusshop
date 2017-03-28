@@ -172,6 +172,7 @@ urlpatterns = patterns("",
 	url('^admin/product-sku-group-delete/$', 'shopcart.myadmin.product.product_sku_group_delete',name='admin_product_sku_group_delete'),
 	
 	url('^admin/product-sku-item-edit/$', 'shopcart.myadmin.product.product_sku_item_edit',name='admin_product_sku_item_edit'),
+	url('^admin/product-sku-item-delete/$', 'shopcart.myadmin.product.product_sku_item_delete',name='admin_product_sku_item_delete'),
 	url('^admin/product-sku-item-set-image/$', 'shopcart.myadmin.product.product_sku_item_set_image',name='admin_product_sku_item_set_image'),
 	
 	url('^admin/related-product-list/$', 'shopcart.myadmin.product.related_product_list',name='admin_related_product_list'),

@@ -940,7 +940,7 @@ jQuery(".product—para-group-batch-oper").click(function(e){
 //商品参数组保存
 jQuery("#product_para_group_detail_submit").click(function(event){
 	event.preventDefault();//阻止A标签跳转
-	var url = "/admin/product-para-group-edit/"
+	var url = "/admin/product-para-group-edit/";
 
 	$.ajax({
 		cache: false,
@@ -1001,7 +1001,7 @@ jQuery(".product—sku-group-batch-oper").click(function(e){
 //商品SKU组保存
 jQuery("#product_sku_group_detail_submit").click(function(event){
 	event.preventDefault();//阻止A标签跳转
-	var url = "/admin/product-sku-group-edit/"
+	var url = "/admin/product-sku-group-edit/";
 
 	$.ajax({
 		cache: false,
@@ -1028,7 +1028,7 @@ jQuery("#product_sku_group_detail_submit").click(function(event){
 //商品SKU项目保存
 jQuery(".sku-item-save-btn").click(function(event){
 	event.preventDefault();//阻止A标签跳转
-	var url = "/admin/product-sku-item-edit/"
+	var url = "/admin/product-sku-item-edit/";
 	var sku_id = $(this).data("id");
 	if (sku_id == 'createnew'){
 		var formname = "#sku_item_detail_form";
@@ -1059,6 +1059,39 @@ jQuery(".sku-item-save-btn").click(function(event){
 		}
 	});
 });
+
+//商品SKU项目删除
+jQuery(".sku-item-delete").click(function(event){
+	event.preventDefault();//阻止A标签跳转
+	var url = "/admin/product-sku-item-delete/";
+	var sku_id = $(this).data("id");
+
+	var postdata = {"id":sku_id};
+
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:postdata,
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			$('#myModal').on('hidden.bs.modal', function (e) {
+				var url = location.href;
+				location.href = url;
+			});
+			
+			$("#myModal").modal('toggle');
+			
+		}
+	});
+});
+
+
+
 
 //关联商品管理
 

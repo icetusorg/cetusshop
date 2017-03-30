@@ -107,7 +107,7 @@
 			success: function(data) {
 				if(data.success==true){
 					$.each( data.data, function( key, val ) {
-						newdata.push(this.count);
+						newdata.push(this.amount);
 						newdate.push(this.date);
 					});
 					option.series[0].data = newdata;

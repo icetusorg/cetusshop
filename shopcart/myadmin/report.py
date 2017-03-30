@@ -37,11 +37,13 @@ def order_report(request):
 					count = Order.objects.filter(create_time__gt=date_list[i]).filter(create_time__lt=date_list[i+1]).count()
 					amount = Order.objects.filter(create_time__gt=date_list[i]).filter(create_time__lt=date_list[i+1]).aggregate(Sum('order_amount'))
 					
+					if amount['order_amount__sum'] == None:
+						amount['order_amount__sum'] = 0.00
 					order = {}
 					order['order'] = i
 					order['date'] = date
 					order['count'] = count
-					order['amount'] = amount
+					order['amount'] = amount['order_amount__sum']
 					order_list.append(order)	
 			
 			result['data'] = order_list

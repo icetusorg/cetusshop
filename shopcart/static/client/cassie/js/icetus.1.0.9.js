@@ -1,4 +1,4 @@
-jQuery(document).ready(function() {
+$(document).ready(function() {
     "use strict";
 	// Django需要验证csrf信息验证提交人身份，这段代码必须，需要放入公共JS
 	// csrf信息开始
@@ -15,6 +15,7 @@ jQuery(document).ready(function() {
 					}
 				}
 			}
+			console.log("cookieValue_csrftoken:" + cookieValue)
 			return cookieValue;
 		}
 		var csrftoken = getCookie('csrftoken');
@@ -24,29 +25,22 @@ jQuery(document).ready(function() {
 			return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 		}
 		$.ajaxSetup({
-			beforeSend: function(xhr, settings) {
-				if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-					xhr.setRequestHeader("X-CSRFToken", csrftoken);
-				}
-			}
+			cache: false //关闭AJAX缓存
 		});
 		// csrf信息结束
-});
-
-
-/***
-	Common functions
-***/
-$(function(){
-    $.ajaxSetup ({
-        cache: false //关闭AJAX缓存
-    });
-});
-
-//公共的调用ajax方法
+		
+		//公共的调用ajax方法
+	
 function imycartAjaxCall(url,object,is_show_message_box,message){
 	var encodedata = $.toJSON(object);
 	$.ajax({
+			beforeSend: function(xhr, settings) {
+				console.log("Start to set csrftoken.......");
+				if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+					console.log("Set the csrf token successful.");
+					xhr.setRequestHeader("X-CSRFToken", csrftoken);
+				}
+			},
 			type : 'POST',
 			contentType : 'application/json',
 			dataType : 'json',
@@ -77,10 +71,19 @@ function imycartAjaxCall(url,object,is_show_message_box,message){
 			}
 	});
 };
+
 //带回调函数的ajax请求通用方法
+
 function imycartAjaxCallWithCallback(url,object,callback,triggerControl,extraInfo){
 	var encodedata = $.toJSON(object);
 	$.ajax({
+			beforeSend: function(xhr, settings) {
+				console.log("Start to set csrftoken.......");
+				if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+					console.log("Set the csrf token successful.");
+					xhr.setRequestHeader("X-CSRFToken", csrftoken);
+				}
+			},
 			type : 'POST',
 			contentType : 'application/json',
 			dataType : 'json',
@@ -95,10 +98,61 @@ function imycartAjaxCallWithCallback(url,object,callback,triggerControl,extraInf
 	});
 };
 
-jQuery(document).ready(function(e){
-	item_count = $.cookie('cart_item_type_count')==null ? 0:$.cookie('cart_item_type_count');
-	$(".top-cart-num-link").text(item_count);
-});
+
+//把商品添加到购物车
+jQuery("#addToCartBtn").click(
+	function() {
+		var productId = $(this).data("product-id");
+		
+		var product_attribute_id = $("#product-attribute-id").val();
+		//如果没有将商品属性选择全面，则不允许提交
+		
+		if($(".product-attribute-group-div").length > 0){
+			if (product_attribute_id){
+				imycartAddProductToCart(productId,product_attribute_id,$("#qty").val(),imycartAddProductToCartCallBack,this,null);
+			}else{
+				//有一种情况，客户也选了但是后台这种SKU没有（这种情况出现在比如2种颜色、2中材质组合，本来应该有4种组合，但是后台删除了一种）
+				var select_all_group = true;
+				$(".product-attribute-group-div").each(function(index,div){
+					if (!($(div).find(".product-attribute-group-selected").val())){
+						$("#infoMessage").html("Please select " + $(div).data("attribute-group-name") + ".");
+						select_all_group = false;
+						//break;
+						return false;
+					}		
+				});
+				if (select_all_group){
+					$("#infoMessage").html("This sku is nolonger on sale.");
+				}
+				$("#myModal").modal('toggle');
+			}
+		}else{
+			imycartAddProductToCart(productId,product_attribute_id,$("#qty").val(),imycartAddProductToCartCallBack,this,null);
+		}
+	}
+);
+
+
+function imycartAddProductToCart(product_id,product_attribute_id,quantity,callback,triggerControl,extraInfo){
+		var url = "/cart/add";
+		var cart = new Object();
+		cart.product_id = product_id;
+		cart.product_attribute_id = product_attribute_id;
+		cart.quantity = quantity;
+		
+		imycartAjaxCallWithCallback(url,cart,callback,triggerControl,extraInfo)
+		//imycartAjaxCall(url,cart,true,'showservermessage');
+};
+
+function imycartAddProductToCartCallBack(result,triggerControl,extraInfo){
+	if (result.success == true){
+		location.href = "/cart/show/";
+		//$.addcartFlyEfect(triggerControl);
+	}else{
+		$("#infoMessage").html(result.message);
+		$("#myModal").modal('toggle');
+	}
+};
 
 //公共方法
 //下拉菜单选项切换
@@ -130,6 +184,13 @@ jQuery("#inquiry-submit").click(function(event){
 	url = '/inquiry/add/'
 	
 	$.ajax({
+		beforeSend: function(xhr, settings) {
+			console.log("Start to set csrftoken.......");
+			if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+				console.log("Set the csrf token successful.");
+				xhr.setRequestHeader("X-CSRFToken", csrftoken);
+			}
+		},		
 		cache: false,
 		type: "POST",
 		url:url,
@@ -170,6 +231,13 @@ jQuery(":radio[name='express'],#promotion_code_apply").click(function(){
 	var url = '/cart/re-calculate-price/';
 	var code_try = $("#promotion_code_try").val();
 	$.ajax({
+		beforeSend: function(xhr, settings) {
+			console.log("Start to set csrftoken.......");
+			if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+				console.log("Set the csrf token successful.");
+				xhr.setRequestHeader("X-CSRFToken", csrftoken);
+			}
+		},		
 		cache: false,
 		type: "GET",
 		url:url,
@@ -491,6 +559,13 @@ jQuery(".btn-address-submit").click(function(){
 	}
 	
 	$.ajax({
+		beforeSend: function(xhr, settings) {
+			console.log("Start to set csrftoken.......");
+			if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+				console.log("Set the csrf token successful.");
+				xhr.setRequestHeader("X-CSRFToken", csrftoken);
+			}
+		},
 		cache: false,
 		type: "POST",
 		url:url,
@@ -565,6 +640,13 @@ $.updateAddressForm = function(address_id){
 	}else{
 		url = url + address_id;
 		$.ajax({
+			beforeSend: function(xhr, settings) {
+				console.log("Start to set csrftoken.......");
+				if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+					console.log("Set the csrf token successful.");
+					xhr.setRequestHeader("X-CSRFToken", csrftoken);
+				}
+			},
 			cache: false,
 			type: "GET",
 			url:url,
@@ -647,59 +729,7 @@ function imycartChangeOrderCallBack(result,triggerControl,extraInfo){
 };
 
 
-//把商品添加到购物车	
-jQuery("#addToCartBtn").click(
-	function() {
-		var productId = $(this).data("product-id");
-		
-		var product_attribute_id = $("#product-attribute-id").val();
-		//如果没有将商品属性选择全面，则不允许提交
-		
-		if($(".product-attribute-group-div").length > 0){
-			if (product_attribute_id){
-				imycartAddProductToCart(productId,product_attribute_id,$("#qty").val(),imycartAddProductToCartCallBack,this,null);
-			}else{
-				//有一种情况，客户也选了但是后台这种SKU没有（这种情况出现在比如2种颜色、2中材质组合，本来应该有4种组合，但是后台删除了一种）
-				var select_all_group = true;
-				$(".product-attribute-group-div").each(function(index,div){
-					if (!($(div).find(".product-attribute-group-selected").val())){
-						$("#infoMessage").html("Please select " + $(div).data("attribute-group-name") + ".");
-						select_all_group = false;
-						//break;
-						return false;
-					}		
-				});
-				if (select_all_group){
-					$("#infoMessage").html("This sku is nolonger on sale.");
-				}
-				$("#myModal").modal('toggle');
-			}
-		}else{
-			imycartAddProductToCart(productId,product_attribute_id,$("#qty").val(),imycartAddProductToCartCallBack,this,null);
-		}
-	}
-);
 
-function imycartAddProductToCart(product_id,product_attribute_id,quantity,callback,triggerControl,extraInfo){
-		var url = "/cart/add";
-		var cart = new Object();
-		cart.product_id = product_id;
-		cart.product_attribute_id = product_attribute_id;
-		cart.quantity = quantity;
-		
-		imycartAjaxCallWithCallback(url,cart,callback,triggerControl,extraInfo)
-		//imycartAjaxCall(url,cart,true,'showservermessage');
-};
-
-function imycartAddProductToCartCallBack(result,triggerControl,extraInfo){
-	if (result.success == true){
-		location.href = "/cart/show/";
-		//$.addcartFlyEfect(triggerControl);
-	}else{
-		$("#infoMessage").html(result.message);
-		$("#myModal").modal('toggle');
-	}
-};
 
 //把商品添加到愿望清单
 jQuery("#addToWishList").click(
@@ -799,6 +829,15 @@ jQuery(".product-attribute-item").click(function(){
 		var url = '/product/get-product-extra/'
 		var encodedata = $.toJSON(product_to_get);
 		$.ajax({
+				beforeSend: function(xhr, settings) {
+					console.log("Start to set csrftoken.......");
+					if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+						console.log("Set the csrf token successful.");
+						xhr.setRequestHeader("X-CSRFToken", csrftoken);
+					}
+				},			
+			
+
 				type : 'POST',
 				contentType : 'application/json',
 				dataType : 'json',
@@ -847,6 +886,19 @@ jQuery(".product-attribute-item").click(function(){
 				}
 		}); 
 });
+
+
+
+		
+});
+
+
+
+jQuery(document).ready(function(e){
+	item_count = $.cookie('cart_item_type_count')==null ? 0:$.cookie('cart_item_type_count');
+	$(".top-cart-num-link").text(item_count);
+});
+
 
 
 /* 

@@ -793,10 +793,10 @@ jQuery(".product-attribute-item").click(function(){
 		}
 	
 		//判断点击的是已经选中的还是没选中的
-		condition = ".product-attribute-group-selected[title=" + $(this).data("group-code") + "]";
+		var condition = ".product-attribute-group-selected[title=" + $(this).data("group-code") + "]";
 		
 		//本次点击的sku项目的相关信息
-		current_attribute_id = $(this).data("attribute-id");
+		var current_attribute_id = $(this).data("attribute-id");
 		
 		if ($(this).parent().hasClass("redborder")){
 			/*  给商品去掉表示选中红框的逻辑 */
@@ -866,9 +866,9 @@ jQuery(".product-attribute-item").click(function(){
 						
 						var id_and_type = result.available_set;
 						if($.trim(id_and_type)!=""){
-							id_list = String(id_and_type).split(",");
+							var id_list = String(id_and_type).split(",");
 							$.each(id_list,function(index,id){
-								tmp = id.split("|")
+								var tmp = id.split("|")
 								var available_class_name = 'sku-available';
 								var inavailable_class_name = 'sku-inavailable';
 								if (tmp[1]=='text'){

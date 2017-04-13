@@ -181,7 +181,7 @@ function imycartAjaxGetCartInfoCallback(result,triggerControl,extraInfo){
 //提交询盘问题
 jQuery("#inquiry-submit").click(function(event){
 	event.preventDefault();
-	url = '/inquiry/add/'
+	var url = '/inquiry/add/';
 	
 	$.ajax({
 		beforeSend: function(xhr, settings) {

@@ -37,8 +37,7 @@
 										<span class="categoryIco" data_level="1">|--</span>
 										<a href="###"><span class="nameText">{{cat.name}}</span></a>
 									</li>
-									<li class="operate" data="list_{{cat.id}}" data-cat-id="{{cat.id}}"><a class="addChild">添加子分类</a>
-										<a class="editCategory" href="../category-edit/?id={{cat.id}}">编辑</a><span>/</span><a class="deleteCategory">删除</a></li>
+									<li class="operate" data="list_{{cat.id}}" data-cat-id="{{cat.id}}"><a class="addChild">添加子分类</a> | <a class="editCategory" href="../category-edit/?id={{cat.id}}">编辑</a><span>|</span><a class="deleteCategory">删除</a></li>
 									<!--"二级分类"-->
 									{% for cat2 in cat.childrens.all%}
 										<ul class="category_02" id="list_{{cat2.id}}">
@@ -48,8 +47,7 @@
 												<span class="categoryIco" data_level="2">|--</span>
 												<a href="###"><span class="nameText">{{cat2.name}}</span></a>
 											</li>
-											<li class="operate" data="list_{{cat2.id}}" data-cat-id="{{cat2.id}}"><a class="addChild">添加子分类</a>
-												<a class="editCategory" href="../category-edit/?id={{cat2.id}}">编辑</a><span>/</span><a class="deleteCategory">删除</a>
+											<li class="operate" data="list_{{cat2.id}}" data-cat-id="{{cat2.id}}"><a class="addChild">添加子分类</a> | <a class="editCategory" href="../category-edit/?id={{cat2.id}}">编辑</a><span>|</span><a class="deleteCategory">删除</a>
 											</li>
 											<!--"三级分类"-->
 											{% for cat3 in cat2.childrens.all %}
@@ -60,8 +58,7 @@
 													<span class="categoryIco" data_level="3">|--</span>
 													<a href="###"><span class="nameText">{{cat3.name}}</span></a>
 												</li>
-												<li class="operate" data="list_{{cat3.id}}" data-cat-id="{{cat3.id}}"><a class="addChild">添加子分类</a>
-													<a class="editCategory" href="../category-edit/?id={{cat3.id}}">编辑</a><span>/</span><a class="deleteCategory">删除</a>
+												<li class="operate" data="list_{{cat3.id}}" data-cat-id="{{cat3.id}}"><a class="addChild">添加子分类</a> | <a class="editCategory" href="../category-edit/?id={{cat3.id}}">编辑</a><span>|</span><a class="deleteCategory">删除</a>
 												</li>
 												<!--"四级分类"-->
 												{% for cat4 in cat3.childrens.all %}
@@ -72,8 +69,7 @@
 														<span class="categoryIco" data_level="4">|--</span>
 														<a href="###"><span class="nameText">{{cat4.name}}</span></a>
 													</li>
-													<li class="operate" data="list_{{cat4.id}}" data-cat-id="{{cat4.id}}"><a class="addChild">添加子分类</a>
-														<a class="editCategory" href="../category-edit/?id={{cat4.id}}">编辑</a><span>/</span><a class="deleteCategory">删除</a></li>
+													<li class="operate" data="list_{{cat4.id}}" data-cat-id="{{cat4.id}}"><a class="addChild">添加子分类</a> | <a class="editCategory" href="../category-edit/?id={{cat4.id}}">编辑</a><span>|</span><a class="deleteCategory">删除</a></li>
 												</ul>
 												{% endfor %}
 											</ul>

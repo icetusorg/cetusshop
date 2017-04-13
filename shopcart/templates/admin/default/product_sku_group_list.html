@@ -32,7 +32,7 @@
 							<tr id="message_list1">
 								<td><input type="checkbox" data-order-id="{{group.id}}" id="checkbox_{{group.id}}" name="is_oper" value="{{group.id}}"></td>
 								<td><a href="/admin/product-sku-group-edit/?id={{group.id}}">{{group.name}}</a></td>
-								<td><a class="deleteCategory message-delete product—sku-group-batch-oper" data-method="delete" data-id="{{group.id}}">删除</a> / <a href="/admin/product-sku-group-edit/?id={{group.id}}">修改</a></td>
+								<td><a href="/admin/product-sku-group-edit/?id={{group.id}}">编辑</a> | <a class="deleteCategory message-delete product—sku-group-batch-oper" data-method="delete" data-id="{{group.id}}">删除</a></td>
 							</tr>
 							{%endfor%}
 							</tbody>

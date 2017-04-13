@@ -29,16 +29,16 @@
             <form id="product-basic-info-form" method="POST">
 				{% csrf_token %}
                 <div class="item-free attr-first-array item">
-                    <label>选择属性：</label>
+                    <label>商品类型<span class="point">*</span>：</label>
 
                     <div class="btn-group normal">
-                        <button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{product.type|default:"B2B"}}</span>
+                        <button type="button" class="btn btn-default inputBtn inputBtn2"><span class="selected-text">{{product.type|default:"B2B"}}</span>
                         </button>
-                        <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn" data-toggle="dropdown">
+                        <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn " data-toggle="dropdown">
                             <span class="caret"></span>
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
-                        <ul class="dropdown-menu" role="menu" id="category-selection">
+                        <ul class="dropdown-menu dropdown-menu2" role="menu" id="category-selection">
                             <li class="dropdown-item" data-value="B2B">B2B</li>
                             <li class="dropdown-item" data-value="B2C">B2C</li>
                             <li class="dropdown-item" data-value="B2B+B2C">B2B+B2C</li>
@@ -47,14 +47,14 @@
                     </div>
                 </div>
                 <div class="item">
-                    <label>产品名称：</label>
+                    <label>产品名称<span class="point">*</span>：</label>
                     <input type="text" name="name" class="form-control" value="{{product.name}}">
                 </div>
 
                 <div class="item"><label>产品编号：</label><input type="text" name="item_number" class="form-control"
                                                              value="{{product.item_number}}"></div>
                 <div class="item btn-item">
-                    <label>自定义URL：</label>
+                    <label>自定义URL<span class="point">*</span>：</label>
                     <input type="text" name="static_file_name" class="form-control"
                            value="{{product.static_file_name|default_if_none:""}}">
                     <button type="button" class="btn btn-primary url_advise_btn">推荐</button>
@@ -207,7 +207,7 @@
 								<a href='{{image.image}}' target="_blank"><img src='{{image.thumb}}' alt='{{image.alt_value}}'></a>
 								<div class="image-operaion">
 									<a href="#" class="set-picture-attr" data-method="set_main" data-id="{{image.id}}" data-item-id="{{product.id}}" data-image-type="product">设为首图 </a> |
-									<a href="#" class="set-picture-attr" data-method="delete" data-id="{{image.id}}" data-item-id="{{product.id}}" data-image-type="product">删除 </a> 
+									<a href="#" class="set-picture-attr set-picture-attr-delete" data-method="delete" data-id="{{image.id}}" data-item-id="{{product.id}}" data-image-type="product">删除 </a>
 									
 								</div>
 							</div>
@@ -232,8 +232,8 @@
         <div class="add-content attr" id="tag_product_para">
 			<form id="product_para_detail_form">
 				<input name="product_id" value="{{product.id}}" type="hidden" />
-				<div class="item-free attr-first-array item">
-					<label>选择属性：</label>
+				<div class="item-free attr-first-array item attr-first-array2">
+					<label>选择属性：<br/>(<a href="/admin/product-para-group-edit/">添加属性组</a>)</label>
 	
 					<div class="btn-group normal">
 						<button type="button" class="btn btn-default inputBtn"><span class="selected-text">{{product|admin_product_para_group:"name"}}</span>
@@ -251,7 +251,7 @@
 						<input class="dropdown-item-input" type="hidden" name="product_para_group" value="{{product|admin_product_para_group:"id"}}"/>
 					</div>
 					
-					<button  type="button" id="make_product_para" class="btn btn-primary">确定</button>
+					<button  type="button" id="make_product_para" class="btn btn-primary product_para_detail_btn">确定</button>
 				</div>
 				{%for para in product.parameters.all%}
 					<div class="item tag_attribute-input">
@@ -265,8 +265,8 @@
 			</form>
         </div>
         <div class="add-content photo " id="tag_sku">
-            <div class="item-free  item product-choose-attribute">
-                <label>选择属性：</label>
+            <div class="item-free  item product-choose-attribute product-choose-attribute2">
+                <label>选择SKU：<br/>(<a href="/admin/product-sku-group-edit/">添加SKU组</a>)</label>
 
                 <div class="btn-group normal">
                     <button type="button" class="btn btn-default inputBtn"><span class="selected-text">请选择一个SKU组</span>
@@ -276,7 +276,7 @@
                         <span class="sr-only">Toggle Dropdown</span>
                     </button>
                     <ul class="dropdown-menu" role="menu" id="category-selection">
-                        <li class="dropdown-item" data-value="">请选择一个属性组</li>
+                        <li class="dropdown-item" data-value="">请选择一个SKU组</li>
                         {% for group in attribute_group_list %}
                         <li class="dropdown-item" data-value="{{group.id}}">{{group.name}} - {{group.code}}</li>
                         {% endfor %}

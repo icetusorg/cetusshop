@@ -96,7 +96,7 @@
 				<h2>文章主图：</h2>
 				<button type="button" class="btn btn-primary cd-popup-trigger" data-type="article" data-id="{{article.id}}">添加主图</button>
 			</div>
-			<div id="article_main_picture_show" class="item product-images ">
+			<div id="article_main_picture_show" class="item product-images product-images2">
 						{% for image in article.get_image_list %}
 							<div class="images">
 								<a href='{{image.image}}' target="_blank"><img src='{{image.thumb}}' alt='{{image.alt_value}}'></a>

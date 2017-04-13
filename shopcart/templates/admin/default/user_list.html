@@ -62,20 +62,19 @@
 							{%for user in user_list%}
 								<tr id="message_list">
 									<td><input id="checkbox_{{user.id}}" type="checkbox" name="is_oper" value="{{user.id}}"></td>
-									<td><a href="###">{{user.email}}</a></td>
+									<td>{{user.email}}</td>
 									<td>普通用户</td>
 									<td>{{user.last_login|date:"Y-m-d H:i:s"}}</td>
 									<td>{{user.create_time|date:"Y-m-d H:i:s"}}</td>
 									<td>{{user.is_active|yesno:"正常,冻结,"}}</td>
 									<td>{{user.reg_ip|default:"未能获取"}}</td>
-									<td><a href="#" class="user-batch-oper" data-user-id="{{user.id}}" data-method='reset-password'>重置密码</a> /
+									<td><a href="#" class="user-batch-oper" data-user-id="{{user.id}}" data-method='reset-password'>重置密码</a> |
 									{%if user.is_active%}
 									<a href="#" class="user-batch-oper"  data-method='active' data-status="off" data-user-id="{{user.id}}">冻结</a>
 									{%else%}
 									<a href="#" class="user-batch-oper"  data-method='active' data-status="on" data-user-id="{{user.id}}">解冻</a>
 									{%endif%}
-									/ <a
-											class="cd-popup-trigger btn-danger-user user-batch-oper" data-method='delete' data-user-id="{{user.id}}">删除</a></td>
+									| <a class="cd-popup-trigger btn-danger-user user-batch-oper" data-method='delete' data-user-id="{{user.id}}">删除</a></td>
 								</tr>
 							{%endfor%}
 	

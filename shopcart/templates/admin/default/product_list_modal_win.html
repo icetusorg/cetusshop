@@ -71,7 +71,7 @@
                     <th>产品图片</th>
                     <th>编号</th>
                     <th>产品名称</th>
-                    <th>分类</th>
+                    <!--<th>分类</th>-->
                 </tr>
 				{%for product in product_list%}
                 <tr>
@@ -79,13 +79,6 @@
                     <td><a href="#"><img src="{{product.thumb}}"></a></td>
                     <td>{{product.item_number}}</td>
                     <td>{{product.name}}</td>
-                    <td>
-                        <ul>
-							{%for cat in product.categorys.all%}
-								<li>{{cat.name}}</li>
-							{%endfor%}
-                        </ul>
-                    </td>
                 </tr>
 				{%endfor%}
                 </tbody>

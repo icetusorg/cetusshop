@@ -23,7 +23,7 @@
                 <div class="box-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <div>							
+                            <div>
                                 <form>
                                     <div class="btn-group normal product-button-search">
                                         <button type="button" class="btn btn-default inputBtn"><span
@@ -55,7 +55,7 @@
                                         </ul>
                                         <input type="hidden" class="dropdown-item-input" name="query_category" value="{{query_category|default:""}}">
                                     </div>
-									
+
                                     <div class="form-group">
                                         <input type="text" name="item_value" value="{{item_value}}" class="form-control product-list-search-input">
                                     </div>
@@ -108,8 +108,8 @@
 									</td>
 									<td>{{product.update_time|date:"Y-m-d H:i:s"}}</td>
 									<td>{{product.is_publish|yesno:"是,否,未定义"}}</td>
-									<td><a href="/admin/product-edit/?id={{product.id}}">编辑</a> | <a href="{{product.get_url}}" target="_blank">预览</a></td>
-									
+									<td><a href="{{product.get_url}}" target="_blank">预览</a> | <a href="/admin/product-edit/?id={{product.id}}">编辑</a></td>
+
 								</tr>
 							{% endfor %}
 							</tbody>
@@ -126,7 +126,7 @@
                         <button type="button" data-method="onpublish" class="btn btn-primary product-batch-oper">上架</button>
                         <button type="button" data-method="offpublish" class="btn btn-primary product-batch-oper">下架</button>
                     </div>
-					
+
                     <div class="xy-pages-jump">
                         <button type="button" class="btn btn-primary page-jump">跳转</button>
                         <input type="text" name="page_number_to_jump" class="form-control">
@@ -137,8 +137,8 @@
 								<li><a name="pageChange" data-tag="Previous" class="pageChage prev" data-page="{{ product_list.previous_page_number }}">&lt;</a></li>
 							{% else %}
 								<li><a>&lt;</a></li>
-							{% endif %}	
-							
+							{% endif %}
+
 							{% for p in page_range %}
 								{% ifequal p objects.number %}
 									<li class="active">{{p}}</li>

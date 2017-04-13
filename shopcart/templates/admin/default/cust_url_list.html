@@ -18,7 +18,7 @@
         <div class="col-md-12">
             <div class="box xy-list page-list-content">
                 <div class="box-body no-padding">
-						<table class="table table-striped page-table-list">
+						<table class="table table-striped page-table-list cust-url-list">
 							<tbody>
 							<tr>
 								<th>页面类型</th>
@@ -33,7 +33,7 @@
 									<td><a href="../customize-url-detail/{{url.id}}/">{{url.name}}</a></td>
 									<td><a href="../customize-url-detail/{{url.id}}/">{{url.page_name}}</a></td>
 									<td><a href="../customize-url-detail/{{url.id}}/">{{url.url}}</a></td>
-									<td data="message_list1"><a href="../customize-url-detail/{{url.id}}/">修改</a> | <a href="{{url.get_url}}" target="_blank">预览</a></td>
+									<td data="message_list1"><a href="{{url.get_url}}" target="_blank">预览</a> | <a href="../customize-url-detail/{{url.id}}/">编辑</a></td>
 								</tr>
 							{% endfor %}
 							{% for article in article_list %}
@@ -42,7 +42,7 @@
 									<td><a href="../article-edit/?id={{article.id}}">{{article.title}}</a></td>
 									<td><a href="../article-edit/?id={{article.id}}">{{article.page_title}}</a></td>
 									<td><a href="../article-edit/?id={{article.id}}">{{article.static_file_name}}</a></td>
-									<td data="message_list1"><a href="../article-edit/?id={{article.id}}" class="article-edit-link" data-article-id="{{article.id}}">修改</a> | <a href="{{article.get_url}}" target="_blank">预览</a> | <a href="#" class="delete-cust-page-article deleteCategory message-delete" data-id="{{article.id}}">删除</a></td>
+									<td data="message_list1"><a href="{{article.get_url}}" target="_blank">预览</a> | <a href="../article-edit/?id={{article.id}}" class="article-edit-link" data-article-id="{{article.id}}">编辑</a> |  <a href="#" class="delete-cust-page-article deleteCategory message-delete" data-id="{{article.id}}">删除</a></td>
 								</tr>
 							{% endfor %}				
 							</tbody>

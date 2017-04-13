@@ -38,7 +38,7 @@
 										<td><input id="checkbox_{{cat.id}}" type="checkbox" name="is_oper" value="{{cat.id}}"></td>
 										<td><input type="text" name="sort_order_{{cat.id}}" value="{{cat.sort_order}}"></td>
 										<td><a href="###"><span class="nameText">{{cat.name}}</span></a></td>
-										<td><a class="editCategory" href="/admin/article-busi-category-edit/?id={{cat.id}}">编辑</a><span>/</span><a class="deleteCategory article-category-batch-oper" data-method="delete" data-id="{{cat.id}}">删除</a></td>
+										<td><a class="editCategory" href="/admin/article-busi-category-edit/?id={{cat.id}}">编辑</a><span> | </span><a class="deleteCategory article-category-batch-oper message-delete" data-method="delete" data-id="{{cat.id}}">删除</a></td>
 									</tr>
 									{%endfor%}
 									</tbody>

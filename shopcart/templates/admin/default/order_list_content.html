@@ -49,13 +49,13 @@
                                                 <span class="sr-only">Toggle Dropdown</span>
                                             </button>
                                             <ul class="dropdown-menu" role="menu" id="selectOption2">
-                                                <li class="dropdown-item" data-value="">所有</li>
-                                                <li class="dropdown-item" data-value="0">已下单</li>
-                                                <li class="dropdown-item" data-value="10">已付款</li>
+                                                <li class="dropdown-item" data-value="">所有订单</li>
+                                                <li class="dropdown-item dropdown-item-0" data-value="0">代付款</li>
+                                                <li class="dropdown-item dropdown-item-10" data-value="10">代发货</li>
 												<li class="dropdown-item" data-value="20">已发货</li>
 												<li class="dropdown-item" data-value="30">已完成</li>
-												<li class="dropdown-item" data-value="99">已关闭</li>
-												<li class="dropdown-item" data-value="90">异常</li>
+												<li class="dropdown-item" data-value="99">关闭</li>
+												<li class="dropdown-item dropdown-item-90" data-value="90">异常</li>
                                             </ul>
                                             <input type="hidden" class="dropdown-item-input" name="query_status" value="{{query_status}}">
                                         </div>
@@ -103,7 +103,7 @@
 											{{order.status|admin_order_status:"zh_CN"}}
 										</td>
 										<td>${{order.order_amount|floatformat:"2"}}</td>
-										<td><a href="/admin/order-detail/{{order.id}}/">查看</a> | <a href="#">备注</a></td>
+										<td><a href="/admin/order-detail/{{order.id}}/">查看</a></td>
 									</tr>
 								{% endfor %}
 							

@@ -43,14 +43,14 @@
                                     <div class="form-group edit-sku-from-div">
                                         <label>SKU类型:</label>
                                         <div class="btn-group normal product-button-search">
-                                            <button type="button" class="btn btn-default inputBtn"><span
+                                            <button type="button" class="btn btn-default inputBtn inputBtn2"><span
                                                     class="selected-text">{{sku_group.group_type|is_equal:"image"|yesno:"图片,文字"}}</span></button>
                                             <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn"
                                                     data-toggle="dropdown">
                                                 <span class="caret"></span>
                                                 <span class="sr-only">Toggle Dropdown</span>
                                             </button>
-                                            <ul class="dropdown-menu" role="menu" id="selectOption">
+                                            <ul class="dropdown-menu dropdown-menu2" role="menu" id="selectOption">
                                                 <li class="dropdown-item" data-value="image">图片</li>
                                                 <li class="dropdown-item" data-value="text">文字</li>
                                             </ul>
@@ -95,7 +95,7 @@
 										<td><img id="img_{{sku.id}}" src="{{sku.thumb}}" alt=""></td>
 										<td><input type="text" name="position" value="{{sku.position}}"></td>
 										<td><input type="hidden" name="attribute_id" value="{{sku.id}}" />
-										<a href="#" class="btn btn-primary sku-item-save-btn" data-id="{{sku.id}}">保存</a>  <a href="#" data-type="attribute" data-trigger-name="sku_item" data-sku-id="{{sku.id}}"  data-id="{{sku_group.id}}" class="btn btn-primary cd-popup-trigger">上传</a> <a href="#" data-id="{{sku.id}}" class="btn btn-danger sku-item-delete">删除</a> </td>
+										<a href="#" class="sku-item-save-btn" data-id="{{sku.id}}">保存</a>  <a href="#" data-type="attribute" data-trigger-name="sku_item" data-sku-id="{{sku.id}}"  data-id="{{sku_group.id}}" class="cd-popup-trigger cd-popup-trigger2">上传</a> <a href="#" data-id="{{sku.id}}" class="sku-item-delete ">删除</a> </td>
 									</form>
 								</tr>
 							{%endfor%}
@@ -109,7 +109,7 @@
 									<td>
 										<input type="hidden" name="attribute_id" value="" />
 										<input type="hidden" name="group_id" value="{{sku_group.id}}" />
-										<a href="#" class="btn btn-primary sku-item-save-btn" data-id="createnew">保存</a> <a href="#" data-type="attribute" data-trigger-name="sku_item"  data-id="" class="btn btn-primary cd-popup-trigger">上传</a> 
+										<a href="#" class="sku-item-save-btn" data-id="createnew">保存</a> <a href="#" data-type="attribute" data-trigger-name="sku_item"  data-id="" class="cd-popup-trigger cd-popup-trigger2">上传</a>
 									</td>
 								</form>
 							</tr>

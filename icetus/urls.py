@@ -215,6 +215,9 @@ urlpatterns = patterns("",
 	url('^admin/user-reset-password/$', 'shopcart.myadmin.user.user_reset_password',name='admin_reset_password'),
 	
 	url('^admin/report/orders/$', 'shopcart.myadmin.report.order_report',name='admin_report_order_report'),
+	url('^admin/report/space-count/$', 'shopcart.myadmin.file.space_count',name='admin_file_order_report'),
+	
+	
 	
 	
 	

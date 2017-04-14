@@ -112,13 +112,17 @@ def file_upload(request,item_type,item_id):
 				ctx['result_message'] = filenames['upload_error_msg']
 				return TemplateResponse(request,System_Config.get_template_name('admin') + '/file_upload.html',ctx)
 				#return HttpResponse(filenames['upload_error_msg'])
-				
+			
+			real_name = filenames['real_name']
+			thumb_name = filenames['real_thumb']
+			file_path = filenames['real_path']
+			
 			#加入到对象的图片列表中去
 			sort = request.POST.get('sort','0')
 			is_show = request.POST.get('is_show_in_product_detail',False)
 			
 			if item_type == 'product':
-				pi = Product_Images.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],product=item,sort=sort,is_show_in_product_detail=is_show,alt_value=alt_value)
+				pi = Product_Images.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],product=item,sort=sort,is_show_in_product_detail=is_show,alt_value=alt_value,file_name=real_name,thumb_name = thumb_name,path=file_path)
 				'''
 				如果改商品原来没有图片，则自动把第一张作为主图
 				'''
@@ -127,7 +131,7 @@ def file_upload(request,item_type,item_id):
 					item.thumb = pi.thumb
 					item.save()
 			else:
-				ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id,alt_value=alt_value)
+				ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id,alt_value=alt_value,file_name=real_name,thumb_name = thumb_name,path=file_path)
 		elif item_type == 'article':
 			try:
 				item = Article.objects.get(id=item_id)
@@ -138,8 +142,12 @@ def file_upload(request,item_type,item_id):
 				ctx['result_message'] = filenames['upload_error_msg']
 				return TemplateResponse(request,System_Config.get_template_name('admin') + '/file_upload.html',ctx)				
 		
+			real_name = filenames['real_name']
+			thumb_name = filenames['real_thumb']
+			file_path = filenames['real_path']
+		
 			logger.debug('Upload success!!!')
-			ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id,alt_value=alt_value)
+			ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id,alt_value=alt_value,file_name=real_name,thumb_name = thumb_name,path=file_path)
 			'''
 			如果改文章原来没有图片，则自动把第一张作为主图
 			'''
@@ -159,7 +167,12 @@ def file_upload(request,item_type,item_id):
 			if filenames['upload_result'] == False:
 				ctx['result_message'] = filenames['upload_error_msg']
 				return TemplateResponse(request,System_Config.get_template_name('admin') + '/file_upload.html',ctx)
-			ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id,alt_value=alt_value)
+			
+			real_name = filenames['real_name']
+			thumb_name = filenames['real_thumb']
+			file_path = filenames['real_path']
+			
+			ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id,alt_value=alt_value,file_name=real_name,thumb_name = thumb_name,path=file_path)
 			logger.info('Attribute_Group image upload success')
 		elif item_type == 'slider':
 			try:
@@ -170,7 +183,12 @@ def file_upload(request,item_type,item_id):
 			if filenames['upload_result'] == False:
 				ctx['result_message'] = filenames['upload_error_msg']
 				return TemplateResponse(request,System_Config.get_template_name('admin') + '/file_upload.html',ctx)
-			ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id,alt_value=alt_value,href=href)
+			
+			real_name = filenames['real_name']
+			thumb_name = filenames['real_thumb']
+			file_path = filenames['real_path']
+			
+			ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id,alt_value=alt_value,href=href,file_name=real_name,thumb_name = thumb_name,path=file_path)
 			logger.info('Slider image upload success')	
 		
 		else:
@@ -257,3 +275,14 @@ def ckediter(request,item_type,item_id):
 		except:
 			raise Http404
 		return TemplateResponse(request,'admin/ckediter.html',ctx)
+
+		
+		
+@staff_member_required
+def space_count(request):
+	ctx = {}
+	if request.method == 'GET':
+		from shopcart.utils import count_file_size
+		path = 'media/'
+		size = count_file_size(path)
+		return HttpResponse('%s 字节' % size)	

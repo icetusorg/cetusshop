@@ -8,7 +8,7 @@ from captcha.models import CaptchaStore
 from captcha.helpers import captcha_image_url
 from django.db import transaction
 from django.utils.translation import ugettext as _
-import datetime,uuid
+import datetime,uuid,os
 from django.core.serializers import serialize,deserialize
 from django.db.models.query import QuerySet
 from django.template.response import TemplateResponse
@@ -158,6 +158,14 @@ def my_send_mail(ctx,send_to,title,template_path,username,password,smtp_host,sen
 				conn.close()# 发送完毕记得关闭连接
 		except:
 			pass
+
+			
+def count_file_size(path):
+	size = 0
+	for root,dirs,files in os.walk(path,True):
+		size += sum([os.path.getsize(os.path.join(root, name)) for name in files])
+	return size	
+			
 			
 def handle_uploaded_file(f,type='other',product_sn='-1',file_name_type='random',manual_name='noname',same_name_handle='reject'):
 	file_name = ""
@@ -186,10 +194,15 @@ def handle_uploaded_file(f,type='other',product_sn='-1',file_name_type='random',
 			raise Exception('%s File type is not allowed to upload.' % [ext])
 		
 		#20160616,koala加入对文件名生成的生成规则
+		real_name = ''
+		real_thumb = ''
+		real_path = path
 		if file_name_type == 'random':
 			random_name = str(uuid.uuid1())
 			file_name = path + random_name + '.' + ext
 			file_thumb_name = path + random_name + '-thumb' + '.' + ext
+			real_name = random_name + '.' + ext
+			real_thumb = random_name + '-thumb' + '.' + ext
 		elif file_name_type == 'origin':
 
 			file_name = path + f.name
@@ -197,13 +210,21 @@ def handle_uploaded_file(f,type='other',product_sn='-1',file_name_type='random',
 			length = len(name_list_tmp)
 			name_list_tmp[length-2] = name_list_tmp[length-2] + '-thumb'
 			file_thumb_name = path + '.'.join(name_list_tmp)
-			logger.debug("44444")
+			
+			real_name = f.name
+			real_thumb = '.'.join(name_list_tmp)
+			
 		elif file_name_type == 'manual':
 			file_name = path + manual_name + '.' + ext
 			file_thumb_name = path + manual_name + '-thumb' + '.' + ext
-			logger.debug('file_name is : %s' % file_name)
+			
+			real_name = manual_name + '.' + ext
+			real_thumb = manual_name + '-thumb' + '.' + ext
+			
 		else:
 			raise Exception('file upload failed')
+			
+		logger.info('real_name : %s , real_thumb : %s' % (real_name,real_thumb))
 		
 		# 判断文件是否已经存在
 		if os.path.exists(file_name):
@@ -232,6 +253,9 @@ def handle_uploaded_file(f,type='other',product_sn='-1',file_name_type='random',
 			file_names['upload_result'] = True
 			file_names['image'] = file_name
 			file_names['thumb'] = file_thumb_name
+			file_names['real_name'] = real_name
+			file_names['real_thumb'] = real_thumb
+			file_names['real_path'] = real_path
 			file_names['image_url'] = System_Config.get_base_url() + '/' + file_name
 			file_names['thumb_url'] = System_Config.get_base_url() + '/' + file_thumb_name
 	except Exception as e:

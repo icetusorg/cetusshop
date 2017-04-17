@@ -157,6 +157,7 @@
 		var parent_id = $(this).parent().data("cat-id");
         var level = $("#" + listId).find(".categoryIco").attr("data_level");
         level = parseInt(level) + 1;
+		console.log("层数：" + level);
 		if (level > maxCategoryNum){
 			alert('最多只能添加' + maxCategoryNum + "层");
 			return false;

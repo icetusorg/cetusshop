@@ -2002,6 +2002,37 @@ jQuery("#category_detail_submit_btn").click(function(e){
 	});
 });
 
+//分类批量操作
+jQuery(".category-batch-oper").click(function(e){
+	var url = "/admin/category-oper/";
+	
+	var method = $(this).data("method");
+	
+	url = url + method + "/";
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#category_batch_form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			if(data.success==true){
+				$('#myModal').on('hidden.bs.modal', function (e) {
+					var newurl = location.href;
+					location.href = newurl;
+				})
+			}
+			$("#myModal").modal('toggle');
+		}
+	});
+});
+
+
 //自定义URL详情
 //跳转方式切换的变化
 function jump_type_extra(type){

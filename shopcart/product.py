@@ -15,6 +15,14 @@ import logging
 # Get an instance of a logger
 logger = logging.getLogger('icetus.shopcart')
 
+def get_page_size():
+	try:
+		size = int(System_Config.objects.get(name='product_page_size').val)
+	except:
+		logger.info('"admin_order_list_page_size" is not setted.Use default value 12.')
+		size = 12
+	return size
+
 # Create your views here.
 def detail(request,id):
 	ctx = {}
@@ -196,10 +204,12 @@ def query_product_show(request):
 		product_list = Product.objects.filter(Q(name__icontains=query_condition))
 		#icontains是大小写不敏感的，contains是大小写敏感的
 		
+		
 		if 'page_size' in request.GET:
-			product_list, page_range = my_pagination(request=request, queryset=product_list,display_amount=request.GET['page_size'])
+			page_size = request.GET['page_size']
 		else:
-			product_list, page_range = my_pagination(request=request, queryset=product_list)
+			page_size = get_page_size()
+		product_list, page_range = my_pagination(request=request, queryset=product_list,display_amount=page_size)
 		
 		ctx['product_list'] = product_list
 		ctx['page_range'] = page_range

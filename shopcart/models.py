@@ -953,6 +953,7 @@ class Album(models.Model):
 	image = models.URLField(verbose_name = '图片链接')
 	thumb = models.URLField(verbose_name = '缩略图链接')
 	alt_value = models.CharField(max_length = 100,default='',verbose_name='Alt值')
+	sort = models.IntegerField(default=0,verbose_name='排序序号')
 	file_name = models.CharField(max_length = 100,null=True,blank=True,verbose_name='文件名')
 	thumb_name = models.CharField(max_length = 100,null=True,blank=True,verbose_name='文件名')
 	path = models.CharField(max_length = 254,null=True,blank=True,verbose_name='文件路径')
@@ -1072,7 +1073,7 @@ class Slider(models.Model):
 		return self.name
 		
 	def get_image_list(self):
-		image_list = Album.objects.filter(item_type='slider',item_id=self.id).order_by('-update_time')
+		image_list = Album.objects.filter(item_type='slider',item_id=self.id).order_by('-sort')
 		return image_list	
 	
 	class Meta:

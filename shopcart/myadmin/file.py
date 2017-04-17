@@ -97,7 +97,7 @@ def file_upload(request,item_type,item_id):
 		alt_value = request.POST.get('alt_value','')
 		filename_type = request.POST.get('filename_type','random')
 		href = request.POST.get('href','')
-	
+		sort = request.POST.get('sort','0')
 	
 		if item_type == 'product' or item_type == 'product_album':
 			try:
@@ -118,7 +118,6 @@ def file_upload(request,item_type,item_id):
 			file_path = filenames['real_path']
 			
 			#加入到对象的图片列表中去
-			sort = request.POST.get('sort','0')
 			is_show = request.POST.get('is_show_in_product_detail',False)
 			
 			if item_type == 'product':
@@ -131,7 +130,7 @@ def file_upload(request,item_type,item_id):
 					item.thumb = pi.thumb
 					item.save()
 			else:
-				ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id,alt_value=alt_value,file_name=real_name,thumb_name = thumb_name,path=file_path)
+				ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id,alt_value=alt_value,file_name=real_name,thumb_name = thumb_name,sort=sort,path=file_path)
 		elif item_type == 'article':
 			try:
 				item = Article.objects.get(id=item_id)
@@ -147,7 +146,7 @@ def file_upload(request,item_type,item_id):
 			file_path = filenames['real_path']
 		
 			logger.debug('Upload success!!!')
-			ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id,alt_value=alt_value,file_name=real_name,thumb_name = thumb_name,path=file_path)
+			ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id,alt_value=alt_value,file_name=real_name,thumb_name = thumb_name,sort=sort,path=file_path)
 			'''
 			如果改文章原来没有图片，则自动把第一张作为主图
 			'''
@@ -172,7 +171,7 @@ def file_upload(request,item_type,item_id):
 			thumb_name = filenames['real_thumb']
 			file_path = filenames['real_path']
 			
-			ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id,alt_value=alt_value,file_name=real_name,thumb_name = thumb_name,path=file_path)
+			ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id,alt_value=alt_value,file_name=real_name,thumb_name = thumb_name,sort=sort,path=file_path)
 			logger.info('Attribute_Group image upload success')
 		elif item_type == 'slider':
 			try:
@@ -188,7 +187,7 @@ def file_upload(request,item_type,item_id):
 			thumb_name = filenames['real_thumb']
 			file_path = filenames['real_path']
 			
-			ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id,alt_value=alt_value,href=href,file_name=real_name,thumb_name = thumb_name,path=file_path)
+			ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id,alt_value=alt_value,href=href,file_name=real_name,thumb_name = thumb_name,sort=sort,path=file_path)
 			logger.info('Slider image upload success')	
 		
 		else:

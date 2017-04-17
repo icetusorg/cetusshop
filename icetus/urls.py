@@ -135,6 +135,8 @@ urlpatterns = patterns("",
 	url('^admin/category-edit/$', 'shopcart.myadmin.category.edit',name='admin_category_edit'),
 	url('^admin/category-detele/(\d+)/$', 'shopcart.myadmin.category.delete',name='admin_category_delete'),
 	url('^admin/ajax_add_category/$', 'shopcart.myadmin.category.ajax_add_category',name='admin_category_ajax_add_category'),
+	url('^admin/category-oper/(.+)/$', 'shopcart.myadmin.category.oper',name='admin_category_oper'),
+	
 	
 	
 	url('^admin/system-config/(.+)/$', 'shopcart.myadmin.system_config.view',name='admin_system_config_view'),

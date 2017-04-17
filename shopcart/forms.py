@@ -161,7 +161,7 @@ class email_form(forms.ModelForm):
 class category_simple_form(forms.ModelForm):
 	class Meta:
 		model = Category
-		fields = ('name','code')
+		fields = ('name','code','sort_order')
 		
 class category_form(forms.ModelForm):
 	name = forms.CharField(required=False)

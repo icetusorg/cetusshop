@@ -19,6 +19,7 @@
             <div class="box xy-search">
                 <div class="box-body">
                     <div class="row">
+						<form id="category_batch_form">
                         <div class="col-md-12 category">
                             <ul class="category_title">
                                 <li class="name">选择</li>
@@ -30,8 +31,8 @@
                             <!-- id=list+数字 给每条分类加一个ID class=operate中的data一致-->
 							{% for cat in category_list%}
 								<ul class="category_01 category-list" id="list_{{cat.id}}">
-									<li><input type="checkbox" name="selected"></li>
-									<li><input type="text" value="1"></li>
+									<li><input type="checkbox" name="is_oper" value="{{cat.id}}"></li>
+									<li><input type="text" name="sort_{{cat.id}}" value="{{cat.sort_order|default:'0'}}"></li>
 									<li class="name">
 										<!-- data_level代表分类的级数，暂时从1级到4级-->
 										<span class="categoryIco" data_level="1">|--</span>
@@ -41,8 +42,8 @@
 									<!--"二级分类"-->
 									{% for cat2 in cat.childrens.all%}
 										<ul class="category_02" id="list_{{cat2.id}}">
-											<li><input type="checkbox" name="selected"></li>
-											<li><input type="text" value="1"></li>
+											<li><input type="checkbox" name="selected" value="{{cat2.id}}"></li>
+											<li><input type="text" name="sort_{{cat2.id}}" value="{{cat2.sort_order|default:'0'}}"></li>
 											<li class="name">
 												<span class="categoryIco" data_level="2">|--</span>
 												<a href="###"><span class="nameText">{{cat2.name}}</span></a>
@@ -52,8 +53,8 @@
 											<!--"三级分类"-->
 											{% for cat3 in cat2.childrens.all %}
 											<ul class="category_03" id="list_{{cat3.id}}">
-												<li><input type="checkbox" name="selected"></li>
-												<li><input type="text" value="1"></li>
+												<li><input type="checkbox" name="selected" value="{{cat3.id}}"></li>
+												<li><input type="text" name="sort_{{cat3.id}}" value="{{cat3.sort_order|default:'0'}}"></li>
 												<li class="name">
 													<span class="categoryIco" data_level="3">|--</span>
 													<a href="###"><span class="nameText">{{cat3.name}}</span></a>
@@ -63,8 +64,8 @@
 												<!--"四级分类"-->
 												{% for cat4 in cat3.childrens.all %}
 												<ul class="category_04" id="list_{{cat4.id}}">
-													<li><input type="checkbox" name="selected"></li>
-													<li><input type="text" value="1"></li>
+													<li><input type="checkbox" name="selected" value="{{cat4.id}}"></li>
+													<li><input type="text" name="sort_{{cat4.id}}" value="{{cat4.sort_order|default:'0'}}"></li>
 													<li class="name">
 														<span class="categoryIco" data_level="4">|--</span>
 														<a href="###"><span class="nameText">{{cat4.name}}</span></a>
@@ -79,12 +80,10 @@
 									</ul>
 							{% endfor %}	
                         </div>
+						</form>
                         <div class="xy-box-select">
-                            <input class="category-set-input" type="checkbox" onclick="selectAll()" id="controlAll">
-                            <a>全选</a>
-                            <button type="button" class="btn btn-danger">删除</button>
-                            <button type="button" class="btn    btn-add">新增</button>
-                            <button type="button" class="btn    btn-add">排序</button>
+                            <a href="/admin/category-edit/" class="btn btn-primary">新增</a>
+                            <button type="button" class="btn btn-add category-batch-oper" data-method="set_order">排序</button>
                         </div>
                     </div>
                 </div>
@@ -127,10 +126,15 @@
         var listId = $(this).parent().attr("data");
 		var parent_id = $(this).parent().data("cat-id");
         var level = $("#" + listId).find(".categoryIco").attr("data_level");
-        level = parseInt(level) + 1;						
+        level = parseInt(level) + 1;
+		if (level > maxCategoryNum){
+			alert('最多只能添加' + maxCategoryNum + "层");
+			return false;
+		}
+		
         var insertHtml = '<ul class="addInputList category_0' + level + '" style="display:block;">' +
                 '<li><input type="checkbox" name="selected"></li>'+
-                '<li><input type="text" value="0"></li>'+
+                '<li><input type="text" id="categorySort" name="sort" value="0"></li>'+
                 '<li class="name"><span class="categoryIco active"></span>' +
                 '<input type="text" class="form-control form-control-hidden" id="categoryCode" placeholder="分类代码"> <input type="text" class="form-control" id="categoryName" placeholder="分类名称"></li>' +
                 '<li class="operate"><a id="categorySubmit" class="addBtn">确定</a><a class="deleteInput">删除</a></li></ul>';
@@ -143,16 +147,17 @@
         $("#categorySubmit").click(function () {
             var name = $("#categoryName").val();
             var code = $("#categoryCode").val();
+			var sort = $("#categorySort").val();
             if (level <= maxCategoryNum) {
-                addCategory(level, listId, name, code,parent_id);
+                addCategory(level, listId, name, code,parent_id,sort);
             }
         })
     };
 	
 
     //模拟"增加分类"提交服务器:  给级别为level，ID为listId的分类增加子分类，子分类名称为name，网址为url
-    function addCategory(level, listId, name, code, parent_id) {
-        console.info("Level: " + level + " ListId: " + listId + " Name: " + name + " Code: " + code + " ParentId:" + parent_id);
+    function addCategory(level, listId, name, code, parent_id,sort) {
+        console.info("Level: " + level + " ListId: " + listId + " Name: " + name + " Code: " + code + " ParentId:" + parent_id + " Sort:" + sort);
 
         if (name == "") {
             $("#categoryName").addClass("warning");
@@ -166,7 +171,7 @@
 			//提价服务器
 			
 			var url = "/admin/ajax_add_category/";
-			var postdata = {"name":name,"code":code,"parent_id":parent_id};
+			var postdata = {"name":name,"code":code,"parent_id":parent_id,"sort_order":sort};
 	
 			$.ajax({
 				cache: false,
@@ -189,11 +194,11 @@
 						console.info('enter 3 ...');
 
 						var tmpHtml = '<ul class="category_0' + level + '" id="list_' + newId + '" style="display:block;">' +
-							'<li><input type="checkbox" name="selected"></li>'+
-							'<li><input type="text" value="0"></li>'+
-							'<li class="name"><span class="categoryIco active" data_level="' + level +'"></span><span class="categoryIco" data_level="3">|--</span><a href="###"><span class="nameText">' + name + '</span></a></li>' +
-							'<li class="operate" data="list_' + newId + '" data-cat-id="' + newId +'"><a class="addChild">添加子分类</a>' +
-							'<a class="editCategory" href="../category-edit/?id=' + newId +'">编辑</a><span>/</span><a class="deleteCategory">删除</a>/</span><a class="moveCategory">移动</a></li></ul>';
+							'<li><input type="checkbox" name="selected" value="' + newId + '"></li>'+
+							'<li><input type="text" name="sort_' + newId + '" value="'+ sort +'"></li>'+
+							'<li class="name"><span class="categoryIco active" data_level="' + level +'"></span>|--</span><a href="###"><span class="nameText">' + name + '</span></a></li>' +
+							'<li class="operate" data="list_' + newId + '" data-cat-id="' + newId +'"><a class="addChild">添加子分类</a> | ' +
+							'<a class="editCategory" href="../category-edit/?id=' + newId +'">编辑</a><span> | </span><a class="deleteCategory">删除</a></li></ul>';
 							
 						console.info("html: " + tmpHtml);
 						console.info('enter 4 ...');

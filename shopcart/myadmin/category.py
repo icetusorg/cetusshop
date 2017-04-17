@@ -64,6 +64,38 @@ def ajax_add_category(request):
 	else:
 		raise Http404	
 	
+	
+@staff_member_required
+@transaction.atomic()	
+def oper(request,method):
+	if request.method == 'POST':
+		result={}
+		if method == 'set_order':
+			id_list = request.POST.getlist('selected')
+			for id in id_list:
+				try:
+					cat = Category.objects.get(id=id)
+				except Exception as err:
+					logger.error('Can not find category %s .\n Error Message: %s' % (id,err))
+					cat = None
+				if cat:
+					try:
+						sort = request.POST.get('sort_%s' % id)
+					except:
+						sort = None
+					if sort:
+						cat.sort_order = sort
+						cat.save()
+			result['success'] = True
+			result['message'] = '分类信息保存成功'
+		
+			return JsonResponse(result)
+		else:
+			raise Http404
+	else:
+		raise Http404
+	
+	
 @staff_member_required
 @transaction.atomic()	
 def delete(request,id):

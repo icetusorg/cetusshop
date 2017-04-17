@@ -130,7 +130,7 @@
 				{% csrf_token %}
 				<div class="item">
 					<label>市场价：</label>
-					<input type="text" name="market_price" value="{{product.market_price}}" class="form-control-product-content form-control">
+					<input type="text" name="market_price" value="{{product.market_price|default:"0.0"}}" class="form-control-product-content form-control">
 				</div>
 				<div class="item">
 					<label>售价1：</label>
@@ -152,7 +152,7 @@
 				</div>
 				<div class="item">
 					<label>库存：</label>
-					<input type="text" name="quantity" value="{{product.quantity}}" class="form-control-product-content form-control">
+					<input type="text" name="quantity" value="{{product.quantity|default:"1"}}" class="form-control-product-content form-control">
 				</div>
 				<div class="item">
 					<label>最小起订量：</label>

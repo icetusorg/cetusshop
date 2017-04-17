@@ -56,6 +56,7 @@ def set_image(request):
 				logger.info('Can not find  picture [%s] in Product_Images. \n Error Message: %s' %(picture_id,err))
 			
 			if picture:
+				picture.remove_file()
 				picture.delete()
 				result['success'] = True
 				result['message'] = '文章图片信息删除成功'
@@ -86,6 +87,7 @@ def delete(request):
 		if article_id_list:
 			for id in article_id_list:
 				article = Article.objects.get(id=id)
+				article.remove_file()
 				article.delete()
 				count += 1
 			result_dict['success'] = True

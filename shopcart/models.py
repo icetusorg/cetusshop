@@ -951,6 +951,11 @@ class Article(models.Model):
 		
 		return image_list
 		
+		
+	def remove_file(self):
+		from shopcart.utils import remove_dir_all
+		remove_dir_all('media/%s/%s' % ('article',self.id))			
+		
 	class Meta:
 		verbose_name = '文章'
 		verbose_name_plural = '文章'
@@ -973,8 +978,9 @@ class Album(models.Model):
 		return self.item_type + ' ' + str(self.item_id)
 		
 	def remove_file(self):
-		from shopcart.utils import remove_file
-		return remove_file(self.path,self.file_name,self.thumb_name)
+		if self.path and self.file_name:
+			from shopcart.utils import remove_file
+			return remove_file(self.path,self.file_name,self.thumb_name)
 	
 	class Meta:
 		verbose_name = '相册'

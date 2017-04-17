@@ -967,6 +967,10 @@ class Album(models.Model):
 	
 	def __str__(self):
 		return self.item_type + ' ' + str(self.item_id)
+		
+	def remove_file(self):
+		from shopcart.utils import remove_file
+		return remove_file(self.path,self.file_name,self.thumb_name)
 	
 	class Meta:
 		verbose_name = '相册'
@@ -1079,6 +1083,10 @@ class Slider(models.Model):
 	def get_image_list(self):
 		image_list = Album.objects.filter(item_type='slider',item_id=self.id).order_by('-sort')
 		return image_list	
+	
+	def remove_file(self):
+		from shopcart.utils import remove_dir_all
+		remove_dir_all('media/%s/%s' % ('slider',self.id))
 	
 	class Meta:
 		verbose_name = '幻灯信息'

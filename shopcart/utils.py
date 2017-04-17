@@ -267,6 +267,45 @@ def handle_uploaded_file(f,type='other',product_sn='-1',file_name_type='random',
 	return file_names
 	
 	
+#删除文件下所有文件	
+def remove_file_in_dir(targetDir,is_recursive=False):
+	for file in os.listdir(targetDir): 
+		targetFile = os.path.join(targetDir,file) 
+		if os.path.isfile(targetFile): 
+			os.remove(targetFile)
+			
+#强制删除整个文件夹
+def remove_dir_all(targetDir):
+	logger.info('targetDir: %s to be delete....' % targetDir)
+	if targetDir:
+		import shutil
+		shutil.rmtree(targetDir)
+				
+def remove_file(targetDir,file,thumb=None):
+	targetFile = os.path.join(targetDir,file)
+	logger.info('File %s is deleting....' % targetFile)
+	
+	result = True
+	if os.path.isfile(targetFile):
+		try:
+			os.remove(targetFile)
+		except Exception as err:
+			logger.error('File %s delete faild. \n Error Message:%s' % (targetFile,err))
+			return False
+			
+	if thumb:
+		targetFile = os.path.join(targetDir,thumb)
+	if os.path.isfile(targetFile):
+		try:
+			os.remove(targetFile)
+		except Exception as err:
+			logger.error('File %s delete faild. \n Error Message:%s' % (targetFile,err))
+			return False
+	
+	return result
+
+	
+	
 def thumbnail(file_name,file_thumb_name):
 	#生成缩略图
 	from PIL import Image

@@ -40,6 +40,7 @@ def set_image(request):
 				logger.info('Can not find  picture [%s] in Album. \n Error Message: %s' %(picture_id,err))
 			
 			if picture:
+				picture.remove_file()
 				picture.delete()
 				result['success'] = True
 				result['message'] = '幻灯图片信息删除成功'
@@ -113,6 +114,7 @@ def oper(request):
 		
 		if method == 'delete':
 			if slider:
+				slider.remove_file()
 				slider.delete()
 			
 		result['success'] = True

@@ -443,6 +443,10 @@ class Attribute_Group(models.Model):
 	
 	def __str__(self):
 		return self.name
+		
+	def remove_file(self):
+		from shopcart.utils import remove_dir_all
+		remove_dir_all('media/%s/%s' % ('attribute',self.id))	
 	
 	class Meta:
 		verbose_name = '商品属性组定义'

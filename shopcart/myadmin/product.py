@@ -160,6 +160,7 @@ def product_sku_group_delete(request):
 			id_list = request.POST.getlist('is_oper')
 			for id in id_list:
 				group = Attribute_Group.objects.get(id=id)
+				group.remove_file()
 				group.delete()
 		except Exception as err:
 			logger.info('Can not find Attribute_Group which id is [%s]. \n Error Message: %s' %(id,err))
@@ -327,6 +328,7 @@ def product_sku_item_set_image(request):
 			picture_id = request.POST.get('picture_id','')
 			try:
 				picture = Album.objects.get(id=picture_id)
+				picture.remove_file()
 				picture.delete()
 				result['success'] = True
 				result['message'] = 'SKU项目图片信息删除成功'

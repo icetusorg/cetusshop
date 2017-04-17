@@ -121,6 +121,36 @@
 	
 	$(".category-list").on("click",".addChild",addChildFunc);
 	
+	
+	//删除分类
+	
+    $(".category-list").on("click",".deleteCategory",function(){
+        var listId = $(this).parent().attr("data");
+		var cat_id = $(this).parent().data("cat-id");
+		var url = "/admin/category-detele/" + cat_id + "/";
+		$.ajax({
+				cache: false,
+				type: "POST",
+				url:url,
+				data:null,
+				async: false,
+				error: function(request) {
+					alert("System error");
+				},
+				success: function(data) {
+					console.info('enter...');
+				
+					$("#infoMessage").html(data.message);
+					if(data.success==true){
+						$("#"+listId).remove();
+					}
+					$("#myModal").modal('toggle');
+				}
+			});
+    });
+	
+	
+	
 	function addChildFunc() {
         $(".addInputList").remove();
         var listId = $(this).parent().attr("data");
@@ -211,32 +241,5 @@
 			});
         }
     };
-
-
-	//删除分类
-    $(".deleteCategory").on("click",function(){
-        var listId = $(this).parent().attr("data");
-		var cat_id = $(this).parent().data("cat-id");
-		var url = "/admin/category-detele/" + cat_id + "/";
-		$.ajax({
-				cache: false,
-				type: "POST",
-				url:url,
-				data:null,
-				async: false,
-				error: function(request) {
-					alert("System error");
-				},
-				success: function(data) {
-					console.info('enter...');
-				
-					$("#infoMessage").html(data.message);
-					if(data.success==true){
-						$("#"+listId).remove();
-					}
-					$("#myModal").modal('toggle');
-				}
-			});
-    })
 	</script>
 {% endblock %}

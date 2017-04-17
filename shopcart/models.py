@@ -174,6 +174,10 @@ class Category(models.Model):
 		while not s.isempty():
 			dir = dir + s.pop().code + '/'
 		return dir
+		
+	def get_childrens(self):
+		return self.childrens.all().order_by('-sort_order')
+		
 
 	def __str__(self):
 		return self.name

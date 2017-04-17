@@ -40,7 +40,7 @@
 									</li>
 									<li class="operate" data="list_{{cat.id}}" data-cat-id="{{cat.id}}"><a class="addChild">添加子分类</a> | <a class="editCategory" href="../category-edit/?id={{cat.id}}">编辑</a><span>|</span><a class="deleteCategory">删除</a></li>
 									<!--"二级分类"-->
-									{% for cat2 in cat.childrens.all%}
+									{% for cat2 in cat.get_childrens%}
 										<ul class="category_02" id="list_{{cat2.id}}">
 											<li><input type="checkbox" name="selected" value="{{cat2.id}}"></li>
 											<li><input type="text" name="sort_{{cat2.id}}" value="{{cat2.sort_order|default:'0'}}"></li>
@@ -51,7 +51,7 @@
 											<li class="operate" data="list_{{cat2.id}}" data-cat-id="{{cat2.id}}"><a class="addChild">添加子分类</a> | <a class="editCategory" href="../category-edit/?id={{cat2.id}}">编辑</a><span>|</span><a class="deleteCategory">删除</a>
 											</li>
 											<!--"三级分类"-->
-											{% for cat3 in cat2.childrens.all %}
+											{% for cat3 in cat2.get_childrens %}
 											<ul class="category_03" id="list_{{cat3.id}}">
 												<li><input type="checkbox" name="selected" value="{{cat3.id}}"></li>
 												<li><input type="text" name="sort_{{cat3.id}}" value="{{cat3.sort_order|default:'0'}}"></li>
@@ -62,7 +62,7 @@
 												<li class="operate" data="list_{{cat3.id}}" data-cat-id="{{cat3.id}}"><a class="addChild">添加子分类</a> | <a class="editCategory" href="../category-edit/?id={{cat3.id}}">编辑</a><span>|</span><a class="deleteCategory">删除</a>
 												</li>
 												<!--"四级分类"-->
-												{% for cat4 in cat3.childrens.all %}
+												{% for cat4 in cat3.get_childrens %}
 												<ul class="category_04" id="list_{{cat4.id}}">
 													<li><input type="checkbox" name="selected" value="{{cat4.id}}"></li>
 													<li><input type="text" name="sort_{{cat4.id}}" value="{{cat4.sort_order|default:'0'}}"></li>

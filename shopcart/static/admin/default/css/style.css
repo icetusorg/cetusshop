@@ -1704,6 +1704,24 @@ iframe {
     padding-left: 60px;
 }
 
+.category .category_05 .name {
+    padding-left: 75px;
+}
+.category .category_06 .name {
+    padding-left: 90px;
+}
+.category .category_07 .name {
+    padding-left: 105px;
+}
+.category .category_08 .name {
+    padding-left: 120px;
+}
+.category .category_09 .name {
+    padding-left: 135px;
+}
+.category .category_10 .name {
+    padding-left: 150px;
+}
 .category .addChild {
     /*color: #333;*/
     /*margin-right: 20px;*/
@@ -1783,19 +1801,6 @@ iframe {
 
 .category li a {
     cursor: pointer;
-}
-
-.category .category_04 .addChild {
-    display: none !important;
-}
-
-.category .category_04 .categoryIco {
-    /*background-image: url("../images/decrease.png") !important;*/
-}
-
-.category .category_04 .editCategory, .category .editCategorySubmit {
-    margin-left: 84px;
-    padding-right: 3px;
 }
 
 /*询盘管理*/

@@ -300,18 +300,23 @@ def ajax_get_product_info(request):
 		第三步：逐个分析与A或者E同组的选项，比如B，查找是否存在 BE的组合，存在则亮起，不存在则灰掉；同样，也要逐个分析与E同组的选项，比如F，不存在AF组合的话，就要将F灰掉。
 		经过上面的筛选，应该可以找到当前组合条件下，可以点选的选项了。
 	'''
-	available_set = check_available_attributes(para_list,product)
-	available_ret = []
-	for attr in available_set:
-		tmp = '%s|%s' % (attr.id,attr.group.group_type)
-		available_ret.append(tmp)
-	result_dict['available_set'] = available_ret
+	
+	#如果一个都没选中，直接返回特定的代码
+	if para_list:
+		available_set = check_available_attributes(para_list,product)
+		available_ret = []
+		for attr in available_set:
+			tmp = '%s|%s' % (attr.id,attr.group.group_type)
+			available_ret.append(tmp)
+		result_dict['available_set'] = available_ret
+	else:
+		result_dict['available_set'] = 'all_available'
 
 	return JsonResponse(result_dict)
 	
 def check_available_attributes(para_list,product):
-	available_list = set()
-
+	available_list = set()		
+	
 	attribute_list = Attribute.objects.filter(id__in=para_list)
 	
 	

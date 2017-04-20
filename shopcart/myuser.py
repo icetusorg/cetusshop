@@ -295,9 +295,10 @@ def address(request,method,id=''):
 		address_id = request.POST.get('address_id','')
 		logger.debug('The address id is %s.' % (address_id))
 		#用途的拼装方法
-		useage = request.POST['first_name'] + ' ' + request.POST['last_name'] + '@' + request.POST['city']
+		#useage = request.POST['first_name'] + ' ' + request.POST['last_name'] + '@' + request.POST['city']
+		#useage = request.POST['first_name'] + ' ' + request.POST['last_name'] + '@' + request.POST['tel']
 		
-		#20160525,倪肖勇加入地址数量控制,有一个系统参数 common_user_address_limit,用来控制普通用户的地址数量，如果参数没有设置，默认5条
+		#20160525,考拉加入地址数量控制,有一个系统参数 common_user_address_limit,用来控制普通用户的地址数量，如果参数没有设置，默认5条
 		address_count = Address.objects.filter(user=request.user).count()
 		logger.debug('The address count of this user is:%s' % (address_count))
 		limit = 5
@@ -326,8 +327,9 @@ def address(request,method,id=''):
 					return JsonResponse(result_dict)				
 			form = address_form(request.POST,instance=address)
 			if form.is_valid():
-				address.useage = useage
-				address.save()				
+				form.save()
+				#address.useage = useage
+				#address.save()				
 				result = True
 				message=_('Address successfully saved.')
 			else:

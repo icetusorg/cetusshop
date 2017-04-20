@@ -626,7 +626,7 @@ $("#select_address_id").change(function(e){
 $.updateAddressForm = function(address_id){
 	//获取地址的详细信息
 	var url = "/user/address/detail/";
-	
+	console.log('Reset address.');
 	if (address_id == ""){
 		//清空下面的列表
 		//$("#address-form")[0].reset(); 
@@ -638,7 +638,9 @@ $.updateAddressForm = function(address_id){
 			.removeAttr('checked')  
 			.removeAttr('selected'); 
 	}else{
+		console.log('Set address detail...');
 		url = url + address_id;
+		console.log('url:' + url);
 		$.ajax({
 			beforeSend: function(xhr, settings) {
 				console.log("Start to set csrftoken.......");
@@ -657,7 +659,7 @@ $.updateAddressForm = function(address_id){
 			},
 			success: function(data) {
 				if(data.success==true){
-					for (key in data.address){
+					for (var key in data.address){
 						$("#id_" + key).val(data.address[key]); //页面上input必须命名成 "id_字段"的形式
 					}
 				}

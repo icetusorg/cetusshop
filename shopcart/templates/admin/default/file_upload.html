@@ -9,7 +9,7 @@
 {%if result_message%}
 <div id="result_message_div">
 	{{result_message}}
-	<a href="#" class="btn primary file_uploaded">确定</a>
+	<a href="#" data-extra-info="{{result_extra}}" class="btn primary file_uploaded">确定</a>
 </div>
 {%else%}
 <div id="file_upload_div">
@@ -108,6 +108,7 @@
 				</div>
 			</div>
 		</div>
+		<input type="hidden" name="extra_info" value="{{extra_info|default:''}}" />
 		<button type="submit" class="btn btn-primary btn-popup btn-popup-submit">上传文件</button>
 	</form>
 </div>
@@ -121,7 +122,9 @@
 		$(".file_uploaded").click(function(event){
 			event.preventDefault();
 			//刷新列表页
-			reload_picture_list();
+			var extra = $(this).data("extra-info");
+			//console.log('extra_info:' + extra.img_id);
+			reload_picture_list(extra);
 			location.href = "{{action_url}}";
 		});
 		
@@ -132,9 +135,9 @@
 		});
 	});
 	
-	function reload_picture_list(){
+	function reload_picture_list(extra){
 		window.parent.document.getElementById("picture_album_iframe").contentWindow.reload_myself();
-		window.parent.reload_picture_list();
+		window.parent.reload_picture_list(extra);
 	};
 	</script>
 {% endblock %}

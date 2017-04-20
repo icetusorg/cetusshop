@@ -7,6 +7,7 @@ from django.http import Http404,HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.template.response import TemplateResponse
 from django.contrib.admin.views.decorators import staff_member_required
+import json
 import logging
 # Get an instance of a logger
 logger = logging.getLogger('icetus.shopcart')
@@ -89,15 +90,22 @@ def file_upload(request,item_type,item_id):
 	
 	if request.method == 'GET':
 		ctx['item_type'] = item_type
+		ctx['extra_info'] = request.GET.get('extra-info')
 		return TemplateResponse(request,System_Config.get_template_name('admin') + '/file_upload.html',ctx)
 	else:
 		ctx['result_message'] = '文件上传成功'
+		
+		
+		result_extra = {}
+		ctx['result_extra'] = json.dumps(result_extra)
+		
 		manual_name = request.POST.get('manual_name','noname')	
 		same_name_handle = request.POST.get('same_name_handle','reject')
 		alt_value = request.POST.get('alt_value','')
 		filename_type = request.POST.get('filename_type','random')
 		href = request.POST.get('href','')
 		sort = request.POST.get('sort','0')
+		extra_info = request.POST.get('extra_info','')
 	
 		if item_type == 'product' or item_type == 'product_album':
 			try:
@@ -129,8 +137,12 @@ def file_upload(request,item_type,item_id):
 					item.image = pi.image
 					item.thumb = pi.thumb
 					item.save()
+					
+				result_extra['img_id'] = pi.id	
 			else:
 				ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id,alt_value=alt_value,file_name=real_name,thumb_name = thumb_name,sort=sort,path=file_path)
+				
+				result_extra['img_id'] = ai.id
 		elif item_type == 'article':
 			try:
 				item = Article.objects.get(id=item_id)
@@ -154,7 +166,7 @@ def file_upload(request,item_type,item_id):
 				item.image = ai.image
 				item.thumb = ai.thumb
 				item.save()
-			
+			result_extra['img_id'] = ai.id
 			logger.debug('ai success!!!')
 			
 		elif item_type == 'attribute':
@@ -172,6 +184,7 @@ def file_upload(request,item_type,item_id):
 			file_path = filenames['real_path']
 			
 			ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id,alt_value=alt_value,file_name=real_name,thumb_name = thumb_name,sort=sort,path=file_path)
+			result_extra['img_id'] = ai.id
 			logger.info('Attribute_Group image upload success')
 		elif item_type == 'slider':
 			try:
@@ -188,6 +201,7 @@ def file_upload(request,item_type,item_id):
 			file_path = filenames['real_path']
 			
 			ai = Album.objects.create(image=filenames['image_url'],thumb=filenames['thumb_url'],item_type=item_type,item_id=item.id,alt_value=alt_value,href=href,file_name=real_name,thumb_name = thumb_name,sort=sort,path=file_path)
+			result_extra['img_id'] = ai.id
 			logger.info('Slider image upload success')	
 		
 		else:
@@ -205,6 +219,9 @@ def file_upload(request,item_type,item_id):
 		if 'return_url' in request.POST:
 			return_url = request.POST.get('return_url')
 			return redirect(return_url)
+			
+		result_extra['extra_info'] = extra_info	
+		ctx['result_extra'] = json.dumps(result_extra)
 		return TemplateResponse(request,System_Config.get_template_name('admin') + '/file_upload.html',ctx)
 		
 		

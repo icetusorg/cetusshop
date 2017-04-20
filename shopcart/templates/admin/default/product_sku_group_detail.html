@@ -95,7 +95,7 @@
 										<td><img id="img_{{sku.id}}" src="{{sku.thumb}}" alt=""></td>
 										<td><input type="text" name="position" value="{{sku.position}}"></td>
 										<td><input type="hidden" name="attribute_id" value="{{sku.id}}" />
-										<a href="#" class="sku-item-save-btn" data-id="{{sku.id}}">保存</a>  <a href="#" data-type="attribute" data-trigger-name="sku_item" data-sku-id="{{sku.id}}"  data-id="{{sku_group.id}}" class="cd-popup-trigger cd-popup-trigger2">上传</a> <a href="#" data-id="{{sku.id}}" class="sku-item-delete ">删除</a> </td>
+										<a href="#" class="sku-item-save-btn" data-id="{{sku.id}}">保存</a>  <a href="#" data-type="attribute" data-trigger-name="sku_item" data-sku-id="{{sku.id}}"  data-id="{{sku_group.id}}" data-extra-info="{{sku.id}}" class="cd-popup-trigger cd-popup-trigger2">上传</a> <a href="#" data-id="{{sku.id}}" class="sku-item-delete ">删除</a> </td>
 									</form>
 								</tr>
 							{%endfor%}
@@ -109,7 +109,7 @@
 									<td>
 										<input type="hidden" name="attribute_id" value="" />
 										<input type="hidden" name="group_id" value="{{sku_group.id}}" />
-										<a href="#" class="sku-item-save-btn" data-id="createnew">保存</a> <a href="#" data-type="attribute" data-trigger-name="sku_item"  data-id="" class="cd-popup-trigger cd-popup-trigger2">上传</a>
+										<a href="#" class="sku-item-save-btn" data-id="createnew">保存</a> <a href="#" data-type="attribute" data-trigger-name="sku_item"  data-id=""  class="cd-popup-trigger cd-popup-trigger2">上传</a>
 									</td>
 								</form>
 							</tr>
@@ -132,8 +132,38 @@
 	{% load staticfiles %}
 	<script src="{% static 'admin/default/js/upload.1.0.2.js' %}" type="text/javascript"></script>
 	<script>
-	function reload_picture_list(){
-		//无需处理
+	function reload_picture_list(extra){
+		//console.log("extra info : " + extra)
+		if (extra!=null){
+			console.log("imgid:" + extra.img_id);
+			console.log("skuid:"+extra.extra_info);
+			var sku_id = extra.extra_info;
+			var id = extra.img_id;
+			
+			
+			var method = "set_sku";
+			var url = "/admin/product-sku-item-set-image/";
+			
+			var postdata = {"sku_id":sku_id,"picture_id":id,"method":method};
+			$.ajax({
+				cache: false,
+				type: "POST",
+				url:url,
+				data:postdata,
+				async: false,
+				error: function(request) {
+					alert("System error");
+				},
+				success: function(data) {
+					if(data.success==true){
+						$("#img_"+sku_id).attr("src",data.thumb);
+						$(".cd-popup").removeClass("is-visible");
+					}			
+				}
+			});
+			
+		}
+		
 	};
 	
 	function album_dblclick_callback(id){

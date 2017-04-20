@@ -38,7 +38,14 @@ jQuery(document).ready(function($){
 			$("#album_trigger_sku_id").val("");
 		}
 		
-		$("#file_upload_iframe").attr("src",'/admin/file-upload/' + type +'/' + id + '/');
+		var extra_info = $(this).data("extra-info");
+		console.log('pop extra-info:' + extra_info);
+		var extraurl = "";
+		if (extra_info!=undefined){
+			extraurl = "?extra-info=" + extra_info;
+		}
+		
+		$("#file_upload_iframe").attr("src",'/admin/file-upload/' + type +'/' + id + '/' + extraurl);
 		$("#picture_album_iframe").attr("src",'/admin/file-list/' + type +'/' + id + '/'); 
 		
 		if (which_page != 'NotSet'){

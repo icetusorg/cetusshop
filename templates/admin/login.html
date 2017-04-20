@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 {% load staticfiles %}
 {% load shopcart_extras %}
+{% load i18n admin_static %}
 <html>
 <head>
     <meta charset="UTF-8">
@@ -25,6 +26,14 @@
             <input id="id_password" name="password" type="password" type="text" placeholder="密码">
 			<input type="hidden" name="next" value="{{ next|admin_login_url:'/admin/index/' }}" />
             <button>登陆</button>
+			
+			{% if form.non_field_errors %}
+			{% for error in form.non_field_errors %}
+			<p class="errornote">
+				请输入正确的用户名和密码！
+			</p>
+			{% endfor %}
+			{% endif %}
         </div>
     </form>
 </div>

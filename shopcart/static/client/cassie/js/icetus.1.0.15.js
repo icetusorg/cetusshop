@@ -439,13 +439,13 @@ jQuery("#empty_cart_button").click(function(event) {
  ***  查看购物车明细页面使用的方法开始 ***
  ***/
 function imycartModifyCart(method,cart_id,quantity,triggerControl){
-	url = '/cart/modify';
+	var url = '/cart/modify';
 	var cart = new Object();
 	cart.method = method;
 	cart.cart_id = cart_id;
 	cart.quantity = quantity;
 	
-	extraInfo = new Object();
+	var extraInfo = new Object();
 	extraInfo.method = method;
 	extraInfo.quantity_origin = quantity;
 	extraInfo.cart_id = cart_id;
@@ -453,7 +453,7 @@ function imycartModifyCart(method,cart_id,quantity,triggerControl){
 };
 
 function imycartModifyCartCallback(result,triggerControl,extraInfo){
-	flag = false;
+	var flag = false;
 	if(extraInfo.method=="set"){
 		if(result.success==true){
 			$("#price-" + extraInfo.cart_id).text("$" + result.cart_product_total.toFixed(2));
@@ -895,7 +895,7 @@ jQuery(".product-attribute-item").click(function(){
 
 
 jQuery(document).ready(function(e){
-	item_count = $.cookie('cart_item_type_count')==null ? 0:$.cookie('cart_item_type_count');
+	var item_count = $.cookie('cart_item_type_count')==null ? 0:$.cookie('cart_item_type_count');
 	$(".top-cart-num-link").text(item_count);
 });
 

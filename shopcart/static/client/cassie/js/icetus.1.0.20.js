@@ -532,6 +532,7 @@ jQuery(".check-address-list").on('click','li>a',function(e){
 //地址添加与修改
 jQuery(".btn-address-submit").click(function(){
 	//将按钮设置为不可用
+	console.log('Start to update address...')
 	$(this).attr('disabled',true);
 	
 	//var address_id = $("#select_address_id").val();
@@ -539,6 +540,7 @@ jQuery(".btn-address-submit").click(function(){
 	$form.validate();
 	var flag = $form.isValid();
 	if(!flag){
+		$(this).attr('disabled',false);
 		return;
 	}
 	//alert(flag);
@@ -867,7 +869,15 @@ jQuery(".product-attribute-item").click(function(){
 						$(".attr-img").addClass("sku-inavailable");
 						
 						var id_and_type = result.available_set;
-						if($.trim(id_and_type)!=""){
+						
+						if (id_and_type == "all_available"){
+							//全部可选
+							$(".attr-text").removeClass("sku-text-inavailable");
+							$(".attr-text").addClass("sku-text-available");
+
+							$(".attr-img").removeClass("sku-inavailable");
+							$(".attr-img").addClass("sku-available");
+						}else if($.trim(id_and_type)!=""){
 							var id_list = String(id_and_type).split(",");
 							$.each(id_list,function(index,id){
 								var tmp = id.split("|")

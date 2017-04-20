@@ -348,7 +348,7 @@
 								<td><img id="img_{{pa.id}}" src="{{pa.image.thumb}}" alt=""></td>
 								<td>
 									
-									<button type="button" data-type="product" data-trigger-name="sku" data-id="{{product.id}}" data-sku-id="{{pa.id}}" class="btn btn-primary cd-popup-trigger">上传</button>
+									<button type="button" data-type="product" data-trigger-name="sku" data-id="{{product.id}}" data-extra-info="{{pa.id}}" data-sku-id="{{pa.id}}" class="btn btn-primary cd-popup-trigger">上传</button>
 									
 								</td>
 								<td>
@@ -461,41 +461,68 @@
 			filebrowserUploadUrl: '{{upload_url}}'
 		});		
 	});
-	function reload_picture_list(){
+	function reload_picture_list(extra){
 			//从服务器查询图片列表
+		if (extra!=null && extra.extra_info!=null && extra.extra_info!=""){
+			console.log("skuid:"+extra.extra_info);
+			var sku_id = extra.extra_info;
+			var id = extra.img_id;
 			
-		var url = "/product/get-product-images/main/";
-		var postdata = {"id":{{product.id|default:"0"}}};
+			var url = "/admin/product-set-image/";
 			
-		$.ajax({
-			cache: false,
-			type: "POST",
-			url:url,
-			data:postdata,
-			async: false,
-			error: function(request) {
-				alert("System error");
-			},
-			success: function(data) {
-				if(data.success==true){
-					//逐个插入图片
-					var tmpHtml = "";
-					$.each( data.image_list, function( key, val ) {
-						//console.log( key, val, this );
-						console.log(this.image);
-						tmpHtml = tmpHtml
-						+ '<div class="images">'
-						+	'<a href="' + this.image + '" target="_blank"><img src="' + this.thumb + '" alt="' + this.alt + '"></a>'
-						+	'<div class="image-operaion">'
-						+		'<a href="#" class="set-picture-attr" data-method="set_main" data-id="' + this.id + '" data-item-id="'+this.product_id+'" data-image-type="product">设为首图 </a> | '
-						+		'<a href="#" class="set-picture-attr" data-method="delete" data-id="' + this.id + '" data-item-id="'+this.product_id+'" data-image-type="product">删除 </a> '
-						+	'</div>'
-						+ '</div>';
-					});
-					$("#product_main_picture_show").html(tmpHtml);
+			var postdata = {"sku_id":sku_id,"picture_id":id,"item_id":{{product.id|default:"0"}},"method":"set_sku"};
+			$.ajax({
+				cache: false,
+				type: "POST",
+				url:url,
+				data:postdata,
+				async: false,
+				error: function(request) {
+					alert("System error");
+				},
+				success: function(data) {
+					if(data.success==true){
+						$("#img_"+sku_id).attr("src",data.thumb);
+						$(".cd-popup").removeClass("is-visible");
+					}			
 				}
-			}
-		});
+			});
+			
+			
+		}else{
+			var url = "/product/get-product-images/main/";
+			var postdata = {"id":{{product.id|default:"0"}}};
+				
+			$.ajax({
+				cache: false,
+				type: "POST",
+				url:url,
+				data:postdata,
+				async: false,
+				error: function(request) {
+					alert("System error");
+				},
+				success: function(data) {
+					if(data.success==true){
+						//逐个插入图片
+						var tmpHtml = "";
+						$.each( data.image_list, function( key, val ) {
+							//console.log( key, val, this );
+							console.log(this.image);
+							tmpHtml = tmpHtml
+							+ '<div class="images">'
+							+	'<a href="' + this.image + '" target="_blank"><img src="' + this.thumb + '" alt="' + this.alt + '"></a>'
+							+	'<div class="image-operaion">'
+							+		'<a href="#" class="set-picture-attr" data-method="set_main" data-id="' + this.id + '" data-item-id="'+this.product_id+'" data-image-type="product">设为首图 </a> | '
+							+		'<a href="#" class="set-picture-attr" data-method="delete" data-id="' + this.id + '" data-item-id="'+this.product_id+'" data-image-type="product">删除 </a> '
+							+	'</div>'
+							+ '</div>';
+						});
+						$("#product_main_picture_show").html(tmpHtml);
+					}
+				}
+			});
+		}
 	};
 	
 	function reload_related_product_list(){

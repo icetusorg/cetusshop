@@ -63,7 +63,7 @@
 								<tr id="message_list">
 									<td><input id="checkbox_{{user.id}}" type="checkbox" name="is_oper" value="{{user.id}}"></td>
 									<td>{{user.email}}</td>
-									<td>普通用户</td>
+									<td>{{user.is_staff|yesno:"管理用户,普通用户"}}</td>
 									<td>{{user.last_login|date:"Y-m-d H:i:s"}}</td>
 									<td>{{user.create_time|date:"Y-m-d H:i:s"}}</td>
 									<td>{{user.is_active|yesno:"正常,冻结,"}}</td>

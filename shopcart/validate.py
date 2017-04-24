@@ -1,5 +1,6 @@
 #coding=utf-8
 from django.shortcuts import render,redirect,render_to_response
+from django.views.decorators.csrf import csrf_exempt
 from shopcart.models import MyUser
 from django.contrib import auth
 from django.core.context_processors import csrf
@@ -13,6 +14,8 @@ import logging
 # Get an instance of a logger
 logger = logging.getLogger('icetus.shopcart')
 # Create your views here.
+
+@csrf_exempt
 def ajax_validate_user(request,exits):
 	result_dict = {}
 

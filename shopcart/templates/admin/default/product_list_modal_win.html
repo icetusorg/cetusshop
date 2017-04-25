@@ -16,6 +16,13 @@
             <div class="col-md-12">
                 <div>
                     <form>
+						{%if type == 'push_product'%}
+							<input type="hidden" name="push_id" value="{{host_id}}" />
+						{%endif%}
+						{%if type == 'related_product'%}
+							<input type="hidden" name="host_id" value="{{host_id}}" />
+						{%endif%}
+						
                          <div class="btn-group normal product-button-search">
                              <button type="button" class="btn btn-default inputBtn"><span
                                     class="selected-text">{{query_item|is_equal:"item_name"|yesno:"产品名称,产品编号,"}}</span></button>

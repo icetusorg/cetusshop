@@ -370,6 +370,12 @@ def push_product_list(request):
 		push_id = request.GET.get('push_id','')
 		ctx['host_id'] = push_id
 		ctx['type'] = 'push_product'
+		
+		#加载分类树信息
+		from shopcart.category import get_all_categorys
+		cat_list = get_all_categorys()
+		ctx['cat_list'] = cat_list
+		
 		ctx = get_product_list(request,ctx)
 		return TemplateResponse(request,System_Config.get_template_name('admin') + '/product_list_modal_win.html',ctx)
 		

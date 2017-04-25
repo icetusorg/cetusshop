@@ -129,7 +129,7 @@ def view_blog_list(request,category_id=None):
 			else:
 				article_list = Article.objects.filter(category=Article.ARTICLE_CATEGORY_BLOG).order_by(request.GET['sort_by'])
 		else:
-			article_list = Article.objects.filter(category=Article.ARTICLE_CATEGORY_BLOG)
+			article_list = Article.objects.filter(category=Article.ARTICLE_CATEGORY_BLOG).order_by('-sort_order')
 			
 			
 		#按分类筛选

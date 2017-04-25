@@ -175,7 +175,7 @@
 			//从服务器查询图片列表
 			
 		var url = "/article/get-article-images/";
-		var postdata = {"id":{{article.id}}};
+		var postdata = {"id":{{article.id|default:"0"}}};
 			
 		$.ajax({
 			cache: false,

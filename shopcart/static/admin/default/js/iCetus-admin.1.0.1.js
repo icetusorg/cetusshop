@@ -1653,6 +1653,62 @@ jQuery(".product-batch-oper").click(function(e){
 	});
 });
 
+//删除留言
+jQuery(".product-batch-delete").click(function(e){
+	var url = "/admin/product-oper/";
+	
+	var $myform = $("<form>",{
+					id:'product_delete_form',
+					});
+	var $input = $("<input>",{
+					name:'method',
+					value:'delete',
+					}).appendTo($myform);
+					
+	
+	//判断来自单条删除的还是批量的删除 
+	var product_id = $(this).data("product-id");
+	if("batch"==product_id){
+		//批量的
+		$("#main-content-table").find("input[type='checkbox']:checked").each(function(){
+			var $input = $("<input>",{
+							name:'is_oper',
+							value:$(this).val(),
+							}).appendTo($myform);
+		});
+		
+	}else{
+		var $input = $("<input>",{
+					name:'is_oper',
+					value:product_id,
+					}).appendTo($myform);
+	}
+    
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$myform.serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			if(data.success==true){
+				$('#myModal').on('hidden.bs.modal', function (e) {
+					location.reload(true); 
+				})
+			}
+			$("#myModal").modal('toggle');
+		}
+	});
+	
+});
+
+
+
+
 
 
 jQuery("#product-basic-info-submit-btn").click(function(e){

@@ -132,7 +132,7 @@ def list(request):
 	ctx['page_name'] = '幻灯片管理'
 
 	if request.method == 'GET':
-		slider_list = Slider.objects.order_by('-update_time')
+		slider_list = Slider.objects.order_by('-create_time')
 	
 		page_size = get_page_size()
 		slider_list, page_range = my_pagination(request=request, queryset=slider_list,display_amount=page_size)	

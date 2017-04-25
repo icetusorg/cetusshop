@@ -62,8 +62,8 @@
                 <div class="item "><label>关键词：</label>
                     <input type="text" class="form-control" value="{{product.keywords}}" name="keywords">
                 </div>
-                <div class="item  "><label>简要描述：</label>
-                    <textarea type="text" class="form-control" name="short_desc">{{product.short_desc}}</textarea>
+                <div class="item  product-add-form-control-item"><label>简要描述：</label>
+                    <textarea type="text" class="form-control product-add-form-control" name="short_desc">{{product.short_desc}}</textarea>
                 </div>
                 <div class="item add-product-tree">
                     <label>分类：（<a href="/admin/category-list/" target='_blank'>新增分类</a>）</label>
@@ -285,16 +285,7 @@
 
                 </div>
                 <button type="button" class="btn btn-primary add-attribute-group">添加</button>
-                <button type="button" class="btn btn-primary make-sku-list">生成SKU</button>
-                <div class="message">
-                    <span>?</span>
-                    <div class="ico">
-                        <div class="text">
-                            <h4>描述</h4>
-                            <p>先下拉选择SKU组后，点“添加”，然后勾选想要的SKU属性，点击“生成SKU”方能生效。</p>
-                        </div>
-                    </div>
-                </div>
+
             </div>
             <div class="item item-hint product-choose-attribute-p">
                 <p>请添加完毕所有相关SKU组之后，点击“生成SKU”按钮</p>
@@ -320,6 +311,18 @@
 				{% endfor %}
 				</div>
 			</form>
+			<div class="product-choose-attribute product-choose-attribute-add-sku">
+				<button type="button" class="btn btn-primary make-sku-list">生成SKU</button>
+				<div class="message">
+					<span>?</span>
+					<div class="ico">
+						<div class="text">
+							<h4>描述</h4>
+							<p>先下拉选择SKU组后，点“添加”，然后勾选想要的SKU属性，点击“生成SKU”方能生效。</p>
+						</div>
+					</div>
+				</div>
+			</div>
 			<form id="sku_attribute_form">
 				<div class="item product-choose-sku-title2 product-choose-sku-title">
 					<h2>SKU列表</h2>
@@ -333,8 +336,8 @@
 							<th>产品编号</th>
 							<th>库存</th>
 							<th>图片</th>
-							<th></th>
 							<th>操作</th>
+							<th></th>
 						</tr>
 						{% for pa in product.attributes.all %}
 							<tr>

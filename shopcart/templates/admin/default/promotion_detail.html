@@ -59,11 +59,21 @@
                 </div>
             </div>
         </div>
-        <div class="item promotion-code-time">
+        <div class="item promotion-code-time promotion-code-time-message">
             <label>有效期：</label>
             <input type="text" name="valid_date_begin" class="form-control" value="{{promotion.valid_date_begin|date:"Y-m-d H:i:s"}}"> 
 			<span>至</span>
-			<input type="text" name="valid_date_end" class="form-control" value="{{promotion.valid_date_end|date:"Y-m-d H:i:s"}}"> 
+			<input type="text" name="valid_date_end" class="form-control" value="{{promotion.valid_date_end|date:"Y-m-d H:i:s"}}">
+
+            <div class="message">
+                <span>?</span>
+                <div class="ico">
+                    <div class="text">
+                        <h4>描述</h4>
+                        <p>日期格式为：YYYY-MM-DD HH:MM:SS 如 2017-03-10 17:30:00，时间为服务器的时间为准</p>
+                    </div>
+                </div>
+            </div>
         </div>
 		
 

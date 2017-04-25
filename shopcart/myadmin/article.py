@@ -350,7 +350,8 @@ def list_view(request):
 		logger.debug('query_busi_category : %s' % query_busi_category)
 			
 		
-		all = Article.objects.all().order_by('-update_time')
+		#all = Article.objects.all().order_by('-update_time')
+		all = Article.objects.all().order_by('-sort_order')
 		if type:
 			all = all.filter(category=type)
 				

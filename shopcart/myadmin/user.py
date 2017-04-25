@@ -41,7 +41,8 @@ def user_list(request):
 
 	if request.method == 'GET':
 		#user_list = MyUser.objects.filter(is_staff=False).filter(is_superuser=False).order_by('-update_time')
-		user_list = MyUser.objects.order_by('-update_time')
+		#user_list = MyUser.objects.order_by('-update_time')
+		user_list = MyUser.objects.order_by('-create_time')
 		
 		item_value = request.GET.get('item_value','')
 		

@@ -59,7 +59,7 @@ def list_view(request):
 	ctx['page_name'] = '订单管理'
 	
 	if request.method == 'GET':
-		inquiry_list = Inquiry.objects.all().order_by('-update_time')
+		inquiry_list = Inquiry.objects.all().order_by('-create_time')
 		
 		qry_field = request.GET.get('qry_field','')
 		qry_value = request.GET.get('qry_value','')

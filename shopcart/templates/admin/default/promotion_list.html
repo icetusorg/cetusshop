@@ -39,7 +39,7 @@
                             <td>{{promotion.code}}</td>
                             <td>{{promotion.discount_type|promotion_type:"zh_CN"}}</td>
                             <td>{{promotion.valid_date_begin|date:"Y-m-d H:i:s"}}至{{promotion.valid_date_end|date:"Y-m-d H:i:s"}}</td>
-                            <td><a class="deleteCategory message-delete promotion-batch-oper" data-method="delete" data-id="{{promotion.id}}">删除</a> | <a href="/admin/promotion-edit/?id={{promotion.id}}">修改</a></td>
+                            <td><a href="/admin/promotion-edit/?id={{promotion.id}}">编辑</a> | <a class="deleteCategory message-delete promotion-batch-oper" data-method="delete" data-id="{{promotion.id}}">删除</a></td>
                         </tr>
 						{%endfor%}
                         </tbody>

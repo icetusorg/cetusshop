@@ -108,7 +108,7 @@
 									</td>
 									<td>{{product.update_time|date:"Y-m-d H:i:s"}}</td>
 									<td>{{product.is_publish|yesno:"是,否,未定义"}}</td>
-									<td><a href="{{product.get_url}}" target="_blank">预览</a> | <a href="/admin/product-edit/?id={{product.id}}">编辑</a></td>
+									<td><a href="{{product.get_url}}" target="_blank">预览</a> | <a href="/admin/product-edit/?id={{product.id}}">编辑</a> | <a class="message-delete" href="">删除</a></td>
 
 								</tr>
 							{% endfor %}

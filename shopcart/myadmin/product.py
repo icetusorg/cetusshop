@@ -1133,7 +1133,8 @@ def get_product_list(request,ctx,exclude_id = None):
 	elif query_item == 'item_number':
 		product_list = Product.objects.filter(Q(item_number__icontains=item_value))
 	else:
-		product_list = Product.objects.all().order_by('update_time')
+		#product_list = Product.objects.all().order_by('update_time')
+		product_list = Product.objects.all().order_by('-sort_order')
 	#icontains是大小写不敏感的，contains是大小写敏感的
 
 	cat = None
@@ -1145,9 +1146,11 @@ def get_product_list(request,ctx,exclude_id = None):
 		logger.info('Can not find category %s .\n Error Message: %s' % (query_category,err))
 	
 	if cat:
-		product_list = product_list.filter(categorys__id=query_category).order_by('update_time').reverse()
+		#product_list = product_list.filter(categorys__id=query_category).order_by('update_time').reverse()
+		product_list = product_list.filter(categorys__id=query_category).order_by('-sort_order')
 	else:
-		product_list = product_list.order_by('update_time').reverse()
+		#product_list = product_list.order_by('update_time').reverse()
+		product_list = product_list.order_by('-sort_order')
 	
 	logger.debug('exclude_id:%s' % exclude_id)
 	if exclude_id:

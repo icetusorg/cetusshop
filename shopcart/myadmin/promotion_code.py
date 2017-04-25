@@ -34,7 +34,7 @@ def list(request):
 	ctx['page_name'] = '优惠码管理'
 	
 	if request.method == 'GET':
-		promotion_list = Promotion.objects.all().order_by('-update_time')
+		promotion_list = Promotion.objects.all().order_by('-create_time')
 
 
 		count = promotion_list.count()

@@ -20,7 +20,7 @@
                 <div class="box-body">
                     <div class="row">
 						<form id="category_batch_form">
-                        <div class="col-md-12 category">
+                        <div class="col-md-12 category category_list">
                             <ul class="category_title">
                                 <li class="name">选择</li>
                                 <li class="view">排序</li>
@@ -40,7 +40,7 @@
 									</li>
 									<li class="operate" data="list_{{cat.id}}" data-cat-id="{{cat.id}}"><a class="addChild">添加子分类</a> | <a class="editCategory" href="../category-edit/?id={{cat.id}}">编辑</a><span>|</span><a class="deleteCategory">删除</a></li>
 									<!--"二级分类"-->
-									{% for cat2 in cat.get_childrens%}
+									{% for cat2 in cat.childrens.all%}
 										<ul class="category_02" id="list_{{cat2.id}}">
 											<li><input type="checkbox" name="selected" value="{{cat2.id}}"></li>
 											<li><input type="text" name="sort_{{cat2.id}}" value="{{cat2.sort_order|default:'0'}}"></li>
@@ -51,7 +51,7 @@
 											<li class="operate" data="list_{{cat2.id}}" data-cat-id="{{cat2.id}}"><a class="addChild">添加子分类</a> | <a class="editCategory" href="../category-edit/?id={{cat2.id}}">编辑</a><span>|</span><a class="deleteCategory">删除</a>
 											</li>
 											<!--"三级分类"-->
-											{% for cat3 in cat2.get_childrens %}
+											{% for cat3 in cat2.childrens.all %}
 											<ul class="category_03" id="list_{{cat3.id}}">
 												<li><input type="checkbox" name="selected" value="{{cat3.id}}"></li>
 												<li><input type="text" name="sort_{{cat3.id}}" value="{{cat3.sort_order|default:'0'}}"></li>
@@ -62,7 +62,7 @@
 												<li class="operate" data="list_{{cat3.id}}" data-cat-id="{{cat3.id}}"><a class="addChild">添加子分类</a> | <a class="editCategory" href="../category-edit/?id={{cat3.id}}">编辑</a><span>|</span><a class="deleteCategory">删除</a>
 												</li>
 												<!--"四级分类"-->
-												{% for cat4 in cat3.get_childrens %}
+												{% for cat4 in cat3.childrens.all %}
 												<ul class="category_04" id="list_{{cat4.id}}">
 													<li><input type="checkbox" name="selected" value="{{cat4.id}}"></li>
 													<li><input type="text" name="sort_{{cat4.id}}" value="{{cat4.sort_order|default:'0'}}"></li>
@@ -81,8 +81,8 @@
 							{% endfor %}	
                         </div>
 						</form>
-                        <div class="xy-box-select">
-                            <a href="/admin/category-edit/" class="btn btn-primary">新增</a>
+                        <div class="xy-box-select category-xy-box-select">
+                            <a href="/admin/category-edit/" class="btn btn-primary btn-primary-add">新增</a>
                             <button type="button" class="btn btn-add category-batch-oper" data-method="set_order">排序</button>
                         </div>
                     </div>
@@ -97,7 +97,7 @@
 {% block scripts %}
 	{% load staticfiles %}
 	<script>
-    var maxCategoryNum = 4; //最多层级数4
+    var maxCategoryNum = 10; //最多层级数4
 
     //分类层级点击展开，收回效果
     $(".categoryIco").on("click", function () {
@@ -115,41 +115,34 @@
             $("#" + idName + " .category_0" + childNum).show();    //显示直接子级
         }
     })
-
+	//点击添加分类
+	$(".btn-add").on("click", function () {
+		$(".addInputList").remove();
+		var listId = $(this).parent().attr("data");
+		var parent_id = $(this).parent().data("cat-id");
+		var level = $("#" + listId).find(".categoryIco").attr("data_level");
+		level = parseInt(level) + 1;
+		var insertHtml = '<ul class="addInputList category_01" style="display:block;">' +
+				'<li><input type="checkbox" name="selected"></li>' +
+				'<li><input type="text" value="0"></li>' +
+				'<li class="name"><span class="categoryIco active"></span>' +
+				'<input type="text" class="form-control form-control-hidden" id="categoryCode" placeholder="分类代码"> <input type="text" class="form-control" id="categoryName" placeholder="分类名称"></li>' +
+				'<li class="operate"><a id="categorySubmit" class="addBtn">确定</a><a class="deleteInput">删除</a></li></ul>';
+		$(".category").append(insertHtml);
+		$("#categoryName").focus();
+		$(".deleteInput").click(function () {
+			$(".addInputList").remove();
+		});
+		$("#categorySubmit").click(function () {
+			var name = $("#categoryName").val();
+			var code = $("#categoryCode").val();
+			addCategory(level, listId, name, code,parent_id);
+		})
+	});
     //点击添加子分类
     //$(".addChild").on("click", addChildFunc);
 	
 	$(".category-list").on("click",".addChild",addChildFunc);
-	
-	
-	//删除分类
-	
-    $(".category-list").on("click",".deleteCategory",function(){
-        var listId = $(this).parent().attr("data");
-		var cat_id = $(this).parent().data("cat-id");
-		var url = "/admin/category-detele/" + cat_id + "/";
-		$.ajax({
-				cache: false,
-				type: "POST",
-				url:url,
-				data:null,
-				async: false,
-				error: function(request) {
-					alert("System error");
-				},
-				success: function(data) {
-					console.info('enter...');
-				
-					$("#infoMessage").html(data.message);
-					if(data.success==true){
-						$("#"+listId).remove();
-					}
-					$("#myModal").modal('toggle');
-				}
-			});
-    });
-	
-	
 	
 	function addChildFunc() {
         $(".addInputList").remove();
@@ -157,7 +150,6 @@
 		var parent_id = $(this).parent().data("cat-id");
         var level = $("#" + listId).find(".categoryIco").attr("data_level");
         level = parseInt(level) + 1;
-		console.log("层数：" + level);
 		if (level > maxCategoryNum){
 			alert('最多只能添加' + maxCategoryNum + "层");
 			return false;
@@ -242,5 +234,32 @@
 			});
         }
     };
+
+
+	//删除分类
+    $(".deleteCategory").on("click",function(){
+        var listId = $(this).parent().attr("data");
+		var cat_id = $(this).parent().data("cat-id");
+		var url = "/admin/category-detele/" + cat_id + "/";
+		$.ajax({
+				cache: false,
+				type: "POST",
+				url:url,
+				data:null,
+				async: false,
+				error: function(request) {
+					alert("System error");
+				},
+				success: function(data) {
+					console.info('enter...');
+				
+					$("#infoMessage").html(data.message);
+					if(data.success==true){
+						$("#"+listId).remove();
+					}
+					$("#myModal").modal('toggle');
+				}
+			});
+    })
 	</script>
 {% endblock %}

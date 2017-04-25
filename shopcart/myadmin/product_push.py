@@ -34,7 +34,7 @@ def list(request):
 	ctx['page_name'] = '商品推荐管理'
 	
 	if request.method == 'GET':
-		push_list = ProductPushGroup.objects.all().order_by('-update_time')
+		push_list = ProductPushGroup.objects.all().order_by('-create_time')
 		
 		logger.debug('push_list:%s' % push_list)
 

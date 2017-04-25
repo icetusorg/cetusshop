@@ -62,8 +62,10 @@ def list_view(request):
 	ctx['page_name'] = '自定义URL管理'
 	
 	if request.method == 'GET':
-		url_list = CustomizeURL.objects.all().order_by('-update_time')
-		article_list = Article.objects.exclude(category=Article.ARTICLE_CATEGORY_BLOG).order_by('-update_time')
+		#url_list = CustomizeURL.objects.all().order_by('-update_time')
+		url_list = CustomizeURL.objects.all().order_by('-create_time')
+		#article_list = Article.objects.exclude(category=Article.ARTICLE_CATEGORY_BLOG).order_by('-update_time')
+		article_list = Article.objects.exclude(category=Article.ARTICLE_CATEGORY_BLOG).order_by('-sort_order')
 
 		#count = url_list.count()
 		#page_size = get_page_size()

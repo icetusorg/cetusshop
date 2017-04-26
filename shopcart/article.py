@@ -105,12 +105,17 @@ def get_article_images(request):
 	else:
 		raise Http404		
 		
+def view_blog_list_with_tdk(request,tdk=None):
+	return view_blog_list(request,None,tdk)
 		
-def view_blog_list(request,category_id=None):
+def view_blog_list(request,category_id=None,tdk=None):
 	ctx = {}
 	ctx['system_para'] = get_system_parameters()
 	ctx['menu_products'] = get_menu_products()
 	ctx['page_name'] = 'Blog'
+	
+	if tdk:
+		customize_tdk(ctx,tdk)
 	
 	try:
 		blog_list_page_size = System_Config.objects.get('blog_list_page_size')

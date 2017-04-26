@@ -121,6 +121,17 @@ USE_TZ = True
 
 AUTH_USER_MODEL = 'shopcart.MyUser'
 
+SOCIALOAUTH_SITES = (
+    ('wechat', 'socialoauth.sites.wechat.Wechat', '微信',
+        {
+          'redirect_uri': 'http://www.lightstart.cn/account/oauth/wechat',
+          'client_id': 'YOUR ID',
+          'client_secret': 'YOUR SECRET',
+        }
+    ),
+)
+
+
 
 #加入这一段的时候，需要注意下面指定的日志目录，必须先建好，不然会报错
 LOGGING = {

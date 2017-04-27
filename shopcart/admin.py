@@ -1,9 +1,14 @@
 from django.contrib import admin
 from django.contrib.auth.models import Permission
 
-from shopcart.models import Product,Order,Order_Products,Category,System_Config,Attribute,Attribute_Group,Article,Email_List,Product_Attribute,Express,ExpressType,Inquiry,Product_Images,Promotion,OrderRemark,MyUser,Email,OrderShippment,CustomizeURL,ArticleBusiCategory,ProductParaGroup,ProductPara,ProductParaDetail,ProductPrice,ClientMenu,Slider,Album,ProductPush,CustomizeVar,ProductPushGroup
+from shopcart.models import Product,Order,Order_Products,Category,System_Config,Attribute,Attribute_Group,Article,Email_List,Product_Attribute,Express,ExpressType,Inquiry,Product_Images,Promotion,OrderRemark,MyUser,Email,OrderShippment,CustomizeURL,ArticleBusiCategory,ProductParaGroup,ProductPara,ProductParaDetail,ProductPrice,ClientMenu,Slider,Album,ProductPush,CustomizeVar,ProductPushGroup,OAuthSite
 
 # Register your models here.
+class OAuthSiteAdmin(admin.ModelAdmin):
+	list_display = ('name','client_id','client_secret','create_time','update_time') 
+admin.site.register(OAuthSite,OAuthSiteAdmin)
+
+
 class CustomizeVarAdmin(admin.ModelAdmin):
 	list_display = ('name','value','desc','create_time','update_time') 
 admin.site.register(CustomizeVar,CustomizeVarAdmin)

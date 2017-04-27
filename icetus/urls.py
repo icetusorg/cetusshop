@@ -20,6 +20,9 @@ from django.conf import settings
 
 urlpatterns = patterns("",
 	url(r'^$', 'shopcart.index.view_index',name='view_index'),
+	url(r'^wx/$', 'shopcart.oauth.views.wechat_check',name='wechat_check'),
+	
+	
 	url(r'^refresh-captcha$', 'shopcart.index.refresh_captcha',name='refresh_captcha'),	
 	url(r'^common/get-menu/$', 'shopcart.index.get_menu',name='common_get_menu'),
 	url(r'^common/get-slider-images/$', 'shopcart.index.get_slider_images',name='common_get_slider_images'),

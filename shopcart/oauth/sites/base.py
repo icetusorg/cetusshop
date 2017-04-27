@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from urllib import urlencode, quote_plus
-import urllib2
 import json
 from functools import wraps
+import requests
 
-from socialoauth.exception import SocialAPIError, SocialSitesConfigError
-from socialoauth import SocialSites
+from shopcart.oauth.exception import SocialAPIError, SocialSitesConfigError
+from shopcart.oauth import SocialSites
+import logging
+logger = logging.getLogger('icetus.shopcart')
 
 HTTP_TIMEOUT = 10
 
@@ -14,7 +15,7 @@ socialsites = SocialSites()
 if not socialsites._configed:
     raise SocialSitesConfigError("SocialSites not configed yet, Do it first!")
 
-
+'''
 def _http_error_handler(func):
 	@wraps(func)
 	def deco(self, *args, **kwargs):
@@ -31,7 +32,7 @@ def _http_error_handler(func):
 		
 		return res
 	return deco
-
+'''
 
 class OAuth2(object):
 	"""Base OAuth2 class, Sub class must define the following settings:
@@ -70,26 +71,36 @@ class OAuth2(object):
 		CLIENT_SECRET
 		"""
 		key = '%s.%s' % (self.__class__.__module__, self.__class__.__name__)
+		logger.debug('key:%s' % key)
 		configs = socialsites.load_config(key)
-		for k, v in configs.iteritems():
+		for k, v in configs.items():
 			setattr(self, k, v)
 
 
-	@_http_error_handler
+	#@_http_error_handler
 	def http_get(self, url, data, parse=True):
-		req = urllib2.Request('%s?%s' % (url, urlencode(data)))
-		self.http_add_header(req)
-		res = urllib2.urlopen(req, timeout=HTTP_TIMEOUT).read()
+		logger.debug('Start to get ...')
+		#req = urllib2.Request('%s?%s' % (url, urlencode(data)))
+		res = requests.get(url,data=data,timeout=HTTP_TIMEOUT)
+		logger.debug('req.url:%s' % res.url)
+		
+		logger.debug('res.json():%s' % res.json())
+		#self.http_add_header(req)
+		#res = urllib2.urlopen(req, timeout=HTTP_TIMEOUT).read()
 		if parse:
 			return json.loads(res)
 		return res
 
 
-	@_http_error_handler
+	#@_http_error_handler
 	def http_post(self, url, data, parse=True):
-		req = urllib2.Request(url, data=urlencode(data))
-		self.http_add_header(req)
-		res = urllib2.urlopen(req, timeout=HTTP_TIMEOUT).read()
+		logger.debug('Start to post ...')
+		res = requests.post(url,data=data,timeout=HTTP_TIMEOUT)
+		logger.debug('req.url:%s' % res.url)
+		logger.debug('res.json():%s' % res.json())
+		#req = urllib2.Request(url, data=urlencode(data))
+		#self.http_add_header(req)
+		#res = urllib2.urlopen(req, timeout=HTTP_TIMEOUT).read()
 		if parse:
 			return json.loads(res)
 		return res
@@ -115,7 +126,7 @@ class OAuth2(object):
 		"""
 
 		url = "%s?client_id=%s&response_type=code&redirect_uri=%s" % (
-			self.AUTHORIZE_URL, self.CLIENT_ID, quote_plus(self.REDIRECT_URI)
+			self.AUTHORIZE_URL, self.CLIENT_ID, self.REDIRECT_URI
 		)
 
 		if getattr(self, 'SCOPE', None) is not None:

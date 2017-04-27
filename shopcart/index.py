@@ -11,9 +11,8 @@ from shopcart.functions.product_util_func import get_menu_products
 from django.http import Http404
 from django.http import HttpResponse,JsonResponse
 from django.template.response import TemplateResponse
-# import the logging library
+
 import logging
-# Get an instance of a logger
 logger = logging.getLogger('icetus.shopcart')
 
 
@@ -25,6 +24,15 @@ def view_index(request,tdk=None):
 	ctx['page_name'] = 'Home'
 	ctx['page_key_words'] = ''
 	ctx['page_description'] = ''
+	
+	
+	from .oauth import SocialSites, SocialAPIError
+	socialsites = SocialSites()
+	
+	s = socialsites.get_site_object_by_class('shopcart.oauth.sites.wechat.Wechat')
+	ctx['oauth'] = s.authorize_url
+	
+	
 	try:
 		cust = CustomizeURL.objects.get(url = 'index.html')
 		

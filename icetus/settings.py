@@ -93,9 +93,9 @@ WSGI_APPLICATION = 'icetus.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'cassie',
-        'USER': 'cassie',
-        'PASSWORD': 'cassie',
+        'NAME': 'icetus_oauth',
+        'USER': 'oauth',
+        'PASSWORD': 'oauth',
         #'HOST':'192.168.137.129',
 		'HOST':'localhost',
 		#'HOST':'www.imycart.com',
@@ -120,17 +120,6 @@ USE_L10N = True
 USE_TZ = True
 
 AUTH_USER_MODEL = 'shopcart.MyUser'
-
-SOCIALOAUTH_SITES = (
-    ('wechat', 'socialoauth.sites.wechat.Wechat', '微信',
-        {
-          'redirect_uri': 'http://www.lightstart.cn/account/oauth/wechat',
-          'client_id': 'YOUR ID',
-          'client_secret': 'YOUR SECRET',
-        }
-    ),
-)
-
 
 
 #加入这一段的时候，需要注意下面指定的日志目录，必须先建好，不然会报错

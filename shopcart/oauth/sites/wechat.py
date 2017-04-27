@@ -1,23 +1,25 @@
 # -*- coding: utf-8 -*-
 
 import json
-from urllib import quote_plus
 
-from socialoauth.sites.base import OAuth2
-from socialoauth.exception import SocialAPIError, SocialSitesConfigError
+
+from shopcart.oauth.sites.base import OAuth2
+from shopcart.oauth.exception import SocialAPIError, SocialSitesConfigError
 
 
 class Wechat(OAuth2):
-	AUTHORIZE_URL = 'https://open.weixin.qq.com/connect/oauth2/authorize'
+	AUTHORIZE_URL = 'https://open.weixin.qq.com/connect/qrconnect'
 	ACCESS_TOKEN_URL = 'https://api.weixin.qq.com/sns/oauth2/access_token'
 	OPENID_URL = 'https://api.weixin.qq.com/sns/userinfo'
 
-	SUPPORTED_SCOPES = ('snsapi_base', 'snsapi_userinfo')
+	SUPPORTED_SCOPES = ('snsapi_base', 'snsapi_userinfo','snsapi_login')
 
 	@property
 	def authorize_url(self):
+		from django.utils.http import urlquote
+		 
 		url = "%s?appid=%s&redirect_uri=%s&response_type=code" % (
-				self.AUTHORIZE_URL, self.CLIENT_ID, quote_plus(self.REDIRECT_URI)
+				self.AUTHORIZE_URL, self.CLIENT_ID, urlquote(self.REDIRECT_URI)
 			)
         
 		if getattr(self, 'SCOPE', None) is not None:

@@ -203,7 +203,7 @@ def query_product_show(request):
 		query_condition = request.GET.get('query','')
 		logger.debug('Query_String is %s ' % query_condition)
 		from django.db.models import Q
-		product_list = Product.objects.filter(Q(name__icontains=query_condition))
+		product_list = Product.objects.filter(Q(name__icontains=query_condition) | Q(item_number=query_condition))
 		#icontains是大小写不敏感的，contains是大小写敏感的
 		
 		

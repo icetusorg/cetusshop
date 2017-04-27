@@ -189,7 +189,7 @@ class Category(models.Model):
 @python_2_unicode_compatible
 class Product(models.Model):
 	item_number = models.CharField(max_length = 100,default='',db_index=True,blank=True,verbose_name='商品编号')
-	name = models.CharField(max_length = 100,default='',verbose_name='商品名称')
+	name = models.CharField(max_length = 100,default='',db_index=True,verbose_name='商品名称')
 	type = models.CharField(max_length = 20,default='B2C',verbose_name='商品类型')
 	click_count = models.IntegerField(default=0,verbose_name='浏览次数')
 	quantity = models.IntegerField(default=0,verbose_name='库存数量')

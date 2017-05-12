@@ -137,23 +137,32 @@ def view_list(request,category_id=None):
 		product_list = None
 		sort_by = None
 		reverse = False
+		
+		if 'direction' in request.GET:
+			direction = request.GET['direction']
+			if 'asc' == direction:
+				reverse = True
+			else:
+				reverse = False
+		
 		if 'sort_by' in request.GET:
 			sort_by = request.GET['sort_by']
-			if 'direction' in request.GET:
-				if 'desc' == request.GET['direction']:
-					logger.debug('desc')
-					product_list = Product.objects.filter(is_publish=True).order_by(request.GET['sort_by'])
-				else:
-					logger.debug('asc')
-					product_list = Product.objects.filter(is_publish=True).order_by(request.GET['sort_by']).reverse()
-				
-				ctx['direction'] = request.GET['direction']
-			else:
+			if not reverse:
+				logger.debug('desc')
 				product_list = Product.objects.filter(is_publish=True).order_by(request.GET['sort_by'])
+			else:
+				logger.debug('asc')
+				product_list = Product.objects.filter(is_publish=True).order_by(request.GET['sort_by']).reverse()
+				
+			ctx['direction'] = request.GET['direction']
 		else:
 			logger.debug("all products")
-			#product_list = Product.objects.filter(is_publish=True).order_by('update_time').reverse()
-			product_list = Product.objects.filter(is_publish=True).order_by('-sort_order')
+			if not reverse:
+				order_by = '-sort_order'
+			else:
+				order_by = 'sort_order'
+			product_list = Product.objects.filter(is_publish=True).order_by(order_by)
+				
 			logger.debug('Products count in product_list : [%s]' % len(product_list))
 		
 		#按分类筛选

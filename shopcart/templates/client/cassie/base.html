@@ -25,6 +25,9 @@
 	<!-- Main Container -->
 	{% block main%}
 	{% endblock %}
+
+	<!-- 加入一段csrftoken -->
+	{% csrf_token %}
 	<!-- Main Container End --> 
 
 	{% include 'client/cassie/modal_win.html' %}

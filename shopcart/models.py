@@ -545,6 +545,29 @@ class Cart_Products(models.Model):
 		#for attr in attr_list:
 		#	ret_str = ret_str + ' [' + attr.group.name + ':' + attr.name + ']'
 			return ret_str
+		
+	def get_picture(self,type='image'):
+		image = ''
+		thumb = ''
+		image = self.product.image
+		thumb = self.product.thumb
+		
+		if self.product_attribute:
+			if self.product_attribute.image:
+				image = self.product_attribute.image.image
+				thumb = self.product_attribute.image.thumb
+		
+		if type == 'image':
+			return image
+		else:
+			return thumb
+		
+	def get_thumb(self):
+		return self.get_picture('thumb')
+		
+	def get_image(self):
+		return self.get_picture('image')
+		
 	
 	def get_product_price(self):
 		price_list = self.product.prices.all()

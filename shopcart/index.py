@@ -4,7 +4,7 @@ from shopcart.models import System_Config,CustomizeURL,ClientMenu,Slider
 from captcha.models import CaptchaStore
 from captcha.helpers import captcha_image_url
 from django.http import HttpResponse
-from shopcart.utils import get_system_parameters
+from shopcart.utils import get_system_parameters,customize_tdk
 import json
 from django.utils.translation import ugettext as _
 from shopcart.functions.product_util_func import get_menu_products
@@ -22,18 +22,20 @@ def view_index(request,tdk=None):
 	ctx = {}
 	ctx['system_para'] = get_system_parameters()
 	ctx['menu_products'] = get_menu_products()
-	ctx['page_name'] = 'Home'
-	ctx['page_key_words'] = ''
-	ctx['page_description'] = ''
-	try:
-		cust = CustomizeURL.objects.get(url = 'index.html')
-		
-		if cust.is_customize_tdk:
-			ctx['page_name'] = cust.page_name
-			ctx['page_key_words'] = cust.keywords
-			ctx['page_description'] = cust.short_desc
-	except Exception as err:
-		logger.info('Can not find the index.html TDK parameter.')
+	if not tdk:
+		try:
+			cust = CustomizeURL.objects.get(name = '首页')
+			if cust.is_customize_tdk:
+				tdk = {}
+				tdk['page_title'] = cust.page_name
+				tdk['keywords'] = cust.keywords
+				tdk['short_desc'] = cust.short_desc
+		except Exception as err:
+			tdk = None
+
+	if tdk:
+		customize_tdk(ctx,tdk)
+
 	
 	return TemplateResponse(request,System_Config.get_template_name() + '/index.html',ctx)
 	

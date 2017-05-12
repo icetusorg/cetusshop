@@ -10,6 +10,7 @@ from django.http import Http404
 from django.http import HttpResponse
 from shopcart.functions.product_util_func import get_menu_products
 from django.template.response import TemplateResponse
+
 # import the logging library
 import logging
 # Get an instance of a logger
@@ -130,14 +131,21 @@ def view_list(request,category_id=None):
 	
 	template = '/product_list.html'
 	
+	logger.debug('Parameters in request:%s' % request.GET)
+	
 	if request.method =='GET':
 		product_list = None
+		sort_by = None
+		reverse = False
 		if 'sort_by' in request.GET:
+			sort_by = request.GET['sort_by']
 			if 'direction' in request.GET:
 				if 'desc' == request.GET['direction']:
-					product_list = Product.objects.filter(is_publish=True).order_by(request.GET['sort_by']).reverse()
-				else:
+					logger.debug('desc')
 					product_list = Product.objects.filter(is_publish=True).order_by(request.GET['sort_by'])
+				else:
+					logger.debug('asc')
+					product_list = Product.objects.filter(is_publish=True).order_by(request.GET['sort_by']).reverse()
 				
 				ctx['direction'] = request.GET['direction']
 			else:
@@ -168,7 +176,14 @@ def view_list(request,category_id=None):
 				product_list = product_list.filter(categorys__in = cat_list)
 				product_list = list(set(product_list))
 				#product_list = sorted(product_list,key= lambda product:product.update_time,reverse=True)
-				product_list = sorted(product_list,key= lambda product:product.sort_order,reverse=True)
+				if sort_by == 'create_time':
+					product_list = sorted(product_list,key= lambda product:product.create_time,reverse=reverse)
+				elif sort_by == 'market_price':
+					product_list = sorted(product_list,key= lambda product:product.market_price,reverse=reverse)
+				elif sort_by == 'name':
+					product_list = sorted(product_list,key= lambda product:product.name,reverse=reverse)
+				else:
+					product_list = sorted(product_list,key= lambda product:product.sort_order,reverse=reverse)
 				logger.debug('Products count in product_list : [%s]' % len(product_list))
 			except Exception as err:
 				logger.error('Can not find category which id is %s. Error message is %s ' % (category_id,err))
@@ -177,7 +192,7 @@ def view_list(request,category_id=None):
 			ctx['category_title'] = category.name
 			ctx['category_desc'] = category.description
 			
-		logger.debug("no sort_by")
+
 		if 'page_size' in request.GET:
 			page_size = request.GET['page_size']
 		else:

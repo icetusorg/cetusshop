@@ -30,6 +30,8 @@ def contact_page(request,tdk=None):
 def url_dispatch(request,url):
 	logger.debug('Url to dispatch:' + url)
 	
+	logger.debug('Parameters:%s' % request.GET)
+	
 	from shopcart.models import Product,Category,Article,CustomizeURL
 	#优先级 1 ：解析商品路径
 	try:

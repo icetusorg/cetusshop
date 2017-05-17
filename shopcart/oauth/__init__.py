@@ -17,8 +17,10 @@ def singleton(cls):
 class SocialSites(object):
 	"""This class holds the sites settings."""
 	def __init__(self):
+		logger.info('Start to init config...')
 		self._configed = False
 		self.config()
+		logger.info('_sites_name_class_table:%s' % self._sites_name_class_table)
 
 	def __getitem__(self, name):
 		"""Get OAuth2 Class by it's setting name"""
@@ -28,6 +30,7 @@ class SocialSites(object):
 		try:
 			return self._sites_name_class_table[name]
 		except KeyError:
+			logger.info('name:%s' % name)
 			raise SocialSitesConfigError("No settings for site: %s" % name)
 
 	def config(self):
@@ -42,7 +45,7 @@ class SocialSites(object):
 		sites = OAuthSite.objects.all()
 		
 		for site in sites:
-			self._sites_name_class_table[site.name] = site.name
+			self._sites_name_class_table[site.name] = site.impl_class
 			self._sites_class_config_table[site.impl_class] = {
 				'site_name': site.name,
 				#'site_name_zh': _site_name_zh,
@@ -57,6 +60,7 @@ class SocialSites(object):
 			self._sites_name_list.append(site.name)
 			self._sites_class_list.append(site.impl_class)
 		
+			
 			print("_site_name:%s , %s" %(site.impl_class,self._sites_class_config_table[site.impl_class]))
 		
 		'''
@@ -98,9 +102,9 @@ class SocialSites(object):
 	
 	def get_site_object_by_name(self, site_name):
 		site_class = self.__getitem__(site_name)
-		print('site_class 1:%s' % site_class)
+		logger.debug('site_class 1:%s' % site_class)
 		return import_oauth_class(site_class)()
 	
 	def get_site_object_by_class(self, site_class):
-		print('site_class 2:%s' % site_class)
+		logger.debug('site_class 2:%s' % site_class)
 		return import_oauth_class(site_class)()

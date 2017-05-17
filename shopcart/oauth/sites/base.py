@@ -81,7 +81,8 @@ class OAuth2(object):
 	def http_get(self, url, data, parse=True):
 		logger.debug('Start to get ...')
 		#req = urllib2.Request('%s?%s' % (url, urlencode(data)))
-		res = requests.get(url,data=data,timeout=HTTP_TIMEOUT)
+		logger.debug('data : %s' % data)
+		res = requests.get(url,params=data,timeout=HTTP_TIMEOUT)
 		logger.debug('req.url:%s' % res.url)
 		
 		logger.debug('res.json():%s' % res.json())
@@ -95,7 +96,7 @@ class OAuth2(object):
 	#@_http_error_handler
 	def http_post(self, url, data, parse=True):
 		logger.debug('Start to post ...')
-		res = requests.post(url,data=data,timeout=HTTP_TIMEOUT)
+		res = requests.post(url,params=data,timeout=HTTP_TIMEOUT)
 		logger.debug('req.url:%s' % res.url)
 		logger.debug('res.json():%s' % res.json())
 		#req = urllib2.Request(url, data=urlencode(data))
@@ -167,12 +168,12 @@ class OAuth2(object):
 	def api_call_get(self, url=None, **kwargs):
 		url = self.build_api_url(url)
 		data = self.build_api_data(**kwargs)
-		return self.http_get(url, data)
+		return self.http_get(url, data ,parse = False)
 
 	def api_call_post(self, url=None, **kwargs):
 		url = self.build_api_url(url)
 		data = self.build_api_data(**kwargs)
-		return self.http_post(url, data)
+		return self.http_post(url, data ,parse = False)
 
 
 	def parse_token_response(self, res):

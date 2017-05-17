@@ -5,6 +5,8 @@ import json
 
 from shopcart.oauth.sites.base import OAuth2
 from shopcart.oauth.exception import SocialAPIError, SocialSitesConfigError
+import logging
+logger = logging.getLogger('icetus.shopcart')
 
 
 class Wechat(OAuth2):
@@ -43,6 +45,7 @@ class Wechat(OAuth2):
 			}
 
 		res = self.http_get(self.ACCESS_TOKEN_URL, data, parse=False)
+		logger.debug('get token res:%s' % res)
 		self.parse_token_response(res)
 
 	def build_api_url(self, url):
@@ -57,23 +60,24 @@ class Wechat(OAuth2):
 		return data
 
 	def parse_token_response(self, res):
-		res = json.loads(res)
+		#res = json.loads(res)
 
-		self.access_token = res['access_token']
-		self.expires_in = int(res['expires_in'])
-		self.refresh_token = res['refresh_token']
+		self.access_token = res.json()['access_token']
+		self.expires_in = int(res.json()['expires_in'])
+		self.refresh_token = res.json()['refresh_token']
 
-		self.uid = res['openid']
+		self.uid = res.json()['openid']
+		
 
 		if self.SCOPE == 'snsapi_userinfo':
 			res = self.api_call_get(self.OPENID_URL, lang='zh_CN')
     
-			if 'errcode' in res:
+			if 'errcode' in res.json():
 				raise SocialAPIError(self.site_name, self.OPENID_URL, res)
     
-			self.name = res['nickname']
-			self.avatar = res['headimgurl']
-			self.avatar_large = res['headimgurl']
+			self.name = res.json()['nickname']
+			self.avatar = res.json()['headimgurl']
+			self.avatar_large = res.json()['headimgurl']
 		else:
 			self.name = ''
 			self.avatar = ''

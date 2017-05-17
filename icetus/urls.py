@@ -21,6 +21,7 @@ from django.conf import settings
 urlpatterns = patterns("",
 	url(r'^$', 'shopcart.index.view_index',name='view_index'),
 	url(r'^wx/$', 'shopcart.oauth.views.wechat_check',name='wechat_check'),
+	url(r'^account/oauth/(.+)/$', 'shopcart.oauth.views.callback',name='oauth_callback'),
 	
 	
 	url(r'^refresh-captcha$', 'shopcart.index.refresh_captcha',name='refresh_captcha'),	

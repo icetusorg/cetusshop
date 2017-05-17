@@ -25,6 +25,7 @@ def view_index(request,tdk=None):
 	ctx['page_key_words'] = ''
 	ctx['page_description'] = ''
 	
+	logger.info('request:%s' % request.GET)
 	
 	from .oauth import SocialSites, SocialAPIError
 	socialsites = SocialSites()

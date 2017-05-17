@@ -16,20 +16,27 @@ from shopcart.oauth import SocialSites, SocialAPIError
 
 def callback(request,sitename):
 	code = request.GET.get('code')
+	logger.info('code : %s' % code)
 	if not code:
 		return redirect('/oautherror')
 
 	socialsites = SocialSites()
-	s = socialsites.get_site_object_by_name(sitename)
+	s = socialsites.get_site_object_by_name('wechat')
 	try:
+		logger.info('Start to get token... ')
+		s.SCOPE = 'snsapi_userinfo'
 		s.get_access_token(code)
+		logger.info('Token has been getted.')
 	except SocialAPIError as err:
 		# 这里可能会发生错误
 		logger.error('%s %s %s oAuth Error. \n Error Message: %s ' % (e.site_name,e.url,e.error_msg))      # 哪个站点的OAuth2发生错误？
 		raise
 
 	# 到这里授权完毕，并且取到了用户信息，uid, name, avatar...
-	return HttpResponse('用户uid：%s , 用户名：%s , avater: %s' % (s.uid,s.name,s.avatar))
+	logger.info('username : %s ' % s.name)
+	return HttpResponse('用户uid：%s , 用户名：%s , avater:<img src="%s" >' % (s.uid,s.name,s.avatar))	
+	
+	
 	
 @csrf_exempt
 def wechat_check(request):

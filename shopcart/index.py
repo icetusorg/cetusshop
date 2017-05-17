@@ -21,7 +21,7 @@ def view_index(request,tdk=None):
 	ctx = {}
 	ctx['system_para'] = get_system_parameters()
 	ctx['menu_products'] = get_menu_products()
-<<<<<<< HEAD
+
 	if not tdk:
 		try:
 			cust = CustomizeURL.objects.get(name = '首页')
@@ -35,32 +35,12 @@ def view_index(request,tdk=None):
 
 	if tdk:
 		customize_tdk(ctx,tdk)
-
-=======
-	ctx['page_name'] = 'Home'
-	ctx['page_key_words'] = ''
-	ctx['page_description'] = ''
-	
-	logger.info('request:%s' % request.GET)
 	
 	from .oauth import SocialSites, SocialAPIError
 	socialsites = SocialSites()
 	
-	#s = socialsites.get_site_object_by_class('shopcart.oauth.sites.wechat.Wechat')
 	s = socialsites.get_site_object_by_name('wechat')
 	ctx['oauth'] = s.authorize_url
-	
-	
-	try:
-		cust = CustomizeURL.objects.get(url = 'index.html')
-		
-		if cust.is_customize_tdk:
-			ctx['page_name'] = cust.page_name
-			ctx['page_key_words'] = cust.keywords
-			ctx['page_description'] = cust.short_desc
-	except Exception as err:
-		logger.info('Can not find the index.html TDK parameter.')
->>>>>>> oauthStart
 	
 	return TemplateResponse(request,System_Config.get_template_name() + '/index.html',ctx)
 	

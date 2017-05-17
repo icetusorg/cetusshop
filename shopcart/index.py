@@ -30,7 +30,8 @@ def view_index(request,tdk=None):
 	from .oauth import SocialSites, SocialAPIError
 	socialsites = SocialSites()
 	
-	s = socialsites.get_site_object_by_class('shopcart.oauth.sites.wechat.Wechat')
+	#s = socialsites.get_site_object_by_class('shopcart.oauth.sites.wechat.Wechat')
+	s = socialsites.get_site_object_by_name('wechat')
 	ctx['oauth'] = s.authorize_url
 	
 	

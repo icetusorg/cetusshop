@@ -21,7 +21,7 @@ def callback(request,sitename):
 		return redirect('/oautherror')
 
 	socialsites = SocialSites()
-	s = socialsites.get_site_object_by_name('wechat')
+	s = socialsites.get_site_object_by_name(sitename)
 	try:
 		logger.info('Start to get token... ')
 		s.SCOPE = 'snsapi_userinfo'

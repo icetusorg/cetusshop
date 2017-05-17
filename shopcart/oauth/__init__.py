@@ -35,9 +35,7 @@ class SocialSites(object):
 
 	def config(self):
 		self._sites_name_class_table = {}
-		# {'renren': 'socialoauth.sites.renren.RenRen',...}
 		self._sites_class_config_table = {}
-		# {'socialoauth.sites.renren.RenRen': {...}, ...}
 		self._sites_name_list = []
 		self._sites_class_list = []
 
@@ -48,7 +46,6 @@ class SocialSites(object):
 			self._sites_name_class_table[site.name] = site.impl_class
 			self._sites_class_config_table[site.impl_class] = {
 				'site_name': site.name,
-				#'site_name_zh': _site_name_zh,
 			}
 			
 			self._sites_class_config_table[site.impl_class]['REDIRECT_URI'] = site.redirect_uri
@@ -63,19 +60,7 @@ class SocialSites(object):
 			
 			print("_site_name:%s , %s" %(site.impl_class,self._sites_class_config_table[site.impl_class]))
 		
-		'''
-		for _site_name, _site_class, _site_name_zh, _site_config in settings:
-			self._sites_name_class_table[_site_name] = _site_class
-			self._sites_class_config_table[_site_class] = {
-				'site_name': _site_name,
-				'site_name_zh': _site_name_zh,
-		}
-			print("_site_name:%s , %s" %(_site_class,self._sites_name_class_table[_site_name]))
-			#for _k, _v in _site_config.iteritems():
-			self._sites_class_config_table[_site_class]['REDIRECT_URI'] = 'http://www.lightstart.cn/account/oauth/wechat'
-			self._sites_class_config_table[_site_class]['CLIENT_ID'] = '#'
-			self._sites_class_config_table[_site_class]['CLIENT_SECRET'] = '#'
-		'''	
+
 
 			
 

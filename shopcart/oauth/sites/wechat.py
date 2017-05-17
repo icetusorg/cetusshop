@@ -75,7 +75,8 @@ class Wechat(OAuth2):
 			if 'errcode' in res.json():
 				raise SocialAPIError(self.site_name, self.OPENID_URL, res)
     
-			self.name = res.json()['nickname']
+			#注意，这里有中文编码问题
+			self.name = res.json()['nickname'].encode('raw_unicode_escape').decode()
 			self.avatar = res.json()['headimgurl']
 			self.avatar_large = res.json()['headimgurl']
 		else:

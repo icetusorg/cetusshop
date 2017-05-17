@@ -15,24 +15,7 @@ socialsites = SocialSites()
 if not socialsites._configed:
     raise SocialSitesConfigError("SocialSites not configed yet, Do it first!")
 
-'''
-def _http_error_handler(func):
-	@wraps(func)
-	def deco(self, *args, **kwargs):
-		try:
-			res = func(self, *args, **kwargs)
-		except urllib2.HTTPError as e:
-			raise SocialAPIError(self.site_name, e.url, e.read())
-		except urllib2.URLError as e:
-			raise SocialAPIError(self.site_name, args[0], e.reason)
-		
-		error_key = getattr(self, 'RESPONSE_ERROR_KEY', None)
-		if error_key is not None and error_key in res:
-			raise SocialAPIError(self.site_name, args[0], res)
-		
-		return res
-	return deco
-'''
+
 
 class OAuth2(object):
 	"""Base OAuth2 class, Sub class must define the following settings:
@@ -77,31 +60,33 @@ class OAuth2(object):
 			setattr(self, k, v)
 
 
-	#@_http_error_handler
 	def http_get(self, url, data, parse=True):
 		logger.debug('Start to get ...')
-		#req = urllib2.Request('%s?%s' % (url, urlencode(data)))
 		logger.debug('data : %s' % data)
-		res = requests.get(url,params=data,timeout=HTTP_TIMEOUT)
+		try:
+			res = requests.get(url,params=data,timeout=HTTP_TIMEOUT)
+		except Exception as err:
+			logger.error('http_get error(%s):%s' % (url,err))
+			res = None
 		logger.debug('req.url:%s' % res.url)
-		
 		logger.debug('res.json():%s' % res.json())
-		#self.http_add_header(req)
-		#res = urllib2.urlopen(req, timeout=HTTP_TIMEOUT).read()
+
 		if parse:
 			return json.loads(res)
 		return res
 
 
-	#@_http_error_handler
 	def http_post(self, url, data, parse=True):
 		logger.debug('Start to post ...')
-		res = requests.post(url,params=data,timeout=HTTP_TIMEOUT)
+		
+		try:
+			res = requests.post(url,params=data,timeout=HTTP_TIMEOUT)
+		except Exception as err:
+			logger.error('http_post error(%s):%s' % (url,err))
+			res = None
+		
 		logger.debug('req.url:%s' % res.url)
 		logger.debug('res.json():%s' % res.json())
-		#req = urllib2.Request(url, data=urlencode(data))
-		#self.http_add_header(req)
-		#res = urllib2.urlopen(req, timeout=HTTP_TIMEOUT).read()
 		if parse:
 			return json.loads(res)
 		return res
@@ -190,9 +175,27 @@ class OAuth2(object):
 
 
 	def build_api_url(self, url):
+		"""
+        Subclass MUST implement this method
+        And set the following attributes:
+
+        access_token,
+        uid,
+        name,
+        avatar,
+		"""
 		raise NotImplementedError()
 
 
 	def build_api_data(self, **kwargs):
+		"""
+        Subclass MUST implement this method
+        And set the following attributes:
+
+        access_token,
+        uid,
+        name,
+        avatar,
+		"""
 		raise NotImplementedError()
 

@@ -296,7 +296,7 @@ def check_out(request):
 			e.price_infact = calc_shipping_fee(cart_product_id_list,e)
 		ctx['express_list'] = express_list
 		
-		ctx['default_express'] = ExpressType.objects.all()[0]
+		ctx['default_express'] = express_list[0]
 		promotion_code = request.POST.get('promotion_code','')
 		
 		prices,promotion = get_prices(cart_product_id_list=cart_product_id_list,express_type=ctx['default_express'],discount_code=promotion_code)

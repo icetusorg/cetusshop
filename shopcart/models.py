@@ -1182,5 +1182,22 @@ class CustomizeVar(models.Model):
 		verbose_name = '自定义变量'
 		verbose_name_plural = '自定义变量'
 		
-		
-		
+
+@python_2_unicode_compatible
+class OAuthSite(models.Model):
+	name = models.CharField(max_length=64,null=True,default='',verbose_name = '名称')
+	impl_class = models.CharField(max_length=256,null=True,default='',verbose_name = '实现类')
+	redirect_uri = models.CharField(max_length=256,null=True,default='',verbose_name = '返回网址')
+	client_id = models.CharField(max_length=256,null=True,default='',verbose_name = '客户ID')
+	client_secret = models.CharField(max_length=256,null=True,default='',verbose_name = '客户密钥')
+	scope = models.CharField(max_length=256,null=True,default='',verbose_name = '资料范围')
+	
+	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
+	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
+	
+	def __str__(self):
+		return '%s' % (self.name)
+	
+	class Meta:
+		verbose_name = '社交账户登陆配置'
+		verbose_name_plural = '社交账户登陆配置'

@@ -62,14 +62,14 @@ class OAuth2(object):
 
 	def http_get(self, url, data, parse=True):
 		logger.debug('Start to get ...')
-		logger.debug('data : %s' % data)
+		#logger.debug('data : %s' % data)
 		try:
 			res = requests.get(url,params=data,timeout=HTTP_TIMEOUT)
 		except Exception as err:
 			logger.error('http_get error(%s):%s' % (url,err))
 			res = None
 		logger.debug('req.url:%s' % res.url)
-		logger.debug('res.json():%s' % res.json())
+		#logger.debug('res.json():%s' % res.json())
 
 		if parse:
 			return json.loads(res)
@@ -86,7 +86,7 @@ class OAuth2(object):
 			res = None
 		
 		logger.debug('req.url:%s' % res.url)
-		logger.debug('res.json():%s' % res.json())
+		#logger.debug('res.json():%s' % res.json())
 		if parse:
 			return json.loads(res)
 		return res

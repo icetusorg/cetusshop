@@ -1190,7 +1190,8 @@ class OAuthSite(models.Model):
 	redirect_uri = models.CharField(max_length=256,null=True,default='',verbose_name = '返回网址')
 	client_id = models.CharField(max_length=256,null=True,default='',verbose_name = '客户ID')
 	client_secret = models.CharField(max_length=256,null=True,default='',verbose_name = '客户密钥')
-	scope = models.CharField(max_length=256,null=True,default='',verbose_name = '资料范围')
+	scope_login = models.CharField(max_length=256,null=True,default='',verbose_name = 'Login资料范围代码')
+	scope_info = models.CharField(max_length=256,null=True,default='',verbose_name = 'Userinfo资料范围代码')
 	
 	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
 	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')

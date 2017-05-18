@@ -24,6 +24,8 @@ class Wechat(OAuth2):
 				self.AUTHORIZE_URL, self.CLIENT_ID, urlquote(self.REDIRECT_URI)
 			)
         
+		self.SCOPE = self.SCOPE_LOGIN
+		
 		if getattr(self, 'SCOPE', None) is not None:
 			if (self.SCOPE in self.SUPPORTED_SCOPES):
 				url = '%s&scope=%s' % (url, self.SCOPE)
@@ -68,7 +70,7 @@ class Wechat(OAuth2):
 
 		self.uid = res.json()['openid']
 		
-
+		self.SCOPE = self.SCOPE_INFO
 		if self.SCOPE == 'snsapi_userinfo':
 			res = self.api_call_get(self.OPENID_URL, lang='zh_CN')
     

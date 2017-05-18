@@ -24,7 +24,6 @@ def callback(request,sitename):
 	s = socialsites.get_site_object_by_name(sitename)
 	try:
 		logger.info('Start to get token... ')
-		s.SCOPE = 'snsapi_userinfo'
 		s.get_access_token(code)
 		logger.info('Token has been getted.')
 	except SocialAPIError as err:

@@ -18,8 +18,8 @@ class SocialSites(object):
 	"""This class holds the sites settings."""
 	def __init__(self):
 		logger.info('Start to init config...')
-		self._configed = False
-		self.config()
+		if getattr(self, '_configed', None) is None:
+			self.config()
 		logger.info('_sites_name_class_table:%s' % self._sites_name_class_table)
 
 	def __getitem__(self, name):
@@ -51,19 +51,14 @@ class SocialSites(object):
 			self._sites_class_config_table[site.impl_class]['REDIRECT_URI'] = site.redirect_uri
 			self._sites_class_config_table[site.impl_class]['CLIENT_ID'] = site.client_id
 			self._sites_class_config_table[site.impl_class]['CLIENT_SECRET'] = site.client_secret
-			self._sites_class_config_table[site.impl_class]['SCOPE'] = site.scope
-			
+			self._sites_class_config_table[site.impl_class]['SCOPE_LOGIN'] = site.scope_login
+			self._sites_class_config_table[site.impl_class]['SCOPE_INFO'] = site.scope_info
 			
 			self._sites_name_list.append(site.name)
 			self._sites_class_list.append(site.impl_class)
 		
 			
 			print("_site_name:%s , %s" %(site.impl_class,self._sites_class_config_table[site.impl_class]))
-		
-
-
-			
-
 		self._configed = True
 
 

@@ -707,6 +707,33 @@ jQuery("#product_para_value_submit").click(function(){
 	});
 });
 
+jQuery("#product_para_value_clear").click(function(){
+	var url = "/admin/product-para-detail-edit/";
+	$("#prd_method").val("clear");
+
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#product_para_detail_form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			$("#infoMessage").html(data.message);
+			$('#myModal').on('hidden.bs.modal', function (e) {
+				var url = location.href;
+				var newurl = changeURLArg(url,"tab_name","tag_product_para");
+				location.href = newurl;//跳转到对应的页面
+			});
+			
+			$("#myModal").modal('toggle');
+			
+		}
+	});
+});
+
 
 
 

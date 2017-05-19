@@ -521,10 +521,19 @@ def product_para_detail_edit(request):
 				value = request.POST[key]
 				db_key = key[len('product_para_id_'):len(key)]
 				
+				method = request.POST.get('method','')
+				if method == 'clear':
+					is_delete = True
+				else:
+					is_delete = False
+					
 				try:
 					prd = ProductParaDetail.objects.get(id=db_key)
-					prd.value = value
-					prd.save()
+					if is_delete:
+						prd.delete()
+					else:
+						prd.value = value
+						prd.save()
 				except Exception as err:
 					logger.error('Can not find parameter [%s]. \n Error Message:%s' %(db_key,err))
 					result['message'] = '参数保存失败'

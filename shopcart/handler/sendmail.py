@@ -167,7 +167,7 @@ def inquiry_received_send_mail(sender,**kwargs):
 def sendmail(email,mail_ctx,title,useage):
 	logger.debug(useage + ': Prepare to send mail.')
 
-	from shopcart.utils import my_send_mail,url_with_out_slash
+	from shopcart.utils import my_send_mail,url_with_out_slash,MailThread
 	from shopcart.models import Email
 	email_definition = Email.objects.get(useage=useage)
 	if email_definition.is_send:
@@ -190,8 +190,11 @@ def sendmail(email,mail_ctx,title,useage):
 			title_template = base.Template(template_string = email_definition.title)
 			title = title_template.render(Context(mail_ctx))
 		logger.debug('Start to send mail.')
-		my_send_mail(ctx=mail_ctx,send_to=email,title=title,template_path=template_path,username=email_definition.username,password=email_definition.password,smtp_host=email_definition.smtp_host,sender=email_definition.email_address)
-		logger.debug('Send mail end.')
+		mail_thread = MailThread(ctx=mail_ctx,send_to=email,title=title,template_path=template_path,username=email_definition.username,password=email_definition.password,smtp_host=email_definition.smtp_host,sender=email_definition.email_address)
+		mail_thread.start()
+		#my_send_mail(ctx=mail_ctx,send_to=email,title=title,template_path=template_path,username=email_definition.username,password=email_definition.password,smtp_host=email_definition.smtp_host,sender=email_definition.email_address)
+		#my_send_mail(ctx=mail_ctx,send_to=email,title=title,template_path=template_path,username=email_definition.username,password=email_definition.password,smtp_host=email_definition.smtp_host,sender=email_definition.email_address)
+		logger.debug('Send mail thread started.')
 	else:
 		logger.info('Mail function is closed.')	
 		

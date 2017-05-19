@@ -13,6 +13,7 @@ from django.core.serializers import serialize,deserialize
 from django.db.models.query import QuerySet
 from django.template.response import TemplateResponse
 from django.db import models
+import threading
 # import the logging library
 import logging
 # Get an instance of a logger
@@ -122,6 +123,19 @@ def get_system_parameters():
 	#当前时间
 	dict['current_date'] = datetime.datetime.now()
 	return dict
+
+	
+#邮件异步发送类
+class MailThread(threading.Thread):
+	
+	def __init__(self,**kwargs):
+		logger.debug('mail thread init ...')
+		threading.Thread.__init__(self)
+		self.paras = kwargs
+		
+	def run(self):
+		logger.debug('start send mail thread ...')
+		my_send_mail(ctx=self.paras['ctx'],send_to=self.paras['send_to'],title=self.paras['title'],template_path=self.paras['template_path'],username=self.paras['username'],password=self.paras['password'],smtp_host=self.paras['smtp_host'],sender=self.paras['sender'])
 	
 	
 def my_send_mail(ctx,send_to,title,template_path,username,password,smtp_host,sender):
@@ -133,7 +147,12 @@ def my_send_mail(ctx,send_to,title,template_path,username,password,smtp_host,sen
 		conn.username = username# 更改用户名
 		conn.password = password # 更改密码
 		conn.host = smtp_host # 设置邮件服务器
+		#conn.port = '465'
+		#conn.use_tls = True
 		conn.open() # 打开连接
+		
+		
+		
 		logger.debug('2')
 		t = loader.get_template(template_path)
 		mail_list = [send_to, ]

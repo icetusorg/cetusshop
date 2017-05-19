@@ -147,6 +147,7 @@ class order_shippment_form(forms.ModelForm):
 class email_form(forms.ModelForm):		
 	useage_name = forms.CharField(required=False)
 	is_send = forms.CharField(required=False)
+	need_ssl = forms.CharField(required=False)
 	email_address = forms.CharField(required=False)
 	title = forms.CharField(required=False)
 	smtp_host = forms.CharField(required=False)
@@ -156,7 +157,7 @@ class email_form(forms.ModelForm):
 	template_file = forms.CharField(required=False)
 	class Meta:
 		model = Email
-		fields = ('useage_name','is_send','email_address','title','smtp_host','username','password','template','template_file')
+		fields = ('useage_name','is_send','email_address','title','smtp_host','username','password','template','template_file','need_ssl')
 
 class category_simple_form(forms.ModelForm):
 	class Meta:

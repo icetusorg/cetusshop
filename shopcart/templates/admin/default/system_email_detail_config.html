@@ -33,6 +33,7 @@
 				<div class="item"><label>SMTP地址：</label><input type="text" name="smtp_host" value="{{email.smtp_host}}" class="form-control"></div>
 				<div class="item"><label>用户名：</label><input type="text" name="username" value="{{email.username}}" class="form-control"></div>
 				<div class="item"><label>密码：</label><input type="text" name="password" value="{{email.password}}" class="form-control"></div>
+				<div class="item"><label>是否SSL：</label><input type="checkbox" name="need_ssl" value="1" {{email.need_ssl|yesno:"checked,,"}}></div>
 				<div class="item"><label>模板组：</label><input type="text" name="template" value="{{email.template}}" class="form-control"></div>
 				<div class="item"><label>模板文件：</label><input type="text" name="template_file" value="{{email.template_file}}" class="form-control"></div>
 				

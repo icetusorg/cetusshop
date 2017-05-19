@@ -190,7 +190,7 @@ def sendmail(email,mail_ctx,title,useage):
 			title_template = base.Template(template_string = email_definition.title)
 			title = title_template.render(Context(mail_ctx))
 		logger.debug('Start to send mail.')
-		mail_thread = MailThread(ctx=mail_ctx,send_to=email,title=title,template_path=template_path,username=email_definition.username,password=email_definition.password,smtp_host=email_definition.smtp_host,sender=email_definition.email_address)
+		mail_thread = MailThread(ctx=mail_ctx,send_to=email,title=title,template_path=template_path,username=email_definition.username,password=email_definition.password,smtp_host=email_definition.smtp_host,sender=email_definition.email_address,is_ssl=email_definition.need_ssl)
 		mail_thread.start()
 		#my_send_mail(ctx=mail_ctx,send_to=email,title=title,template_path=template_path,username=email_definition.username,password=email_definition.password,smtp_host=email_definition.smtp_host,sender=email_definition.email_address)
 		#my_send_mail(ctx=mail_ctx,send_to=email,title=title,template_path=template_path,username=email_definition.username,password=email_definition.password,smtp_host=email_definition.smtp_host,sender=email_definition.email_address)

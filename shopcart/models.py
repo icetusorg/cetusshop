@@ -48,6 +48,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
 	is_active = models.BooleanField('active', default=True)
 	reg_ip = models.CharField(max_length=32,null=True,blank=True,verbose_name='注册IP地址')
 	last_ip = models.CharField(max_length=32,null=True,blank=True,verbose_name='最后登陆IP地址')
+	
 	create_time = models.DateTimeField(auto_now_add = True,null=True)
 	update_time = models.DateTimeField(auto_now = True,null=True)
 
@@ -605,6 +606,7 @@ class Email(models.Model):
 	smtp_host = models.CharField(max_length=100)
 	username = models.CharField(max_length=100)
 	password = models.CharField(max_length=100)
+	need_ssl = models.BooleanField(default=False,verbose_name="是否启用SSL连接")
 	template = models.CharField(max_length=254,null=True,blank=True,verbose_name='模板组名称')
 	template_file = models.CharField(max_length=254,null=True,blank=True,verbose_name='模板文件名称')
 	create_time = models.DateTimeField(auto_now_add = True)

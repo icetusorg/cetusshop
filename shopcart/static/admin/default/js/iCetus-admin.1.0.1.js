@@ -787,7 +787,8 @@ jQuery(".add-attribute-group").click(function(){
 				
 				var $title = $("<div>",{
 					id:'title_div_' + selected_group_id,
-					text:"删除 | " + data.data.group.name + " - " + data.data.group.code,
+					//text:"删除 | " + data.data.group.name + " - " + data.data.group.code,
+					text:" " + data.data.group.name + " - " + data.data.group.code,
 					"class":"attr-array-title",
 					}).appendTo($pdiv);
 				

@@ -14,7 +14,7 @@ def get_menu_products():
 	return product_list
 
 def get_url(object):
-	from shopcart.models import System_Config,Product
+	from shopcart.models import System_Config,Product,Category
 	url = url_with_out_slash(System_Config.objects.get(name='base_url').val)
 	
 	
@@ -25,5 +25,10 @@ def get_url(object):
 		else:
 			return ('%s/%s' % (url,object.static_file_name))
 			#return url + '/' + object.static_file_name
+	elif isinstance(object,Category):
+		if object.static_file_name == None or object.static_file_name == '':
+			return ('%s/category/%s' % (url,object.id))
+		else:
+			return ('%s/%s' % (url,object.static_file_name))
 	else:
 		return '#'

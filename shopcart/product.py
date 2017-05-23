@@ -194,6 +194,9 @@ def view_list(request,category_id=None):
 				else:
 					product_list = sorted(product_list,key= lambda product:product.sort_order,reverse=reverse)
 				logger.debug('Products count in product_list : [%s]' % len(product_list))
+				
+				
+				ctx['category'] = category
 			except Exception as err:
 				logger.error('Can not find category which id is %s. Error message is %s ' % (category_id,err))
 				

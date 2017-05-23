@@ -179,6 +179,24 @@ class Category(models.Model):
 	def get_childrens(self):
 		return self.childrens.all().order_by('-sort_order')
 		
+	def get_url(self):
+		from shopcart.functions.product_util_func import get_url
+		return get_url(self)
+	
+	def get_leveled_parents(self):
+		from shopcart.utils import Stack 
+		s = self.get_parent_stack()
+		parent_list = []
+		while not s.isempty():
+			parent_list.append(s.pop())
+		return parent_list
+	
+
+	def get_parent(cat):
+		if cat.parent:
+			return get_parent(cat.parent)
+		else:
+			return cat
 
 	def __str__(self):
 		return self.name
@@ -222,6 +240,13 @@ class Product(models.Model):
 	
 	def get_related_products(self):
 		return self.related_products.all()
+	
+	def get_one_category(self):
+		list = self.categorys.all()
+		if len(list) > 0:
+			return list[0]
+		else:
+			return None
 	
 	
 	def get_main_image(self):

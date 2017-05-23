@@ -23,7 +23,6 @@ urlpatterns = patterns("",
 	url(r'^wx/$', 'shopcart.oauth.views.wechat_check',name='wechat_check'),
 	url(r'^account/oauth/(.+)/$', 'shopcart.oauth.views.callback',name='oauth_callback'),
 	
-	
 	url(r'^refresh-captcha$', 'shopcart.index.refresh_captcha',name='refresh_captcha'),	
 	url(r'^common/get-menu/$', 'shopcart.index.get_menu',name='common_get_menu'),
 	url(r'^common/get-slider-images/$', 'shopcart.index.get_slider_images',name='common_get_slider_images'),
@@ -96,6 +95,7 @@ urlpatterns = patterns("",
 
 	
 	url('^admin/index/$', 'shopcart.myadmin.index.view',name='admin_index_view'),
+	url(r'^admin/heart/$', 'shopcart.myadmin.index.heart',name='admin_heart'),
 	url('^admin/index-content/$', 'shopcart.myadmin.index.content_view',name='admin_index_content_view'),
 	url('^admin/admin_logout/$', 'shopcart.myuser.admin_logout',name='myuser_admin_logout'),
 	

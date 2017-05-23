@@ -31,7 +31,10 @@ jQuery(document).ready(function() {
 			}
 		});
 		// csrf信息结束
+		
 });
+
+
 
 
 /***
@@ -97,6 +100,25 @@ function imycartAjaxCallWithCallback(url,object,callback,triggerControl,extraInf
 };
 
 //公共方法
+//调用心跳通讯
+function make_heart_beat(){
+	console.log('Heart beating start... ');
+	var url = "/admin/heart/";
+	$.ajax({
+		cache: false,
+		type: "GET",
+		url:url,
+		data:null,
+		async: false,
+		error: function(request) {
+			console.log('Heart beating failed ... ');
+		},
+		success: function(data) {
+			console.log('Heart beating success ... ');
+		}
+	});
+};
+
 
 //通用弹出窗口
 

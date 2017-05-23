@@ -3,7 +3,7 @@ from django.shortcuts import render,redirect
 from shopcart.models import System_Config,Order
 from shopcart.utils import get_system_parameters
 from django.template.response import TemplateResponse
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 
 
 from django.contrib.admin.views.decorators import staff_member_required
@@ -22,6 +22,11 @@ def view(request):
 	ctx['system_para'] = get_system_parameters()
 	if request.method == 'GET':
 		return TemplateResponse(request,System_Config.get_template_name('admin') + '/index.html',ctx)
+		
+def heart(request):
+	result = {}
+	result['success'] = True
+	return JsonResponse(result)
 		
 @staff_member_required	
 def content_view(request):

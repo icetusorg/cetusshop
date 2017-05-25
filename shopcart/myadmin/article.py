@@ -164,8 +164,8 @@ def article_basic_edit(request):
 				ctx['article'] = article
 				
 				#图片处理URL
-				ctx['action_url'] = '/admin/file-upload/article/%s/' % id
-				logger.debug('action_url:%s' % ctx['action_url'])
+				ctx['upload_url'] = '/admin/file-upload/article/%s/' % id
+				logger.debug('upload_url:%s' % ctx['upload_url'])
 				
 				ctx['file_delete_url'] = '/file-delete/article'
 					

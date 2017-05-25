@@ -148,7 +148,7 @@ def file_upload(request,item_type,item_id):
 				item = Article.objects.get(id=item_id)
 			except:
 				raise Http404
-			filenames = handle_uploaded_file(request.FILES['upload'],item_type,item_id,request.POST['filename_type'],manual_name,same_name_handle)
+			filenames = handle_uploaded_file(request.FILES['upload'],item_type,item_id,filename_type,manual_name,same_name_handle)
 			if filenames['upload_result'] == False:
 				ctx['result_message'] = filenames['upload_error_msg']
 				return TemplateResponse(request,System_Config.get_template_name('admin') + '/file_upload.html',ctx)				

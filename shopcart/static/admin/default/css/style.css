@@ -3776,5 +3776,8 @@ xpopup
     }
 }
 
-
+.user-panel{
+    white-space: nowrap;
+    overflow: hidden;
+}
 

@@ -311,7 +311,10 @@ def remove_dir_all(targetDir):
 	logger.info('targetDir: %s to be delete....' % targetDir)
 	if targetDir:
 		import shutil
-		shutil.rmtree(targetDir)
+		try:
+			shutil.rmtree(targetDir)
+		except Exception as err:
+			logger.error('Remove dir faild. Error Message : %s' % err)
 				
 def remove_file(targetDir,file,thumb=None):
 	targetFile = os.path.join(targetDir,file)

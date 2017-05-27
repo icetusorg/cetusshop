@@ -101,8 +101,9 @@
 							<div class="images">
 								<a href='{{image.image}}' target="_blank"><img src='{{image.thumb}}' alt='{{image.alt_value}}'></a>
 								<div class="image-operaion">
-									<a href="#" class="set-picture-attr" data-method="delete" data-id="{{image.id}}" data-article-id="{{article.id}}" data-image-type="article">删除 </a> |
-									<a href="#" class="set-picture-attr" data-method="set_main" data-id="{{image.id}}" data-article-id="{{article.id}}" data-image-type="article">主图 </a>
+									<a href="#" class="set-picture-attr" data-method="set_main" data-id="{{image.id}}" data-article-id="{{article.id}}" data-image-type="article">设为主图 </a> |
+									<a href="#" class="set-picture-attr" data-method="delete" data-id="{{image.id}}" data-article-id="{{article.id}}" data-image-type="article">删除 </a>
+									
 								</div>
 							</div>
 						{% empty %}

@@ -141,6 +141,7 @@ def detail(request,id):
 	
 
 @staff_member_required
+@transaction.atomic()
 def article_basic_edit(request):
 	ctx = {}
 	
@@ -229,17 +230,18 @@ def article_basic_edit(request):
 			
 			#只有属于博客类的文章才需要保存分类
 			if article.category == Article.ARTICLE_CATEGORY_BLOG:
-				category_id = request.POST.get('busi_category')
-				try:
-					category = ArticleBusiCategory.objects.get(id=category_id)
-				except Exception as err:
-					logger.error('Can not find article_busi_category [%s].\nError Message:%s' % (category_id,err))
-					result['success'] = False
-					result['message'] = '文章保存失败，请选择文章分类。'
-					result['data'] = {}
-					return JsonResponse(result)
-				article.busi_category = category
-				article.save()
+				category_id = request.POST.get('busi_category','')
+				if category_id: 
+					try:
+						category = ArticleBusiCategory.objects.get(id=category_id)
+					except Exception as err:
+						logger.error('Can not find article_busi_category [%s].\nError Message:%s' % (category_id,err))
+						result['success'] = False
+						result['message'] = '文章保存失败，请选择文章分类。'
+						result['data'] = {}
+						return JsonResponse(result)
+					article.busi_category = category
+					article.save()
 			
 			result['success'] = True
 			result['message'] = '文章保存成功'

@@ -299,7 +299,7 @@ def handle_uploaded_file(f,type='other',product_sn='-1',file_name_type='random',
 	return file_names
 	
 	
-#删除文件下所有文件	
+#删除文件夹下所有文件	
 def remove_file_in_dir(targetDir,is_recursive=False):
 	for file in os.listdir(targetDir): 
 		targetFile = os.path.join(targetDir,file) 

@@ -72,7 +72,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
 			return 'female'
 		else:
 			return 'unknow'
-
+			
 
 class Address(models.Model):
 	useage = models.CharField(max_length=254,default='',null=True)
@@ -149,7 +149,7 @@ class Category(models.Model):
 	name = models.CharField(max_length = 100,default='',verbose_name = '分类名称')
 	page_title = models.CharField(max_length = 100,blank=True,default='',verbose_name='网页标题')
 	keywords = models.CharField(max_length = 254,default='',blank=True,verbose_name='关键字')
-	short_desc = models.CharField(max_length = 254,default='',blank=True,verbose_name='简略描述')
+	short_desc = models.CharField(max_length = 1024,default='',blank=True,verbose_name='简略描述')
 	description = models.CharField(max_length = 1024,default='',blank=True,verbose_name='分类描述')
 	sort_order = models.CharField(max_length = 100,default='',verbose_name = '排序序号')
 	parent = models.ForeignKey('self',null=True,default=None,related_name='childrens',blank=True,verbose_name = '上级分类')
@@ -217,7 +217,7 @@ class Product(models.Model):
 	market_price = models.FloatField(default=0.0,verbose_name='市场价')
 	page_title = models.CharField(max_length = 100,blank=True,default='',verbose_name='网页标题')
 	keywords = models.CharField(max_length = 254,default='',blank=True,verbose_name='关键字')
-	short_desc = models.CharField(max_length = 254,default='',blank=True,verbose_name='简略描述')
+	short_desc = models.CharField(max_length = 1024,default='',blank=True,verbose_name='简略描述')
 	description = models.TextField(blank=True,verbose_name='详细描述')
 	youtube = models.CharField(max_length = 1024,default='',blank=True,verbose_name='youtube视频地址')
 	thumb = models.URLField(verbose_name='主缩略图')
@@ -851,7 +851,7 @@ class Order_Products(models.Model):
 	product_attribute_name = models.CharField(max_length=1000,default='',verbose_name='选中的商品属性文字说明')
 	order = models.ForeignKey(Order,null=True,related_name='order_products')
 	name = models.CharField(max_length = 100,default='',verbose_name='商品名称')
-	short_desc = models.CharField(max_length = 254,default='')
+	short_desc = models.CharField(max_length = 1024,default='')
 	price = models.FloatField(verbose_name='商品价格')
 	thumb = models.URLField()
 	image = models.URLField()
@@ -971,7 +971,7 @@ class Article(models.Model):
 	user = models.ForeignKey(MyUser,null=True,blank=True,verbose_name = '用户')
 	keywords = models.CharField(max_length=254,null=True,blank=True,verbose_name = '关键字')
 	page_title = models.CharField(max_length = 100,blank=True,default='',verbose_name='网页标题')
-	short_desc = models.CharField(max_length = 254,default='',blank=True,verbose_name='简略描述')
+	short_desc = models.CharField(max_length = 1024,default='',blank=True,verbose_name='简略描述')
 	static_file_name = models.CharField(max_length = 254,db_index=True,null=True,blank=True,verbose_name = '静态文件名')
 	folder = models.CharField(max_length = 254,null=True,blank=True,verbose_name = '静态文件目录')
 	breadcrumbs = models.CharField(max_length = 254,null=True,blank=True,verbose_name = '导航位置')
@@ -1229,3 +1229,22 @@ class OAuthSite(models.Model):
 	class Meta:
 		verbose_name = '社交账户登陆配置'
 		verbose_name_plural = '社交账户登陆配置'
+
+@python_2_unicode_compatible		
+class OAuthAccount(models.Model):
+	site_name = models.CharField(max_length=64,null=True,default='',verbose_name = '社交网站')
+	user = models.ForeignKey(MyUser,null=True,blank=True,related_name='oauth_accounts')
+	uid = models.CharField(max_length=64,null=True,default='',verbose_name = 'UID')
+	name = models.CharField(max_length=128,null=True,default='',verbose_name = '昵称')
+	avatar = models.CharField(max_length=1024,null=True,default='',verbose_name = '头像')
+	
+	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
+	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
+	
+	def __str__(self):
+		return '%s: %s - %s' % (self.user,self.site_name,self.name)
+	
+	class Meta:
+		verbose_name = '社交账户账号'
+		verbose_name_plural = '社交账户账号'
+	

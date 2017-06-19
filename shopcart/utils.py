@@ -298,6 +298,27 @@ def handle_uploaded_file(f,type='other',product_sn='-1',file_name_type='random',
 			destination.close()
 	return file_names
 	
+#获取一个文件内容
+def read_file(targetDir,filename):
+	targetFile = os.path.join(targetDir,filename)
+	logger.info('Start to read file : %s' % targetFile)
+	if os.path.isfile(targetFile): 
+		fp = open(targetFile)
+		try:
+			content = fp.read()
+		except Exception as err:
+			logger.error('Read file %s error. Error Message: %s' % (fp,err))
+			content = None
+		finally:
+			if fp is not None:
+				try:
+					fp.close()
+				except:
+					logger.error('Can not close file %s' % fp)
+					pass
+		return content
+	else:
+		return None
 	
 #删除文件夹下所有文件	
 def remove_file_in_dir(targetDir,is_recursive=False):

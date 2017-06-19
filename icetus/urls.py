@@ -23,6 +23,8 @@ urlpatterns = patterns("",
 	url(r'^wx/$', 'shopcart.oauth.views.wechat_check',name='wechat_check'),
 	url(r'^account/oauth/(.+)/$', 'shopcart.oauth.views.callback',name='oauth_callback'),
 	
+	url(r'^sitemap.xml$', 'shopcart.views.sitemap',name='view_sitemap'),
+	
 	url(r'^refresh-captcha$', 'shopcart.index.refresh_captcha',name='refresh_captcha'),	
 	url(r'^common/get-menu/$', 'shopcart.index.get_menu',name='common_get_menu'),
 	url(r'^common/get-slider-images/$', 'shopcart.index.get_slider_images',name='common_get_slider_images'),

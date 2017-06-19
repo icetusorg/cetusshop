@@ -26,6 +26,16 @@ def contact_page(request,tdk=None):
 	customize_tdk(ctx,tdk)
 	
 	return TemplateResponse(request,System_Config.get_template_name() + '/contact.html',ctx)
+	
+
+def sitemap(request):
+	ctx = {}
+	
+	from shopcart.utils import read_file
+	file = read_file('media/sitemap/','sitemap.xml')
+	
+	return HttpResponse(file)
+	
 
 def url_dispatch(request,url):
 	logger.debug('Url to dispatch:' + url)

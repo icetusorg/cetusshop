@@ -1248,3 +1248,40 @@ class OAuthAccount(models.Model):
 		verbose_name = '社交账户账号'
 		verbose_name_plural = '社交账户账号'
 	
+@python_2_unicode_compatible
+class NoticeEmailType(models.Model):
+	type = models.CharField(max_length=64,null=True,default='',verbose_name = '通知类型')
+	name = models.CharField(max_length=64,null=True,default='',verbose_name = '通知名称')
+	is_send = models.BooleanField(default=False,verbose_name='是否发送')
+	title = models.CharField(max_length=254,verbose_name='邮件主题')
+	sender = models.EmailField(null=True)
+	smtp_host = models.CharField(max_length=100)
+	username = models.CharField(max_length=100)
+	password = models.CharField(max_length=100)
+	need_ssl = models.BooleanField(default=False,verbose_name="是否启用SSL连接")
+	template = models.CharField(max_length=254,null=True,blank=True,verbose_name='模板组名称')
+	template_file = models.CharField(max_length=254,null=True,blank=True,verbose_name='模板文件名称')
+	create_time = models.DateTimeField(auto_now_add = True)
+	update_time = models.DateTimeField(auto_now = True)
+	
+	def __str__(self):
+		return '%s: %s' % (self.type,self.name)
+	
+	class Meta:
+		verbose_name = '通知邮件类型'
+		verbose_name_plural = '通知邮件类型'
+
+	
+@python_2_unicode_compatible	
+class NoticeEmailList(models.Model):
+	type = models.ForeignKey(NoticeEmailType,null=True,blank=True,verbose_name = '类型')
+	email_address = models.EmailField(null=True)
+	create_time = models.DateTimeField(auto_now_add = True)
+	update_time = models.DateTimeField(auto_now = True)
+	
+	def __str__(self):
+		return '%s: %s' % (self.type.name,self.email_address)
+	
+	class Meta:
+		verbose_name = '通知邮件列表'
+		verbose_name_plural = '通知邮件列表'

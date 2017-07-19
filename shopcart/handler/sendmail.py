@@ -156,11 +156,53 @@ def inquiry_received_send_mail(sender,**kwargs):
 		mail_ctx['system_para'] = get_system_parameters()
 		mail_ctx['name'] = inquiry.name
 		#sendmail('inquiry_received_send_mail',inquiry.email,mail_ctx,title=None,useage='inquiry_received')
-		sendmail(inquiry.email,mail_ctx,title=None,useage='inquiry_received')	
+		sendmail(inquiry.email,mail_ctx,title=None,useage='inquiry_received')
+		
+		#将邮件发送给管理员
+		send_notice_email('inquiry_notice',mail_ctx)
+		
+		
 	except Exception as err:
 		logger.error('There is an error ocuuerd in inquiry_received_send_mail . \n Error Message：%s' % err)
 	
 
+	
+#发送通知邮件
+def send_notice_email(notice_type,mail_ctx):
+	from shopcart.models import NoticeEmailType,NoticeEmailList
+	from shopcart.utils import url_with_out_slash,MailThread
+	try:
+		type = NoticeEmailType.objects.get(type=notice_type)
+	except Exception as err:
+		logger.info('There is no config for %s. \n Error Message: %s ' % (notice_type,err))
+		type = None
+			
+	if type and type.is_send == True:
+		audit_list = NoticeEmailList.objects.filter(type=type)
+	else:
+		audit_list = None
+		
+	if audit_list:
+		template = 'default'
+		if type.template != '' and type.template != None:
+			logger.debug('email.template is not none')
+			template = url_with_out_slash(type.template)
+		
+		template_file = 'default' + '.html'
+		if type.template_file != '' and type.template_file != None:
+			logger.debug('email.template_file is not none')
+			template_file = type.template_file
+		
+		template_path =  'email/%s/%s' % (template,template_file)
+		
+		
+	
+		for audit in audit_list:
+			logger.debug('Start to send mail to %s....' % audit.email_address)
+			mail_thread = MailThread(ctx=mail_ctx,send_to=audit.email_address,title=type.title,template_path=template_path,username=type.username,password=type.password,smtp_host=type.smtp_host,sender=type.sender,is_ssl=type.need_ssl)
+			mail_thread.start()
+			
+	
 	
 	
 #发送邮件	

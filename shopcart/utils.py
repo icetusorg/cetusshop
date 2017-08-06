@@ -135,6 +135,9 @@ class MailThread(threading.Thread):
 		
 	def run(self):
 		logger.debug('start send mail thread ...')
+		logger.debug('self.paras.smtp_host: %s' % self.paras['smtp_host'])
+		logger.debug('self.paras.username: %s' % self.paras['username'])
+		logger.debug('self.paras.password: %s' % self.paras['password'])
 		my_send_mail(ctx=self.paras['ctx'],send_to=self.paras['send_to'],title=self.paras['title'],template_path=self.paras['template_path'],username=self.paras['username'],password=self.paras['password'],smtp_host=self.paras['smtp_host'],sender=self.paras['sender'],is_ssl=self.paras['is_ssl'])
 	
 	
@@ -142,6 +145,8 @@ def my_send_mail(ctx,send_to,title,template_path,username,password,smtp_host,sen
 	logger.debug('Enter my_send_mail function.')
 	t = loader.get_template(template_path)
 	html_content = t.render(Context(ctx)) 
+	
+	logger.debug('0 username:%s , password: , host:%s ' % (username,smtp_host))
 	
 	if is_ssl:
 		logger.debug('Using SSL')
@@ -153,10 +158,16 @@ def my_send_mail(ctx,send_to,title,template_path,username,password,smtp_host,sen
 		msg['From'] = sender
 		msg['To'] = send_to
 		try:
+			logger.debug('1 username:%s , password:%s , host:%s ' % (username,password,smtp_host))
+			logger.debug('1')
 			s = smtplib.SMTP_SSL(smtp_host,465)
+			logger.debug('2')
 			s.login(username,password)
+			logger.debug('3')
 			s.sendmail(username,send_to,msg.as_string())
+			logger.debug('4')
 			s.quit()
+			logger.debug('5')
 		except Exception as err:
 			logger.error('Mail send error: %s' % err)
 		finally:
@@ -169,18 +180,34 @@ def my_send_mail(ctx,send_to,title,template_path,username,password,smtp_host,sen
 		try:
 			logger.debug('Not Using SSL')
 			conn = get_connection() # 返回当前使用的邮件后端的实例
+			logger.debug('1')
 			conn.username = username# 更改用户名
 			conn.password = password # 更改密码
 			conn.host = smtp_host # 设置邮件服务器
-			conn.open() # 打开连接
+			logger.debug('1.5')
+			logger.debug('1 username:%s , password:%s , host:%s ' % (conn.username,conn.password,conn.host))
+			logger.debug('2')
+			
+			try:
+				conn.open() # 打开连接
+				logger.debug('3')
+			except Exception as connerr:
+				logger.debug('3.5')
+				logger.error('Conn.Open Error. Error Message : %s' % connerr)
+			finally:
+				logger('3.999')
+				
+			logger.debug('3.6')
 			
 			mail_list = [send_to, ]
+			logger.debug('4:%s' % mail_list)
 			EMAIL_HOST_USER = sender
 			subject, from_email, to = title, EMAIL_HOST_USER, mail_list
 			
 			msg = EmailMultiAlternatives(subject, html_content, from_email, to)
 			msg.attach_alternative(html_content, "text/html")
 			conn.send_messages([msg,]) # 我们用send_messages发送邮件
+			logger.info('Mail send success! target:%s' % to)
 		except Exception as err:
 			logger.error('Mail send error：' + str(err))
 		finally:

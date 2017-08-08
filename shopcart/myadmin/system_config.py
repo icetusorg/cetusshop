@@ -1,7 +1,7 @@
 #coding=utf-8
 from django.shortcuts import render,redirect,render_to_response
 from django.core.urlresolvers import reverse
-from shopcart.models import System_Config,Email
+from shopcart.models import System_Config,Email,NoticeEmailType,NoticeEmailList
 from shopcart.utils import get_system_parameters
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse,JsonResponse,Http404
@@ -29,6 +29,8 @@ def view(request,type='site_config'):
 	#邮件设置
 	email_list = Email.objects.all()
 	ctx['email_list'] = email_list
+	notice_email_type_list = NoticeEmailType.objects.all()
+	ctx['notice_email_type_list'] = notice_email_type_list
 	
 	
 	template_name = '/system_%s.html' % type
@@ -146,15 +148,49 @@ def email_config_manage(request):
 
 		from shopcart.forms import email_form
 		id = request.POST.get('id','')
-
-		try:
-			email = Email.objects.get(id=id)
-			form = email_form(request.POST,instance=email)
-			form.save()
-		except Exception as err:
-			logger.error('Save email config which id is [%s] faild. \n Error message: %s' % (id,err))
-			result['message'] = '邮件设置保存失败'
-			return JsonResponse(result)
+		type = request.POST.get('target_type','')
+		
+		logger.debug('type:%s' % type)
+		
+		if type == 'email':
+			try:
+				email = Email.objects.get(id=id)
+				form = email_form(request.POST,instance=email)
+				form.save()
+			except Exception as err:
+				logger.error('Save email config which id is [%s] faild. \n Error message: %s' % (id,err))
+				result['message'] = '邮件设置保存失败'
+				return JsonResponse(result)
+		elif type == 'notice':
+			try:
+				email = NoticeEmailType.objects.get(id=id)
+				email.is_send = request.POST.get('is_send',False)
+				email.sender = request.POST.get('email_address')
+				email.title = request.POST.get('title')
+				
+				email.smtp_host = request.POST.get('smtp_host')
+				email.username = request.POST.get('username')
+				email.password = request.POST.get('password')
+				email.need_ssl = request.POST.get('need_ssl',False)
+				email.template = request.POST.get('template')
+				email.template_file = request.POST.get('template_file')
+				email.save()
+				
+				target_list = request.POST.get('target_list')
+				if target_list:
+					target_array = target_list.split(',')
+				for em in email.auditors.all():
+					em.delete()
+				for target in target_array:
+					if target:
+						NoticeEmailList.objects.create(type=email,email_address=target)
+				
+			except Exception as err:
+				logger.error('Save email config which id is [%s] faild. \n Error message: %s' % (id,err))
+				result['message'] = '邮件设置保存失败'
+				return JsonResponse(result)
+		else:
+			raise Http404
 
 		result['success'] = True
 		result['message'] = '邮件设置保存成功'
@@ -165,8 +201,24 @@ def email_config_manage(request):
 		ctx['page_name'] = '邮件配置'
 	
 		id = request.GET.get('id','')
+		type = request.GET.get('type','email')
+		
 		try:
-			email = Email.objects.get(id=id)
+			if type == 'notice':
+				email = NoticeEmailType.objects.get(id=id)
+				email.useage_name = email.name
+				email.email_address = email.sender
+				email.target_type = 'notice'
+				email.target_list = ''
+				for em in email.auditors.all():
+					if email.target_list == '':
+						email.target_list = em.email_address
+					else:
+						email.target_list = '%s,%s' % (email.target_list,em.email_address) 
+				
+			else:
+				email = Email.objects.get(id=id)
+				email.target_type = 'email'
 			ctx['email'] = email
 		except Exception as err:
 			logger.error('Can not find email setting which id is [%s]' % id)

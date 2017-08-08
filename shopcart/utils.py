@@ -146,7 +146,7 @@ def my_send_mail(ctx,send_to,title,template_path,username,password,smtp_host,sen
 	t = loader.get_template(template_path)
 	html_content = t.render(Context(ctx)) 
 	
-	logger.debug('0 username:%s , password: , host:%s ' % (username,smtp_host))
+	logger.debug('0 send_to:%s , username:%s , password: , host:%s ' % (send_to,username,smtp_host))
 	
 	if is_ssl:
 		logger.debug('Using SSL')

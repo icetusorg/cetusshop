@@ -169,13 +169,14 @@ def inquiry_received_send_mail(sender,**kwargs):
 	
 #发送通知邮件
 def send_notice_email(notice_type,mail_ctx):
+	logger.info('Start to send notice mails,notice_type:%s ...' % notice_type)
 	from shopcart.models import NoticeEmailType,NoticeEmailList
 	from shopcart.utils import url_with_out_slash,MailThread
 	try:
 		type = NoticeEmailType.objects.get(type=notice_type)
 	except Exception as err:
 		logger.info('There is no config for %s. \n Error Message: %s ' % (notice_type,err))
-		type = None
+		type = None		
 			
 	if type and type.is_send == True:
 		audit_list = NoticeEmailList.objects.filter(type=type)

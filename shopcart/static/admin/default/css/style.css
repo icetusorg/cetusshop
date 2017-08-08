@@ -344,17 +344,19 @@ a{
 .xy-list-product .product-table-striped th:nth-child(1), .xy-list-product .product-table-striped tr td:nth-child(1) {
     width: 6%;
     text-align: center;
+    vertical-align: middle;
 }
 
 .xy-list-product .product-table-striped th:nth-child(2), .xy-list-product .product-table-striped tr td:nth-child(2) {
     width: 8%;
     text-align: center;
+    vertical-align: middle;
 }
 
 .product-table-striped tr td input {
     width: 50%;
     text-align: center;
-    margin-top: 18px;
+    /*margin-top: 18px;*/
 }
 
 .xy-list-product .table-striped th:nth-child(3), .xy-list-product .table-striped tr td:nth-child(3) {
@@ -364,6 +366,7 @@ a{
 .xy-list-product .product-table-striped th:nth-child(3), .xy-list-product .product-table-striped tr td:nth-child(3) {
     width: 8%;
     text-align: center;
+    vertical-align: middle;
 }
 
 .xy-list-product .table-striped th:nth-child(4), .xy-list-product .table-striped tr td:nth-child(4) {
@@ -443,7 +446,7 @@ a{
 }
 
 .xy-list-product .table-striped tr td:nth-child(1) input {
-    margin-top: 24px;
+    /*margin-top: 24px;*/
 }
 
 .xy-list-all {
@@ -1583,11 +1586,12 @@ iframe {
 }
 
 .email-config .attr-array-list dt, .email-config .attr-array-list dd {
-    width: 21%;
+    width: 20%;
 }
 
-.email-config .attr-array-list dt:nth-child(3), .email-config .attr-array-list dd:nth-child(3) {
-    width: 37%;
+.email-config .attr-array-list dt:nth-child(4), .email-config .attr-array-list dd:nth-child(4),.email-config .attr-array-list dt:nth-child(5), .email-config .attr-array-list dd:nth-child(5) {
+    width: 20%;
+    text-align: center;
 }
 
 .email-config input {
@@ -1636,7 +1640,7 @@ iframe {
 }
 
 .email-edit .item input {
-    width: 220px;
+    width: 275px;
 }
 
 .email-edit input[type="checkbox"] {
@@ -1658,7 +1662,9 @@ iframe {
 .email-test button {
     margin-left: 25px;
 }
-
+.email-input-long input{
+    width: 500px!important;
+}
 /*编辑邮件模板*/
 .article {
     width: 100%;
@@ -3780,4 +3786,13 @@ xpopup
     white-space: nowrap;
     overflow: hidden;
 }
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    padding: 8px;
+    line-height: 1.42857143;
+    vertical-align: middle;
+    border-top: 1px solid #ddd;
+}
 
+.table {
+     margin-bottom:0px!important;
+}

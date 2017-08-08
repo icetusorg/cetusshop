@@ -1274,7 +1274,7 @@ class NoticeEmailType(models.Model):
 	
 @python_2_unicode_compatible	
 class NoticeEmailList(models.Model):
-	type = models.ForeignKey(NoticeEmailType,null=True,blank=True,verbose_name = '类型')
+	type = models.ForeignKey(NoticeEmailType,null=True,blank=True,verbose_name = '类型',related_name='auditors')
 	email_address = models.EmailField(null=True)
 	create_time = models.DateTimeField(auto_now_add = True)
 	update_time = models.DateTimeField(auto_now = True)

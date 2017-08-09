@@ -40,8 +40,8 @@
 						<dl>
 							<dd>{{email.useage_name}}</dd>
 							<dd>
-								<input type="radio" name="{{email.id}}_is_send" {{email.is_send|yesno:"checked,,"}}><label>是</label>
-								<input type="radio" name="{{email.id}}_is_send" {{email.is_send|yesno:",checked,"}}><label>否</label>
+								<input type="radio" name="{{email.id}}_is_send" {{email.is_send|yesno:"checked,,"}} disabled><label>是</label>
+								<input type="radio" name="{{email.id}}_is_send" {{email.is_send|yesno:",checked,"}} disabled><label>否</label>
 							</dd>
 							<dd>{{email.email_address}}</dd>
 							<dd>客户</dd>
@@ -53,8 +53,8 @@
 						<dl>
 							<dd>{{email.name}}</dd>
 							<dd>
-								<input type="radio" name="{{email.id}}_is_send" {{email.is_send|yesno:"checked,,"}}><label>是</label>
-								<input type="radio" name="{{email.id}}_is_send" {{email.is_send|yesno:",checked,"}}><label>否</label>
+								<input type="radio" name="notice_{{email.id}}_is_send" {{email.is_send|yesno:"checked,,"}} disabled><label>是</label>
+								<input type="radio" name="notice_{{email.id}}_is_send" {{email.is_send|yesno:",checked,"}} disabled><label>否</label>
 							</dd>
 							<dd>{{email.sender}}</dd>
 							<dd>管理员</dd>

@@ -155,6 +155,7 @@ def inquiry_received_send_mail(sender,**kwargs):
 		from shopcart.utils import get_system_parameters
 		mail_ctx['system_para'] = get_system_parameters()
 		mail_ctx['name'] = inquiry.name
+		mail_ctx['inquiry'] = inquiry
 		#sendmail('inquiry_received_send_mail',inquiry.email,mail_ctx,title=None,useage='inquiry_received')
 		sendmail(inquiry.email,mail_ctx,title=None,useage='inquiry_received')
 		

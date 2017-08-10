@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head lang="en">
+    <meta charset="utf-8"/>
+    <title>{{system_para.site_name}}</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <style type="text/css">
+        @font-face {
+            font-family: opensan;  /*名称自定义*/
+            src: url("../fonts/opensan.ttf")   /*字体文件上传放进网站对应目录*/
+        }
+        body {font-family: opensan, Arial, Helvetica;font-size: 14px;line-height: 24px;color: #666;overflow-x:hidden;}
+        a:hover,a,a:focus{text-decoration: none;cursor: pointer;}
+        *{margin:0; padding:0;outline: none !important;}
+        label i{color:#ff0000;}
+        label{margin-bottom: 0!important;}
+        li, ul{ list-style-type:none;}
+        .color{color:#333 !important;}
+        .none{display: none;}
+        input[type="text"],textarea{ -webkit-appearance: none;}
+        button{border-radius:0;border-bottom-left-radius:0;border-bottom-right-radius:0; border-top-left-radius:0; border-top-right-radius:0;-webkit-transition:0.4s; -moz-transition: 0.4s;-o-transition: 0.4s;transition: 0.4s;}
+        button:hover{border-radius:0;border-bottom-left-radius:0;border-bottom-right-radius:0; border-top-left-radius:0; border-top-right-radius:0;-webkit-transition:0.4s; -moz-transition: 0.4s;-o-transition: 0.4s;transition: 0.4s;}
+        .delay,.delay:hover{-webkit-transition:0.4s; -moz-transition: 0.4s;-o-transition: 0.4s;transition: 0.4s;}
+        .ico-down{width:10px; height:10px; background: url("../images/ico/down.jpg"); display: inline-block;}
+        /*Email邮件页面*/
+        .email-wapper{width:640px; margin:40px auto; border: 1px solid #eee;}
+        .email-wapper a{color:#333}
+        .email-logo{width:640px; margin:0 auto; text-align: center;padding-top: 10px; padding-bottom: 20px;}
+        .email-content{padding:0 20px; height:500px;}
+        .email-footer{width:600px; margin:0 auto; height:60px; line-height:60px; text-align: center; border-top:1px solid #333;}
+        .email-buttom{margin-top: 20px;}
+        .email-buttom a{padding:10px; background-color: #333; color:#fff;}
+
+
+        /*email_inquiry*/
+        .table {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 20px;
+        }
+        table {
+            background-color: transparent;
+        }
+        .message-detail-table tr td:first-child {
+            width: 15%;
+            font-size: 12px;
+            color: #333333;
+        }
+        .message-detail-table tr td:last-child {
+            width: 100%;
+            font-size: 12px;
+            float: left;
+            color: #333333;
+        }
+        .xy-list.box, .xy-list-product.box {
+            border-top: none;
+            box-shadow: none;
+        }
+        .box-header > .fa, .box-header > .glyphicon, .box-header > .ion, .box-header .box-title {
+            display: inline-block;
+            font-size: 14px;
+            margin: 0;
+            line-height: 1;
+        }
+        .message-detail-table-content tr td {
+            font-size: 12px;
+            vertical-align: middle;
+            text-align: center;
+        }
+        .xy-list img, .xy-list-product img {
+            width: 60px;
+            height: 60px;
+            padding-top: 8px;
+        }
+        .content{
+            padding: 20px;
+        }
+
+    </style>
+<body>
+<div class="email-wapper">
+    <div class="email-header">
+    </div>
+    <div class="content">
+        <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box xy-search">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">询盘信息</h3>
+                        <table class="table message-detail-table">
+                            <tbody>
+                            <tr>
+                                <td>Email:</td>
+                                <td>{{inquiry.email}}</td>
+                            </tr>
+                            <tr>
+                                <td>姓名:</td>
+                                <td>{{name}}</td>
+                            </tr>
+                            <tr>
+                                <td>留言时间:</td>
+                                <td>{{inquiry.create_time|date:"Y-m-d H:i:s"}}</td>
+                            </tr>
+                            <tr>
+                                <td>IP:</td>
+                                <td>{{inquiry.ip_address}}</td>
+                            </tr>
+                            <tr>
+                                <td>留言标题:</td>
+                                <td>{{inquiry.title}}</td>
+                            </tr>
+                            <tr>
+                                <td>留言内容:</td>
+                                <td>{{inquiry.message}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="email-footer"><a href="{{system_para.base_url}}">{{system_para.site_name}}</a></div>
+</div>
+</body>
+</html>

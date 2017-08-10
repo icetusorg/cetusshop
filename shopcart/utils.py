@@ -148,6 +148,7 @@ def my_send_mail(ctx,send_to,title,template_path,username,password,smtp_host,sen
 	
 	logger.debug('0 send_to:%s , username:%s , password: , host:%s ' % (send_to,username,smtp_host))
 	
+	
 	if is_ssl:
 		logger.debug('Using SSL')
 		import smtplib
@@ -157,6 +158,8 @@ def my_send_mail(ctx,send_to,title,template_path,username,password,smtp_host,sen
 		msg['Subject'] = title
 		msg['From'] = sender
 		msg['To'] = send_to
+		
+		s = None
 		try:
 			logger.debug('1 username:%s , password:%s , host:%s ' % (username,password,smtp_host))
 			logger.debug('1')

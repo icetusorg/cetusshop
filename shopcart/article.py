@@ -118,9 +118,11 @@ def view_blog_list(request,category_id=None,tdk=None):
 		customize_tdk(ctx,tdk)
 	
 	try:
-		blog_list_page_size = System_Config.objects.get('blog_list_page_size')
-	except:
-		logger.debug('blog_list_page_size is not defined,use the default value 12.')
+		blog_list_page_size_item = System_Config.objects.get(name='blog_list_page_size')
+		blog_list_page_size = blog_list_page_size_item.val
+		logger.debug('blog_list_page_size is %s .' % blog_list_page_size)
+	except Exception as err:
+		logger.debug('blog_list_page_size is not defined,use the default value 12. \Error Message:%s' % err)
 		blog_list_page_size = 12
 	
 	if request.method =='GET':	

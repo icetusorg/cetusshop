@@ -368,7 +368,8 @@ def list_view(request):
 		
 			
 		page_size = get_page_size()
-		artile_list, page_range = my_pagination(request=request, queryset=all,display_amount=page_size)
+		artile_list, page_range ,current_page = my_pagination(request=request, queryset=all,display_amount=page_size)
+		logger.debug('current_page:%s' % current_page)
 		
 		#为页面准备分类的下拉列表
 		from shopcart.myadmin.article_busi_category import get_all_category
@@ -379,6 +380,7 @@ def list_view(request):
 		ctx['article_list'] = artile_list
 		ctx['page_range'] = page_range
 		ctx['page_size'] = page_size
+		ctx['current_page'] = current_page
 		ctx['article_count'] = all.count()
 		return TemplateResponse(request,System_Config.get_template_name('admin') + '/article_list.html',ctx)
 	else:

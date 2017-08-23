@@ -213,10 +213,11 @@ def view_list(request,category_id=None):
 			except:
 				page_size = 12
 		
-		product_list, page_range = my_pagination(request=request, queryset=product_list,display_amount=page_size)
+		product_list, page_range,current_page = my_pagination(request=request, queryset=product_list,display_amount=page_size)
 		
 		ctx['product_list'] = product_list
 		ctx['page_range'] = page_range
+		ctx['current_page'] = current_page
 		return TemplateResponse(request,System_Config.get_template_name() + template,ctx)
 
 
@@ -238,10 +239,11 @@ def query_product_show(request):
 			page_size = request.GET['page_size']
 		else:
 			page_size = get_page_size()
-		product_list, page_range = my_pagination(request=request, queryset=product_list,display_amount=page_size)
+		product_list, page_range,current_page = my_pagination(request=request, queryset=product_list,display_amount=page_size)
 		
 		ctx['product_list'] = product_list
 		ctx['page_range'] = page_range
+		ctx['current_page'] = current_page
 		return TemplateResponse(request,System_Config.get_template_name() + '/product_list.html',ctx)
 		
 		

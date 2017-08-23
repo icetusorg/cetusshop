@@ -160,11 +160,12 @@ def view_blog_list(request,category_id=None,tdk=None):
 		
 		if 'page_size' in request.GET:
 			logger.debug('the page_size has been detacted')
-			article_list, page_range = my_pagination(request=request, queryset=article_list,display_amount=request.GET['page_size'])
+			article_list, page_range,current_page = my_pagination(request=request, queryset=article_list,display_amount=request.GET['page_size'])
 		else:
-			article_list, page_range = my_pagination(request=request, queryset=article_list,display_amount=blog_list_page_size)
+			article_list, page_range,current_page = my_pagination(request=request, queryset=article_list,display_amount=blog_list_page_size)
 		
 		ctx['article_list'] = article_list
 		ctx['page_range'] = page_range
+		ctx['current_page'] = current_page
 		logger.info('template : ' + template)
 		return TemplateResponse(request,System_Config.get_template_name() + '/' + template,ctx)

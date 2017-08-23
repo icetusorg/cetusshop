@@ -80,11 +80,12 @@ def list_view(request):
 			get_product_detail_for_inquiry(inquiry)
 			
 		page_size = get_page_size()
-		inquiry_list, page_range = my_pagination(request=request, queryset=inquiry_list,display_amount=page_size)	
+		inquiry_list, page_range,current_page = my_pagination(request=request, queryset=inquiry_list,display_amount=page_size)	
 		
 		ctx['inquiry_list'] = inquiry_list
 		ctx['page_range'] = page_range
 		ctx['page_size'] = page_size
+		ctx['current_page'] = current_page
 		ctx['inquiry_count'] = count
 		return TemplateResponse(request,System_Config.get_template_name('admin') + '/inquiry_list.html',ctx)
 	else:

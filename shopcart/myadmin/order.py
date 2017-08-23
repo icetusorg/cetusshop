@@ -77,11 +77,12 @@ def list_view(request):
 		
 
 		page_size = get_page_size()
-		order_list, page_range = my_pagination(request=request, queryset=all,display_amount=page_size)
+		order_list, page_range,current_page = my_pagination(request=request, queryset=all,display_amount=page_size)
 		
 		ctx['order_list'] = order_list
 		ctx['page_range'] = page_range
 		ctx['page_size'] = page_size
+		ctx['current_page'] = current_page
 		ctx['order_count'] = all.count()
 		return TemplateResponse(request,System_Config.get_template_name('admin') + '/order_list_content.html',ctx)
 	else:

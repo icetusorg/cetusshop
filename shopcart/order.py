@@ -244,9 +244,10 @@ def show_order(request):
 		except:
 			logger.debug('order_list_page_size is not defined,use the default value 10.')
 			order_list_page_size = 10
-		order_list, page_range = my_pagination(request, order_list,display_amount=order_list_page_size)
+		order_list, page_range,current_page = my_pagination(request, order_list,display_amount=order_list_page_size)
 		ctx['order_list'] = order_list
 		ctx['page_range'] = page_range
+		ctx['current_page'] = current_page
 		return TemplateResponse(request,System_Config.get_template_name() + '/orders.html',ctx)
 		
 		

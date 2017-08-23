@@ -70,9 +70,10 @@ def product_sku_group_list(request):
 		group_list = Attribute_Group.objects.all()
 		
 		page_size = 12
-		group_list, page_range = my_pagination(request=request, queryset=group_list,display_amount=page_size)
+		group_list, page_range ,current_page = my_pagination(request=request, queryset=group_list,display_amount=page_size)
 		ctx['group_list'] = group_list
 		ctx['page_range'] = page_range
+		ctx['current_page'] = current_page
 		ctx['item_count'] = ProductParaGroup.objects.all().count()
 		ctx['page_size'] = page_size
 		return TemplateResponse(request,System_Config.get_template_name('admin') + '/product_sku_group_list.html',ctx)
@@ -89,9 +90,10 @@ def product_para_list(request):
 		product_para_list = ProductParaGroup.objects.all()
 		
 		page_size = 12
-		product_para_list, page_range = my_pagination(request=request, queryset=product_para_list,display_amount=page_size)
+		product_para_list, page_range ,current_page = my_pagination(request=request, queryset=product_para_list,display_amount=page_size)
 		ctx['product_para_list'] = product_para_list
 		ctx['page_range'] = page_range
+		ctx['current_page'] = current_page
 		ctx['item_count'] = ProductParaGroup.objects.all().count()
 		ctx['page_size'] = page_size
 		return TemplateResponse(request,System_Config.get_template_name('admin') + '/product_para_list_content.html',ctx)
@@ -1179,12 +1181,13 @@ def get_product_list(request,ctx,exclude_id = None):
 		except:
 			page_size = 12
 	
-	product_list, page_range = my_pagination(request=request, queryset=product_list,display_amount=page_size)
+	product_list, page_range ,current_page = my_pagination(request=request, queryset=product_list,display_amount=page_size)
 	ctx['product_list'] = product_list
 	ctx['page_range'] = page_range
 	ctx['item_count'] = Product.objects.all().count()
 	ctx['page_size'] = page_size
 	ctx['query_item'] = query_item
+	ctx['current_page'] = current_page
 	ctx['item_value'] = item_value
 	return ctx
 		

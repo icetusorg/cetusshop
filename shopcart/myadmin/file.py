@@ -68,10 +68,11 @@ def file_list_show(request,item_type,item_id):
 			
 		page_size = 12
 		count = image_list.count()
-		image_list, page_range = my_pagination(request=request, queryset=image_list,display_amount=page_size)	
+		image_list, page_range,current_page = my_pagination(request=request, queryset=image_list,display_amount=page_size)	
 		ctx['image_list'] = image_list	
 		ctx['page_range'] = page_range
 		ctx['page_size'] = page_size
+		ctx['current_page'] = current_page
 		ctx['item_count'] = count
 		return TemplateResponse(request,System_Config.get_template_name('admin') + '/picture_list.html',ctx)
 	else:

@@ -135,11 +135,12 @@ def list(request):
 		slider_list = Slider.objects.order_by('-create_time')
 	
 		page_size = get_page_size()
-		slider_list, page_range = my_pagination(request=request, queryset=slider_list,display_amount=page_size)	
+		slider_list, page_range,current_page = my_pagination(request=request, queryset=slider_list,display_amount=page_size)	
 		
 		ctx['slider_list'] = slider_list
 		ctx['page_range'] = page_range
 		ctx['page_size'] = page_size
+		ctx['current_page'] = current_page
 		ctx['item_count'] = Slider.objects.all().count()
 		return TemplateResponse(request,System_Config.get_template_name('admin') + '/slider_list.html',ctx)
 	else:

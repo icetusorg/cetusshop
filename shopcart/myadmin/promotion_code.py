@@ -39,10 +39,11 @@ def list(request):
 
 		count = promotion_list.count()
 		page_size = get_page_size()
-		promotion_list, page_range = my_pagination(request=request, queryset=promotion_list,display_amount=page_size)	
+		promotion_list, page_range,current_page = my_pagination(request=request, queryset=promotion_list,display_amount=page_size)	
 
 		ctx['page_range'] = page_range
 		ctx['page_size'] = page_size
+		ctx['current_page'] = current_page
 		ctx['item_count'] = count
 		
 		ctx['promotion_list'] = promotion_list

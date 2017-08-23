@@ -118,8 +118,8 @@
 							{% endif %}	
 							
 							{% for p in page_range %}
-								{% ifequal p objects.number %}
-									<li class="active">{{p}}</li>
+								{% ifequal p current_page %}
+									<li><a class="pageChage current_page"  data-page = "{{p}}" href="#" title="{{p}}">{{p}}</a></li>
 								{% else %}
 									<li><a class="pageChage"  data-page = "{{p}}" href="#" title="{{p}}">{{p}}</a></li>
 								{% endifequal %}

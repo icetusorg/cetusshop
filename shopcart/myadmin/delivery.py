@@ -22,8 +22,9 @@ def type_list_view(request):
 	if request.method == 'GET':
 		express_type_list = ExpressType.objects.filter(is_delete=False)
 		
-		express_type_list, page_range = my_pagination(request=request, queryset=express_type_list,display_amount=15)
+		express_type_list, page_range,current_page = my_pagination(request=request, queryset=express_type_list,display_amount=15)
 		ctx['page_range'] = page_range
+		ctx['current_page']=current_page
 		ctx['item_count'] = ExpressType.objects.all().count()
 		ctx['page_size'] = 15
 		
@@ -121,9 +122,10 @@ def express_list_view(request):
 	
 	if request.method == 'GET':
 		express_list = Express.objects.filter(is_delete=False)
-		express_list, page_range = my_pagination(request=request, queryset=express_list,display_amount=15)
+		express_list, page_range,current_page = my_pagination(request=request, queryset=express_list,display_amount=15)
 		ctx['express_list'] = express_list
 		ctx['page_range'] = page_range
+		ctx['current_page'] = current_page
 		ctx['item_count'] = Express.objects.all().count()
 		ctx['page_size'] = 15
 		

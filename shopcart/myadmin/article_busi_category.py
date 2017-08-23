@@ -37,11 +37,12 @@ def list(request):
 
 			
 		page_size = get_page_size()
-		category_list, page_range = my_pagination(request=request, queryset=category_list,display_amount=page_size)	
+		category_list, page_range,current_page = my_pagination(request=request, queryset=category_list,display_amount=page_size)	
 		
 		ctx['category_list'] = category_list
 		ctx['page_range'] = page_range
 		ctx['page_size'] = page_size
+		ctx['current_page'] = current_page
 		ctx['count'] = count
 
 		return TemplateResponse(request,System_Config.get_template_name('admin') + '/article_busi_category_list.html',ctx)

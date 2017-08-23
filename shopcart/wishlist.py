@@ -53,9 +53,10 @@ def view_wishlist(request):
 			logger.info('The system parameter [wish_list_page_size] is not setted,use the default value 5.')
 			page_size = 5
 		
-		wish_list, page_range = my_pagination(request, wish_list,display_amount=page_size)
+		wish_list, page_range,current_page = my_pagination(request, wish_list,display_amount=page_size)
 		ctx['wish_list'] = wish_list
 		ctx['page_range'] = page_range
+		ctx['current_page'] = current_page
 		return TemplateResponse(request,System_Config.get_template_name() + '/wish_list.html',ctx)
 		
 @login_required()

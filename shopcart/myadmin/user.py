@@ -51,11 +51,12 @@ def user_list(request):
 			user_list = user_list.filter(Q(email__icontains=item_value))
 	
 		page_size = get_page_size()
-		user_list, page_range = my_pagination(request=request, queryset=user_list,display_amount=page_size)	
+		user_list, page_range,current_page = my_pagination(request=request, queryset=user_list,display_amount=page_size)	
 		
 		ctx['user_list'] = user_list
 		ctx['page_range'] = page_range
 		ctx['page_size'] = page_size
+		ctx['current_page'] = current_page
 		ctx['item_count'] = MyUser.objects.all().count()
 		return TemplateResponse(request,System_Config.get_template_name('admin') + '/user_list.html',ctx)
 	else:

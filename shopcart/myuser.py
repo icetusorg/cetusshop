@@ -91,6 +91,7 @@ def info(request):
 		return redirect('/user/info/?success=true')
 
 def do_login(request,myuser,ctx):
+	logger.debug('do_login myuser:%s' % myuser)
 	if myuser is not None:
 		if myuser.is_active == True:
 			auth.login(request,myuser)
@@ -108,6 +109,7 @@ def do_login(request,myuser,ctx):
 			response.set_cookie('cart_id',mycart.id,max_age = 3600*24*365)
 			response.set_cookie('cart_item_type_count',mycart.cart_products.all().count(),max_age = 3600*24*365)
 			response.set_cookie('icetususer',myuser.email)
+			logger.debug('>>>>>>>>>user.backend:%s , type is %s' % (myuser.backend,type(myuser.backend)))
 			return response
 		else:
 			ctx['login_result'] = _('Your account has been banned!')
@@ -120,6 +122,7 @@ def inner_login(request,login_user,ctx=None):
 	myuser = None
 	if login_user:
 		myuser = auth.authenticate(username = login_user.email, password = login_user.password)
+		logger.debug('myuser:%s' % myuser)
 	return do_login(request,myuser,ctx)
 
 def login(request,tdk=None):

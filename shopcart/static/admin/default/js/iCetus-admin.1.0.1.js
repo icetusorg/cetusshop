@@ -211,6 +211,11 @@ jQuery(".pageChage").click(function(event){
 	event.preventDefault();//阻止A标签跳转
 	var url = location.href;
 	var pageNo = $.getUrlParam("page");
+	if (pageNo==null){
+		pageNo = "1";
+	}
+	console.log("pageNo:" + pageNo);
+	
 	var tag = $(this).attr("data-tag");
 	if(tag=="Previous"){
 		//向前，如果当前不是第一页，则向前翻页

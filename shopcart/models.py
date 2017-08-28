@@ -276,7 +276,7 @@ class Product(models.Model):
 				main_image = img
 				break
 				
-		logger.debug('main_img:%s   alt:%s' % (main_image,main_image.alt_value))
+		#logger.debug('main_img:%s   alt:%s' % (main_image,main_image.alt_value))
 		
 		if main_image:
 			image_list.remove(main_image)

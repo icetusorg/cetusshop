@@ -1181,10 +1181,12 @@ def get_product_list(request,ctx,exclude_id = None):
 		except:
 			page_size = 12
 	
+	count = len(product_list)
+	
 	product_list, page_range ,current_page = my_pagination(request=request, queryset=product_list,display_amount=page_size)
 	ctx['product_list'] = product_list
 	ctx['page_range'] = page_range
-	ctx['item_count'] = Product.objects.all().count()
+	ctx['item_count'] = count
 	ctx['page_size'] = page_size
 	ctx['query_item'] = query_item
 	ctx['current_page'] = current_page

@@ -368,6 +368,8 @@ def list_view(request):
 		
 			
 		page_size = get_page_size()
+		
+		count = len(all)
 		artile_list, page_range ,current_page = my_pagination(request=request, queryset=all,display_amount=page_size)
 		logger.debug('current_page:%s' % current_page)
 		
@@ -381,7 +383,7 @@ def list_view(request):
 		ctx['page_range'] = page_range
 		ctx['page_size'] = page_size
 		ctx['current_page'] = current_page
-		ctx['article_count'] = all.count()
+		ctx['article_count'] = count
 		return TemplateResponse(request,System_Config.get_template_name('admin') + '/article_list.html',ctx)
 	else:
 		raise Http404

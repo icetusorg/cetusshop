@@ -788,6 +788,12 @@ class Order(models.Model):
 	def get_human_status(self):
 		dict = {'0':'Wait For Payment','10':'Wait For Shipment','15':'Wait For Shippment','20':'Shipping','30':'Complete','40':'Canceled','90':'Payment Error','99':'Closed'}
 		return dict[self.status]
+		
+	def get_cust_remarks(self):
+		remark_list = self.cust_remarks.all()
+		return remark_list
+		
+		
 	#get_human_status.admin_order_field = 'pub_date'
 	#get_human_status.boolean = True
 	get_human_status.short_description = '订单状态'
@@ -796,7 +802,21 @@ class Order(models.Model):
 		verbose_name = '订单'
 		verbose_name_plural = '订单'
 		
-		
+
+@python_2_unicode_compatible		
+class OrderCustRemark(models.Model):
+	order = models.ForeignKey(Order,null=True,related_name='cust_remarks')
+	content = models.CharField(max_length = 255,verbose_name='留言内容')
+	create_time = models.DateTimeField(auto_now_add = True)
+	update_time = models.DateTimeField(auto_now = True)	
+	
+	
+	def __str__(self):
+		return self.content
+	
+	class Meta:
+		verbose_name = '订单客户留言'
+		verbose_name_plural = '订单客户留言'
 		
 @python_2_unicode_compatible		
 class OrderShippment(models.Model):

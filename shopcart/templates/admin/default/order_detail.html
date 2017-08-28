@@ -134,7 +134,9 @@
         </div>
         <div class="order-detail-message">
             <h3>客户留言</h3>
-            <p>Please, Delively As soon as possible</p>
+			{%for remark in order.get_cust_remarks%}
+            <p>{{remark.content}}</p>
+			{%endfor%}
         </div>
         <div class="order-detail-remark">
             <h3>备注</h3>

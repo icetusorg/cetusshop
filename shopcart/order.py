@@ -1,7 +1,7 @@
 #coding=utf-8
 from django.shortcuts import render,redirect,render_to_response
 from django.core.urlresolvers import reverse
-from shopcart.models import System_Config,MyUser,Order,Address,Product,Order_Products,Cart_Products,Cart,Product_Attribute,ExpressType,OrderRemark
+from shopcart.models import System_Config,MyUser,Order,Address,Product,Order_Products,Cart_Products,Cart,Product_Attribute,ExpressType,OrderRemark,OrderCustRemark
 from shopcart.utils import my_pagination,get_serial_number,get_system_parameters
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse,JsonResponse,Http404
@@ -93,7 +93,13 @@ def place_order(request):
 		order = Order.objects.create(order_number=get_serial_number(),user=request.user,status=Order.ORDER_STATUS_PLACE_ORDER,country=address.country,province=address.province,city=address.city,district=address.district,address_line_1=address.address_line_1,
 			address_line_2=address.address_line_2,first_name=address.first_name,last_name=address.last_name,zipcode=address.zipcode,tel=address.tel,mobile=address.mobile,email=request.user.email,
 			products_amount = sub_total,shipping_fee=shipping,discount=discount,order_amount=total,to_seller=remark,express_type_name = express.name,promotion_code=promotion_code)
-					
+		
+		#如果有客户留言，则记录客户留言
+		remark = request.POST.get('cust_remark','')
+		if remark:
+			remark_content = OrderCustRemark.objects.create(order=order,content=remark)
+			
+		
 		
 		for cp_id in cart_product_id:
 			cp = Cart_Products.objects.get(id=cp_id)
@@ -140,6 +146,7 @@ def place_order(request):
 			#删除购物车中商品
 			cp.delete()
 			#logger.debug('>>>>>8:cp.delete')
+			
 			
 		return redirect('/cart/payment/' + str(order.id))
 

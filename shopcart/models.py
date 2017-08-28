@@ -275,6 +275,9 @@ class Product(models.Model):
 				logger.debug('Find the main image. Remove it to top.')
 				main_image = img
 				break
+				
+		logger.debug('main_img:%s   alt:%s' % (main_image,main_image.alt_value))
+		
 		if main_image:
 			image_list.remove(main_image)
 			image_list.insert(0,main_image)

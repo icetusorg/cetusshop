@@ -356,8 +356,8 @@ def related_product_list(request):
 		ctx['type'] = 'related_product'
 		
 		#加载分类树信息
-		from shopcart.category import get_all_categorys
-		cat_list = get_all_categorys()
+		from shopcart.category import get_orgnized_category_list
+		cat_list = get_orgnized_category_list
 		ctx['cat_list'] = cat_list
 		
 		ctx = get_product_list(request,ctx,exclude_id=host_id)
@@ -374,8 +374,8 @@ def push_product_list(request):
 		ctx['type'] = 'push_product'
 		
 		#加载分类树信息
-		from shopcart.category import get_all_categorys
-		cat_list = get_all_categorys()
+		from shopcart.category import get_orgnized_category_list
+		cat_list = get_orgnized_category_list()
 		ctx['cat_list'] = cat_list
 		
 		ctx = get_product_list(request,ctx)

@@ -42,6 +42,33 @@ def get_all_top_categorys():
 	top_category_list = Category.objects.filter(parent=None)
 	return top_category_list
 	
+def get_orgnized_category_list(prefix='--'):
+	top_list = get_all_top_categorys()
+	result_list = []
+	tmp = None
+	for cat in top_list:
+		tmp = {}
+		tmp['name'] = cat.name
+		tmp['id'] = cat.id
+		result_list.append(tmp)
+		for cat2 in cat.childrens.all():
+			tmp = {}
+			tmp['name'] = prefix + cat2.name
+			tmp['id'] = cat2.id
+			result_list.append(tmp)
+			for cat3 in cat2.childrens.all():
+				tmp = {}
+				tmp['name'] = prefix + prefix + cat3.name
+				tmp['id'] = cat3.id
+				result_list.append(tmp)
+				for cat4 in cat3.childrens.all():
+					tmp = {}
+					tmp['name'] = prefix + prefix + prefix + cat4.name
+					tmp['id'] = cat4.id
+					result_list.append(tmp)
+	return result_list
+	
+
 
 def find_top_category(cat,levle):
 	if cat.parent==None:

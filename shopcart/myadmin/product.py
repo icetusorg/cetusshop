@@ -1130,8 +1130,9 @@ def product_list(request):
 		#item_number_condition = request.GET.get('item_number','')
 		
 		#加载分类树信息
-		from shopcart.category import get_all_categorys
-		cat_list = get_all_categorys()
+		from shopcart.category import get_all_categorys,get_orgnized_category_list
+		#cat_list = get_all_categorys()
+		cat_list = get_orgnized_category_list()
 		ctx['cat_list'] = cat_list
 		ctx = get_product_list(request,ctx)
 		return TemplateResponse(request,System_Config.get_template_name('admin') + '/product_list_content.html',ctx)

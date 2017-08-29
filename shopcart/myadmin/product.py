@@ -17,6 +17,22 @@ logger = logging.getLogger('icetus.shopcart')
 
 @staff_member_required
 @transaction.atomic()
+def product_export(request):
+	ctx = {}
+	ctx['page_name'] = '商品SKU组管理'
+	
+	if request.method == 'GET':
+		from shopcart.functions.excel_util import export_products
+		product_list = Product.objects.all()
+		export_products(product_list)
+		return HttpResponse('OK')
+	else:
+		raise Http404		
+
+
+
+@staff_member_required
+@transaction.atomic()
 def product_sku_group_edit(request):
 	ctx = {}
 	

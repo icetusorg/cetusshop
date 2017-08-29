@@ -169,6 +169,8 @@ urlpatterns = patterns("",
 	url('^admin/no-permission/$', 'shopcart.myadmin.index.no_permission',name='admin_no_permission'),
 	url('^admin/product-oper/$', 'shopcart.myadmin.product.oper',name='admin_product_oper'),
 	url('^admin/product/$', 'shopcart.myadmin.product.product_list',name='admin_product_list'),
+	url('^admin/product/product_export/$', 'shopcart.myadmin.product.product_export',name='admin_product_export'),
+	
 	url('^admin/product-edit/$', 'shopcart.myadmin.product.product_basic_edit',name='admin_product_basic_edit'),
 	url('^admin/product-detail-manage/$', 'shopcart.myadmin.product.product_detail_info_manage',name='admin_product_detail_info_manage'),
 	url('^admin/product-picture-manage/$', 'shopcart.myadmin.product.product_picture_manage',name='admin_product_picture_manage'),

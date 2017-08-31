@@ -11,7 +11,7 @@
 <div class="row album-image-show">
 	{%for image in image_list%}
 		<div class="tab-pane-album col-md-2 col-xs-2">
-			<img class="album-image" data-id="{{image.id}}" src="{{image.thumb}}" alt="{{image.alt_value|default:""}}">
+			<img class="album-image" data-id="{{image.id}}" src="{{image.get_thumb_url}}" alt="{{image.alt_value|default:""}}">
 			<p></p>
 			{%if item_type == 'attribute'%}
 				<a href="#" class="select_picture" data-id="{{image.id}}">选择</a>

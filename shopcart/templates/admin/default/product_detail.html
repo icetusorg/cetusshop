@@ -204,7 +204,7 @@
 				<div id="product_main_picture_show" class="item product-images ">
 						{% for image in product.get_main_image_list %}
 							<div class="images">
-								<a href='{{image.image}}' target="_blank"><img src='{{image.thumb}}' alt='{{image.alt_value}}'></a>
+								<a href='{{image.get_image_url}}' target="_blank"><img src='{{image.get_thumb_url}}' alt='{{image.alt_value}}'></a>
 								<div class="image-operaion">
 									<a href="#" class="set-picture-attr" data-method="set_main" data-id="{{image.id}}" data-item-id="{{product.id}}" data-image-type="product">设为首图 </a> |
 									<a href="#" class="set-picture-attr set-picture-attr-delete" data-method="delete" data-id="{{image.id}}" data-item-id="{{product.id}}" data-image-type="product">删除 </a>
@@ -350,7 +350,7 @@
 									<input type="hidden" name="pa_id" value="{{pa.id}}" />
 								</td>
 								<td><input type="text" name="pa-quantity-{{pa.id}}" value="{{pa.quantity}}"></td>
-								<td><img id="img_{{pa.id}}" src="{{pa.image.thumb}}" alt=""></td>
+								<td><img id="img_{{pa.id}}" src="{{pa.image.get_thumb_url}}" alt=""></td>
 								<td>
 									
 									<button type="button" data-type="product" data-trigger-name="sku" data-id="{{product.id}}" data-extra-info="{{pa.id}}" data-sku-id="{{pa.id}}" class="btn btn-primary cd-popup-trigger">上传</button>
@@ -388,7 +388,7 @@
 						{%for p in product.get_related_products%}
                         <tr>
                             <td><input name="is_oper" id="rp_checkbox_{{p.id}}" value="{{p.id}}" type="checkbox"></td>
-                            <td><img src="{{p.thumb}}"></td>
+                            <td><img src="{{p.get_thumb_url}}"></td>
                             <td>{{p.item_number}}</td>
                             <td>{{p.name}}</td>
                             <td>

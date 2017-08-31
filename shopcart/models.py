@@ -286,7 +286,7 @@ class Product(models.Model):
 			if len(image_list) > 0:
 				return image_list[0]
 			else:
-				return ''
+				return None
 		else:
 			return image_list
 
@@ -611,13 +611,16 @@ class Cart_Products(models.Model):
 	def get_picture(self,type='image'):
 		image = ''
 		thumb = ''
-		image = self.product.image
-		thumb = self.product.thumb
+		try:
+			image = self.product.get_main_image().get_image_url()
+			thumb = self.product.get_main_image().get_thumb_url()
+		except:
+			pass
 		
 		if self.product_attribute:
 			if self.product_attribute.image:
-				image = self.product_attribute.image.image
-				thumb = self.product_attribute.image.thumb
+				image = self.product_attribute.image.get_image_url()
+				thumb = self.product_attribute.image.get_thumb_url()
 		
 		if type == 'image':
 			return image

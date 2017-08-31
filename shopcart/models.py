@@ -283,7 +283,10 @@ class Product(models.Model):
 			image_list.insert(0,main_image)
 			
 		if method == 'single':
-			return image_list[0]
+			if len(image_list) > 0:
+				return image_list[0]
+			else:
+				return ''
 		else:
 			return image_list
 
@@ -376,7 +379,6 @@ class Product(models.Model):
 		verbose_name = '商品'
 		verbose_name_plural = '商品'
 		
-		
 @python_2_unicode_compatible		
 class ProductPrice(models.Model):
 	product = models.ForeignKey(Product,default=None,related_name='prices',verbose_name='关联的商品')
@@ -386,6 +388,7 @@ class ProductPrice(models.Model):
 	
 	create_time = models.DateTimeField(auto_now_add = True)
 	update_time = models.DateTimeField(auto_now = True)
+	
 	
 	def __str__(self):
 		return self.product.name + ':' + str(self.price)
@@ -409,6 +412,36 @@ class Product_Images(models.Model):
 	path = models.CharField(max_length = 254,null=True,blank=True,verbose_name='文件路径')
 	create_time = models.DateTimeField(auto_now_add = True)
 	update_time = models.DateTimeField(auto_now = True)
+	
+	def get_image_url(self):
+		return self.get_picture_url('image')
+			
+	def get_thumb_url(self):
+		return self.get_picture_url('thumb')
+	
+	def get_picture_url(self,method='image'):
+		#整理路径，如果有\则替换为/
+		if method == 'image':
+			filename = self.file_name
+		else:
+			filename = self.thumb_name
+		
+		
+		if not filename:
+			if method == 'image':
+				return self.image
+			else:
+				return self.thumb
+
+		else:
+			path = self.path.replace('\\','/')
+			if not path.endswith('/'):
+				path = path + '/'
+			base_url = System_Config.objects.get(name='base_url').val
+			if not base_url.endswith('/'):
+				base_url = base_url + "/"
+			return base_url + path + filename
+	
 	
 	def __str__(self):
 		return str(self.id) + ' ' + self.thumb
@@ -1308,3 +1341,43 @@ class NoticeEmailList(models.Model):
 	class Meta:
 		verbose_name = '通知邮件列表'
 		verbose_name_plural = '通知邮件列表'
+		
+		
+@python_2_unicode_compatible			
+class ProductImportError(models.Model):
+	row_num = models.IntegerField(default=0,verbose_name='行号')
+	type = models.CharField(max_length = 20,default='B2C',verbose_name='商品类型')
+	name = models.CharField(max_length = 100,default='',db_index=True,verbose_name='商品名称')
+	item_number = models.CharField(max_length = 100,default='',db_index=True,blank=True,verbose_name='商品编号')
+	static_file_name = models.CharField(max_length=254,default=None,null=True,db_index=True,blank=True,verbose_name='静态文件名(不包含路径，以html结尾)')
+	short_desc = models.CharField(max_length = 1024,default='',blank=True,verbose_name='简略描述')
+	cat_str = models.CharField(max_length = 1024,default='',blank=True,verbose_name='分类名称')
+	keywords = models.CharField(max_length = 254,default='',blank=True,verbose_name='关键字')
+	sort_order = models.IntegerField(default=0,verbose_name='排序序号')
+	is_publish = models.BooleanField(default=False,verbose_name='上架')
+	market_price = models.FloatField(default=0.0,verbose_name='市场价')
+	price1 =  models.FloatField(default=0.0,verbose_name='区间价1')
+	quantity1 =  models.IntegerField(default=0,verbose_name='下单量1')
+	price2 =  models.FloatField(default=0.0,verbose_name='区间价2')
+	quantity2 =  models.IntegerField(default=0,verbose_name='下单量2')
+	price3 =  models.FloatField(default=0.0,verbose_name='区间价3')
+	quantity3 =  models.IntegerField(default=0,verbose_name='下单量3')
+	description = models.TextField(blank=True,verbose_name='详细描述')
+	image1 = models.CharField(max_length = 1024,default='',blank=True,verbose_name='图片1')
+	image2 = models.CharField(max_length = 1024,default='',blank=True,verbose_name='图片2')
+	image3 = models.CharField(max_length = 1024,default='',blank=True,verbose_name='图片3')
+	image4 = models.CharField(max_length = 1024,default='',blank=True,verbose_name='图片4')
+	image5 = models.CharField(max_length = 1024,default='',blank=True,verbose_name='图片5')
+	folder_local = models.CharField(max_length = 1024,default='',blank=True,verbose_name='图片目录名称')
+	
+	create_time = models.DateTimeField(auto_now_add = True)
+	update_time = models.DateTimeField(auto_now = True)
+	
+	def __str__(self):
+		return '%s %s' % (self.row_num,self.name)
+	
+	class Meta:
+		verbose_name = '导入异常的记录'
+		verbose_name_plural = '导入异常的记录'
+	
+

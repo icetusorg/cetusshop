@@ -20,6 +20,23 @@ import logging
 logger = logging.getLogger('icetus.shopcart')
 
 
+#返回文件名和后缀
+def split_filename(filename):
+	index = filename.rfind('.')
+	if index == -1:
+		return filename,''
+	else:
+		return filename[0:index],filename[index + 1:]
+
+def convert_image_thumb_name(filename,method='i2t'):
+	if method == 'i2t':
+		name,ext = split_filename(filename)
+	logger.debug('ext:%s' % ext)
+	if ext:
+		return name + '-thumb' + '.' + ext
+	else:
+		return name
+		
 #去掉网址最后的‘/’
 def url_with_out_slash(url):
 	if url.endswith('/'):

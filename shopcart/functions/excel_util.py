@@ -17,9 +17,39 @@ def write_file(path='',filename=''):
 	ws.write(2, 1, 1)
 	wb.save('example.xls')
 	return True
+
+def read_file_demo():
+	import xlrd
+	fname = ".\media\import\product_import.xls"
+	bk = xlrd.open_workbook(fname)
+	shxrange = range(bk.nsheets)
+	try:
+		sh = bk.sheet_by_name("iCetus Products Export")
+	except:
+		logger.debug("no sheet in %s named 'iCetus Products Export'" % fname)
+	#获取行数
+	nrows = sh.nrows
+	#获取列数
+	ncols = sh.ncols
+	logger.debug("nrows %d, ncols %d" % (nrows,ncols)) 
+	#获取第一行第一列数据 
+	cell_value = sh.cell_value(1,1)
+	#print cell_value
+	row_list = []
+	#获取各行数据
+	for i in range(1,nrows):
+		row_data = sh.row_values(i)
+		#logger.debug('row data:%s' % row_data)
+		row_list.append(row_data)
+
+	#logger.debug('Excel Data: %s' % row_list)
+	return row_list
+	
 	
 def export_products(product_list):
 	import xlwt
+	style_amount=xlwt.easyxf('font:name Times New Roman,color-index black,bold off',num_format_str='#,##0.00')
+	
 	wb = xlwt.Workbook()
 	ws = wb.add_sheet('iCetus Products Export')
 	#输出一行标题
@@ -60,11 +90,11 @@ def export_products(product_list):
 			quantity_list.append('')
 		
 		
-		ws.write(index+1,10,price_list[0])
+		ws.write(index+1,10,price_list[0],style_amount)
 		ws.write(index+1,11,quantity_list[0])
-		ws.write(index+1,12,price_list[1])
+		ws.write(index+1,12,price_list[1],style_amount)
 		ws.write(index+1,13,quantity_list[1])
-		ws.write(index+1,14,price_list[2])
+		ws.write(index+1,14,price_list[2],style_amount)
 		ws.write(index+1,15,quantity_list[2])
 		
 		image_list = []
@@ -81,7 +111,7 @@ def export_products(product_list):
 		ws.write(index+1,20,image_list[4])
 		ws.write(index+1,21,p.description)
 		
-	wb.save('example.xls')
+	wb.save('.\media\export\product_export.xls')
 	return True
 	
 

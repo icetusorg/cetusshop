@@ -1,6 +1,6 @@
 #coding=utf-8
 from django.shortcuts import render,redirect
-from shopcart.models import Product,System_Config,Category,Attribute,Attribute_Group,Product_Attribute,Product_Images,ProductParaGroup,ProductPara,ProductPrice,ProductParaDetail,Album
+from shopcart.models import Product,System_Config,Category,Attribute,Attribute_Group,Product_Attribute,Product_Images,ProductParaGroup,ProductPara,ProductPrice,ProductParaDetail,Album,ProductImportError
 from shopcart.forms import product_add_form,product_basic_info_form,product_detail_info_form,product_para_group_form,product_sku_group_form
 from shopcart.utils import handle_uploaded_file,my_pagination
 from django.http import Http404,HttpResponse,JsonResponse
@@ -19,7 +19,7 @@ logger = logging.getLogger('icetus.shopcart')
 @transaction.atomic()
 def product_export(request):
 	ctx = {}
-	ctx['page_name'] = '商品SKU组管理'
+	ctx['page_name'] = '商品导出'
 	
 	if request.method == 'GET':
 		from shopcart.functions.excel_util import export_products
@@ -27,8 +27,142 @@ def product_export(request):
 		export_products(product_list)
 		return HttpResponse('OK')
 	else:
-		raise Http404		
+		raise Http404
+		
+@staff_member_required
+@transaction.atomic()
+def product_import(request):
+	ctx = {}
+	ctx['page_name'] = '商品导入'
+	
+	if request.method == 'GET':
+		from shopcart.functions.excel_util import read_file_demo
+		data_list = read_file_demo()
+		#先清除异常表中原有数据
+		ProductImportError.objects.all().delete()
+		
+		for data in data_list:
+			#for d in data:
+			#	logger.debug("data:%s" % d)
+			
+			pie = ProductImportError()
+			pie.row_num=0
+			pie.type=data[0]
+			pie.name=data[1]
+			pie.item_number=data[2]
+			pie.static_file_name=data[3]
+			pie.short_desc=data[4]
+			pie.keywords=data[5]
+			pie.cat_str=data[6]
+			pie.sort_order=data[7]
+			pie.is_publish=data[8]
+			pie.market_price=data[9]
+			
+			try:
+				pie.price1=float(data[10])
+			except Exception as err:
+				pie.price1=0.00
+			try:
+				pie.quantity1=int(data[11])
+			except Exception as err:
+				pie.quantity1=0
+			
+			try:
+				pie.price2=float(data[12])
+			except Exception as err:
+				pie.price2=0.00
+			try:
+				pie.quantity2=int(data[13])
+			except Exception as err:
+				pie.quantity2=0
+				
+			try:
+				pie.price3=float(data[14])
+			except Exception as err:
+				pie.price3=0.00
+			try:
+				pie.quantity3=int(data[15])
+			except Exception as err:
+				pie.quantity3=0
+			
+			pie.folder_local=str(int(data[16]))
+			pie.image1=data[17]
+			pie.image2=data[18]
+			pie.image3=data[19]
+			pie.image4=data[20]
+			pie.image5=data[21]
+			pie.description=data[22]
+			pie.save()
+			#ProductImportError.objects.create(pie)
+			
+			
+			#pie = ProductImportError.objects.create(
+			#row_num=0,type=data[0],name=data[1],item_number=data[2],static_file_name=data[3],
+			#short_desc=data[4],keywords=data[5],cat_str=data[6],sort_order=data[7],is_publish=data[8],market_price=data[9],
+			#price1=float(data[10]),
+			#quantity1=data[11],
+			#price2=float(data[12]),quantity2=data[13],price3=float(data[14]),quantity3=data[15],
+			#image1=data[16],image2=data[17],image3=data[18],image4=data[19],image5=data[20],description=data[21],folder_local='')
+		create_product()
+		return HttpResponse('OK')
+	else:
+		raise Http404
 
+@transaction.atomic()	
+def create_product():
+	product_import_list = ProductImportError.objects.all()
+	for pie in product_import_list:
+		product = Product()
+		product.type = pie.type
+		product.name= pie.name
+		product.item_number=pie.item_number
+		product.static_file_name=pie.static_file_name
+		product.short_desc=pie.short_desc
+		product.keywords=pie.keywords
+		
+		
+		product.sort_order=pie.sort_order
+		product.is_publish=pie.is_publish
+		product.market_price=pie.market_price
+		product.save()
+		#处理分类
+		cat_name_list = pie.cat_str.split(',')
+		cat_list = Category.objects.filter(name__in=cat_name_list)
+		product.categorys = cat_list
+		
+		#处理商品分段价格
+		price_list = [pie.price1,pie.price2,pie.price3]
+		quantity_list = [pie.quantity1,pie.quantity2,pie.quantity3]
+		for index,price in enumerate(price_list):
+			if price > 0:
+				p = ProductPrice()
+				p.product = product
+				p.sort_order = index
+				p.price = price
+				p.quantity = quantity_list[index]
+				p.save()
+		
+		
+		
+		#处理图片
+		img_list = [pie.image1,pie.image2,pie.image3,pie.image4,pie.image5]
+		for index,img in  enumerate(img_list):
+			image = Product_Images()
+			image.product = product
+			image.is_show_in_product_detail = True
+			image.sort = index
+			image.alt_value = ''
+			image.file_name = img
+			image.path = 'media/product/%s/' % product.id
+			
+			from shopcart.utils import convert_image_thumb_name
+			image.thumb_name = convert_image_thumb_name(img,method='i2t')
+			image.save()
+			image.thumb = image.get_thumb_url()
+			image.image = image.get_image_url()
+			image.save()
+
+		pie.delete()
 
 
 @staff_member_required

@@ -99,7 +99,7 @@
 			<div id="article_main_picture_show" class="item product-images product-images2">
 						{% for image in article.get_image_list %}
 							<div class="images">
-								<a href='{{image.image}}' target="_blank"><img src='{{image.thumb}}' alt='{{image.alt_value}}'></a>
+								<a href='{{image.get_image_url}}' target="_blank"><img src='{{image.get_thumb_url}}' alt='{{image.alt_value}}'></a>
 								<div class="image-operaion">
 									<a href="#" class="set-picture-attr" data-method="set_main" data-id="{{image.id}}" data-article-id="{{article.id}}" data-image-type="article">设为主图 </a> |
 									<a href="#" class="set-picture-attr" data-method="delete" data-id="{{image.id}}" data-article-id="{{article.id}}" data-image-type="article">删除 </a>

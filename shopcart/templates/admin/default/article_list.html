@@ -96,7 +96,7 @@
 								<tr>
 									<td><input type="checkbox" name="is_oper" value="{{article.id}}"></td>
 									<td><input type="text" name="sort_{{article.id}}" value="{{article.sort_order}}"></td>
-									<td><a href="#"><img src="{{article.image}}"></a></td>
+									<td><a href="#"><img src="{{article.get_main_image.get_thumb_url}}"></a></td>
 									<td>{{article.title}}</td>
 									<td>
 										{{article.busi_category.name}}

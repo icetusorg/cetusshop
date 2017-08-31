@@ -1046,6 +1046,13 @@ class Article(models.Model):
 		from shopcart.functions.article_util_func import get_url
 		return get_url(self)		
 
+	def get_main_image(self):
+		images = self.get_image_list()
+		if len(images) > 0:
+			return images[0]
+		else:
+			return None
+		
 	def get_image_list(self):
 		image_list = Album.objects.filter(item_type='article',item_id=self.id)
 		main_image = None
@@ -1090,6 +1097,35 @@ class Album(models.Model):
 		if self.path and self.file_name:
 			from shopcart.utils import remove_file
 			return remove_file(self.path,self.file_name,self.thumb_name)
+			
+	def get_image_url(self):
+		return self.get_picture_url('image')
+			
+	def get_thumb_url(self):
+		return self.get_picture_url('thumb')
+	
+	def get_picture_url(self,method='image'):
+		#整理路径，如果有\则替换为/
+		if method == 'image':
+			filename = self.file_name
+		else:
+			filename = self.thumb_name
+		
+		
+		if not filename:
+			if method == 'image':
+				return self.image
+			else:
+				return self.thumb
+
+		else:
+			path = self.path.replace('\\','/')
+			if not path.endswith('/'):
+				path = path + '/'
+			base_url = System_Config.objects.get(name='base_url').val
+			if not base_url.endswith('/'):
+				base_url = base_url + "/"
+			return base_url + path + filename
 	
 	class Meta:
 		verbose_name = '相册'
@@ -1243,8 +1279,13 @@ class ProductPush(models.Model):
 		p['name'] = self.product.name
 		p['title'] = self.title
 		p['url'] = self.product.get_url()
-		p['image'] = self.product.image
-		p['thumb'] = self.product.thumb
+		image = self.product.get_main_image()
+		if image:
+			p['image'] = image.get_image_url()
+			p['thumb'] = image.get_thumb_url()
+		else:
+			p['image'] = '#'
+			p['thumb'] = '#'
 		p['price'] = self.product.get_min_price()
 		return p
 		

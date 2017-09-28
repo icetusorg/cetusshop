@@ -21,11 +21,43 @@ def product_export(request):
 	ctx = {}
 	ctx['page_name'] = '商品导出'
 	
-	if request.method == 'GET':
+	result = {}
+	result['success'] = True
+	result['message'] = '商品导出成功'
+	result['file_url'] = ''
+	
+	if request.method == 'POST':
 		from shopcart.functions.excel_util import export_products
-		product_list = Product.objects.all()
-		export_products(product_list)
-		return HttpResponse('OK')
+		
+		method = request.POST.get('method','')
+		logger.debug('Export method is : %s' % method)
+		
+		if method == 'selection':
+			product_id_list = request.POST.getlist('is_oper')
+			if not product_id_list:
+				result['success'] = False
+				result['message'] = '请选择至少一件商品进行导出'
+				result['file_url'] = ''
+				return JsonResponse(result)
+			product_list = Product.objects.filter(id__in=product_id_list)
+		elif method == 'all':
+			product_list = Product.objects.all()
+		else:
+			raise Http404
+		
+		try:
+			file_name = 'media\export\product_export.xls'
+			export_products(product_list,file_name)
+			
+			from shopcart.utils import url_with_out_slash
+			url = url_with_out_slash(System_Config.objects.get(name='base_url').val)
+			result['file_url'] = '%s/media/export/product_export.xls' % url
+		except Exception as err:
+			logger.error('Product export error : %s' % err)
+			result['success'] = False
+			result['message'] = '商品导出失败'
+			result['file_url'] = ''
+		return JsonResponse(result)
 	else:
 		raise Http404
 		
@@ -85,7 +117,7 @@ def product_import(request):
 			except Exception as err:
 				pie.quantity3=0
 			
-			pie.folder_local=str(int(data[16]))
+			pie.folder_local=data[16]
 			pie.image1=data[17]
 			pie.image2=data[18]
 			pie.image3=data[19]
@@ -93,16 +125,7 @@ def product_import(request):
 			pie.image5=data[21]
 			pie.description=data[22]
 			pie.save()
-			#ProductImportError.objects.create(pie)
-			
-			
-			#pie = ProductImportError.objects.create(
-			#row_num=0,type=data[0],name=data[1],item_number=data[2],static_file_name=data[3],
-			#short_desc=data[4],keywords=data[5],cat_str=data[6],sort_order=data[7],is_publish=data[8],market_price=data[9],
-			#price1=float(data[10]),
-			#quantity1=data[11],
-			#price2=float(data[12]),quantity2=data[13],price3=float(data[14]),quantity3=data[15],
-			#image1=data[16],image2=data[17],image3=data[18],image4=data[19],image5=data[20],description=data[21],folder_local='')
+
 		create_product()
 		return HttpResponse('OK')
 	else:
@@ -161,7 +184,18 @@ def create_product():
 			image.thumb = image.get_thumb_url()
 			image.image = image.get_image_url()
 			image.save()
-
+		
+		#将本地文件夹改名
+		import os
+		path_prefix = 'media/product/'
+		target_path = '%s%s' % (path_prefix,product.id)
+		local_path = path_prefix + pie.folder_local
+		if os.path.exists(local_path):
+			logger.debug('Path:%s is exist' % (local_path))
+			os.rename(local_path,target_path)
+		else:
+			logger.debug('Path:%s is not exist' % (local_path))
+		
 		pie.delete()
 
 

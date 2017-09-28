@@ -46,7 +46,7 @@ def read_file_demo():
 	return row_list
 	
 	
-def export_products(product_list):
+def export_products(product_list,file_name):
 	import xlwt
 	style_amount=xlwt.easyxf('font:name Times New Roman,color-index black,bold off',num_format_str='#,##0.00')
 	
@@ -110,8 +110,8 @@ def export_products(product_list):
 		ws.write(index+1,19,image_list[3])
 		ws.write(index+1,20,image_list[4])
 		ws.write(index+1,21,p.description)
-		
-	wb.save('.\media\export\product_export.xls')
+	wb.save('.\\' + file_name)	
+	#wb.save('.\media\export\product_export.xls')
 	return True
 	
 

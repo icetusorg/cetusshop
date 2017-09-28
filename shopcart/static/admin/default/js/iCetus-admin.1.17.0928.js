@@ -1708,6 +1708,39 @@ jQuery(".product-batch-oper").click(function(e){
 	});
 });
 
+//产品导出
+jQuery(".product-batch-export").click(function(e){
+	var url = "/admin/product/product_export/";
+	method = $(this).data("method");
+	$("#product_batch_method").val(method);
+
+	
+	$.ajax({
+		cache: false,
+		type: "POST",
+		url:url,
+		data:$("#product_batch_form").serialize(),
+		async: false,
+		error: function(request) {
+			alert("System error");
+		},
+		success: function(data) {
+			message = data.message;
+			
+			if(data.success==true){
+				message = message + '&nbsp <a href = "' + data.file_url + '" target="_blank">点击下载</a>';
+				$('#myModal').on('hidden.bs.modal', function (e) {
+					
+				})
+			}
+			$("#infoMessage").html(message);
+			
+			$("#myModal").modal('toggle');
+		}
+	});
+});
+
+
 //删除留言
 jQuery(".product-batch-delete").click(function(e){
 	var url = "/admin/product-oper/";

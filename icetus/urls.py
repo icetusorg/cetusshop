@@ -80,6 +80,8 @@ urlpatterns = patterns("",
 	url(r'^admin/product-import-upload/$', 'shopcart.myadmin.file.product_import_upload',name='admin_file_product_import_upload'),
 	url(r'^admin/simple-upload/$', 'shopcart.myadmin.file.simple_upload',name='admin_file_simple_upload'),
 	
+	url(r'^admin/file-upload/(.+)/(.+)/$', 'shopcart.myadmin.file.file_upload',name='admin_file_upload'),
+	
 	url(r'^file-delete/(.+)/(.+)/(.+)/$', 'shopcart.myadmin.file.file_delete',name='admin_file_delete'),
 	url(r'^email-list/add/$', 'shopcart.emaillist.add_to_email_list',name='emaillist_add_to_email_list'),
 	url(r'^query/product/$', 'shopcart.product.query_product_show',name='product_query_product_show'),

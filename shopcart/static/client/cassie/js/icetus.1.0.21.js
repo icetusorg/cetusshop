@@ -901,11 +901,6 @@ jQuery(".product-attribute-item").click(function(){
 
 
 
-		
-});
-
-
-
 jQuery(document).ready(function(e){
 	var item_count = $.cookie('cart_item_type_count')==null ? 0:$.cookie('cart_item_type_count');
 	$(".top-cart-num-link").text(item_count);

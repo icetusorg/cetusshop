@@ -1,6 +1,6 @@
 #coding=utf-8
 from django.shortcuts import render,redirect
-from shopcart.models import Product,System_Config,Category,Attribute,Attribute_Group,Product_Attribute,Product_Images,ProductParaGroup,ProductPara,ProductPrice,ProductParaDetail,Album,ProductImportError
+from shopcart.models import Product,System_Config,Category,Attribute,Attribute_Group,Product_Attribute,Product_Images,ProductParaGroup,ProductPara,ProductPrice,ProductParaDetail,Album,ProductImportError,BatchTaskMonitor
 from shopcart.forms import product_add_form,product_basic_info_form,product_detail_info_form,product_para_group_form,product_sku_group_form
 from shopcart.utils import handle_uploaded_file,my_pagination
 from django.http import Http404,HttpResponse,JsonResponse
@@ -62,11 +62,12 @@ def product_export(request):
 		raise Http404
 		
 @staff_member_required
-@transaction.atomic()
+@transaction.non_atomic_requests
 def product_import(request):
 	ctx = {}
 	ctx['page_name'] = '商品导入'
 	
+	#if request.method == 'POST':
 	if request.method == 'GET':
 		from shopcart.functions.excel_util import read_file_demo
 		data_list = read_file_demo()
@@ -128,11 +129,24 @@ def product_import(request):
 
 		create_product()
 		return HttpResponse('OK')
+	#elif request.method == 'GET':
+	#	return TemplateResponse(request,System_Config.get_template_name('admin') + '/product_import.html',ctx)
 	else:
 		raise Http404
 
-@transaction.atomic()	
+
 def create_product():
+	try:
+		logger.debug('Start Transaction..')
+		import_monitor,created = BatchTaskMonitor.objects.get_or_create(type='product_create')
+		transaction.commit()
+		logger.debug('Transaction commited..')
+	except Exception as err:
+		logger.debug('Transaction err:%s' % err)
+		
+	raise Exception('No Reason')
+
+	'''
 	product_import_list = ProductImportError.objects.all()
 	for pie in product_import_list:
 		product = Product()
@@ -197,7 +211,7 @@ def create_product():
 			logger.debug('Path:%s is not exist' % (local_path))
 		
 		pie.delete()
-
+		'''
 
 @staff_member_required
 @transaction.atomic()

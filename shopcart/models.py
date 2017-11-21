@@ -1424,4 +1424,24 @@ class ProductImportError(models.Model):
 		verbose_name = '导入异常的记录'
 		verbose_name_plural = '导入异常的记录'
 	
+	
+@python_2_unicode_compatible
+class BatchTaskMonitor(models.Model):
+	type = models.CharField(max_length = 20,unique=True,default='',verbose_name='任务类型')
+	#任务状态：created,started,finished,failed
+	status = models.CharField(max_length = 20,default='created',verbose_name='任务状态')
+	success_count = models.IntegerField(default=0,verbose_name='成功记录数')
+	failed_count = models.IntegerField(default=0,verbose_name='失败记录数')
+	
+	start_time = models.DateTimeField(null=True)
+	end_time = models.DateTimeField(null=True)
+	
+	create_time = models.DateTimeField(auto_now_add = True)
+	update_time = models.DateTimeField(auto_now = True)
 
+	def __str__(self):
+		return '%s' % (self.type)
+	
+	class Meta:
+		verbose_name = '批量任务监控'
+		verbose_name_plural = '批量任务监控'

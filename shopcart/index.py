@@ -36,11 +36,11 @@ def view_index(request,tdk=None):
 	if tdk:
 		customize_tdk(ctx,tdk)
 	
-	from .oauth import SocialSites, SocialAPIError
-	socialsites = SocialSites()
+	#from .oauth import SocialSites, SocialAPIError
+	#socialsites = SocialSites()
 	
-	s = socialsites.get_site_object_by_name('wechat')
-	ctx['oauth'] = s.authorize_url
+	#s = socialsites.get_site_object_by_name('facebook')
+	#ctx['oauth'] = s.authorize_url
 	
 	return TemplateResponse(request,System_Config.get_template_name() + '/index.html',ctx)
 	

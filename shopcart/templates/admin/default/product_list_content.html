@@ -96,7 +96,7 @@
 								<tr>
 									<td><input name="is_oper" data-order-id="{{product.id}}" value="{{product.id}}" type="checkbox"></td>
 									<td><input type="text" name="sort_{{product.id}}" value="{{product.sort_order}}"></td>
-									<td><a href="/admin/product-edit/?id={{product.id}}"><img src="{{product.get_thumb_url}}"></a></td>
+									<td><a href="/admin/product-edit/?id={{product.id}}"><img src="{{product.get_main_image.get_image_url}}"></a></td>
 									<td>{{product.item_number}}</td>
 									<td><a href="/admin/product-edit/?id={{product.id}}">{{product.name}}</a></td>
 									<td>

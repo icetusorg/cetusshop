@@ -1710,7 +1710,7 @@ jQuery(".product-batch-oper").click(function(e){
 
 //产品导出
 jQuery(".product-batch-export").click(function(e){
-	var url = "/admin/product/product_export/";
+	var url = "/admin/product/product-export/";
 	method = $(this).data("method");
 	$("#product_batch_method").val(method);
 

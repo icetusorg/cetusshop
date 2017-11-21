@@ -2,7 +2,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,Http404
 from django.http import JsonResponse,QueryDict
-from shopcart.models import System_Config,Product,Product_Images,Category,MyUser,Email,Reset_Password,Address,Product_Attribute,Attribute_Group,Attribute,Article,Express,ExpressType,Order
+from shopcart.models import System_Config,Product,Product_Images,Category,MyUser,Email,Reset_Password,Address,Product_Attribute,Attribute_Group,Attribute,Article,Express,ExpressType,Order,CustomizeURL,OAuthSite
 from django.db import transaction
 from django.utils.translation import ugettext as _
 import datetime
@@ -158,6 +158,20 @@ def init_email():
 	
 	email = Email.objects.create(useage='order_was_payed',email_address=email_address,smtp_host=smtp_host,username=username,password=password,template='default',template_file='order_was_payed.html')
 	emial_sys = System_Config.objects.create(name='order_was_payed_send_mail',val='true')
+
+def init_cust_url():
+	cust_url = CustomizeURL.objects.create(name='login',url='index-login.html',target_url='/user/login/',module='shopcart.myuser',function='login',type='MVC',is_customize_tdk='0',page_name='Login Page',keywords='Keywords of login page',short_desc='Short desc of login page')
+	
+	cust_url = CustomizeURL.objects.create(name='index',url='index.html',target_url='/',module='shopcart.index',function='view_index',type='MVC',is_customize_tdk='1',page_name='Index Page',keywords='Keywords of index page',short_desc='Short desc of index page')
+	
+	cust_url = CustomizeURL.objects.create(name='blog',url='blog-list.html',target_url='/blog/',module='shopcart.article',function='view_blog_list_with_tdk',type='MVC',is_customize_tdk='1',page_name='Blog Page',keywords='Keywords of blog page',short_desc='Short desc of blog page')
+	
+	cust_url = CustomizeURL.objects.create(name='contact_us',url='Contact-us.html',target_url='/contact/show/',module='shopcart.views',function='contact_page',type='MVC',is_customize_tdk='1',page_name='Contact us Page',keywords='Keywords of contact us page',short_desc='Short desc of contact us page')
+
+	
+def init_oauth():
+	pass
+	#oauth_site = OAuthSite.objects.create(name='wechat',impl_class='shopcart.oauth.sites.wechat.Wechat',redirect_uri='',client_id='',client_secret='',scope_login='',scope_info='')
 
 
 	

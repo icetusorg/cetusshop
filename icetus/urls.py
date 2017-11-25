@@ -77,8 +77,8 @@ urlpatterns = patterns("",
 	url(r'^ajax_val_captcha/$', 'shopcart.validate.ajax_validate_captcha',name='ajax_validate_captcha'),
 	url(r'^paypal/', include('paypal.standard.ipn.urls')),
 	url(r'^comments/', include('django_comments.urls')),
-	url(r'^admin/product-import-upload/$', 'shopcart.myadmin.file.product_import_upload',name='admin_file_product_import_upload'),
-	url(r'^admin/simple-upload/$', 'shopcart.myadmin.file.simple_upload',name='admin_file_simple_upload'),
+	#url(r'^admin/product-import-upload/$', 'shopcart.myadmin.file.product_import_upload',name='admin_file_product_import_upload'),
+	#url(r'^admin/simple-upload/$', 'shopcart.myadmin.file.simple_upload',name='admin_file_simple_upload'),
 	
 	url(r'^admin/file-upload/(.+)/(.+)/$', 'shopcart.myadmin.file.file_upload',name='admin_file_upload'),
 	

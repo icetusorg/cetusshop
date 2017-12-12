@@ -1,0 +1,73 @@
+<!--底部-->
+{% load staticfiles %}
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="footer-item">
+                <h5>Customer Service</h5>
+                <ul>
+                    <li><i class="list-allow-left"></i><a href="/contact/show/">Contact us</a></li>
+                    <li><i class="list-allow-left"></i><a href="http://911signalonline.com/Delivery.html">Delivery</a></li>
+                    <li><i class="list-allow-left"></i><a href="http://911signalonline.com/Warranty-Info.html">Warranty Info</a></li>
+                    <li><i class="list-allow-left"></i><a href="http://911signalonline.com/Privacy-Policy.html">Privacy Policy</a></li>
+                    <li><i class="list-allow-left"></i>Sitemap</li>
+                </ul>
+            </div>
+            <div class="footer-item footer-contact">
+                <h5>Contact Information</h5>
+                <ul>
+                    <li><i class="glyphicon glyphicon-map-marker"></i>Address</li>
+                    <li class="footer-ico-empty">{{system_para.contact_address}}</li>
+                    <li><i class="glyphicon glyphicon-earphone"></i>Phone:</li>
+                    <li class="footer-ico-empty">{{system_para.office_phone}}</li>
+                    <li><i class="glyphicon glyphicon-envelope"></i>Email:</li>
+                    <li class="footer-ico-empty"><a href="mailto:{{system_para.service_email}}"></a>{{system_para.service_email}}
+                    </li>
+                </ul>
+            </div>
+            <div class="footer-item footer-letter">
+                <h5>Be the First to Know</h5>
+
+                <p>Get all the latest information on Events,Sales and Offers. Sign up for newsletter today.</p>
+                <label>Enter your e-mail Address</label>
+
+                <div class="footer-form">
+                    <input type="text" id="newsletter-email" name="email">
+                    <button class="add-to-emaillist" type="submit">Submit</button>
+                </div>
+                <div class="footer-share">
+                    <!-- PayPal Logo -->
+                    <table border="0" cellpadding="10" cellspacing="0" align="center">
+                        <tr>
+                            <td align="center"></td>
+                        </tr>
+                        <tr>
+                            <td align="center"><a
+                                    href="https://www.paypal.com/c2/webapps/mpp/paypal-popup?locale.x=zh_C2"
+                                    title="How PayPal Works"
+                                    onclick="javascript:window.open('https://www.paypal.com/c2/webapps/mpp/paypal-popup?locale.x=zh_C2','WIPaypal','toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=1060, height=700'); return false;"><img
+                                    src="https://www.paypalobjects.com/webstatic/mktg/logo/PP_AcceptanceMarkTray-NoDiscover_243x40.png"
+                                    alt="立即使用PayPal购买"/></a></td>
+                        </tr>
+                    </table><!-- PayPal Logo -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="copy">
+    <div class="container">
+        <div class="row">
+            <div class="copy-media">
+                <a href="/"><img class="footer-logo" src="{% static "client/911signal/images/911logo2.png"%}"></a>
+                <a href="https://www.facebook.com/911signal"><img src="{% static "client/911signal/images/ico/facebook.png"%}"></a>
+                <a href="https://twitter.com/911signalGroup"><img src="{% static "client/911signal/images/ico/twitter.png"%}"></a>
+                <a href="https://www.linkedin.com/company/911-signal-technology-inc"><img src="{% static "client/911signal/images/ico/linkedin.png"%}"></a>
+                <a href="https://www.pinterest.com/911signal/"><img src="{% static "client/911signal/images/ico/pinterest.png"%}"></a>
+                <a href="https://youtube.com/c/911strobe"><img src="{% static "client/911signal/images/ico/youtube.png"%}"></a>
+                <a href="https://plus.google.com/+911signal"><img src="{% static "client/911signal/images/ico/google.png"%}"></a>
+            </div>
+            <p>{{system_para.copyright|safe}}</p>
+        </div>
+    </div>
+</div>

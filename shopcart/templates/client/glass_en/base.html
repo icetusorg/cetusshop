@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{page_name}} | {{system_para.site_name}}</title>
+    <meta name="keywords" content="{{page_key_words}}">
+    <meta name="description" content="{{page_description}}">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static "client/glass_en/css/bootstrap.min.css"%}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "client/glass_en/css/style.css"%}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "client/glass_en/css/style-phone.css"%}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "client/glass_en/css/bootstrap-touch-slider.css"%}" type="text/css"/>
+
+    <!--ico-->
+    <link rel="shortcut icon"  href="{% static "client/glass_en/images/logo.ico"%}" />
+    <link rel="apple-touch-icon" href="{% static "client/glass_en/images/icon.png"%}">
+    {%block head_extra%}
+    {%endblock%}
+
+</head>
+<body>
+<!--header-->
+<!--phone menu-->
+{% include 'client/glass_en/header.html' %}
+<!--header end-->
+
+<!--content-->
+<div class="body">
+    <!-- Breadcrumbs -->
+    {% block breadcrumbs %}
+    {% endblock %}
+    <!-- Breadcrumbs End -->
+    {% block main%}
+    {% endblock %}
+    <!--add csrftoken-->
+    {% csrf_token %}
+</div>
+<!--content end-->
+{% include 'client/glass_en/modal_win.html' %}
+
+<!--footer-->
+{% include 'client/glass_en/footer.html' %}
+<!--footer end-->
+<script type="text/javascript" src="{% static 'client/glass_en/js/jquery-1.11.1.min.js'%}"></script>
+
+
+<script type="text/javascript" src="{% static 'client/glass_en/js/bootstrap.min.js'%}"></script>
+<script type="text/javascript" src="{% static 'client/glass_en/js/my.js'%}"></script>
+
+<script type="text/javascript" src="{% static 'client/glass_en/js/icetus.1.0.20.js' %}"></script>
+<script type="text/javascript" src="{% static 'client/glass_en/js/jquery.cookie.js'%}"></script>
+<script type="text/javascript" src="{% static 'client/glass_en/js/jquery.json.min.js'%}"></script>
+
+
+{% block scripts %}
+{% endblock %}
+</body>
+</html>

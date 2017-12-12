@@ -1,0 +1,52 @@
+{% extends "client/glass_en/base.html" %}
+{% block breadcrumbs %}
+<!--crumb-->
+<div class="crumb">
+    <div class="container">
+        <a href="/">Home</a> > <a><span>About Us</span></a>
+    </div>
+</div>
+<!--crumb end-->
+{% endblock %}
+{% block main %}
+{% load i18n %}
+{% load staticfiles %}
+<div class="about-us">
+    <div class="container">
+        <img class="about-us-banner" src="{% static "client/glass_en/images/aboutUs_pic01.jpg"%}">
+        <p>Since 1996 Glass Holding Group established it’s Quartz Sand manufacturing base in Fenyang
+            Anhui,China,After 19 years development“Glass”becaming the most professional quartz sand and non-metallic
+            mineral Supplier.</p>
+        <p>Form the open-cut,processing,technolog development,scientific managment and sales Integration system.</p>
+        <p>Due to the Market demand and our customer increased year by year,we exploits 4 main quartz sand base and
+            owned 5 entity processing enterprises.
+            We believe that “Glass” will be the Top High-tech and efficient international Mining Group!</p>
+        <h2>Our Vision</h2>
+        <p>Creat Maxium value for our clients</p>
+        <p>Offer the best stage for our Staff</p>
+        <p>Make a contribution to society</p>
+        <img src="{% static "client/glass_en/images/aboutUs_pic02.jpg"%}">
+        <img src="{% static "client/glass_en/images/aboutUs_pic03.jpg"%}">
+        <img src="{% static "client/glass_en/images/aboutUs_pic04.jpg"%}">
+        <h2>Cooperation</h2>
+        <div class="row">
+            <div class="col-md-3 col-xs-6">
+                <img src="{% static "client/glass_en/images/logo_01.jpg"%}">
+            </div>
+            <div class="col-md-3 col-xs-6">
+                <img src="{% static "client/glass_en/images/logo_02.jpg"%}">
+            </div>
+            <div class="col-md-3 col-xs-6">
+                <img src="{% static "client/glass_en/images/logo_03.jpg"%}">
+            </div>
+            <div class="col-md-3 col-xs-6">
+                <img src="{% static "client/glass_en/images/logo_04.jpg"%}">
+            </div>
+        </div>
+    </div>
+</div>
+<!--body end-->
+{% endblock %}
+{% block scripts %}
+{% load staticfiles %}
+{% endblock %}

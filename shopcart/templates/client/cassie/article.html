@@ -1,43 +1,53 @@
-{% extends "client/cassie/base.html" %}	
+{% extends "client/cassie/base.html" %}
 {% block breadcrumbs %}
-<div class="crumb main">
-    <div class="container">
-        <div class="row">
-            <a href="../index.html">Home</a> &gt; {{article.title}}
+    <div class="crumb main">
+        <div class="container">
+            <div class="row">
+                <a href="../index.html">Home</a> &gt; {{ article.title }}
+            </div>
         </div>
     </div>
-</div>
-{% endblock%}
+{% endblock %}
 {% block main %}
-{% load i18n %}
-{% load staticfiles %}
-<div class="artical">
-   <div class="container">
-       <div class="row">
-           <div class="artical-list col-md-9">
-              <div class="row">
-                 <div class="artical-content">
-                    <h1>{{article.title}}</h1>
-                    <p class="artical-date">Date:<span>{{article.create_time|date:'Y-m-d'}}</span></p>
-                    {{article.content|safe}}
-                 </div>
-              </div>
-           </div>
-           <div class="artical-sidbar col-md-3">
-               <div class="row">
-                  <h3>Follow Us</h3>
-                  <div class="artical-media">
-                     <a hre="#"><img src="{% static 'client/cassie/images/ico/facebook-footer.png'%}"></a>
-                     <a hre="#"><img src="{% static 'client/cassie/images/ico/twitter-footer.png'%}"></a>
-                     <a hre="#"><img src="{% static 'client/cassie/images/ico/linkin-footer.png'%}"></a>
-                  </div>
-               </div>
-           </div>
-       </div>
-   </div>
-</div>
+    {% load i18n %}
+    {% load staticfiles %}
+    <div class="artical">
+        <div class="container">
+            <div class="row">
+                <div class="artical-list col-md-9">
+                    <div class="row">
+                        <div class="artical-content">
+                            <h1>{{ article.title }}</h1>
+                            <p class="artical-date">Date:<span>{{ article.create_time|date:'Y-m-d' }}</span></p>
+                            {{ article.content|safe }}
+
+                            {% for image in article.get_image_list_pdf %}
+                                <div class="images">
+                                    <a href='{{ image.get_image_url }}' target="_blank"><img
+                                            src='{{ image.thumb }}'
+                                            alt='{{ image.alt_value }}'></a>
+                                    <p>{{ image.file_name }}</p>
+                                </div>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+                <div class="artical-sidbar col-md-3">
+                    <div class="row">
+                        <h3>Follow Us</h3>
+                        <div class="artical-media">
+                            <a hre="#"><img src="{% static 'client/cassie/images/ico/facebook-footer.png' %}"></a>
+                            <a hre="#"><img src="{% static 'client/cassie/images/ico/twitter-footer.png' %}"></a>
+                            <a hre="#"><img src="{% static 'client/cassie/images/ico/linkin-footer.png' %}"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 {% block scripts %}
-	{% load staticfiles %}
+    {% load staticfiles %}
 {% endblock %}
 

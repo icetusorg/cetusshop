@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试验证码</title>
+</head>
+<body>
+<form method="post" action="#">
+    {% csrf_token %}
+    <img id="check_code_img" src="/create_code/" onclick="refresh_check_code(this)">
+    <input type="text" name="code">
+    <input type="submit">
+</form>
+
+<script>
+    function refresh_check_code(ths) {
+        ths.src += '?';
+        //src后面加问好会自动刷新验证码img的src
+    }
+</script>
+
+</body>
+</html>

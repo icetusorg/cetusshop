@@ -36,7 +36,7 @@
 									<li class="name">
 										<!-- data_level代表分类的级数，暂时从1级到4级-->
 										<span class="categoryIco" data_level="1">|--</span>
-										<a href="###"><span class="nameText">{{cat.name}}</span></a>
+										<a target="_blank" href="{{ cat.get_url }}"><span class="nameText">{{cat.name}}</span></a>
 									</li>
 									<li class="operate" data="list_{{cat.id}}" data-cat-id="{{cat.id}}"><a class="addChild">添加子分类</a> | <a class="editCategory" href="../category-edit/?id={{cat.id}}">编辑</a><span>|</span><a class="deleteCategory">删除</a></li>
 									<!--"二级分类"-->
@@ -46,7 +46,7 @@
 											<li><input type="text" name="sort_{{cat2.id}}" value="{{cat2.sort_order|default:'0'}}"></li>
 											<li class="name">
 												<span class="categoryIco" data_level="2">|--</span>
-												<a href="###"><span class="nameText">{{cat2.name}}</span></a>
+												<a target="_blank" href="{{ cat2.get_url }}"><span class="nameText">{{cat2.name}}</span></a>
 											</li>
 											<li class="operate" data="list_{{cat2.id}}" data-cat-id="{{cat2.id}}"><a class="addChild">添加子分类</a> | <a class="editCategory" href="../category-edit/?id={{cat2.id}}">编辑</a><span>|</span><a class="deleteCategory">删除</a>
 											</li>
@@ -57,7 +57,7 @@
 												<li><input type="text" name="sort_{{cat3.id}}" value="{{cat3.sort_order|default:'0'}}"></li>
 												<li class="name">
 													<span class="categoryIco" data_level="3">|--</span>
-													<a href="###"><span class="nameText">{{cat3.name}}</span></a>
+													<a target="_blank" href="{{ cat3.get_url }}"><span class="nameText">{{cat3.name}}</span></a>
 												</li>
 												<li class="operate" data="list_{{cat3.id}}" data-cat-id="{{cat3.id}}"><a class="addChild">添加子分类</a> | <a class="editCategory" href="../category-edit/?id={{cat3.id}}">编辑</a><span>|</span><a class="deleteCategory">删除</a>
 												</li>
@@ -68,7 +68,7 @@
 													<li><input type="text" name="sort_{{cat4.id}}" value="{{cat4.sort_order|default:'0'}}"></li>
 													<li class="name">
 														<span class="categoryIco" data_level="4">|--</span>
-														<a href="###"><span class="nameText">{{cat4.name}}</span></a>
+														<a target="_blank" href="{{ cat4.get_url }}"><span class="nameText">{{cat4.name}}</span></a>
 													</li>
 													<li class="operate" data="list_{{cat4.id}}" data-cat-id="{{cat4.id}}"><a class="addChild">添加子分类</a> | <a class="editCategory" href="../category-edit/?id={{cat4.id}}">编辑</a><span>|</span><a class="deleteCategory">删除</a></li>
 												</ul>
@@ -114,31 +114,41 @@
         } else {                    //子级是隐藏状态，点击后显示当前级下面所有的子级
             $("#" + idName + " .category_0" + childNum).show();    //显示直接子级
         }
-    })
+    });
+
+
+
+
+
 	//点击添加分类
-	$(".btn-add").on("click", function () {
-		$(".addInputList").remove();
-		var listId = $(this).parent().attr("data");
-		var parent_id = $(this).parent().data("cat-id");
-		var level = $("#" + listId).find(".categoryIco").attr("data_level");
-		level = parseInt(level) + 1;
-		var insertHtml = '<ul class="addInputList category_01" style="display:block;">' +
-				'<li><input type="checkbox" name="selected"></li>' +
-				'<li><input type="text" value="0"></li>' +
-				'<li class="name"><span class="categoryIco active"></span>' +
-				'<input type="text" class="form-control form-control-hidden" id="categoryCode" placeholder="分类代码"> <input type="text" class="form-control" id="categoryName" placeholder="分类名称"></li>' +
-				'<li class="operate"><a id="categorySubmit" class="addBtn">确定</a><a class="deleteInput">删除</a></li></ul>';
-		$(".category").append(insertHtml);
-		$("#categoryName").focus();
-		$(".deleteInput").click(function () {
-			$(".addInputList").remove();
-		});
-		$("#categorySubmit").click(function () {
-			var name = $("#categoryName").val();
-			var code = $("#categoryCode").val();
-			addCategory(level, listId, name, code,parent_id);
-		})
-	});
+{#	$(".btn-add").on("click", function () {#}
+{#		$(".addInputList").remove();#}
+{#		var listId = $(this).parent().attr("data");#}
+{#		var parent_id = $(this).parent().data("cat-id");#}
+{#		var level = $("#" + listId).find(".categoryIco").attr("data_level");#}
+{#		level = parseInt(level) + 1;#}
+{#		var insertHtml = '<ul class="addInputList category_01" style="display:block;">' +#}
+{#				'<li><input type="checkbox" name="selected"></li>' +#}
+{#				'<li><input type="text" value="0"></li>' +#}
+{#				'<li class="name"><span class="categoryIco active"></span>' +#}
+{#				'<input type="text" class="form-control form-control-hidden" id="categoryCode" placeholder="分类代码"> <input type="text" class="form-control" id="categoryName" placeholder="分类名称"></li>' +#}
+{#				'<li class="operate"><a id="categorySubmit" class="addBtn">确定</a><a class="deleteInput">删除</a></li></ul>';#}
+{#		$(".category").append(insertHtml);#}
+{#		$("#categoryName").focus();#}
+{#		$(".deleteInput").click(function () {#}
+{#			$(".addInputList").remove();#}
+{#		});#}
+{#		$("#categorySubmit").click(function () {#}
+{#			var name = $("#categoryName").val();#}
+{#			var code = $("#categoryCode").val();#}
+{#			addCategory(level, listId, name, code,parent_id);#}
+{#		})#}
+{#	});#}
+
+
+
+
+
     //点击添加子分类
     //$(".addChild").on("click", addChildFunc);
 	

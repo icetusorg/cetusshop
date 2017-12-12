@@ -1,0 +1,63 @@
+{% extends "client/sanyan/base.html" %}
+{% block breadcrumbs %}
+<div class="crumb">
+    <div class="container">
+        <a href="/">HOME</a> - <a href="#0"><span>Why Choose Us</span></a>
+    </div>
+</div>
+{% endblock %}
+{% block main %}
+{% load i18n %}
+{% load staticfiles %}
+<div class="why-us">
+    <div class="container">
+
+        <h2>EXPERIENCED IN EXPORT(Since 2004)</h2>
+
+        <p>We started exporting Bio-ethanol fireplace, electric fireplace and mantel since.</p>
+        <p>Our professional sales team with much experience in this line of business would offer you the best
+            service. Many of our stable clients have much cooperated with us more than 10 years.
+        </p>
+        <img class="why-us-img-1" src="{% static "client/sanyan/images/WhyUs_01.jpg"%}" alt="">
+        <h2>CERTIFICATE</h2>
+        <img class="why-us-img-2" src="{% static "client/sanyan/images/WhyUs_02.jpg"%}" alt="">
+        <img src="{% static "client/sanyan/images/WhyUs_03.jpg"%}" alt="">
+        <h2>FACTORY OVERVIEW</h2>
+
+        <div class="row">
+            <div class="col-md-6">
+                <img src="{% static "client/sanyan/images/WhyUs_04.jpg"%}">
+            </div>
+            <div class="col-md-6">
+                <img src="{% static "client/sanyan/images/WhyUs_05.jpg"%}">
+            </div>
+            <div class="col-md-6">
+                <img src="{% static "client/sanyan/images/WhyUs_06.jpg"%}">
+            </div>
+            <div class="col-md-6">
+                <img src="{% static "client/sanyan/images/WhyUs_07.jpg"%}">
+            </div>
+        </div>
+
+        <h2>EXHIBITION</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <img src="{% static "client/sanyan/images/WhyUs_08.jpg"%}">
+            </div>
+            <div class="col-md-6">
+                <img src="{% static "client/sanyan/images/WhyUs_09.jpg"%}">
+            </div>
+            <div class="col-md-6">
+                <img src="{% static "client/sanyan/images/WhyUs_10.jpg"%}">
+            </div>
+            <div class="col-md-6">
+                <img src="{% static "client/sanyan/images/WhyUs_11.jpg"%}">
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+{% load staticfiles %}
+{% endblock %}

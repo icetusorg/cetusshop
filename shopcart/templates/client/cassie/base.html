@@ -2,56 +2,63 @@
 <html>
 <head lang="en">
     <meta charset="utf-8"/>
-    <title>{{page_name}} | {{system_para.site_name}}</title>
-    <meta name="keywords" content="{{page_key_words}}">
-    <meta name="description" content="{{page_description}}">
+    <title>{{ page_name }} | {{ system_para.site_name }}</title>
+    <meta name="keywords" content="{{ page_key_words }}">
+    <meta name="description" content="{{ page_description }}">
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
-	{% load staticfiles %}
-	<link rel="stylesheet" href="{% static "client/cassie/css/bootstrapValidator.min.css"%}" type="text/css"/>
-    <link rel="stylesheet" href="{% static "client/cassie/css/style.css"%}" type="text/css"/>
-    <link rel="stylesheet" href="{% static "client/cassie/css/bootstrap.min.css"%}" type="text/css"/>
-	{%block head_extra%}
-	{%endblock%}
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static "client/cassie/css/bootstrapValidator.min.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "client/cassie/css/style.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "client/cassie/css/bootstrap.min.css" %}" type="text/css"/>
+    {% block head_extra %}
+    {% endblock %}
 </head>
 <body>
 <!--手机左侧菜单-->
-    <!--header 头部! -->
-	{% include 'client/cassie/header.html' %}
-	<!-- Breadcrumbs -->
-	{% block breadcrumbs %}
-	{% endblock %}
-	<!-- Breadcrumbs End --> 
-	<!-- Main Container -->
-	{% block main%}
-	{% endblock %}
+<!--header 头部! -->
+{% include 'client/cassie/header.html' %}
+<!-- Breadcrumbs -->
+{% block breadcrumbs %}
+{% endblock %}
+<!-- Breadcrumbs End -->
+<!-- Main Container -->
+{% block main %}
+{% endblock %}
 
-	<!-- 加入一段csrftoken -->
-	{% csrf_token %}
-	<!-- Main Container End --> 
+<!-- 加入一段csrftoken -->
+{% csrf_token %}
+<!-- Main Container End -->
 
-	{% include 'client/cassie/modal_win.html' %}
-	<!-- 底部 Footer!-->
-	{% include 'client/cassie/footer.html' %}
-	<!-- JavaScript -->
+{% include 'client/cassie/modal_win.html' %}
+<!-- 底部 Footer!-->
+{% include 'client/cassie/footer.html' %}
+<!-- JavaScript -->
 </div>
 <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
-<script type="text/javascript" src="{% static 'client/cassie/js/main.js'%}"></script>
-<script type="text/javascript" src="{% static 'client/cassie/js/bootstrap.min.js' %}"></script> 
+<script type="text/javascript" src="{% static 'client/cassie/js/main.js' %}"></script>
+<script type="text/javascript" src="{% static 'client/cassie/js/bootstrap.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'client/cassie/js/jquery.cookie.js' %}"></script>
 <script type="text/javascript" src="{% static 'client/cassie/js/jquery.json.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'client/cassie/js/icetus.1.0.21.js' %}"></script>
-<script async defer src="http://assets.pinterest.com/js/pinit.js"></script>
-<script type="text/javascript">
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-75590646-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
+{#<script type="text/javascript">#}
+{#    jQuery(document).ready(function () {#}
+{#        var url = "/visitor/";#}
+{#        $.ajax({#}
+{#            cache: false,#}
+{#            type: "GET",#}
+{#            url: url,#}
+{#            data: null,#}
+{#            async: false,#}
+{#            error: function (request) {#}
+{#                console.log('错误 ... ');#}
+{#            },#}
+{#            success: function (data) {#}
+{#                console.log('第' + data.number + '个访问数');#}
+{#            }#}
+{#        });#}
+{#    });#}
+{#</script>#}
 <!--
 <script type="text/javascript" src="//cdn.bootcss.com/bootstrap-validator/0.5.2/js/bootstrapValidator.min.js"></script>
 -->

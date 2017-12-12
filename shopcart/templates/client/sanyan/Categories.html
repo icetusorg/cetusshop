@@ -1,0 +1,125 @@
+{% extends "client/sanyan/base.html" %}
+{% block breadcrumbs %}
+<div class="crumb">
+    <div class="container">
+        <a href="/">HOME</a> - <a href="/Products.html"><span>Products</span></a> - <a href="#0"><span>Electric Fireplace</span></a>
+    </div>
+</div>
+{% endblock %}
+{% block main %}
+{% load i18n %}
+{% load staticfiles %}
+<div class="Categories">
+    <div class="container">
+        <div class="row">
+            <div class="product-list-left col-md-3 col-xs-12">
+                <div class="product-list-left-bg">
+
+
+                    <h2>Categories</h2>
+                    <ul>
+                        <li><a href="/Electric-Fireplace.html">Electric Fireplace</a></li>
+                        <li><a href="/Traditional-Electric-Fireplace.html">- Traditional Electric Fireplace</a></li>
+                        <li><a href="/Entertainment-Center-Fireplace.html">- Entertainment Center Fireplace</a></li>
+                        <li><a href="/Portable-Electric-Fireplace.html">- Portable Electric Fireplace</a></li>
+                        <li><a href="/Wall-Mounted-Electric-Fireplace.html">- Wall Mounted Electric Fireplace</a></li>
+                        <li><a href="/Electric-Fireplace-Insert.html">- Electric Fireplace Insert</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="/Bio-ethanol-Fireplace.html">Bio-ethanol Fireplace</a></li>
+                        <li><a href="/Ethanol-Fireplace-With-Gelbox.html">- Ethanol Fireplace With Gelbox</a></li>
+                        <li><a href="/Floor-Ethanol-Fireplace.html">- Floor Ethanol Fireplace</a></li>
+                        <li><a href="/Table-Ethanol-Fireplace.html">- Table Ethanol Fireplace</a></li>
+                        <li><a href="/Wall-Mounted-Ethanol-Fireplace.html">- Wall Mounted Ethanol Fireplace</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="/Wood-mantel.html">Wood mantel</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="/Gas-Logs.html">Gas Logs</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="/Accessories.html">Accessories</a></li>
+                    </ul>
+
+                </div>
+            </div>
+            <div class="categories-list-right col-md-9 col-xs-12">
+
+                <div class="ArticleList-right-one">
+                    <a class="ArticleList-right-a" href="/Traditional-Electric-Fireplace.html"><img src="{% static "client/sanyan/images/Cate_01.jpg"%}"></a>
+                    <div class="ArticleList-right-one-center">
+                        <a class="ArticleList-right-h3" href="/Traditional-Electric-Fireplace.html"><h3>Traditional electric fireplace</h3></a>
+                        <p class="ArticleList-right-content">Electric fireplace with classic mantel, easy operation
+                            and design with security, realistic log flame effect create a warm and romantic
+                            atmosphere.</p>
+                    </div>
+                    <a class="ArticleList-right-button" href="/Traditional-Electric-Fireplace.html">
+                        <button>
+                            VIEW MORE
+                        </button>
+                    </a>
+                </div>
+
+                <div class="ArticleList-right-one">
+                    <a class="ArticleList-right-a" href="/Entertainment-Center-Fireplace.html"><img src="{% static "client/sanyan/images/Cate_02.jpg"%}"></a>
+                    <div class="ArticleList-right-one-center">
+                        <a class="ArticleList-right-h3" href="/Entertainment-Center-Fireplace.html"><h3>Entertainment-Center-Fireplace</h3></a>
+                        <p class="ArticleList-right-content">A fireplace that can hold your entertainment, and adds charm to ensure your space remains cozy.</p>
+                    </div>
+                    <a class="ArticleList-right-button" href="/Entertainment-Center-Fireplace.html">
+                        <button>
+                            VIEW MORE
+                        </button>
+                    </a>
+                </div>
+
+                <div class="ArticleList-right-one">
+                    <a class="ArticleList-right-a" href="/Portable-Electric-Fireplace.html"><img src="{% static "client/sanyan/images/Cate_03.jpg"%}"></a>
+                    <div class="ArticleList-right-one-center">
+                        <a class="ArticleList-right-h3" href="/Portable-Electric-Fireplace.html"><h3>Portable electric fireplace</h3></a>
+                        <p class="ArticleList-right-content">Free standing & compact design perfectly for all indoor space, realistic log flame effect create a warm and romantic atmosphere.</p>
+                    </div>
+                    <a class="ArticleList-right-button" href="/Portable-Electric-Fireplace.html">
+                        <button>
+                            VIEW MORE
+                        </button>
+                    </a>
+                </div>
+
+                <div class="ArticleList-right-one">
+                    <a class="ArticleList-right-a" href="/Wall-Mounted-Electric-Fireplace.html"><img src="{% static "client/sanyan/images/Cate_04.jpg"%}"></a>
+                    <div class="ArticleList-right-one-center">
+                        <a class="ArticleList-right-h3" href="/Wall-Mounted-Electric-Fireplace.html"><h3>Wall mounted electric fireplace</h3></a>
+                        <p class="ArticleList-right-content">Fill a big blank wall with a touch of modernity and elegance, lifelike LED flames require no messy clean up, fast installation and easy to use.</p>
+                    </div>
+                    <a class="ArticleList-right-button" href="/Wall-Mounted-Electric-Fireplace.html">
+                        <button>
+                            VIEW MORE
+                        </button>
+                    </a>
+                </div>
+
+
+                <div class="ArticleList-right-one">
+                    <a class="ArticleList-right-a" href="/Electric-Fireplace-Insert.html"><img src="{% static "client/sanyan/images/Cate_05.jpg"%}"></a>
+                    <div class="ArticleList-right-one-center">
+                        <a class="ArticleList-right-h3" href="/Electric-Fireplace-Insert.html"><h3>Electric fireplace insert</h3></a>
+                        <p class="ArticleList-right-content">Convert your existing gas or wood fireplace, can be used alone or embedded in the mantel.</p>
+                    </div>
+                    <a class="ArticleList-right-button" href="/Electric-Fireplace-Insert.html">
+                        <button>
+                            VIEW MORE
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+{% block scripts %}
+{% load staticfiles %}
+{% endblock %}

@@ -1,110 +1,145 @@
-{% extends "client/cassie/base.html" %}	
+{% extends "client/cassie/base.html" %}
 {% block breadcrumbs %}
-<div class="crumb main">
-    <div class="container">
-        <div class="row">
-           <a href="/">Home</a> &gt; {{product.name}}
+    <div class="crumb main">
+        <div class="container">
+            <div class="row">
+                <a href="/">Home</a> &gt; {{ product.name }}
+            </div>
         </div>
     </div>
-</div>
-{% endblock%}
+{% endblock %}
 {% block main %}
-{% load i18n %}
+    {% load i18n %}
 
-<!--产品幻灯开始-->
-<div class="detail">
-  <div class="detail-main">
-   <div id="preview" class="spec-preview">
+    <!--产品幻灯开始-->
+    <div class="detail">
+        <div class="detail-main">
+            <div id="preview" class="spec-preview">
       <span class="jqzoom">
-        <img id="product-big-image" jqimg="{{product.image}}" alt="" src="{{product.image}}" class="cart-move-img"/>      </span>
-   </div>
-   <div class="spec-scroll">
-          <div class="items">
-              <ul>
-				 {% for image in product.get_main_image_list %}
-					<li><img alt="" bimg="{{image.image}}" src="{{image.image}}" onMouseMove="preview(this);"></li>
-				{% endfor %}
-              </ul>
-          </div>
-   </div>
-  </div>
-  <div class="detail-attr">
-     <h1>{{product.name}}</h1>
-     <p class="detail-attr-des">{{product.short_desc}}</p>
-     <div class="detail-price">
+        <img id="product-big-image" jqimg="{{ product.image }}" alt="" src="{{ product.image }}" class="cart-move-img"/>      </span>
+            </div>
+            <div class="spec-scroll">
+                <div class="items">
+                    <ul>
+                        {% for image in product.get_main_image_list %}
+                            <li><img alt="" bimg="{{ image.image }}" src="{{ image.image }}"
+                                     onMouseMove="preview(this);"></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="detail-attr">
+            <h1>{{ product.name }}</h1>
+            <p class="detail-attr-des">{{ product.short_desc }}</p>
+            <div class="detail-price">
 		<span>
-				${{product.market_price|floatformat:"2"}}
+				${{ product.market_price|floatformat:"2" }}
 		</span>
-		<span id="product-price-main" class="price">
+                <span id="product-price-main" class="price">
 			{% if product.has_price_range %}
-				${{product.get_min_price|floatformat:"2"}} - ${{product.get_max_price|floatformat:"2"}}
-			{% else %}
-				${{product.get_min_price|floatformat:"2"}}
-			{% endif %}
+                ${{ product.get_min_price|floatformat:"2" }} - ${{ product.get_max_price|floatformat:"2" }}
+            {% else %}
+                ${{ product.get_min_price|floatformat:"2" }}
+            {% endif %}
 		</span>
-	 </div>
-	<div class="product-attributes">
-		<!-- 先找出商品关联的所有的attributes，然后找出分组 -->
-		<input type="hidden" id="product-attribute-id" value="" />
-		<input type="hidden" id="current_attrobute_id" name="current_attrobute_id" value="" />
-		{% for group in product.get_attributes %}
-			{% for attr in group.attr_list %}
-				{% if group.group_type == 'text' %}
-					{% if forloop.first %}
-						<div class="product-attribute-group-div" data-attribute-group-name="{{group.name}}">
-							<input type='hidden' class="product-attribute-group-selected" title="{{group.code}}" value="" />
-							<ul class="detail-color">
-								<li>{{group.name}}:</li>
-					{% endif %}
-								<li class="attr-text sku-text-available"><span class="product-attribute-item" data-attribute-id="{{attr.id}}" data-group-code="{{group.code}}" data-product-id="{{product.id}}" name="{{group.code}}">{{attr.name}}</span></li>
-					{% if forloop.last %}
-							</ul>
-						</div>
-					{% endif %}
-				{% elif group.group_type == 'image' %}
-					{% if forloop.first %}
-						<div class="product-attribute-group-div" data-attribute-group-name="{{group.name}}">
-							<input type='hidden' class="product-attribute-group-selected" title="{{group.code}}" value="" />
-							<ul class="detail-color">
-								<li>{{group.name}}:</li>
-					{% endif %}
-								<li class="attr-img sku-available">
-									<img class="product-attribute-item" data-attribute-id="{{attr.id}}" data-group-code="{{group.code}}" data-product-id="{{product.id}}" src='{{attr.thumb}}' alt='{{attr.name}}' title='{{attr.name}}'/>
-								</li>
-					{% if forloop.last %}
-							</ul>
-						</div>
-					{% endif %}
-				{% else%}
-					<p>{{attr.name}}</p>
-				{% endif %}
-			{% endfor %}
-		{% endfor %}
-	</div>
+            </div>
+            <div class="product-attributes">
+                <!-- 先找出商品关联的所有的attributes，然后找出分组 -->
+                <input type="hidden" id="product-attribute-id" value=""/>
+                <input type="hidden" id="current_attrobute_id" name="current_attrobute_id" value=""/>
+                {% for group in product.get_attributes %}
+                    {% for attr in group.attr_list %}
+                        {% if group.group_type == 'text' %}
+                            {% if forloop.first %}
+                                <div class="product-attribute-group-div" data-attribute-group-name="{{ group.name }}">
+                                <input type='hidden' class="product-attribute-group-selected" title="{{ group.code }}"
+                                       value=""/>
+                                <ul class="detail-color">
+                                <li>{{ group.name }}:</li>
+                            {% endif %}
+                        <li class="attr-text sku-text-available"><span class="product-attribute-item"
+                                                                       data-attribute-id="{{ attr.id }}"
+                                                                       data-group-code="{{ group.code }}"
+                                                                       data-product-id="{{ product.id }}"
+                                                                       name="{{ group.code }}">{{ attr.name }}</span>
+                        </li>
+                        {% if forloop.last %}
+                            </ul>
+                            </div>
+                        {% endif %}
+                        {% elif group.group_type == 'image' %}
+                            {% if forloop.first %}
+                                <div class="product-attribute-group-div" data-attribute-group-name="{{ group.name }}">
+                                <input type='hidden' class="product-attribute-group-selected" title="{{ group.code }}"
+                                       value=""/>
+                                <ul class="detail-color">
+                                <li>{{ group.name }}:</li>
+                            {% endif %}
+                        <li class="attr-img sku-available">
+                            <img class="product-attribute-item" data-attribute-id="{{ attr.id }}"
+                                 data-group-code="{{ group.code }}" data-product-id="{{ product.id }}"
+                                 src='{{ attr.thumb }}' alt='{{ attr.name }}' title='{{ attr.name }}'/>
+                        </li>
+                        {% if forloop.last %}
+                            </ul>
+                            </div>
+                        {% endif %}
+                        {% else %}
+                            <p>{{ attr.name }}</p>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </div>
 
-      <img src="{{product.thumb}}" class="cart-move" title="Fly Image">
-      <div class="detail-quality">
-        <input type="text" class="small-quality" id="qty" name="qty" placeholder="1" value="1">
-        <a id="addToCartBtn" data-product-id="{{product.id}}" class="detail-add-btn delay">add to cart</a>
-        <a class="glyphicon glyphicon-heart detail-heart delay  {{is_my_wish|yesno:"detail-heart-click,,"}}" id="addToWishList" data-product-id="{{product.id}}"></a>
-        <p id="min_order_quantity_tips" class="min-purchase-tips">
-				Minimun Order Quantity : <span id="min_order_quantity">{{product.min_order_quantity}}</span>
-		</p>
-      </div>
-      <p class="detail-attr-social"></p>
-  </div>
-  <div class="container">
-    <div class="row">
-		<div class="detail-des">
-			<h5 class="detail-des-title">Description</h5><h5 class="detail-des-line"></h5>
-			<div class="detail-des-main">
-				{{product.description|safe}}
-			</div>
-		</div>
-	</div>
-  </div>
-  <!-- 关联商品 -->
-  <!--
+            <img src="{{ product.thumb }}" class="cart-move" title="Fly Image">
+            <div class="detail-quality">
+                <input type="text" class="small-quality" id="qty" name="qty" placeholder="1" value="1">
+                <a id="addToCartBtn" data-product-id="{{ product.id }}" class="detail-add-btn delay">add to cart</a>
+                <a class="glyphicon glyphicon-heart detail-heart delay  {{ is_my_wish|yesno:"detail-heart-click,," }}"
+                   id="addToWishList" data-product-id="{{ product.id }}"></a>
+                <p id="min_order_quantity_tips" class="min-purchase-tips">
+                    Minimun Order Quantity : <span id="min_order_quantity">{{ product.min_order_quantity }}</span>
+                </p>
+            </div>
+            <p class="detail-attr-social"></p>
+            <div class="row">
+                <style>
+                    .product-main-right-accessory-list img {
+                        max-width: 100%;
+                    }
+                </style>
+                {% for image in product.get_main_image_list_attachment_rar %}
+                    <div class="product-main-right-accessory-list col-md-4">
+                        <p>我是压缩包</p>
+                        <a href='{{ image.get_image_url }}' target="_blank"><img
+                                src="{{ image.thumb }}">{{ image.file_name }}
+                        </a>
+                    </div>
+                {% endfor %}
+
+                {% for image in product.get_main_image_list_attachment_pdf %}
+                    <div class="product-main-right-accessory-list col-md-4">
+                        <p>我是pdf</p>
+                        <a href='{{ image.get_image_url }}' target="_blank"><img
+                                src="{{ image.thumb }}">{{ image.file_name }}
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="detail-des">
+                    <h5 class="detail-des-title">Description</h5><h5 class="detail-des-line"></h5>
+                    <div class="detail-des-main">
+                        {{ product.description|safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 关联商品 -->
+        <!--
   <div class="container">
     <div class="row">
 		<div class="detail-des">
@@ -115,13 +150,13 @@
 	</div>
   </div>
   -->
-  <!--关联商品结束-->
-  
-</div>
+        <!--关联商品结束-->
+
+    </div>
 {% endblock %}
 {% block scripts %}
-	{% load staticfiles %}
-	<script type="text/javascript" src="{% static 'client/cassie/js/base.js' %}"></script>
-	<script type="text/javascript" src="{% static 'client/cassie/js/jquery.jqzoom.js' %}"></script>
+    {% load staticfiles %}
+    <script type="text/javascript" src="{% static 'client/cassie/js/base.js' %}"></script>
+    <script type="text/javascript" src="{% static 'client/cassie/js/jquery.jqzoom.js' %}"></script>
 {% endblock %}
 

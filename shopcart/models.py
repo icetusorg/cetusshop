@@ -1,1447 +1,1585 @@
-#coding=utf-8
+# coding=utf-8
 from django.db import models
 import uuid
 from django.conf import settings
-from django.contrib.auth.models import BaseUserManager, AbstractBaseUser,PermissionsMixin
+from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 from django.utils.translation import ugettext as _
 from django.utils.encoding import python_2_unicode_compatible
 
 import logging
+
 logger = logging.getLogger('icetus.shopcart')
+
 
 # Create your models here.
 class MyUserManager(BaseUserManager):
-	def _create_user(self, username, email, password, **extra_fields):
-		"""
-		Creates and saves a User with the given username, email and password.
-		"""
-		
-		#if not username:
-		#    raise ValueError('The given username must be set')
-		email = self.normalize_email(email)
-		user = self.model(username=username, email=email, **extra_fields)
-		user.set_password(password)
-		user.save(using=self._db)
-		return user
+    def _create_user(self, username, email, password, **extra_fields):
+        """
+        Creates and saves a User with the given username, email and password.
+        """
 
-	def create_user(self, username, email, password, **extra_fields):
-		extra_fields.setdefault('is_staff', False)
-		return self._create_user(username, email, password, **extra_fields)
+        # if not username:
+        #    raise ValueError('The given username must be set')
+        email = self.normalize_email(email)
+        user = self.model(username=username, email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
 
-	def create_superuser(self, username, email, password, **extra_fields):
-		extra_fields.setdefault('is_staff', True)
-		if extra_fields.get('is_staff') is not True:
-			raise ValueError('Superuser must have is_staff=True')
+    def create_user(self, username, email, password, **extra_fields):
+        extra_fields.setdefault('is_staff', False)
+        return self._create_user(username, email, password, **extra_fields)
 
-		return self._create_user(username, email, password, **extra_fields)
+    def create_superuser(self, username, email, password, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True')
+
+        return self._create_user(username, email, password, **extra_fields)
+
 
 class MyUser(AbstractBaseUser, PermissionsMixin):
-	username = models.CharField(max_length=254,unique=True, null=True,db_index=True)
-	email = models.EmailField('email address', unique=True, db_index=True, max_length=254)
-	first_name = models.CharField(max_length=254,null=True)
-	middle_name = models.CharField(max_length=254,null=True)
-	last_name = models.CharField(max_length=254,null=True)
-	mobile_phone = models.CharField(max_length=50,null=True)
-	gender = models.CharField(max_length=3,null=True)
-	birthday = models.DateField(null=True)
-	is_staff = models.BooleanField('staff status', default=False)
-	is_active = models.BooleanField('active', default=True)
-	reg_ip = models.CharField(max_length=32,null=True,blank=True,verbose_name='注册IP地址')
-	last_ip = models.CharField(max_length=32,null=True,blank=True,verbose_name='最后登陆IP地址')
-	
-	create_time = models.DateTimeField(auto_now_add = True,null=True)
-	update_time = models.DateTimeField(auto_now = True,null=True)
+    username = models.CharField(max_length=254, unique=True, null=True, db_index=True)
+    email = models.EmailField('email address', unique=True, db_index=True, max_length=254)
+    first_name = models.CharField(max_length=254, null=True)
+    middle_name = models.CharField(max_length=254, null=True)
+    last_name = models.CharField(max_length=254, null=True)
+    mobile_phone = models.CharField(max_length=50, null=True)
+    gender = models.CharField(max_length=3, null=True)
+    birthday = models.DateField(null=True)
+    is_staff = models.BooleanField('staff status', default=False)
+    is_active = models.BooleanField('active', default=True)
+    reg_ip = models.CharField(max_length=32, null=True, blank=True, verbose_name='注册IP地址')
+    last_ip = models.CharField(max_length=32, null=True, blank=True, verbose_name='最后登陆IP地址')
 
-	USERNAME_FIELD = 'email'
+    create_time = models.DateTimeField(auto_now_add=True, null=True)
+    update_time = models.DateTimeField(auto_now=True, null=True)
 
-	objects = MyUserManager()
+    USERNAME_FIELD = 'email'
 
-	class Meta:
-		db_table = 'myuser'
+    objects = MyUserManager()
 
-	def get_full_name(self):
-		return self.username
+    class Meta:
+        db_table = 'myuser'
 
-	def get_short_name(self):
-		return str(self.first_name) + ' ' + str(self.last_name)
-		
-	def get_human_gender(self):
-		if self.gender == '1':
-			return 'male'
-		elif self.gender == '0':
-			return 'female'
-		else:
-			return 'unknow'
-			
+    def get_full_name(self):
+        return self.username
+
+    def get_short_name(self):
+        return str(self.first_name) + ' ' + str(self.last_name)
+
+    def get_human_gender(self):
+        if self.gender == '1':
+            return 'male'
+        elif self.gender == '0':
+            return 'female'
+        else:
+            return 'unknow'
+
 
 class Address(models.Model):
-	useage = models.CharField(max_length=254,default='',null=True)
-	is_default = models.BooleanField(default=True)
-	first_name = models.CharField(max_length=50,default='',null=True,blank=True)
-	last_name = models.CharField(max_length=50,default='',null=True,blank=True)
-	user = models.ForeignKey(MyUser,null=True,related_name='addresses')
-	country = models.CharField(max_length=50,default='',null=True,blank=True)
-	province = models.CharField(max_length=50,default='',null=True,blank=True)
-	city = models.CharField(max_length=50,default='',null=True,blank=True)
-	district = models.CharField(max_length=50,default='',null=True,blank=True)
-	address_line_1 = models.CharField(max_length=100,default='',null=True,blank=True)
-	address_line_2 = models.CharField(max_length=100,default='',null=True,blank=True)
-	zipcode = models.CharField(max_length=50,default='',null=True,blank=True)
-	tel = models.CharField(max_length=50,default='',null=True,blank=True)
-	mobile = models.CharField(max_length=50,default='',null=True,blank=True)
-	sign_building = models.CharField(max_length=50,default='',null=True,blank=True)
-	best_time = models.CharField(max_length=50,default='',null=True,blank=True)
-	create_time = models.DateTimeField(auto_now_add = True)
-	update_time = models.DateTimeField(auto_now = True)
-	
+    useage = models.CharField(max_length=254, default='', null=True)
+    is_default = models.BooleanField(default=True)
+    first_name = models.CharField(max_length=50, default='', null=True, blank=True)
+    last_name = models.CharField(max_length=50, default='', null=True, blank=True)
+    user = models.ForeignKey(MyUser, null=True, related_name='addresses')
+    country = models.CharField(max_length=50, default='', null=True, blank=True)
+    province = models.CharField(max_length=50, default='', null=True, blank=True)
+    city = models.CharField(max_length=50, default='', null=True, blank=True)
+    district = models.CharField(max_length=50, default='', null=True, blank=True)
+    address_line_1 = models.CharField(max_length=100, default='', null=True, blank=True)
+    address_line_2 = models.CharField(max_length=100, default='', null=True, blank=True)
+    zipcode = models.CharField(max_length=50, default='', null=True, blank=True)
+    tel = models.CharField(max_length=50, default='', null=True, blank=True)
+    mobile = models.CharField(max_length=50, default='', null=True, blank=True)
+    sign_building = models.CharField(max_length=50, default='', null=True, blank=True)
+    best_time = models.CharField(max_length=50, default='', null=True, blank=True)
+    create_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
+
 
 @python_2_unicode_compatible
 class System_Config(models.Model):
-	name = models.CharField(max_length = 100,verbose_name = '参数名称')
-	val = models.CharField(max_length = 254,verbose_name = '参数值')
-	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建时间')
-	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新时间')
+    name = models.CharField(max_length=100, verbose_name='参数名称')
+    val = models.CharField(max_length=254, verbose_name='参数值')
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
+    update_time = models.DateTimeField(auto_now=True, verbose_name='更新时间')
 
-	@staticmethod
-	#获取模板名字
-	def get_template_name(type='client'):
-		sys_conf = System_Config.objects.get(name='template_name')
-		prefix = ''
-		if type.lower() == 'client':
-			prefix = 'client/'
-			return prefix + sys_conf.val
-		elif type.lower() == 'admin':
-			prefix = 'admin/'
-			admin_template = 'default'
-			try:
-				admin_template = System_Config.objects.get(name='admin_template_name').val
-			except Exception as err:
-				logger.info('System Parameter "admin_template_name" not defined.Use the default value "default".')
-			return prefix + admin_template
-		elif type.lower() == 'email':
-			prefix = 'email/'
-			email_template = 'defalut'
-			try:
-				email_template = System_Config.objects.get(name='email_template_name').val
-			except Exception as err:
-				logger.info('System Parameter "email_template_name" not defined.Use the default value "default".')
-			return prefix + email_template
-		else:
-			return sys_conf.val
-		
-	
-	@staticmethod
-	#获取网站根路径
-	def get_base_url():
-		sys_conf = System_Config.objects.get(name='base_url')
-		return sys_conf.val
-		
-	def __str__(self):
-		return self.name
-		
-	class Meta:
-		verbose_name = '系统参数'
-		verbose_name_plural = '系统参数'
+    @staticmethod
+    # 获取模板名字
+    def get_template_name(type='client'):
+        sys_conf = System_Config.objects.get(name='template_name')
+        prefix = ''
+        if type.lower() == 'client':
+            prefix = 'client/'
+            return prefix + sys_conf.val
+        elif type.lower() == 'admin':
+            prefix = 'admin/'
+            admin_template = 'default'
+            try:
+                admin_template = System_Config.objects.get(name='admin_template_name').val
+            except Exception as err:
+                logger.info('System Parameter "admin_template_name" not defined.Use the default value "default".')
+            return prefix + admin_template
+        elif type.lower() == 'email':
+            prefix = 'email/'
+            email_template = 'defalut'
+            try:
+                email_template = System_Config.objects.get(name='email_template_name').val
+            except Exception as err:
+                logger.info('System Parameter "email_template_name" not defined.Use the default value "default".')
+            return prefix + email_template
+        else:
+            return sys_conf.val
+
+    @staticmethod
+    # 获取网站根路径
+    def get_base_url():
+        sys_conf = System_Config.objects.get(name='base_url')
+        return sys_conf.val
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = '系统参数'
+        verbose_name_plural = '系统参数'
+
 
 @python_2_unicode_compatible
 class Category(models.Model):
-	code = models.CharField(max_length = 100,default='',db_index=True,unique=True,verbose_name = '分类代码')
-	name = models.CharField(max_length = 100,default='',verbose_name = '分类名称')
-	page_title = models.CharField(max_length = 100,blank=True,default='',verbose_name='网页标题')
-	keywords = models.CharField(max_length = 254,default='',blank=True,verbose_name='关键字')
-	short_desc = models.CharField(max_length = 1024,default='',blank=True,verbose_name='简略描述')
-	description = models.CharField(max_length = 1024,default='',blank=True,verbose_name='分类描述')
-	sort_order = models.CharField(max_length = 100,default='',verbose_name = '排序序号')
-	parent = models.ForeignKey('self',null=True,default=None,related_name='childrens',blank=True,verbose_name = '上级分类')
-	detail_template = models.CharField(max_length = 254,default='',blank=True,verbose_name='商品详情页指定模板')
-	category_template = models.CharField(max_length = 254,default='',blank=True,verbose_name='分类指定模板')
-	static_file_name = models.CharField(max_length = 254,db_index=True,unique=True,null=True,blank=True,verbose_name='静态文件名(不包含路径，以html结尾)')
-	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建时间')
-	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新时间')
-	
-	def get_parent_stack(self):
-		from shopcart.utils import Stack  
-		s=Stack(20);
-		target = self
-		while target is not None:
-			s.push(target)
-			target = target.parent
-		return s
-		
-	def get_dirs(self):
-		from shopcart.utils import Stack 
-		s = self.get_parent_stack()
-		dir = ''
-		while not s.isempty():
-			dir = dir + s.pop().code + '/'
-		return dir
-		
-	def get_childrens(self):
-		return self.childrens.all().order_by('-sort_order')
-		
-	def get_url(self):
-		from shopcart.functions.product_util_func import get_url
-		return get_url(self)
-	
-	def get_leveled_parents(self):
-		from shopcart.utils import Stack 
-		s = self.get_parent_stack()
-		parent_list = []
-		while not s.isempty():
-			parent_list.append(s.pop())
-		return parent_list
-	
+    code = models.CharField(max_length=100, default='', db_index=True, unique=True, verbose_name='分类代码')
+    name = models.CharField(max_length=100, default='', verbose_name='分类名称')
+    page_title = models.CharField(max_length=100, blank=True, default='', verbose_name='网页标题')
+    keywords = models.CharField(max_length=254, default='', blank=True, verbose_name='关键字')
+    short_desc = models.CharField(max_length=1024, default='', blank=True, verbose_name='简略描述')
+    description = models.CharField(max_length=1024, default='', blank=True, verbose_name='分类描述')
+    sort_order = models.CharField(max_length=100, default='', verbose_name='排序序号')
+    parent = models.ForeignKey('self', null=True, default=None, related_name='childrens', blank=True,
+                               verbose_name='上级分类')
+    detail_template = models.CharField(max_length=254, default='', blank=True, verbose_name='商品详情页指定模板')
+    category_template = models.CharField(max_length=254, default='', blank=True, verbose_name='分类指定模板')
+    static_file_name = models.CharField(max_length=254, db_index=True, unique=True, null=True, blank=True,
+                                        verbose_name='静态文件名(不包含路径，以html结尾)')
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
+    update_time = models.DateTimeField(auto_now=True, verbose_name='更新时间')
 
-	def get_parent(cat):
-		if cat.parent:
-			return get_parent(cat.parent)
-		else:
-			return cat
+    def get_parent_stack(self):
+        from shopcart.utils import Stack
+        s = Stack(20);
+        target = self
+        while target is not None:
+            s.push(target)
+            target = target.parent
+        return s
 
-	def __str__(self):
-		return self.name
-		
-	class Meta:
-		verbose_name = '商品分类'
-		verbose_name_plural = '商品分类'
+    def get_dirs(self):
+        from shopcart.utils import Stack
+        s = self.get_parent_stack()
+        dir = ''
+        while not s.isempty():
+            dir = dir + s.pop().code + '/'
+        return dir
+
+    def get_childrens(self):
+        return self.childrens.all().order_by('-sort_order')
+
+    def get_url(self):
+        from shopcart.functions.product_util_func import get_url
+        return get_url(self)
+
+    def get_leveled_parents(self):
+        from shopcart.utils import Stack
+        s = self.get_parent_stack()
+        parent_list = []
+        while not s.isempty():
+            parent_list.append(s.pop())
+        return parent_list
+
+    def get_parent(cat):
+        if cat.parent:
+            return get_parent(cat.parent)
+        else:
+            return cat
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = '商品分类'
+        verbose_name_plural = '商品分类'
+
 
 @python_2_unicode_compatible
 class Product(models.Model):
-	item_number = models.CharField(max_length = 100,default='',db_index=True,blank=True,verbose_name='商品编号')
-	name = models.CharField(max_length = 100,default='',db_index=True,verbose_name='商品名称')
-	type = models.CharField(max_length = 20,default='B2C',verbose_name='商品类型')
-	click_count = models.IntegerField(default=0,verbose_name='浏览次数')
-	quantity = models.IntegerField(default=0,verbose_name='库存数量')
-	warn_quantity = models.IntegerField(default=0,verbose_name='预警库存')
-	price = models.FloatField(default=0.0,verbose_name='基准价格')
-	market_price = models.FloatField(default=0.0,verbose_name='市场价')
-	page_title = models.CharField(max_length = 100,blank=True,default='',verbose_name='网页标题')
-	keywords = models.CharField(max_length = 254,default='',blank=True,verbose_name='关键字')
-	short_desc = models.CharField(max_length = 1024,default='',blank=True,verbose_name='简略描述')
-	description = models.TextField(blank=True,verbose_name='详细描述')
-	youtube = models.CharField(max_length = 1024,default='',blank=True,verbose_name='youtube视频地址')
-	thumb = models.URLField(verbose_name='主缩略图')
-	image = models.URLField(verbose_name='主图大图')
-	is_free_shipping = models.BooleanField(default=False,verbose_name='是否包邮')
-	sort_order = models.IntegerField(default=0,verbose_name='排序序号')
-	static_file_name = models.CharField(max_length=254,default=None,null=True,db_index=True,blank=True,verbose_name='静态文件名(不包含路径，以html结尾)')
-	categorys = models.ManyToManyField(Category,verbose_name='商品分类',related_name="products")
-	min_order_quantity = models.IntegerField(default=0,verbose_name='最小下单数量')
-	is_publish = models.BooleanField(default=False,verbose_name='上架')
-	detail_template = models.CharField(max_length = 254,default='',blank=True,verbose_name='详情页指定模板')
-	related_products = models.ManyToManyField('self',null=True,blank=True,related_name='parent_product',verbose_name='关联商品')
-	weight = models.FloatField(default=0.0,verbose_name='重量，克')
-	cuboid_long = models.FloatField(default=0.0,verbose_name='体积_长_毫米')
-	cuboid_width = models.FloatField(default=0.0,verbose_name='体积_宽_毫米')
-	cuboid_height = models.FloatField(default=0.0,verbose_name='体积_高_毫米')
-	
-	create_time = models.DateTimeField(auto_now_add = True)
-	update_time = models.DateTimeField(auto_now = True)
-	
-	def get_related_products(self):
-		return self.related_products.all()
-	
-	def get_one_category(self):
-		list = self.categorys.all()
-		if len(list) > 0:
-			return list[0]
-		else:
-			return None
-	
-	
-	def get_main_image(self):
-		return self.get_images(method='single')
-		
-	def get_main_image_list(self):
-		return self.get_images(method='main')
-		
-	def get_all_image_list(self):
-		return self.get_images(method='all')
-		
-	def get_images(self,method,sort_by='sort_order'):
-		image_list = self.images.all()
-		if method == 'main':
-			image_list = image_list.filter(is_show_in_product_detail=True) 
-		
-		if sort_by == 'sort_order':
-			image_list = sorted(image_list,key= lambda image:image.sort,reverse=True)
-		elif sort_by == 'create_time':
-			image_list = sorted(image_list,key= lambda image:image.create_time,reverse=True)
-			
-		main_image_url = self.image
-		main_image = None
-		for img in image_list:
-			if img.image == main_image_url:
-				logger.debug('Find the main image. Remove it to top.')
-				main_image = img
-				break
-				
-		#logger.debug('main_img:%s   alt:%s' % (main_image,main_image.alt_value))
-		
-		if main_image:
-			image_list.remove(main_image)
-			image_list.insert(0,main_image)
-			
-		if method == 'single':
-			if len(image_list) > 0:
-				return image_list[0]
-			else:
-				return None
-		else:
-			return image_list
+    item_number = models.CharField(max_length=100, default='', db_index=True, blank=True, verbose_name='商品编号')
+    name = models.CharField(max_length=100, default='', db_index=True, verbose_name='商品名称')
+    type = models.CharField(max_length=20, default='B2C', verbose_name='商品类型')
+    click_count = models.IntegerField(default=0, verbose_name='浏览次数')
+    quantity = models.IntegerField(default=0, verbose_name='库存数量')
+    warn_quantity = models.IntegerField(default=0, verbose_name='预警库存')
+    price = models.FloatField(default=0.0, verbose_name='基准价格')
+    market_price = models.FloatField(default=0.0, verbose_name='市场价')
+    page_title = models.CharField(max_length=100, blank=True, default='', verbose_name='网页标题')
+    keywords = models.CharField(max_length=254, default='', blank=True, verbose_name='关键字')
+    short_desc = models.CharField(max_length=1024, default='', blank=True, verbose_name='简略描述')
+    description = models.TextField(blank=True, verbose_name='详细描述')
+    youtube = models.CharField(max_length=1024, default='', blank=True, verbose_name='youtube视频地址')
+    thumb = models.URLField(verbose_name='主缩略图')
+    image = models.URLField(verbose_name='主图大图')
+    is_free_shipping = models.BooleanField(default=False, verbose_name='是否包邮')
+    sort_order = models.IntegerField(default=0, verbose_name='排序序号')
+    static_file_name = models.CharField(max_length=254, default=None, null=True, db_index=True, blank=True,
+                                        verbose_name='静态文件名(不包含路径，以html结尾)')
+    categorys = models.ManyToManyField(Category, verbose_name='商品分类', related_name="products")
+    min_order_quantity = models.IntegerField(default=0, verbose_name='最小下单数量')
+    is_publish = models.BooleanField(default=False, verbose_name='上架')
+    detail_template = models.CharField(max_length=254, default='', blank=True, verbose_name='详情页指定模板')
+    related_products = models.ManyToManyField('self', null=True, blank=True, related_name='parent_product',
+                                              verbose_name='关联商品')
+    weight = models.FloatField(default=0.0, verbose_name='重量，克')
+    cuboid_long = models.FloatField(default=0.0, verbose_name='体积_长_毫米')
+    cuboid_width = models.FloatField(default=0.0, verbose_name='体积_宽_毫米')
+    cuboid_height = models.FloatField(default=0.0, verbose_name='体积_高_毫米')
 
-	def get_attributes(self):
-		pa_list = self.attributes.all()
-		attribute_list = Attribute.objects.filter(product_attribute__in=pa_list).distinct()
-		attribute_group_list = list(set([attr.group for attr in attribute_list]))#用set去重后，再转回list
-		attribute_group_list.sort(key=lambda x:x.position)#利用position字段排序
-		
-		for ag in attribute_group_list:
-			ag.attr_list = [attr for attr in attribute_list if attr.group == ag]
-			ag.attr_list.sort(key=lambda x:x.position)
-		
-		return attribute_group_list
-		
-	def get_product_detail_images(self):
-		return self.images.filter(is_show_in_product_detail=True).order_by('sort')
-		
-	def get_url(self):
-		from shopcart.functions.product_util_func import get_url
-		return get_url(self)
-		
-	def get_stere(self,unit=None):
-		stere_cm = self.cuboid_long * self.cuboid_width * self.cuboid_height
-		if unit == None or unit == 'm':
-			#换算成立方米
-			return stere_cm / (1000 * 1000 * 1000)
-		else:
-			return stere_cm
-			
-	def get_weight(self,unit=None):
-		if unit==None or unit=='kg':
-			#换算成千克
-			return self.weight / 1000
-		else:
-			return self.weight
-			
-	def get_min_price(self):
-		return self.get_price_for_show('min')
-		
-	def get_max_price(self):
-		return self.get_price_for_show('max')
-		
-	def get_price(self):
-		return self.get_price_for_show('min-max')
-		
-	def has_price_range(self):
-		if self.get_max_price() - self.get_min_price() > 0.01:
-			return True
-		else:
-			return False
-			
-	def get_price_for_show(self,method='min'):
-		price_min = 0.0
-		price_max = 0.0
-		price_list = []
-		
-		if self.prices.all().count()>0:
-			for p in self.prices.all():
-				if p.price > 0:
-					price_list.append(p.price)
+    create_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
 
-			if len(price_list) > 0:	
-				price_min = min(price_list)
-				price_max = max(price_list)
-			else:
-				price_min = self.price
-				price_max = self.price
-		else:
-			price_min = self.price
-			price_max = self.price
-		
-		if method == 'min':
-			return price_min
-		elif method == 'max':
-			return price_max
-		elif method == 'min-max':
-			if price_max - price_min > 0.01:
-				return '%s - %s' % (price_min,price_max)
-			else:
-				return price_max
-		else:
-			return price_min
-			
-	
-	def __str__(self):
-		return self.name
-	
-	class Meta:
-		verbose_name = '商品'
-		verbose_name_plural = '商品'
-		
-@python_2_unicode_compatible		
+    def get_related_products(self):
+        return self.related_products.all()
+
+    def get_one_category(self):
+        list = self.categorys.all()
+        if len(list) > 0:
+            return list[0]
+        else:
+            return None
+
+    def get_main_image(self):
+        return self.get_images(method='single')
+
+    def get_main_image_list(self):
+        return self.get_images(method='main')
+
+    def get_main_image_list_attachment(self):
+        image_list = Album.objects.filter(item_type='attachment', item_id=self.id)
+        image_list = list(image_list)
+        logger.debug("获取到的list:%s" % image_list)
+        return image_list
+
+    def get_main_image_list_attachment_pdf(self):
+        image_list = Album.objects.filter(item_type='attachment', item_id=self.id)
+        image_list = list(image_list)
+        new_images_list = []
+        # 允许上传的类型
+        file_allow = ['PDF']
+        logger.debug("获取到的list:%s" % image_list)
+        for img in image_list:
+            ext = img.image.split('.')[-1]
+            logger.debug(str(ext))
+            if ext.upper() not in file_allow:
+                logger.info(image_list)
+            else:
+                new_images_list.append(img)
+                logger.info(img.image)
+        return new_images_list
+
+    def get_main_image_list_attachment_rar(self):
+        image_list = Album.objects.filter(item_type='attachment', item_id=self.id)
+        image_list = list(image_list)
+        new_images_list = []
+        # 允许上传的类型
+        file_allow = ['RAR', 'ZIP']
+        logger.debug("获取到的list:%s" % image_list)
+        for img in image_list:
+            ext = img.image.split('.')[-1]
+            logger.debug(str(ext))
+            if ext.upper() not in file_allow:
+                logger.info(image_list)
+            else:
+                new_images_list.append(img)
+                logger.info(img.image)
+        return new_images_list
+
+    def get_all_image_list(self):
+        return self.get_images(method='all')
+
+    def get_images(self, method, sort_by='sort_order'):
+        image_list = self.images.all()
+        if method == 'main':
+            image_list = image_list.filter(is_show_in_product_detail=True)
+
+        if sort_by == 'sort_order':
+            image_list = sorted(image_list, key=lambda image: image.sort, reverse=True)
+        elif sort_by == 'create_time':
+            image_list = sorted(image_list, key=lambda image: image.create_time, reverse=True)
+
+        main_image_url = self.image
+        main_image = None
+        for img in image_list:
+            if img.image == main_image_url:
+                logger.debug('Find the main image. Remove it to top.')
+                main_image = img
+                break
+
+        # logger.debug('main_img:%s   alt:%s' % (main_image,main_image.alt_value))
+
+        if main_image:
+            image_list.remove(main_image)
+            image_list.insert(0, main_image)
+
+        if method == 'single':
+            if len(image_list) > 0:
+                return image_list[0]
+            else:
+                return None
+        else:
+            return image_list
+
+    def get_attributes(self):
+        pa_list = self.attributes.all()
+        attribute_list = Attribute.objects.filter(product_attribute__in=pa_list).distinct()
+        attribute_group_list = list(set([attr.group for attr in attribute_list]))  # 用set去重后，再转回list
+        attribute_group_list.sort(key=lambda x: x.position)  # 利用position字段排序
+
+        for ag in attribute_group_list:
+            ag.attr_list = [attr for attr in attribute_list if attr.group == ag]
+            ag.attr_list.sort(key=lambda x: x.position)
+
+        return attribute_group_list
+
+    def get_product_detail_images(self):
+        return self.images.filter(is_show_in_product_detail=True).order_by('sort')
+
+    def get_url(self):
+        from shopcart.functions.product_util_func import get_url
+        return get_url(self)
+
+    def get_stere(self, unit=None):
+        stere_cm = self.cuboid_long * self.cuboid_width * self.cuboid_height
+        if unit == None or unit == 'm':
+            # 换算成立方米
+            return stere_cm / (1000 * 1000 * 1000)
+        else:
+            return stere_cm
+
+    def get_weight(self, unit=None):
+        if unit == None or unit == 'kg':
+            # 换算成千克
+            return self.weight / 1000
+        else:
+            return self.weight
+
+    def get_min_price(self):
+        return self.get_price_for_show('min')
+
+    def get_max_price(self):
+        return self.get_price_for_show('max')
+
+    def get_price(self):
+        return self.get_price_for_show('min-max')
+
+    def has_price_range(self):
+        if self.get_max_price() - self.get_min_price() > 0.01:
+            return True
+        else:
+            return False
+
+    def get_price_for_show(self, method='min'):
+        price_min = 0.0
+        price_max = 0.0
+        price_list = []
+
+        if self.prices.all().count() > 0:
+            for p in self.prices.all():
+                if p.price > 0:
+                    price_list.append(p.price)
+
+            if len(price_list) > 0:
+                price_min = min(price_list)
+                price_max = max(price_list)
+            else:
+                price_min = self.price
+                price_max = self.price
+        else:
+            price_min = self.price
+            price_max = self.price
+
+        if method == 'min':
+            return price_min
+        elif method == 'max':
+            return price_max
+        elif method == 'min-max':
+            if price_max - price_min > 0.01:
+                return '%s - %s' % (price_min, price_max)
+            else:
+                return price_max
+        else:
+            return price_min
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = '商品'
+        verbose_name_plural = '商品'
+
+
+@python_2_unicode_compatible
 class ProductPrice(models.Model):
-	product = models.ForeignKey(Product,default=None,related_name='prices',verbose_name='关联的商品')
-	sort_order = models.IntegerField(default=0,verbose_name='排序序号')
-	price = models.FloatField(default=0.0,verbose_name='价格')
-	quantity = models.IntegerField(default=0,verbose_name='数量区间')
-	
-	create_time = models.DateTimeField(auto_now_add = True)
-	update_time = models.DateTimeField(auto_now = True)
-	
-	
-	def __str__(self):
-		return self.product.name + ':' + str(self.price)
-	
-	class Meta:
-		verbose_name = '商品分段价格'
-		verbose_name_plural = '商品分段价格'
-	
+    product = models.ForeignKey(Product, default=None, related_name='prices', verbose_name='关联的商品')
+    sort_order = models.IntegerField(default=0, verbose_name='排序序号')
+    price = models.FloatField(default=0.0, verbose_name='价格')
+    quantity = models.IntegerField(default=0, verbose_name='数量区间')
 
-@python_2_unicode_compatible		
+    create_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.product.name + ':' + str(self.price)
+
+    class Meta:
+        verbose_name = '商品分段价格'
+        verbose_name_plural = '商品分段价格'
+
+
+@python_2_unicode_compatible
 class Product_Images(models.Model):
-	#product_id = models.IntegerField(default=0)
-	thumb = models.URLField(null=True)
-	image = models.URLField(null=True)
-	product = models.ForeignKey(Product,default=None,related_name='images',verbose_name='关联的商品')
-	is_show_in_product_detail = models.BooleanField(default=False,verbose_name='是否在商品详情中展示')
-	sort = models.IntegerField(default=0,verbose_name='排序序号')
-	alt_value = models.CharField(max_length = 100,default='',verbose_name='Alt值')
-	file_name = models.CharField(max_length = 100,null=True,blank=True,verbose_name='文件名')
-	thumb_name = models.CharField(max_length = 100,null=True,blank=True,verbose_name='文件名')
-	path = models.CharField(max_length = 254,null=True,blank=True,verbose_name='文件路径')
-	create_time = models.DateTimeField(auto_now_add = True)
-	update_time = models.DateTimeField(auto_now = True)
-	
-	def get_image_url(self):
-		return self.get_picture_url('image')
-			
-	def get_thumb_url(self):
-		return self.get_picture_url('thumb')
-	
-	def get_picture_url(self,method='image'):
-		#整理路径，如果有\则替换为/
-		if method == 'image':
-			filename = self.file_name
-		else:
-			filename = self.thumb_name
-		
-		
-		if not filename:
-			if method == 'image':
-				return self.image
-			else:
-				return self.thumb
+    # product_id = models.IntegerField(default=0)
+    thumb = models.URLField(null=True)
+    image = models.URLField(null=True)
+    product = models.ForeignKey(Product, default=None, related_name='images', verbose_name='关联的商品')
+    is_show_in_product_detail = models.BooleanField(default=False, verbose_name='是否在商品详情中展示')
+    sort = models.IntegerField(default=0, verbose_name='排序序号')
+    alt_value = models.CharField(max_length=100, default='', verbose_name='Alt值')
+    file_name = models.CharField(max_length=100, null=True, blank=True, verbose_name='文件名')
+    thumb_name = models.CharField(max_length=100, null=True, blank=True, verbose_name='文件名')
+    path = models.CharField(max_length=254, null=True, blank=True, verbose_name='文件路径')
+    create_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
 
-		else:
-			path = self.path.replace('\\','/')
-			if not path.endswith('/'):
-				path = path + '/'
-			base_url = System_Config.objects.get(name='base_url').val
-			if not base_url.endswith('/'):
-				base_url = base_url + "/"
-			return base_url + path + filename
-	
-	
-	def __str__(self):
-		return str(self.id) + ' ' + self.thumb
-	
-	class Meta:
-		verbose_name = '商品相册'
-		verbose_name_plural = '商品相册'
+    def get_image_url(self):
+        return self.get_picture_url('image')
+
+    def get_thumb_url(self):
+        return self.get_picture_url('thumb')
+
+    def get_picture_url(self, method='image'):
+        # 整理路径，如果有\则替换为/
+        if method == 'image':
+            filename = self.file_name
+        else:
+            filename = self.thumb_name
+
+        if not filename:
+            if method == 'image':
+                return self.image
+            else:
+                return self.thumb
+
+        else:
+            path = self.path.replace('\\', '/')
+            if not path.endswith('/'):
+                path = path + '/'
+            base_url = System_Config.objects.get(name='base_url').val
+            if not base_url.endswith('/'):
+                base_url = base_url + "/"
+            return base_url + path + filename
+
+    def __str__(self):
+        return str(self.id) + ' ' + self.thumb
+
+    class Meta:
+        verbose_name = '商品相册'
+        verbose_name_plural = '商品相册'
+
 
 @python_2_unicode_compatible
 class ProductParaGroup(models.Model):
-	name = models.CharField(max_length = 100,default='',verbose_name='参数组名称')
-	create_time = models.DateTimeField(auto_now_add = True)
-	update_time = models.DateTimeField(auto_now = True)
-	
-	def __str__(self):
-		return self.name
-	
-	class Meta:
-		verbose_name = '商品参数组定义'
-		verbose_name_plural = '商品参数组定义'
+    name = models.CharField(max_length=100, default='', verbose_name='参数组名称')
+    create_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = '商品参数组定义'
+        verbose_name_plural = '商品参数组定义'
+
 
 @python_2_unicode_compatible
 class ProductPara(models.Model):
-	group = models.ForeignKey(ProductParaGroup,related_name='paras',null=True)
-	name = models.CharField(max_length = 100,default='',verbose_name='参数名称')
-	create_time = models.DateTimeField(auto_now_add = True)
-	update_time = models.DateTimeField(auto_now = True)
-	
-	def __str__(self):
-		return self.name
-	
-	class Meta:
-		verbose_name = '商品参数定义'
-		verbose_name_plural = '商品参数定义'
-		
+    group = models.ForeignKey(ProductParaGroup, related_name='paras', null=True)
+    name = models.CharField(max_length=100, default='', verbose_name='参数名称')
+    create_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = '商品参数定义'
+        verbose_name_plural = '商品参数定义'
+
+
 @python_2_unicode_compatible
 class ProductParaDetail(models.Model):
-	product_para = models.ForeignKey(ProductPara,null=True)
-	product = models.ForeignKey(Product,null=True,blank=True,related_name='parameters',verbose_name='宿主商品')
-	value = models.CharField(max_length = 254,default='',verbose_name='参数值')
-	create_time = models.DateTimeField(auto_now_add = True)
-	update_time = models.DateTimeField(auto_now = True)
-	
-	def __str__(self):
-		return self.product.name + " " + self.product_para.name + ":" + self.value
-	
-	class Meta:
-		verbose_name = '商品参数具体数值'
-		verbose_name_plural = '商品参数具体数值'
+    product_para = models.ForeignKey(ProductPara, null=True)
+    product = models.ForeignKey(Product, null=True, blank=True, related_name='parameters', verbose_name='宿主商品')
+    value = models.CharField(max_length=254, default='', verbose_name='参数值')
+    create_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
 
-		
-	
+    def __str__(self):
+        return self.product.name + " " + self.product_para.name + ":" + self.value
+
+    class Meta:
+        verbose_name = '商品参数具体数值'
+        verbose_name_plural = '商品参数具体数值'
+
+
 @python_2_unicode_compatible
 class Attribute_Group(models.Model):
-	name = models.CharField(max_length = 100,default='')
-	group_type = models.CharField(max_length = 100,default='') #分为text,image两种，一种是前台显示文字，一种是前台显示图片
-	position = models.IntegerField(default=0)
-	code = models.CharField(max_length = 100,default='') #用于html中用的name属性的
-	create_time = models.DateTimeField(auto_now_add = True)
-	update_time = models.DateTimeField(auto_now = True)
-	
-	def __str__(self):
-		return self.name
-		
-	def remove_file(self):
-		from shopcart.utils import remove_dir_all
-		remove_dir_all('media/%s/%s' % ('attribute',self.id))	
-	
-	class Meta:
-		verbose_name = '商品属性组定义'
-		verbose_name_plural = '商品属性组定义'
+    name = models.CharField(max_length=100, default='')
+    group_type = models.CharField(max_length=100, default='')  # 分为text,image两种，一种是前台显示文字，一种是前台显示图片
+    position = models.IntegerField(default=0)
+    code = models.CharField(max_length=100, default='')  # 用于html中用的name属性的
+    create_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+    def remove_file(self):
+        from shopcart.utils import remove_dir_all
+        remove_dir_all('media/%s/%s' % ('attribute', self.id))
+
+    class Meta:
+        verbose_name = '商品属性组定义'
+        verbose_name_plural = '商品属性组定义'
+
 
 @python_2_unicode_compatible
 class Attribute(models.Model):
-	group = models.ForeignKey(Attribute_Group,related_name='attributes',null=True)
-	name = models.CharField(max_length = 100,default='',verbose_name='外部名称')
-	code = models.CharField(max_length = 100,default='',verbose_name='内部代码')
-	position = models.IntegerField(default=0)
-	thumb = models.URLField(null=True,default=None,blank=True)
-	create_time = models.DateTimeField(auto_now_add = True)
-	update_time = models.DateTimeField(auto_now = True)
-	
-	def __str__(self):
-		return self.code
-	
-	class Meta:
-		#ordering = ['name']
-		verbose_name = '商品属性定义'
-		verbose_name_plural = '商品属性定义'
+    group = models.ForeignKey(Attribute_Group, related_name='attributes', null=True)
+    name = models.CharField(max_length=100, default='', verbose_name='外部名称')
+    code = models.CharField(max_length=100, default='', verbose_name='内部代码')
+    position = models.IntegerField(default=0)
+    thumb = models.URLField(null=True, default=None, blank=True)
+    create_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.code
+
+    class Meta:
+        # ordering = ['name']
+        verbose_name = '商品属性定义'
+        verbose_name_plural = '商品属性定义'
+
 
 @python_2_unicode_compatible
 class Product_Attribute(models.Model):
-	product = models.ForeignKey(Product,null=True,related_name='attributes')
-	sub_item_number = models.CharField(max_length = 100,default='',db_index=True)
-	quantity = models.IntegerField(default=0)
-	price_adjusment = models.FloatField(default=0.0)
-	image = models.ForeignKey(Product_Images,null=True,blank=True)
-	name = models.CharField(max_length = 254,default='')
-	attribute = models.ManyToManyField(Attribute,null=True,related_name='product_attribute')
-	min_order_quantity = models.IntegerField(default=0,verbose_name='最小下单数量')
-	create_time = models.DateTimeField(auto_now_add = True)
-	update_time = models.DateTimeField(auto_now = True)
-	
-	def __str__(self):
-		return self.get_grouped_attribute_desc()
-	
-	def get_grouped_attribute_desc(self):
-		attr_list = []
-		attr_list = Attribute.objects.filter(product_attribute=self).distinct()
-		ret_str = ''
-		for attr in attr_list:
-			ret_str = ret_str + ' [' + attr.group.name + ':' + attr.name + ']'
-		return ret_str
-	
-	def get_attribute_groups(self):
-		attr_list = Attribute.objects.filter(product_attribute=self).distinct()
-		group_list = []
-		for attr in attr_list:
-			group_list.append(attr.group)
-		return group_list
-	
-	class Meta:
-		verbose_name = '商品属性'
-		verbose_name_plural = '商品属性'
+    product = models.ForeignKey(Product, null=True, related_name='attributes')
+    sub_item_number = models.CharField(max_length=100, default='', db_index=True)
+    quantity = models.IntegerField(default=0)
+    price_adjusment = models.FloatField(default=0.0)
+    image = models.ForeignKey(Product_Images, null=True, blank=True)
+    name = models.CharField(max_length=254, default='')
+    attribute = models.ManyToManyField(Attribute, null=True, related_name='product_attribute')
+    min_order_quantity = models.IntegerField(default=0, verbose_name='最小下单数量')
+    create_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.get_grouped_attribute_desc()
+
+    def get_grouped_attribute_desc(self):
+        attr_list = []
+        attr_list = Attribute.objects.filter(product_attribute=self).distinct()
+        ret_str = ''
+        for attr in attr_list:
+            ret_str = ret_str + ' [' + attr.group.name + ':' + attr.name + ']'
+        return ret_str
+
+    def get_attribute_groups(self):
+        attr_list = Attribute.objects.filter(product_attribute=self).distinct()
+        group_list = []
+        for attr in attr_list:
+            group_list.append(attr.group)
+        return group_list
+
+    class Meta:
+        verbose_name = '商品属性'
+        verbose_name_plural = '商品属性'
 
 
 class Cart(models.Model):
-	user = models.ForeignKey(MyUser,null=True,related_name='mycart')
-	create_time = models.DateTimeField(auto_now_add = True)
-	update_time = models.DateTimeField(auto_now = True)
-	
-	def get_sub_total(self):
-		total = 0
-		for cart_product in self.cart_products.all():
-			total = total + cart_product.get_total()
-		return total
-	
-class Cart_Products(models.Model):
-	cart = models.ForeignKey(Cart,null=True,related_name='cart_products')
-	product = models.ForeignKey(Product,null=True)
-	product_attribute = models.ForeignKey(Product_Attribute,null=True)
-	quantity = models.IntegerField(default=0)
-	create_time = models.DateTimeField(auto_now_add = True)
-	update_time = models.DateTimeField(auto_now = True)
-	
-	def get_total(self):
-		return self.quantity * self.get_product_price()
-		
-	def get_weight_total(self,unit=None):
-		return self.quantity * self.product.get_weight(unit)
-		
-	def get_stere_total(self,unit=None):
-		return self.quantity * self.product.get_stere(unit)
-		
-	def get_short_product_attr(self):
-		logger.debug('product_attribute: %s' % self.product_attribute)
-		attr_list = []
-		if self.product_attribute:
-			return self.product_attribute.get_grouped_attribute_desc()
-		else:
-		#	attr_list = Attribute.objects.filter(product_attribute=self.product_attribute).distinct()
-			ret_str = ''
-		#for attr in attr_list:
-		#	ret_str = ret_str + ' [' + attr.group.name + ':' + attr.name + ']'
-			return ret_str
-		
-	def get_picture(self,type='image'):
-		image = ''
-		thumb = ''
-		try:
-			image = self.product.get_main_image().get_image_url()
-			thumb = self.product.get_main_image().get_thumb_url()
-		except:
-			pass
-		
-		if self.product_attribute:
-			if self.product_attribute.image:
-				image = self.product_attribute.image.get_image_url()
-				thumb = self.product_attribute.image.get_thumb_url()
-		
-		if type == 'image':
-			return image
-		else:
-			return thumb
-		
-	def get_thumb(self):
-		return self.get_picture('thumb')
-		
-	def get_image(self):
-		return self.get_picture('image')
-		
-	
-	def get_product_price(self):
-		price_list = self.product.prices.all()
-		
-		if price_list.count()>0:
-			price_list = sorted(price_list,key= lambda price:price.quantity,reverse=False)
-			logger.debug('price_list: %s' % price_list)
-			#price = price_list[0].price
-			price = self.product.price
-			for p in price_list:
-				if self.quantity >= p.quantity:
-					if p.price > 0:
-						price = p.price
-			logger.debug('price:%s' % price)
-			return price
-		else:
-			if self.product_attribute is None:
-				return self.product.price
-			else:
-				return self.product_attribute.price_adjusment + self.product.price
+    user = models.ForeignKey(MyUser, null=True, related_name='mycart')
+    create_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
 
-	
+    def get_sub_total(self):
+        total = 0
+        for cart_product in self.cart_products.all():
+            total = total + cart_product.get_total()
+        return total
+
+
+class Cart_Products(models.Model):
+    cart = models.ForeignKey(Cart, null=True, related_name='cart_products')
+    product = models.ForeignKey(Product, null=True)
+    product_attribute = models.ForeignKey(Product_Attribute, null=True)
+    quantity = models.IntegerField(default=0)
+    create_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
+
+    def get_total(self):
+        return self.quantity * self.get_product_price()
+
+    def get_weight_total(self, unit=None):
+        return self.quantity * self.product.get_weight(unit)
+
+    def get_stere_total(self, unit=None):
+        return self.quantity * self.product.get_stere(unit)
+
+    def get_short_product_attr(self):
+        logger.debug('product_attribute: %s' % self.product_attribute)
+        attr_list = []
+        if self.product_attribute:
+            return self.product_attribute.get_grouped_attribute_desc()
+        else:
+            #	attr_list = Attribute.objects.filter(product_attribute=self.product_attribute).distinct()
+            ret_str = ''
+            # for attr in attr_list:
+            #	ret_str = ret_str + ' [' + attr.group.name + ':' + attr.name + ']'
+            return ret_str
+
+    def get_picture(self, type='image'):
+        image = ''
+        thumb = ''
+        try:
+            image = self.product.get_main_image().get_image_url()
+            thumb = self.product.get_main_image().get_thumb_url()
+        except:
+            pass
+
+        if self.product_attribute:
+            if self.product_attribute.image:
+                image = self.product_attribute.image.get_image_url()
+                thumb = self.product_attribute.image.get_thumb_url()
+
+        if type == 'image':
+            return image
+        else:
+            return thumb
+
+    def get_thumb(self):
+        return self.get_picture('thumb')
+
+    def get_image(self):
+        return self.get_picture('image')
+
+    def get_product_price(self):
+        price_list = self.product.prices.all()
+
+        if price_list.count() > 0:
+            price_list = sorted(price_list, key=lambda price: price.quantity, reverse=False)
+            logger.debug('price_list: %s' % price_list)
+            # price = price_list[0].price
+            price = self.product.price
+            for p in price_list:
+                if self.quantity >= p.quantity:
+                    if p.price > 0:
+                        price = p.price
+            logger.debug('price:%s' % price)
+            return price
+        else:
+            if self.product_attribute is None:
+                return self.product.price
+            else:
+                return self.product_attribute.price_adjusment + self.product.price
+
+
 class Wish(models.Model):
-	user = models.ForeignKey(MyUser,null=True,related_name='wishs')
-	product = models.ForeignKey(Product,null=True)
-	create_time = models.DateTimeField(auto_now_add = True)
-	update_time = models.DateTimeField(auto_now = True)
+    user = models.ForeignKey(MyUser, null=True, related_name='wishs')
+    product = models.ForeignKey(Product, null=True)
+    create_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
+
 
 class Email(models.Model):
-	useage = models.CharField(max_length = 100,unique=True)
-	useage_name = models.CharField(max_length = 254,null=True,blank=True,verbose_name='邮件用途显示名称')
-	is_send = models.BooleanField(default=False,verbose_name='是否发送')
-	email_address = models.EmailField(null=True)
-	title = models.CharField(max_length=254,verbose_name='邮件主题')
-	smtp_host = models.CharField(max_length=100)
-	username = models.CharField(max_length=100)
-	password = models.CharField(max_length=100)
-	need_ssl = models.BooleanField(default=False,verbose_name="是否启用SSL连接")
-	template = models.CharField(max_length=254,null=True,blank=True,verbose_name='模板组名称')
-	template_file = models.CharField(max_length=254,null=True,blank=True,verbose_name='模板文件名称')
-	create_time = models.DateTimeField(auto_now_add = True)
-	update_time = models.DateTimeField(auto_now = True)
+    useage = models.CharField(max_length=100, unique=True)
+    useage_name = models.CharField(max_length=254, null=True, blank=True, verbose_name='邮件用途显示名称')
+    is_send = models.BooleanField(default=False, verbose_name='是否发送')
+    email_address = models.EmailField(null=True)
+    title = models.CharField(max_length=254, verbose_name='邮件主题')
+    smtp_host = models.CharField(max_length=100)
+    username = models.CharField(max_length=100)
+    password = models.CharField(max_length=100)
+    need_ssl = models.BooleanField(default=False, verbose_name="是否启用SSL连接")
+    template = models.CharField(max_length=254, null=True, blank=True, verbose_name='模板组名称')
+    template_file = models.CharField(max_length=254, null=True, blank=True, verbose_name='模板文件名称')
+    create_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
+
 
 @python_2_unicode_compatible
 class Email_List(models.Model):
-	email = models.EmailField(unique=True, db_index=True, max_length=254,verbose_name = '电子邮件')
-	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
-	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
-	
-	def __str__(self):
-		return self.email
-		
-	class Meta:
-		verbose_name = '订阅邮件列表'
-		verbose_name_plural = '订阅邮件列表'
+    email = models.EmailField(unique=True, db_index=True, max_length=254, verbose_name='电子邮件')
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建日期')
+    update_time = models.DateTimeField(auto_now=True, verbose_name='更新日期')
+
+    def __str__(self):
+        return self.email
+
+    class Meta:
+        verbose_name = '订阅邮件列表'
+        verbose_name_plural = '订阅邮件列表'
+
 
 @python_2_unicode_compatible
 class ExpressType(models.Model):
-	name = models.CharField(max_length=100,null=True,verbose_name = '送货方式')
-	price_fixed = models.FloatField(default = 0.0,verbose_name = '固定运费')
-	price_per_kilogram = models.FloatField(default = 0.0,verbose_name = '每千克运费')
-	price_per_stere = models.FloatField(default = 0.0,verbose_name = '每立方米运费')
-	price_calc_type = models.CharField(max_length=10,default='fixed',verbose_name = '运费计算方式')
-	is_in_use = models.BooleanField(default=True,verbose_name='是否启用')
-	is_delete = models.BooleanField(default=False,verbose_name='是否删除')
-	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
-	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
-	
-	def __str__(self):
-		return self.name
-	
-	class Meta:
-		verbose_name = '送货方式'
-		verbose_name_plural = '送货方式'
-		
-	def get_expresses(self):
-		list = self.expresses.all()
-		list = list.filter(is_delete=False)
-		return list
+    name = models.CharField(max_length=100, null=True, verbose_name='送货方式')
+    price_fixed = models.FloatField(default=0.0, verbose_name='固定运费')
+    price_per_kilogram = models.FloatField(default=0.0, verbose_name='每千克运费')
+    price_per_stere = models.FloatField(default=0.0, verbose_name='每立方米运费')
+    price_calc_type = models.CharField(max_length=10, default='fixed', verbose_name='运费计算方式')
+    is_in_use = models.BooleanField(default=True, verbose_name='是否启用')
+    is_delete = models.BooleanField(default=False, verbose_name='是否删除')
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建日期')
+    update_time = models.DateTimeField(auto_now=True, verbose_name='更新日期')
 
-		
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = '送货方式'
+        verbose_name_plural = '送货方式'
+
+    def get_expresses(self):
+        list = self.expresses.all()
+        list = list.filter(is_delete=False)
+        return list
+
+
 @python_2_unicode_compatible
 class Express(models.Model):
-	name = models.CharField(max_length=100,null=True,verbose_name = '快递名称')
-	express_type = models.ManyToManyField(ExpressType,null=True,related_name='expresses')
-	price_fixed = models.FloatField(default = 0.0,verbose_name = '固定运费')
-	price_per_kilogram = models.FloatField(default = 0.0,verbose_name = '每千克运费')
-	price_per_stere = models.FloatField(default = 0.0,verbose_name = '每立方米运费')
-	is_in_use = models.BooleanField(default=True,verbose_name='是否启用')
-	is_delete = models.BooleanField(default=False,verbose_name='是否删除')
-	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
-	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
-	
-	def __str__(self):
-		return self.name
-		
-	def get_express_types(self):
-		list = self.express_type
-		list = list.filter(is_delete=False)
-		return list
-	
-	class Meta:
-		verbose_name = '快递公司'
-		verbose_name_plural = '快递公司'	
-	
+    name = models.CharField(max_length=100, null=True, verbose_name='快递名称')
+    express_type = models.ManyToManyField(ExpressType, null=True, related_name='expresses')
+    price_fixed = models.FloatField(default=0.0, verbose_name='固定运费')
+    price_per_kilogram = models.FloatField(default=0.0, verbose_name='每千克运费')
+    price_per_stere = models.FloatField(default=0.0, verbose_name='每立方米运费')
+    is_in_use = models.BooleanField(default=True, verbose_name='是否启用')
+    is_delete = models.BooleanField(default=False, verbose_name='是否删除')
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建日期')
+    update_time = models.DateTimeField(auto_now=True, verbose_name='更新日期')
+
+    def __str__(self):
+        return self.name
+
+    def get_express_types(self):
+        list = self.express_type
+        list = list.filter(is_delete=False)
+        return list
+
+    class Meta:
+        verbose_name = '快递公司'
+        verbose_name_plural = '快递公司'
+
+
 @python_2_unicode_compatible
 class Order(models.Model):
-	# 订单等待付款 
-	ORDER_STATUS_PLACE_ORDER = '0' 
-	# 订单已付款，等待确认 
-	ORDER_STATUS_PAYED_UNCONFIRMED = '5'
-	# 订单付款已确认
-	ORDER_STATUS_PAYED_SUCCESS = '10'
-	# 订单已备货
-	ORDER_STATUS_COLLECT_SUCCESS = '15'
-	# 订单部分发货
-	ORDER_STATUS_PART_SHIPPING = '18'
-	# 订单已发货
-	ORDER_STATUS_SHIPPING = '20'
-	# 订单已完成
-	ORDER_STATUS_COMPLETE = '30'
-	# 订单已取消
-	ORDER_STATUS_CANCLED = '40'
-	# 订单异常
-	ORDER_STATUS_ERROR = '90'
-	# 订单已关闭
-	ORDER_STATUS_CLOSED = '99'
-	# 订单状态选项 
-	ORDER_STATUS_CHOICES = ( 
-		(ORDER_STATUS_PLACE_ORDER,'等待付款'),
-		(ORDER_STATUS_PAYED_UNCONFIRMED,'已付款未确认'),
-		(ORDER_STATUS_PAYED_SUCCESS,'已付款'),
-		(ORDER_STATUS_COLLECT_SUCCESS,'已备货'),
-		(ORDER_STATUS_PART_SHIPPING,'部分发货'),
-		(ORDER_STATUS_SHIPPING,'已发货'),
-		(ORDER_STATUS_COMPLETE,'已完成'),
-		(ORDER_STATUS_CANCLED,'已取消'),
-		(ORDER_STATUS_ERROR,'订单异常'),
-		(ORDER_STATUS_CLOSED,'订单已关闭')
-	) 
+    # 订单等待付款
+    ORDER_STATUS_PLACE_ORDER = '0'
+    # 订单已付款，等待确认
+    ORDER_STATUS_PAYED_UNCONFIRMED = '5'
+    # 订单付款已确认
+    ORDER_STATUS_PAYED_SUCCESS = '10'
+    # 订单已备货
+    ORDER_STATUS_COLLECT_SUCCESS = '15'
+    # 订单部分发货
+    ORDER_STATUS_PART_SHIPPING = '18'
+    # 订单已发货
+    ORDER_STATUS_SHIPPING = '20'
+    # 订单已完成
+    ORDER_STATUS_COMPLETE = '30'
+    # 订单已取消
+    ORDER_STATUS_CANCLED = '40'
+    # 订单异常
+    ORDER_STATUS_ERROR = '90'
+    # 订单已关闭
+    ORDER_STATUS_CLOSED = '99'
+    # 订单状态选项
+    ORDER_STATUS_CHOICES = (
+        (ORDER_STATUS_PLACE_ORDER, '等待付款'),
+        (ORDER_STATUS_PAYED_UNCONFIRMED, '已付款未确认'),
+        (ORDER_STATUS_PAYED_SUCCESS, '已付款'),
+        (ORDER_STATUS_COLLECT_SUCCESS, '已备货'),
+        (ORDER_STATUS_PART_SHIPPING, '部分发货'),
+        (ORDER_STATUS_SHIPPING, '已发货'),
+        (ORDER_STATUS_COMPLETE, '已完成'),
+        (ORDER_STATUS_CANCLED, '已取消'),
+        (ORDER_STATUS_ERROR, '订单异常'),
+        (ORDER_STATUS_CLOSED, '订单已关闭')
+    )
+
+    order_number = models.CharField(max_length=100, unique=True, db_index=True, verbose_name='订单编号')
+    user = models.ForeignKey(MyUser, null=True, related_name='orders', verbose_name='用户')
+    status = models.CharField(max_length=32, default='0', verbose_name='订单状态', choices=ORDER_STATUS_CHOICES)
+    shipping_status = models.CharField(max_length=100, default='not yet', blank=True, verbose_name='发货状态')
+    pay_status = models.CharField(max_length=100, default='wait for payment', blank=True)
+    country = models.CharField(max_length=100, default='', blank=True, verbose_name='国家')
+    province = models.CharField(max_length=100, default='', blank=True, verbose_name='省/州')
+    city = models.CharField(max_length=100, default='', blank=True, verbose_name='市')
+    district = models.CharField(max_length=100, default='', blank=True, verbose_name='区')
+    address_line_1 = models.CharField(max_length=254, default='', blank=True, verbose_name='地址 1')
+    address_line_2 = models.CharField(max_length=254, default='', blank=True, verbose_name='地址 2')
+    first_name = models.CharField(max_length=254, default='', blank=True, verbose_name='名')
+    last_name = models.CharField(max_length=254, default='', blank=True, verbose_name='姓')
+    zipcode = models.CharField(max_length=10, default='', blank=True, verbose_name='邮编')
+    tel = models.CharField(max_length=20, default='', blank=True, verbose_name='电话')
+    mobile = models.CharField(max_length=20, default='', blank=True)
+    email = models.CharField(max_length=100, default='', blank=True)
+
+    express_type_id = models.IntegerField(default=0, verbose_name="快递方式ID")
+    express_type_name = models.CharField(max_length=100, null=True, blank=True, verbose_name='送货方式')
+    shipper_name = models.CharField(max_length=100, default='', blank=True, verbose_name='快递名称')
+    shpping_no = models.CharField(max_length=100, default='', blank=True, verbose_name='快递单号')
+    pay_id = models.CharField(max_length=100, default='', blank=True)
+    pay_name = models.CharField(max_length=100, default='', blank=True)
+    products_amount = models.FloatField(default=0.00)
+    shipping_fee = models.FloatField(default=0.00)
+    price_adjusment = models.FloatField(default=0.00, verbose_name="管理员调整价格")
+    promotion_code = models.CharField(max_length=100, default='', blank=True, verbose_name='使用的优惠码')
+    discount = models.FloatField(default=0.00)
+    order_amount = models.FloatField(default=0.00, verbose_name='订单总价')
+    money_paid = models.FloatField(default=0.00)
+    refer = models.CharField(max_length=10, default='', blank=True)
+    pay_time = models.DateTimeField(null=True)
+    shipping_time = models.DateTimeField(null=True)
+    to_seller = models.CharField(max_length=100, blank=True)
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name='下单日期')
+    update_time = models.DateTimeField(auto_now=True, verbose_name='更新日期')
+
+    def __str__(self):
+        return self.order_number
+
+    def calculate_total_price(self):
+        price = self.products_amount + self.shipping_fee + self.discount + self.price_adjusment
+        self.order_amount = price
+        return self.order_amount
+
+    def get_human_status(self):
+        dict = {'0': 'Wait For Payment', '10': 'Wait For Shipment', '15': 'Wait For Shippment', '20': 'Shipping',
+                '30': 'Complete', '40': 'Canceled', '90': 'Payment Error', '99': 'Closed'}
+        return dict[self.status]
+
+    def get_cust_remarks(self):
+        remark_list = self.cust_remarks.all()
+        return remark_list
+
+    # get_human_status.admin_order_field = 'pub_date'
+    # get_human_status.boolean = True
+    get_human_status.short_description = '订单状态'
+
+    class Meta:
+        verbose_name = '订单'
+        verbose_name_plural = '订单'
 
 
-	order_number = models.CharField(max_length = 100,unique=True,db_index=True,verbose_name='订单编号')
-	user = models.ForeignKey(MyUser,null=True,related_name='orders',verbose_name='用户')
-	status = models.CharField(max_length = 32,default='0',verbose_name='订单状态',choices=ORDER_STATUS_CHOICES)
-	shipping_status = models.CharField(max_length = 100,default='not yet',blank=True,verbose_name='发货状态')
-	pay_status = models.CharField(max_length = 100,default='wait for payment',blank=True)
-	country = models.CharField(max_length = 100,default='',blank=True,verbose_name='国家')
-	province = models.CharField(max_length = 100,default='',blank=True,verbose_name='省/州')
-	city = models.CharField(max_length = 100,default='',blank=True,verbose_name='市')
-	district = models.CharField(max_length = 100,default='',blank=True,verbose_name='区')
-	address_line_1 = models.CharField(max_length = 254,default='',blank=True,verbose_name='地址 1')
-	address_line_2 = models.CharField(max_length = 254,default='',blank=True,verbose_name='地址 2')
-	first_name = models.CharField(max_length = 254,default='',blank=True,verbose_name='名')
-	last_name = models.CharField(max_length = 254,default='',blank=True,verbose_name='姓')
-	zipcode = models.CharField(max_length = 10,default='',blank=True,verbose_name='邮编')
-	tel = models.CharField(max_length = 20,default='',blank=True,verbose_name='电话')
-	mobile = models.CharField(max_length = 20,default='',blank=True)
-	email = models.CharField(max_length = 100,default='',blank=True)
-	
-	express_type_id = models.IntegerField(default=0,verbose_name="快递方式ID")
-	express_type_name = models.CharField(max_length=100,null=True,blank=True,verbose_name='送货方式')
-	shipper_name = models.CharField(max_length = 100,default='',blank=True,verbose_name='快递名称')
-	shpping_no = models.CharField(max_length = 100,default='',blank=True,verbose_name='快递单号')
-	pay_id = models.CharField(max_length = 100,default='',blank=True)
-	pay_name = models.CharField(max_length = 100,default='',blank=True)
-	products_amount = models.FloatField(default=0.00)
-	shipping_fee = models.FloatField(default=0.00)
-	price_adjusment = models.FloatField(default=0.00,verbose_name="管理员调整价格")
-	promotion_code = models.CharField(max_length = 100,default='',blank=True,verbose_name='使用的优惠码')
-	discount = models.FloatField(default=0.00)
-	order_amount = models.FloatField(default=0.00,verbose_name='订单总价')
-	money_paid = models.FloatField(default=0.00)
-	refer = models.CharField(max_length = 10,default='',blank=True)
-	pay_time = models.DateTimeField(null=True)
-	shipping_time = models.DateTimeField(null=True)
-	to_seller = models.CharField(max_length = 100,blank=True)
-	create_time = models.DateTimeField(auto_now_add = True,verbose_name='下单日期')
-	update_time = models.DateTimeField(auto_now = True,verbose_name='更新日期')
-
-	def __str__(self):
-		return self.order_number
-		
-	def calculate_total_price(self):
-		price = self.products_amount + self.shipping_fee + self.discount + self.price_adjusment
-		self.order_amount = price
-		return self.order_amount
-	
-	def get_human_status(self):
-		dict = {'0':'Wait For Payment','10':'Wait For Shipment','15':'Wait For Shippment','20':'Shipping','30':'Complete','40':'Canceled','90':'Payment Error','99':'Closed'}
-		return dict[self.status]
-		
-	def get_cust_remarks(self):
-		remark_list = self.cust_remarks.all()
-		return remark_list
-		
-		
-	#get_human_status.admin_order_field = 'pub_date'
-	#get_human_status.boolean = True
-	get_human_status.short_description = '订单状态'
-	
-	class Meta:
-		verbose_name = '订单'
-		verbose_name_plural = '订单'
-		
-
-@python_2_unicode_compatible		
+@python_2_unicode_compatible
 class OrderCustRemark(models.Model):
-	order = models.ForeignKey(Order,null=True,related_name='cust_remarks')
-	content = models.CharField(max_length = 255,verbose_name='留言内容')
-	create_time = models.DateTimeField(auto_now_add = True)
-	update_time = models.DateTimeField(auto_now = True)	
-	
-	
-	def __str__(self):
-		return self.content
-	
-	class Meta:
-		verbose_name = '订单客户留言'
-		verbose_name_plural = '订单客户留言'
-		
-@python_2_unicode_compatible		
-class OrderShippment(models.Model):
-	order = models.ForeignKey(Order,null=True,related_name='shippments')
-	shipper_name = models.CharField(max_length=254,null=True,blank=True,verbose_name="快递公司")
-	express = models.ForeignKey(Express,null=True,related_name='related_orders',verbose_name='承运快递公司')
-	ship_no = models.CharField(max_length=254,null=True,blank=True,verbose_name="快递单号")
-	shipping_cost = models.FloatField(default=0.00,verbose_name="快递成本")
-	shipping_time = models.DateTimeField(null=True,verbose_name="发货时间")
-	remark = models.CharField(max_length=254,null=True,blank=True,verbose_name="备注")
-	
-	country = models.CharField(max_length = 100,default='',blank=True,verbose_name='国家')
-	province = models.CharField(max_length = 100,default='',blank=True,verbose_name='省/州')
-	city = models.CharField(max_length = 100,default='',blank=True,verbose_name='市')
-	district = models.CharField(max_length = 100,default='',blank=True,verbose_name='区')
-	address_line_1 = models.CharField(max_length = 254,default='',blank=True,verbose_name='地址 1')
-	address_line_2 = models.CharField(max_length = 254,default='',blank=True,verbose_name='地址 2')
-	first_name = models.CharField(max_length = 254,default='',blank=True,verbose_name='名')
-	last_name = models.CharField(max_length = 254,default='',blank=True,verbose_name='姓')
-	zipcode = models.CharField(max_length = 10,default='',blank=True,verbose_name='邮编')
-	tel = models.CharField(max_length = 20,default='',blank=True,verbose_name='电话')
-	
-	create_time = models.DateTimeField(auto_now_add = True)
-	update_time = models.DateTimeField(auto_now = True)
-	
-	def __str__(self):
-		return self.ship_no
-	
-	class Meta:
-		verbose_name = '发货记录'
-		verbose_name_plural = '发货记录'	
-		
-@python_2_unicode_compatible		
-class OrderRemark(models.Model):
-	order = models.ForeignKey(Order,null=True,related_name='order_remarks')
-	content = models.CharField(max_length=254,null=True,blank=True,verbose_name='备注内容')
-	user = models.ForeignKey(MyUser,null=True,related_name='order_remarks')
-	create_time = models.DateTimeField(auto_now_add = True)
-	update_time = models.DateTimeField(auto_now = True)
-	
-	def __str__(self):
-		return self.content
-	
-	class Meta:
-		verbose_name = '订单备注'
-		verbose_name_plural = '订单备注'
-	
+    order = models.ForeignKey(Order, null=True, related_name='cust_remarks')
+    content = models.CharField(max_length=255, verbose_name='留言内容')
+    create_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
 
-@python_2_unicode_compatible		
+    def __str__(self):
+        return self.content
+
+    class Meta:
+        verbose_name = '订单客户留言'
+        verbose_name_plural = '订单客户留言'
+
+
+@python_2_unicode_compatible
+class OrderShippment(models.Model):
+    order = models.ForeignKey(Order, null=True, related_name='shippments')
+    shipper_name = models.CharField(max_length=254, null=True, blank=True, verbose_name="快递公司")
+    express = models.ForeignKey(Express, null=True, related_name='related_orders', verbose_name='承运快递公司')
+    ship_no = models.CharField(max_length=254, null=True, blank=True, verbose_name="快递单号")
+    shipping_cost = models.FloatField(default=0.00, verbose_name="快递成本")
+    shipping_time = models.DateTimeField(null=True, verbose_name="发货时间")
+    remark = models.CharField(max_length=254, null=True, blank=True, verbose_name="备注")
+
+    country = models.CharField(max_length=100, default='', blank=True, verbose_name='国家')
+    province = models.CharField(max_length=100, default='', blank=True, verbose_name='省/州')
+    city = models.CharField(max_length=100, default='', blank=True, verbose_name='市')
+    district = models.CharField(max_length=100, default='', blank=True, verbose_name='区')
+    address_line_1 = models.CharField(max_length=254, default='', blank=True, verbose_name='地址 1')
+    address_line_2 = models.CharField(max_length=254, default='', blank=True, verbose_name='地址 2')
+    first_name = models.CharField(max_length=254, default='', blank=True, verbose_name='名')
+    last_name = models.CharField(max_length=254, default='', blank=True, verbose_name='姓')
+    zipcode = models.CharField(max_length=10, default='', blank=True, verbose_name='邮编')
+    tel = models.CharField(max_length=20, default='', blank=True, verbose_name='电话')
+
+    create_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.ship_no
+
+    class Meta:
+        verbose_name = '发货记录'
+        verbose_name_plural = '发货记录'
+
+
+@python_2_unicode_compatible
+class OrderRemark(models.Model):
+    order = models.ForeignKey(Order, null=True, related_name='order_remarks')
+    content = models.CharField(max_length=254, null=True, blank=True, verbose_name='备注内容')
+    user = models.ForeignKey(MyUser, null=True, related_name='order_remarks')
+    create_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.content
+
+    class Meta:
+        verbose_name = '订单备注'
+        verbose_name_plural = '订单备注'
+
+
+@python_2_unicode_compatible
 class Order_Products(models.Model):
-	product_id = models.IntegerField(default=0,verbose_name='商品编号')
-	#product_attribute = models.ForeignKey(Product_Attribute,null=True)
-	product_attribute_id = models.IntegerField(null=True,blank=True,verbose_name='SKU的id')
-	product_attribute_item_number = models.CharField(max_length=100,null=True,blank=True,verbose_name='SKU编号')
-	product_attribute_name = models.CharField(max_length=1000,default='',verbose_name='选中的商品属性文字说明')
-	order = models.ForeignKey(Order,null=True,related_name='order_products')
-	name = models.CharField(max_length = 100,default='',verbose_name='商品名称')
-	short_desc = models.CharField(max_length = 1024,default='')
-	price = models.FloatField(verbose_name='商品价格')
-	thumb = models.URLField()
-	image = models.URLField()
-	quantity = models.IntegerField(default=0,verbose_name='订购数量')
-	create_time = models.DateTimeField(auto_now_add = True)
-	update_time = models.DateTimeField(auto_now = True)
-	
-	def get_total(self):
-		return self.quantity * self.price
-	get_total.short_description = '金额小计'
-	
-	def __str__(self):
-		return self.name
-		
-	def get_short_product_attr(self):
-		attr_list = []
-		if self.product_attribute_id:
-			attr_list = Attribute.objects.filter(product_attribute__id=self.product_attribute_id).distinct()
-		ret_str = ''
-		for attr in attr_list:
-			ret_str = ret_str + ' [' + attr.group.name + ':' + attr.name + ']'
-		return ret_str
-	
-	class Meta:
-		verbose_name = '订单商品'
-		verbose_name_plural = '订单商品'
+    product_id = models.IntegerField(default=0, verbose_name='商品编号')
+    # product_attribute = models.ForeignKey(Product_Attribute,null=True)
+    product_attribute_id = models.IntegerField(null=True, blank=True, verbose_name='SKU的id')
+    product_attribute_item_number = models.CharField(max_length=100, null=True, blank=True, verbose_name='SKU编号')
+    product_attribute_name = models.CharField(max_length=1000, default='', verbose_name='选中的商品属性文字说明')
+    order = models.ForeignKey(Order, null=True, related_name='order_products')
+    name = models.CharField(max_length=100, default='', verbose_name='商品名称')
+    short_desc = models.CharField(max_length=1024, default='')
+    price = models.FloatField(verbose_name='商品价格')
+    thumb = models.URLField()
+    image = models.URLField()
+    quantity = models.IntegerField(default=0, verbose_name='订购数量')
+    create_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
+
+    def get_total(self):
+        return self.quantity * self.price
+
+    get_total.short_description = '金额小计'
+
+    def __str__(self):
+        return self.name
+
+    def get_short_product_attr(self):
+        attr_list = []
+        if self.product_attribute_id:
+            attr_list = Attribute.objects.filter(product_attribute__id=self.product_attribute_id).distinct()
+        ret_str = ''
+        for attr in attr_list:
+            ret_str = ret_str + ' [' + attr.group.name + ':' + attr.name + ']'
+        return ret_str
+
+    class Meta:
+        verbose_name = '订单商品'
+        verbose_name_plural = '订单商品'
+
 
 class Abnormal_Order(models.Model):
-	order = models.ForeignKey(Order,null=True,related_name='abnormal_orders')
-	reason = models.CharField(max_length=100,null=True)
-	detail = models.TextField()
-	create_time = models.DateTimeField(auto_now_add = True)
-	update_time = models.DateTimeField(auto_now = True)
-	
-@python_2_unicode_compatible		
+    order = models.ForeignKey(Order, null=True, related_name='abnormal_orders')
+    reason = models.CharField(max_length=100, null=True)
+    detail = models.TextField()
+    create_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
+
+
+@python_2_unicode_compatible
 class CustomizeURL(models.Model):
-	name = models.CharField(max_length=254,db_index=True,null=True,blank=True,verbose_name="页面名称")
-	url = models.CharField(max_length=254,db_index=True,null=True,blank=True,verbose_name="自定义URL")
-	target_url = models.CharField(max_length=1024,null=True,blank=True,verbose_name="目标URL")
-	module = models.CharField(max_length=1024,null=True,blank=True,verbose_name="内部模块名称")
-	function = models.CharField(max_length=1024,null=True,blank=True,verbose_name="内部模块方法")
-	type = models.CharField(max_length=10,null=True,blank=True,verbose_name="跳转方式")
-	is_customize_tdk = models.BooleanField(default=False,verbose_name="是否自定义TDK")
-	page_name = models.CharField(max_length=1024,null=True,blank=True,verbose_name="页面标题")
-	keywords = models.CharField(max_length=1024,null=True,blank=True,verbose_name="关键字")
-	short_desc = models.CharField(max_length=1024,null=True,blank=True,verbose_name="简略描述")
-	create_time = models.DateTimeField(auto_now_add = True)
-	update_time = models.DateTimeField(auto_now = True)
-	
-	def __str__(self):
-		return self.url
-		
-	def get_url(self):
-		from shopcart.functions.customize_url_util_func import get_url
-		return get_url(self)		
-	
-	class Meta:
-		verbose_name = '自定义URL'
-		verbose_name_plural = '自定义URL'
+    name = models.CharField(max_length=254, db_index=True, null=True, blank=True, verbose_name="页面名称")
+    url = models.CharField(max_length=254, db_index=True, null=True, blank=True, verbose_name="自定义URL")
+    target_url = models.CharField(max_length=1024, null=True, blank=True, verbose_name="目标URL")
+    module = models.CharField(max_length=1024, null=True, blank=True, verbose_name="内部模块名称")
+    function = models.CharField(max_length=1024, null=True, blank=True, verbose_name="内部模块方法")
+    type = models.CharField(max_length=10, null=True, blank=True, verbose_name="跳转方式")
+    is_customize_tdk = models.BooleanField(default=False, verbose_name="是否自定义TDK")
+    page_name = models.CharField(max_length=1024, null=True, blank=True, verbose_name="页面标题")
+    keywords = models.CharField(max_length=1024, null=True, blank=True, verbose_name="关键字")
+    short_desc = models.CharField(max_length=1024, null=True, blank=True, verbose_name="简略描述")
+    create_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.url
+
+    def get_url(self):
+        from shopcart.functions.customize_url_util_func import get_url
+        return get_url(self)
+
+    class Meta:
+        verbose_name = '自定义URL'
+        verbose_name_plural = '自定义URL'
+
 
 class Reset_Password(models.Model):
-	email = models.EmailField('email address',max_length=254)
-	validate_code = models.CharField(max_length=254)
-	is_active = models.BooleanField(default=False)
-	apply_time = models.DateTimeField()
-	expirt_time = models.DateTimeField()
-	create_time = models.DateTimeField(auto_now_add = True)
-	update_time = models.DateTimeField(auto_now = True)
+    email = models.EmailField('email address', max_length=254)
+    validate_code = models.CharField(max_length=254)
+    is_active = models.BooleanField(default=False)
+    apply_time = models.DateTimeField()
+    expirt_time = models.DateTimeField()
+    create_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
+
 
 class Serial_Number(models.Model):
-	work_date = models.CharField(max_length=8,unique=True)
-	serial_number = models.IntegerField(default=1)
-	create_time = models.DateTimeField(auto_now_add = True)
-	update_time = models.DateTimeField(auto_now = True)
+    work_date = models.CharField(max_length=8, unique=True)
+    serial_number = models.IntegerField(default=1)
+    create_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
 
-	
-@python_2_unicode_compatible		
+
+@python_2_unicode_compatible
 class ArticleBusiCategory(models.Model):
-	name = models.CharField(max_length=254,db_index=True,null=True,blank=True,verbose_name="分类名称")
-	code = models.CharField(max_length=254,db_index=True,null=True,blank=True,verbose_name="分类代码")
-	sort_order = models.IntegerField(default=0,verbose_name='排序序号')
-	keywords = models.CharField(max_length=254,null=True,blank=True,verbose_name = '关键字')
-	page_title = models.CharField(max_length = 100,blank=True,default='',verbose_name='网页标题')
-	static_file_name = models.CharField(max_length = 254,db_index=True,unique=True,null=True,blank=True,verbose_name = '静态文件名')
-	short_desc = models.CharField(max_length=1024,null=True,blank=True,verbose_name="简略描述")
-	category_template = models.CharField(max_length = 254,default='',blank=True,verbose_name='分类指定模板')
-	create_time = models.DateTimeField(auto_now_add = True)
-	update_time = models.DateTimeField(auto_now = True)
-	
-	def __str__(self):
-		return self.name
-	
-	class Meta:
-		verbose_name = '文章业务分类'
-		verbose_name_plural = '文章业务分类'	
-	
-	
+    name = models.CharField(max_length=254, db_index=True, null=True, blank=True, verbose_name="分类名称")
+    code = models.CharField(max_length=254, db_index=True, null=True, blank=True, verbose_name="分类代码")
+    sort_order = models.IntegerField(default=0, verbose_name='排序序号')
+    keywords = models.CharField(max_length=254, null=True, blank=True, verbose_name='关键字')
+    page_title = models.CharField(max_length=100, blank=True, default='', verbose_name='网页标题')
+    static_file_name = models.CharField(max_length=254, db_index=True, unique=True, null=True, blank=True,
+                                        verbose_name='静态文件名')
+    short_desc = models.CharField(max_length=1024, null=True, blank=True, verbose_name="简略描述")
+    category_template = models.CharField(max_length=254, default='', blank=True, verbose_name='分类指定模板')
+    create_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = '文章业务分类'
+        verbose_name_plural = '文章业务分类'
+
+
 @python_2_unicode_compatible
 class Article(models.Model):
-	title = models.CharField(max_length=254,null=True,db_index=True,verbose_name = '标题')
-	# 博客类宣传文章
-	ARTICLE_CATEGORY_BLOG = '0' 
-	# 公告类文章
-	ARTICLE_CATEGORY_NOTICE = '10'
-	# 网站信息文章
-	ARTICLE_CATEGORY_SITEINFO = '20'
-	# 文章状态选项 
-	CATEGORY_CHOICES = ( 
-		(ARTICLE_CATEGORY_BLOG,'宣传博客'),
-		(ARTICLE_CATEGORY_NOTICE,'网站公告'),
-		(ARTICLE_CATEGORY_SITEINFO,'站点信息'),
-	) 
-	category = models.CharField(max_length=10,null=True,blank=True,verbose_name = '文章分类',choices=CATEGORY_CHOICES)
-	sort_order = models.IntegerField(default=0,verbose_name='排序序号')
-	busi_category = models.ForeignKey(ArticleBusiCategory,null=True,blank=True,related_name='articles',verbose_name = '文章业务分类')
-	content = models.TextField(null=True,blank=True,verbose_name = '内容')
-	user = models.ForeignKey(MyUser,null=True,blank=True,verbose_name = '用户')
-	keywords = models.CharField(max_length=254,null=True,blank=True,verbose_name = '关键字')
-	page_title = models.CharField(max_length = 100,blank=True,default='',verbose_name='网页标题')
-	short_desc = models.CharField(max_length = 1024,default='',blank=True,verbose_name='简略描述')
-	static_file_name = models.CharField(max_length = 254,db_index=True,null=True,blank=True,verbose_name = '静态文件名')
-	folder = models.CharField(max_length = 254,null=True,blank=True,verbose_name = '静态文件目录')
-	breadcrumbs = models.CharField(max_length = 254,null=True,blank=True,verbose_name = '导航位置')
-	image = models.URLField(null=True,blank=True,verbose_name = '图片链接')
-	detail_template = models.CharField(max_length = 254,default='',blank=True,verbose_name='详情页指定模板')
-	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
-	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
-	
-	def __str__(self):
-		return self.title
-	
-	def get_url(self):
-		from shopcart.functions.article_util_func import get_url
-		return get_url(self)		
+    title = models.CharField(max_length=254, null=True, db_index=True, verbose_name='标题')
+    # 博客类宣传文章
+    ARTICLE_CATEGORY_BLOG = '0'
+    # 公告类文章
+    ARTICLE_CATEGORY_NOTICE = '10'
+    # 网站信息文章
+    ARTICLE_CATEGORY_SITEINFO = '20'
+    # 文章状态选项
+    CATEGORY_CHOICES = (
+        (ARTICLE_CATEGORY_BLOG, '宣传博客'),
+        (ARTICLE_CATEGORY_NOTICE, '网站公告'),
+        (ARTICLE_CATEGORY_SITEINFO, '站点信息'),
+    )
+    category = models.CharField(max_length=10, null=True, blank=True, verbose_name='文章分类', choices=CATEGORY_CHOICES)
+    sort_order = models.IntegerField(default=0, verbose_name='排序序号')
+    busi_category = models.ForeignKey(ArticleBusiCategory, null=True, blank=True, related_name='articles',
+                                      verbose_name='文章业务分类')
+    content = models.TextField(null=True, blank=True, verbose_name='内容')
+    user = models.ForeignKey(MyUser, null=True, blank=True, verbose_name='用户')
+    keywords = models.CharField(max_length=254, null=True, blank=True, verbose_name='关键字')
+    page_title = models.CharField(max_length=100, blank=True, default='', verbose_name='网页标题')
+    short_desc = models.CharField(max_length=1024, default='', blank=True, verbose_name='简略描述')
+    static_file_name = models.CharField(max_length=254, db_index=True, null=True, blank=True, verbose_name='静态文件名')
+    folder = models.CharField(max_length=254, null=True, blank=True, verbose_name='静态文件目录')
+    breadcrumbs = models.CharField(max_length=254, null=True, blank=True, verbose_name='导航位置')
+    image = models.URLField(null=True, blank=True, verbose_name='图片链接')
+    detail_template = models.CharField(max_length=254, default='', blank=True, verbose_name='详情页指定模板')
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建日期')
+    update_time = models.DateTimeField(auto_now=True, verbose_name='更新日期')
 
-	def get_main_image(self):
-		images = self.get_image_list()
-		if len(images) > 0:
-			return images[0]
-		else:
-			return None
-		
-	def get_image_list(self):
-		image_list = Album.objects.filter(item_type='article',item_id=self.id)
-		main_image = None
-		for img in image_list:
-			if img.image == self.image:
-				main_image = img
-				
-		image_list = list(image_list)
-		if main_image:
-			image_list.remove(main_image)
-			image_list.insert(0,main_image)
-		
-		return image_list
-		
-		
-	def remove_file(self):
-		from shopcart.utils import remove_dir_all
-		remove_dir_all('media/%s/%s' % ('article',self.id))			
-		
-	class Meta:
-		verbose_name = '文章'
-		verbose_name_plural = '文章'
+    def __str__(self):
+        return self.title
+
+    def get_url(self):
+        from shopcart.functions.article_util_func import get_url
+        return get_url(self)
+
+    def get_main_image(self):
+        images = self.get_image_list()
+        if len(images) > 0:
+            return images[0]
+        else:
+            return None
+
+    def get_image_list(self):
+        image_list = Album.objects.filter(item_type='article', item_id=self.id)
+        main_image = None
+        for img in image_list:
+            if img.image == self.image:
+                main_image = img
+
+        image_list = list(image_list)
+        if main_image:
+            image_list.remove(main_image)
+            image_list.insert(0, main_image)
+
+        return image_list
+
+    def get_image_list_pdf(self):
+        image_list = Album.objects.filter(item_type='article', item_id=self.id)
+
+        main_image = None
+        logger.info(image_list)
+        image_list = list(image_list)
+        new_images_list = []
+        # 允许上传的类型
+        file_allow = ['PDF', 'ZIP', 'RAR']
+        for img in image_list:
+            ext = img.image.split('.')[-1]
+            logger.debug(str(ext))
+            if ext.upper() not in file_allow:
+                logger.info(image_list)
+            else:
+                new_images_list.append(img)
+                logger.info(img.image)
+
+        return new_images_list
+
+    def get_image_list_images(self):
+        image_list = Album.objects.filter(item_type='article', item_id=self.id)
+
+        main_image = None
+        logger.info(image_list)
+        image_list = list(image_list)
+        new_images_list = []
+        # 允许上传的类型
+        file_allow = ['JPG', 'JPEG', 'PNG', 'GIF']
+        for img in image_list:
+            ext = img.image.split('.')[-1]
+            logger.debug(str(ext))
+            if ext.upper() not in file_allow:
+                logger.info(image_list)
+            else:
+                new_images_list.append(img)
+                logger.info(img.image)
+
+        return new_images_list
+
+    def remove_file(self):
+        from shopcart.utils import remove_dir_all
+        remove_dir_all('media/%s/%s' % ('article', self.id))
+
+    class Meta:
+        verbose_name = '文章'
+        verbose_name_plural = '文章'
+
 
 class Album(models.Model):
-	item_type = models.CharField(max_length=100,verbose_name = '对象类型')
-	item_id = models.IntegerField(default=0,verbose_name = '对象ID')
-	image = models.URLField(verbose_name = '图片链接')
-	thumb = models.URLField(verbose_name = '缩略图链接')
-	alt_value = models.CharField(max_length = 100,default='',verbose_name='Alt值')
-	sort = models.IntegerField(default=0,verbose_name='排序序号')
-	file_name = models.CharField(max_length = 100,null=True,blank=True,verbose_name='文件名')
-	thumb_name = models.CharField(max_length = 100,null=True,blank=True,verbose_name='文件名')
-	path = models.CharField(max_length = 254,null=True,blank=True,verbose_name='文件路径')
-	href = models.CharField(max_length = 254,default='',verbose_name='自定义链接地址')
-	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
-	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
-	
-	def __str__(self):
-		return self.item_type + ' ' + str(self.item_id)
-		
-	def remove_file(self):
-		if self.path and self.file_name:
-			from shopcart.utils import remove_file
-			return remove_file(self.path,self.file_name,self.thumb_name)
-			
-	def get_image_url(self):
-		return self.get_picture_url('image')
-			
-	def get_thumb_url(self):
-		return self.get_picture_url('thumb')
-	
-	def get_picture_url(self,method='image'):
-		#整理路径，如果有\则替换为/
-		if method == 'image':
-			filename = self.file_name
-		else:
-			filename = self.thumb_name
-		
-		
-		if not filename:
-			if method == 'image':
-				return self.image
-			else:
-				return self.thumb
+    item_type = models.CharField(max_length=100, verbose_name='对象类型')
+    item_id = models.IntegerField(default=0, verbose_name='对象ID')
+    image = models.URLField(verbose_name='图片链接')
+    thumb = models.URLField(verbose_name='缩略图链接')
+    alt_value = models.CharField(max_length=100, default='', verbose_name='Alt值')
+    sort = models.IntegerField(default=0, verbose_name='排序序号')
+    file_name = models.CharField(max_length=100, null=True, blank=True, verbose_name='文件名')
+    thumb_name = models.CharField(max_length=100, null=True, blank=True, verbose_name='文件名')
+    path = models.CharField(max_length=254, null=True, blank=True, verbose_name='文件路径')
+    href = models.CharField(max_length=254, default='', verbose_name='自定义链接地址')
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建日期')
+    update_time = models.DateTimeField(auto_now=True, verbose_name='更新日期')
 
-		else:
-			path = self.path.replace('\\','/')
-			if not path.endswith('/'):
-				path = path + '/'
-			base_url = System_Config.objects.get(name='base_url').val
-			if not base_url.endswith('/'):
-				base_url = base_url + "/"
-			return base_url + path + filename
-	
-	class Meta:
-		verbose_name = '相册'
-		verbose_name_plural = '相册'
-			
+    def __str__(self):
+        return self.item_type + ' ' + str(self.item_id)
 
-@python_2_unicode_compatible		
+    def remove_file(self):
+        if self.path and self.file_name:
+            from shopcart.utils import remove_file
+            return remove_file(self.path, self.file_name, self.thumb_name)
+
+    def get_image_url(self):
+        return self.get_picture_url('image')
+
+    def get_thumb_url(self):
+        return self.get_picture_url('thumb')
+
+    def get_picture_url(self, method='image'):
+        # 整理路径，如果有\则替换为/
+        if method == 'image':
+            filename = self.file_name
+        else:
+            filename = self.thumb_name
+
+        if not filename:
+            if method == 'image':
+                return self.image
+            else:
+                return self.thumb
+
+        else:
+            path = self.path.replace('\\', '/')
+            if not path.endswith('/'):
+                path = path + '/'
+            base_url = System_Config.objects.get(name='base_url').val
+            if not base_url.endswith('/'):
+                base_url = base_url + "/"
+            return base_url + path + filename
+
+    class Meta:
+        verbose_name = '相册'
+        verbose_name_plural = '相册'
+
+
+@python_2_unicode_compatible
 class Inquiry(models.Model):
-	name = models.CharField(max_length=100,null=True,verbose_name = '对方称呼')
-	company = models.CharField(max_length=200,null=True,verbose_name = '对方公司')
-	email = models.EmailField(max_length=254,null=True,verbose_name = '电子邮件')
-	title = models.CharField(max_length=100,null=True,verbose_name = '留言标题')
-	message = models.TextField(blank=True,verbose_name='询盘信息')
-	ip_address = models.CharField(max_length=32,null=True,blank=True,verbose_name='IP地址')
-	product = models.IntegerField(default=0,verbose_name='关联商品的id')
-	quantity = models.IntegerField(default=0,verbose_name='数量')
-	unit = models.CharField(max_length=100,null=True,verbose_name = '数量单位')
-	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
-	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
-	
-	def __str__(self):
-		return self.name
-	
-	class Meta:
-		verbose_name = '询盘信息'
-		verbose_name_plural = '询盘信息'
+    name = models.CharField(max_length=100, null=True, verbose_name='对方称呼')
+    company = models.CharField(max_length=200, null=True, verbose_name='对方公司')
+    email = models.EmailField(max_length=254, null=True, verbose_name='电子邮件')
+    title = models.CharField(max_length=100, null=True, verbose_name='留言标题')
+    message = models.TextField(blank=True, verbose_name='询盘信息')
+    ip_address = models.CharField(max_length=32, null=True, blank=True, verbose_name='IP地址')
+    product = models.IntegerField(default=0, verbose_name='关联商品的id')
+    quantity = models.IntegerField(default=0, verbose_name='数量')
+    unit = models.CharField(max_length=100, null=True, verbose_name='数量单位')
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建日期')
+    update_time = models.DateTimeField(auto_now=True, verbose_name='更新日期')
 
-		
-@python_2_unicode_compatible			
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = '询盘信息'
+        verbose_name_plural = '询盘信息'
+
+
+@python_2_unicode_compatible
 class Promotion(models.Model):
-	code = models.CharField(max_length=100,db_index=True,verbose_name='促销码')
-	name = models.CharField(max_length=100,null=True,default='',verbose_name='促销码名称')
-	is_reuseable = models.BooleanField(verbose_name='可否重复使用')
-	is_valid = models.BooleanField(verbose_name='是否有效')
-	valid_date_begin = models.DateTimeField(verbose_name='有效期开始时间')
-	valid_date_end = models.DateTimeField(verbose_name='有效期结束时间')
-	
-	DISCOUNT_TYPE_FIXED = 'FIXED'
-	DISCOUNT_TYPE_SCALE = 'SCALE'
-	DISCOUNT_TYPE_OFF_WHEN_UPTOX = 'OFF_WHEN_UPTOX'
-	DISCOUNT_TYPE_FREE_SHIPPING = 'FREE_SHIPPING'
-	DISCOUNT_TYPE_FUNCTION = 'FUNCTION'
-	DISCOUNT_TYPE_CHOICES = ( 
-		(DISCOUNT_TYPE_FIXED,'固定优惠'),
-		(DISCOUNT_TYPE_SCALE,'百分比'),
-		(DISCOUNT_TYPE_OFF_WHEN_UPTOX,'满减'),
-		(DISCOUNT_TYPE_FREE_SHIPPING,'免邮费'),
-		(DISCOUNT_TYPE_FUNCTION,'公式自定义'),
-	)
-	
-	discount_condition = models.CharField(max_length=255,null=True,blank=True,verbose_name='优惠条件(表达式)')
-	
-	discount_type = models.CharField(max_length=20,verbose_name='优惠方式')
-	discount = models.CharField(max_length=255,verbose_name='优惠额或公式')
-	
-	item_type = models.CharField(null=True,blank=True,max_length=20,verbose_name='优惠对象类型')
-	item_id = models.IntegerField(null=True,blank=True,verbose_name='优惠对象ID')
-	
-	impl_class = models.CharField(null=True,blank=True,max_length=255,verbose_name='优惠插件名称')	
-	
-	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
-	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
-	
-	def __str__(self):
-		return self.code
-		
-	def valid(self):
-		if not self.is_valid:
-			logger.info('The promotion code has been used.')
-			return False
-	
-		import datetime
-		now = datetime.datetime.now()
-	
-		if now.timestamp() > self.valid_date_begin.timestamp() and now.timestamp() < self.valid_date_end.timestamp():
-			return True
-		else:
-			logger.info('Promotion code is not valid,now:[%s],valid_date_begin:[%s],valid_date_end:[%s]' % (now.timestamp(),self.valid_date_begin.timestamp(),self.valid_date_end.timestamp()))
-			return False
-	
-	class Meta:
-		verbose_name = '促销代码'
-		verbose_name_plural = '促销代码'
-		
-@python_2_unicode_compatible		
-class ClientMenu(models.Model):
-	name = models.CharField(max_length=100,null=True,verbose_name = '菜单用途')
-	code = models.CharField(max_length=100,null=True,verbose_name = '菜单代码')
-	content = models.TextField(null=True,blank=True,verbose_name = '菜单内容')
-	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
-	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
-	
-	def __str__(self):
-		return self.name
-	
-	class Meta:
-		verbose_name = '菜单信息'
-		verbose_name_plural = '菜单信息'	
+    code = models.CharField(max_length=100, db_index=True, verbose_name='促销码')
+    name = models.CharField(max_length=100, null=True, default='', verbose_name='促销码名称')
+    is_reuseable = models.BooleanField(verbose_name='可否重复使用')
+    is_valid = models.BooleanField(verbose_name='是否有效')
+    valid_date_begin = models.DateTimeField(verbose_name='有效期开始时间')
+    valid_date_end = models.DateTimeField(verbose_name='有效期结束时间')
 
-@python_2_unicode_compatible		
+    DISCOUNT_TYPE_FIXED = 'FIXED'
+    DISCOUNT_TYPE_SCALE = 'SCALE'
+    DISCOUNT_TYPE_OFF_WHEN_UPTOX = 'OFF_WHEN_UPTOX'
+    DISCOUNT_TYPE_FREE_SHIPPING = 'FREE_SHIPPING'
+    DISCOUNT_TYPE_FUNCTION = 'FUNCTION'
+    DISCOUNT_TYPE_CHOICES = (
+        (DISCOUNT_TYPE_FIXED, '固定优惠'),
+        (DISCOUNT_TYPE_SCALE, '百分比'),
+        (DISCOUNT_TYPE_OFF_WHEN_UPTOX, '满减'),
+        (DISCOUNT_TYPE_FREE_SHIPPING, '免邮费'),
+        (DISCOUNT_TYPE_FUNCTION, '公式自定义'),
+    )
+
+    discount_condition = models.CharField(max_length=255, null=True, blank=True, verbose_name='优惠条件(表达式)')
+
+    discount_type = models.CharField(max_length=20, verbose_name='优惠方式')
+    discount = models.CharField(max_length=255, verbose_name='优惠额或公式')
+
+    item_type = models.CharField(null=True, blank=True, max_length=20, verbose_name='优惠对象类型')
+    item_id = models.IntegerField(null=True, blank=True, verbose_name='优惠对象ID')
+
+    impl_class = models.CharField(null=True, blank=True, max_length=255, verbose_name='优惠插件名称')
+
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建日期')
+    update_time = models.DateTimeField(auto_now=True, verbose_name='更新日期')
+
+    def __str__(self):
+        return self.code
+
+    def valid(self):
+        if not self.is_valid:
+            logger.info('The promotion code has been used.')
+            return False
+
+        import datetime
+        now = datetime.datetime.now()
+
+        if now.timestamp() > self.valid_date_begin.timestamp() and now.timestamp() < self.valid_date_end.timestamp():
+            return True
+        else:
+            logger.info('Promotion code is not valid,now:[%s],valid_date_begin:[%s],valid_date_end:[%s]' % (
+                now.timestamp(), self.valid_date_begin.timestamp(), self.valid_date_end.timestamp()))
+            return False
+
+    class Meta:
+        verbose_name = '促销代码'
+        verbose_name_plural = '促销代码'
+
+
+@python_2_unicode_compatible
+class ClientMenu(models.Model):
+    name = models.CharField(max_length=100, null=True, verbose_name='菜单用途')
+    code = models.CharField(max_length=100, null=True, verbose_name='菜单代码')
+    content = models.TextField(null=True, blank=True, verbose_name='菜单内容')
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建日期')
+    update_time = models.DateTimeField(auto_now=True, verbose_name='更新日期')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = '菜单信息'
+        verbose_name_plural = '菜单信息'
+
+
+@python_2_unicode_compatible
 class Slider(models.Model):
-	name = models.CharField(max_length=100,null=True,verbose_name = '幻灯用途')
-	code = models.CharField(max_length=100,null=True,verbose_name = '幻灯代码')
-	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
-	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
-	
-	def __str__(self):
-		return self.name
-		
-	def get_image_list(self):
-		image_list = Album.objects.filter(item_type='slider',item_id=self.id).order_by('-sort')
-		return image_list	
-	
-	def remove_file(self):
-		from shopcart.utils import remove_dir_all
-		remove_dir_all('media/%s/%s' % ('slider',self.id))
-	
-	class Meta:
-		verbose_name = '幻灯信息'
-		verbose_name_plural = '幻灯信息'
+    name = models.CharField(max_length=100, null=True, verbose_name='幻灯用途')
+    code = models.CharField(max_length=100, null=True, verbose_name='幻灯代码')
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建日期')
+    update_time = models.DateTimeField(auto_now=True, verbose_name='更新日期')
+
+    def __str__(self):
+        return self.name
+
+    def get_image_list(self):
+        image_list = Album.objects.filter(item_type='slider', item_id=self.id).order_by('-sort')
+        return image_list
+
+    def remove_file(self):
+        from shopcart.utils import remove_dir_all
+        remove_dir_all('media/%s/%s' % ('slider', self.id))
+
+    class Meta:
+        verbose_name = '幻灯信息'
+        verbose_name_plural = '幻灯信息'
+
 
 @python_2_unicode_compatible
 class ProductPushGroup(models.Model):
-	name = models.CharField(max_length=100,null=True,verbose_name = '推送组名称')
-	code = models.CharField(max_length=100,null=True,verbose_name = '推送组代码')
-	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
-	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
-	
-	def __str__(self):
-		return '%s' % (self.name)
-		
-	class Meta:
-		verbose_name = '商品推荐组'
-		verbose_name_plural = '商品推荐组'	
-		
-		
-@python_2_unicode_compatible		
+    name = models.CharField(max_length=100, null=True, verbose_name='推送组名称')
+    code = models.CharField(max_length=100, null=True, verbose_name='推送组代码')
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建日期')
+    update_time = models.DateTimeField(auto_now=True, verbose_name='更新日期')
+
+    def __str__(self):
+        return '%s' % (self.name)
+
+    class Meta:
+        verbose_name = '商品推荐组'
+        verbose_name_plural = '商品推荐组'
+
+
+@python_2_unicode_compatible
 class ProductPush(models.Model):
-	group = models.ForeignKey(ProductPushGroup,null=True,blank=True,related_name='products')
-	product = models.ForeignKey(Product,null=True,blank=True,related_name='push_channels')
-	sort_order = models.IntegerField(default=0,verbose_name='排序序号')
-	title = models.CharField(max_length=254,null=True,default='',verbose_name = '定制的标题')
-	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
-	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
-	
-	def __str__(self):
-		return '%s : %s' % (self.group,self.product)
-		
-	def serialization(self):
-		p = {}
-		p['name'] = self.product.name
-		p['title'] = self.title
-		p['url'] = self.product.get_url()
-		image = self.product.get_main_image()
-		if image:
-			p['image'] = image.get_image_url()
-			p['thumb'] = image.get_thumb_url()
-		else:
-			p['image'] = '#'
-			p['thumb'] = '#'
-		p['price'] = self.product.get_min_price()
-		return p
-		
-	
-	class Meta:
-		verbose_name = '商品推荐'
-		verbose_name_plural = '商品推荐'
-		
-@python_2_unicode_compatible		
+    group = models.ForeignKey(ProductPushGroup, null=True, blank=True, related_name='products')
+    product = models.ForeignKey(Product, null=True, blank=True, related_name='push_channels')
+    sort_order = models.IntegerField(default=0, verbose_name='排序序号')
+    title = models.CharField(max_length=254, null=True, default='', verbose_name='定制的标题')
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建日期')
+    update_time = models.DateTimeField(auto_now=True, verbose_name='更新日期')
+
+    def __str__(self):
+        return '%s : %s' % (self.group, self.product)
+
+    def serialization(self):
+        p = {}
+        p['name'] = self.product.name
+        p['title'] = self.title
+        p['url'] = self.product.get_url()
+        image = self.product.get_main_image()
+        if image:
+            p['image'] = image.get_image_url()
+            p['thumb'] = image.get_thumb_url()
+        else:
+            p['image'] = '#'
+            p['thumb'] = '#'
+        p['price'] = self.product.get_min_price()
+        return p
+
+    class Meta:
+        verbose_name = '商品推荐'
+        verbose_name_plural = '商品推荐'
+
+
+@python_2_unicode_compatible
 class CustomizeVar(models.Model):
-	name = models.CharField(max_length=64,null=True,default='',verbose_name = '变量名称')
-	value = models.CharField(max_length=254,null=True,verbose_name = '变量值')
-	desc = models.CharField(max_length=254,null=True,verbose_name = '变量描述')
-	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
-	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
-	
-	def __str__(self):
-		return '%s : %s' % (self.name,self.value)
-	
-	class Meta:
-		verbose_name = '自定义变量'
-		verbose_name_plural = '自定义变量'
-		
+    name = models.CharField(max_length=64, null=True, default='', verbose_name='变量名称')
+    value = models.CharField(max_length=254, null=True, verbose_name='变量值')
+    desc = models.CharField(max_length=254, null=True, verbose_name='变量描述')
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建日期')
+    update_time = models.DateTimeField(auto_now=True, verbose_name='更新日期')
+
+    def __str__(self):
+        return '%s : %s' % (self.name, self.value)
+
+    class Meta:
+        verbose_name = '自定义变量'
+        verbose_name_plural = '自定义变量'
+
 
 @python_2_unicode_compatible
 class OAuthSite(models.Model):
-	name = models.CharField(max_length=64,null=True,default='',verbose_name = '名称')
-	impl_class = models.CharField(max_length=256,null=True,default='',verbose_name = '实现类')
-	redirect_uri = models.CharField(max_length=256,null=True,default='',verbose_name = '返回网址')
-	client_id = models.CharField(max_length=256,null=True,default='',verbose_name = '客户ID')
-	client_secret = models.CharField(max_length=256,null=True,default='',verbose_name = '客户密钥')
-	scope_login = models.CharField(max_length=256,null=True,default='',verbose_name = 'Login资料范围代码')
-	scope_info = models.CharField(max_length=256,null=True,default='',verbose_name = 'Userinfo资料范围代码')
-	
-	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
-	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
-	
-	def __str__(self):
-		return '%s' % (self.name)
-	
-	class Meta:
-		verbose_name = '社交账户登陆配置'
-		verbose_name_plural = '社交账户登陆配置'
+    name = models.CharField(max_length=64, null=True, default='', verbose_name='名称')
+    impl_class = models.CharField(max_length=256, null=True, default='', verbose_name='实现类')
+    redirect_uri = models.CharField(max_length=256, null=True, default='', verbose_name='返回网址')
+    client_id = models.CharField(max_length=256, null=True, default='', verbose_name='客户ID')
+    client_secret = models.CharField(max_length=256, null=True, default='', verbose_name='客户密钥')
+    scope_login = models.CharField(max_length=256, null=True, default='', verbose_name='Login资料范围代码')
+    scope_info = models.CharField(max_length=256, null=True, default='', verbose_name='Userinfo资料范围代码')
 
-@python_2_unicode_compatible		
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建日期')
+    update_time = models.DateTimeField(auto_now=True, verbose_name='更新日期')
+
+    def __str__(self):
+        return '%s' % (self.name)
+
+    class Meta:
+        verbose_name = '社交账户登陆配置'
+        verbose_name_plural = '社交账户登陆配置'
+
+
+@python_2_unicode_compatible
 class OAuthAccount(models.Model):
-	site_name = models.CharField(max_length=64,null=True,default='',verbose_name = '社交网站')
-	user = models.ForeignKey(MyUser,null=True,blank=True,related_name='oauth_accounts')
-	uid = models.CharField(max_length=64,null=True,default='',verbose_name = 'UID')
-	name = models.CharField(max_length=128,null=True,default='',verbose_name = '昵称')
-	avatar = models.CharField(max_length=1024,null=True,default='',verbose_name = '头像')
-	
-	create_time = models.DateTimeField(auto_now_add = True,verbose_name = '创建日期')
-	update_time = models.DateTimeField(auto_now = True,verbose_name = '更新日期')
-	
-	def __str__(self):
-		return '%s: %s - %s' % (self.user,self.site_name,self.name)
-	
-	class Meta:
-		verbose_name = '社交账户账号'
-		verbose_name_plural = '社交账户账号'
-	
+    site_name = models.CharField(max_length=64, null=True, default='', verbose_name='社交网站')
+    user = models.ForeignKey(MyUser, null=True, blank=True, related_name='oauth_accounts')
+    uid = models.CharField(max_length=64, null=True, default='', verbose_name='UID')
+    name = models.CharField(max_length=128, null=True, default='', verbose_name='昵称')
+    avatar = models.CharField(max_length=1024, null=True, default='', verbose_name='头像')
+
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建日期')
+    update_time = models.DateTimeField(auto_now=True, verbose_name='更新日期')
+
+    def __str__(self):
+        return '%s: %s - %s' % (self.user, self.site_name, self.name)
+
+    class Meta:
+        verbose_name = '社交账户账号'
+        verbose_name_plural = '社交账户账号'
+
+
 @python_2_unicode_compatible
 class NoticeEmailType(models.Model):
-	type = models.CharField(max_length=64,null=True,default='',verbose_name = '通知类型')
-	name = models.CharField(max_length=64,null=True,default='',verbose_name = '通知名称')
-	is_send = models.BooleanField(default=False,verbose_name='是否发送')
-	title = models.CharField(max_length=254,verbose_name='邮件主题')
-	sender = models.EmailField(null=True)
-	smtp_host = models.CharField(max_length=100)
-	username = models.CharField(max_length=100)
-	password = models.CharField(max_length=100)
-	need_ssl = models.BooleanField(default=False,verbose_name="是否启用SSL连接")
-	template = models.CharField(max_length=254,null=True,blank=True,verbose_name='模板组名称')
-	template_file = models.CharField(max_length=254,null=True,blank=True,verbose_name='模板文件名称')
-	create_time = models.DateTimeField(auto_now_add = True)
-	update_time = models.DateTimeField(auto_now = True)
-	
-	def __str__(self):
-		return '%s: %s' % (self.type,self.name)
-	
-	class Meta:
-		verbose_name = '通知邮件类型'
-		verbose_name_plural = '通知邮件类型'
+    type = models.CharField(max_length=64, null=True, default='', verbose_name='通知类型')
+    name = models.CharField(max_length=64, null=True, default='', verbose_name='通知名称')
+    is_send = models.BooleanField(default=False, verbose_name='是否发送')
+    title = models.CharField(max_length=254, verbose_name='邮件主题')
+    sender = models.EmailField(null=True)
+    smtp_host = models.CharField(max_length=100)
+    username = models.CharField(max_length=100)
+    password = models.CharField(max_length=100)
+    need_ssl = models.BooleanField(default=False, verbose_name="是否启用SSL连接")
+    template = models.CharField(max_length=254, null=True, blank=True, verbose_name='模板组名称')
+    template_file = models.CharField(max_length=254, null=True, blank=True, verbose_name='模板文件名称')
+    create_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
 
-	
-@python_2_unicode_compatible	
+    def __str__(self):
+        return '%s: %s' % (self.type, self.name)
+
+    class Meta:
+        verbose_name = '通知邮件类型'
+        verbose_name_plural = '通知邮件类型'
+
+
+@python_2_unicode_compatible
 class NoticeEmailList(models.Model):
-	type = models.ForeignKey(NoticeEmailType,null=True,blank=True,verbose_name = '类型',related_name='auditors')
-	email_address = models.EmailField(null=True)
-	create_time = models.DateTimeField(auto_now_add = True)
-	update_time = models.DateTimeField(auto_now = True)
-	
-	def __str__(self):
-		return '%s: %s' % (self.type.name,self.email_address)
-	
-	class Meta:
-		verbose_name = '通知邮件列表'
-		verbose_name_plural = '通知邮件列表'
-		
-		
-@python_2_unicode_compatible			
+    type = models.ForeignKey(NoticeEmailType, null=True, blank=True, verbose_name='类型', related_name='auditors')
+    email_address = models.EmailField(null=True)
+    create_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return '%s: %s' % (self.type.name, self.email_address)
+
+    class Meta:
+        verbose_name = '通知邮件列表'
+        verbose_name_plural = '通知邮件列表'
+
+
+@python_2_unicode_compatible
 class ProductImportError(models.Model):
-	row_num = models.IntegerField(default=0,verbose_name='行号')
-	type = models.CharField(max_length = 20,default='B2C',verbose_name='商品类型')
-	name = models.CharField(max_length = 100,default='',db_index=True,verbose_name='商品名称')
-	item_number = models.CharField(max_length = 100,default='',db_index=True,blank=True,verbose_name='商品编号')
-	static_file_name = models.CharField(max_length=254,default=None,null=True,db_index=True,blank=True,verbose_name='静态文件名(不包含路径，以html结尾)')
-	short_desc = models.CharField(max_length = 1024,default='',blank=True,verbose_name='简略描述')
-	cat_str = models.CharField(max_length = 1024,default='',blank=True,verbose_name='分类名称')
-	keywords = models.CharField(max_length = 254,default='',blank=True,verbose_name='关键字')
-	sort_order = models.IntegerField(default=0,verbose_name='排序序号')
-	is_publish = models.BooleanField(default=False,verbose_name='上架')
-	market_price = models.FloatField(default=0.0,verbose_name='市场价')
-	price1 =  models.FloatField(default=0.0,verbose_name='区间价1')
-	quantity1 =  models.IntegerField(default=0,verbose_name='下单量1')
-	price2 =  models.FloatField(default=0.0,verbose_name='区间价2')
-	quantity2 =  models.IntegerField(default=0,verbose_name='下单量2')
-	price3 =  models.FloatField(default=0.0,verbose_name='区间价3')
-	quantity3 =  models.IntegerField(default=0,verbose_name='下单量3')
-	description = models.TextField(blank=True,verbose_name='详细描述')
-	image1 = models.CharField(max_length = 1024,default='',blank=True,verbose_name='图片1')
-	image2 = models.CharField(max_length = 1024,default='',blank=True,verbose_name='图片2')
-	image3 = models.CharField(max_length = 1024,default='',blank=True,verbose_name='图片3')
-	image4 = models.CharField(max_length = 1024,default='',blank=True,verbose_name='图片4')
-	image5 = models.CharField(max_length = 1024,default='',blank=True,verbose_name='图片5')
-	folder_local = models.CharField(max_length = 1024,default='',blank=True,verbose_name='图片目录名称')
-	
-	create_time = models.DateTimeField(auto_now_add = True)
-	update_time = models.DateTimeField(auto_now = True)
-	
-	def __str__(self):
-		return '%s %s' % (self.row_num,self.name)
-	
-	class Meta:
-		verbose_name = '导入异常的记录'
-		verbose_name_plural = '导入异常的记录'
-	
-	
+    row_num = models.IntegerField(default=0, verbose_name='行号')
+    type = models.CharField(max_length=20, default='B2C', verbose_name='商品类型')
+    name = models.CharField(max_length=100, default='', db_index=True, verbose_name='商品名称')
+    item_number = models.CharField(max_length=100, default='', db_index=True, blank=True, verbose_name='商品编号')
+    static_file_name = models.CharField(max_length=254, default=None, null=True, db_index=True, blank=True,
+                                        verbose_name='静态文件名(不包含路径，以html结尾)')
+    short_desc = models.CharField(max_length=1024, default='', blank=True, verbose_name='简略描述')
+    cat_str = models.CharField(max_length=1024, default='', blank=True, verbose_name='分类名称')
+    keywords = models.CharField(max_length=254, default='', blank=True, verbose_name='关键字')
+    sort_order = models.IntegerField(default=0, verbose_name='排序序号')
+    is_publish = models.BooleanField(default=False, verbose_name='上架')
+    market_price = models.FloatField(default=0.0, verbose_name='市场价')
+    price1 = models.FloatField(default=0.0, verbose_name='区间价1')
+    quantity1 = models.IntegerField(default=0, verbose_name='下单量1')
+    price2 = models.FloatField(default=0.0, verbose_name='区间价2')
+    quantity2 = models.IntegerField(default=0, verbose_name='下单量2')
+    price3 = models.FloatField(default=0.0, verbose_name='区间价3')
+    quantity3 = models.IntegerField(default=0, verbose_name='下单量3')
+    description = models.TextField(blank=True, verbose_name='详细描述')
+    image1 = models.CharField(max_length=1024, default='', blank=True, verbose_name='图片1')
+    image2 = models.CharField(max_length=1024, default='', blank=True, verbose_name='图片2')
+    image3 = models.CharField(max_length=1024, default='', blank=True, verbose_name='图片3')
+    image4 = models.CharField(max_length=1024, default='', blank=True, verbose_name='图片4')
+    image5 = models.CharField(max_length=1024, default='', blank=True, verbose_name='图片5')
+    folder_local = models.CharField(max_length=1024, default='', blank=True, verbose_name='图片目录名称')
+
+    create_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return '%s %s' % (self.row_num, self.name)
+
+    class Meta:
+        verbose_name = '导入异常的记录'
+        verbose_name_plural = '导入异常的记录'
+
+
 @python_2_unicode_compatible
 class BatchTaskMonitor(models.Model):
-	type = models.CharField(max_length = 20,unique=True,default='',verbose_name='任务类型')
-	#任务状态：created,started,finished,failed
-	status = models.CharField(max_length = 20,default='created',verbose_name='任务状态')
-	success_count = models.IntegerField(default=0,verbose_name='成功记录数')
-	failed_count = models.IntegerField(default=0,verbose_name='失败记录数')
-	
-	start_time = models.DateTimeField(null=True)
-	end_time = models.DateTimeField(null=True)
-	
-	create_time = models.DateTimeField(auto_now_add = True)
-	update_time = models.DateTimeField(auto_now = True)
+    type = models.CharField(max_length=20, unique=True, default='', verbose_name='任务类型')
+    # 任务状态：created,started,finished,failed
+    status = models.CharField(max_length=20, default='created', verbose_name='任务状态')
+    success_count = models.IntegerField(default=0, verbose_name='成功记录数')
+    failed_count = models.IntegerField(default=0, verbose_name='失败记录数')
 
-	def __str__(self):
-		return '%s' % (self.type)
-	
-	class Meta:
-		verbose_name = '批量任务监控'
-		verbose_name_plural = '批量任务监控'
+    start_time = models.DateTimeField(null=True)
+    end_time = models.DateTimeField(null=True)
+
+    create_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return '%s' % (self.type)
+
+    class Meta:
+        verbose_name = '批量任务监控'
+        verbose_name_plural = '批量任务监控'
+
+
+@python_2_unicode_compatible
+class Recruit(models.Model):
+    title = models.CharField(max_length=254, null=True, db_index=True, verbose_name='岗位名称')
+    sort_order = models.IntegerField(default=0, verbose_name='排序序号')
+    content = models.TextField(null=True, blank=True, verbose_name='内容')
+    keywords = models.CharField(max_length=254, null=True, blank=True, verbose_name='关键字')
+
+    number = models.CharField(max_length=254, null=True, blank=True, verbose_name='招聘人数')
+    education = models.CharField(max_length=254, null=True, blank=True, verbose_name='学历要求')
+    site = models.CharField(max_length=254, null=True, blank=True, verbose_name='工作地点')
+    type = models.CharField(max_length=254, null=True, blank=True, verbose_name='工作类型')
+    # page_title = models.CharField(max_length=100, blank=True, default='', verbose_name='网页标题')
+    # short_desc = models.CharField(max_length=1024, default='', blank=True, verbose_name='简略描述')
+    static_file_name = models.CharField(max_length=254, db_index=True, null=True, blank=True, verbose_name='静态文件名')
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建日期')
+    update_time = models.DateTimeField(auto_now=True, verbose_name='更新日期')
+
+    def __str__(self):
+        return self.title
+
+    def get_url(self):
+        from shopcart.functions.recruit_util_func import get_url
+        return get_url(self)
+
+
+@python_2_unicode_compatible
+class Visitor(models.Model):
+    ip_address = models.CharField(max_length=32, null=True, blank=True, verbose_name='IP地址')
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建日期')
+
+    def __str__(self):
+        return self.ip_address

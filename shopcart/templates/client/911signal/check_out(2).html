@@ -1,0 +1,271 @@
+{% extends "client/911signal/base.html" %}
+{%block head_extra%}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'client/911signal/css/cart.css'%}" type="text/css"/>
+{%endblock%}
+{% block main %}
+{% load i18n %}
+{% load staticfiles %}
+<div class="check-out main">
+    <div class="container">
+        <div class="row">
+            <h1>Check Out</h1>
+            <div class="row">
+                <div class="col-md-4 col-xs-12 col-xy-4">
+                    <h2>Name & Address</h2>
+                    <div class="carts-sidbar">
+                        <p>Select a address from your address book or enter a new address.</p>
+                        <form id="address-form">
+                            {% csrf_token %}
+                            <div class="check-address">
+                                <a class="check-choice-address">
+                                    <span class="check-use-address" id="span_address_selected">{{default_address.useage|default:"New address"}}</span>
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="check-address-list" id="ul_address_list">
+                                    <li><a class="address-option" data-address-id="">New address</a></li>
+                                    {%for address in user.addresses.all%}
+                                    <li><a class="address-option" data-address-id="{{address.id}}">{{address.useage}}</a></li>
+                                    {%endfor%}
+                                </ul>
+                                <input id="input_address_id" type="hidden" class="input-address-id" name="address_id" value="{{default_address.id}}" />
+                            </div>
+                            <div class="form-group">
+                                <div class="check-new-address">
+                                    <input id="id_useage" type="hidden" maxlength="254" name="useage" type="text" value="{{default_address.useage}}" />
+
+                                    <div class="register-item">
+                                        <label>First Name<i>*</i></label>
+                                        <div class="col-xs-12"><input type="text" maxlength="50" name="first_name" id="id_first_name" value="{{default_address.first_name}}"></div>
+                                    </div>
+                                    <div class="register-item">
+                                        <label>Last Name<i>*</i></label>
+                                        <div class="col-xs-12"><input type="text" maxlength="50" name="last_name" id="id_last_name" value="{{default_address.last_name}}"></div>
+                                    </div>
+                                    <div class="register-item">
+                                        <label>Address1<i>*</i></label>
+                                        <div class="col-xs-12"><input type="text" id="id_address_line_1" maxlength="100" name="address_line_1" value="{{default_address.address_line_1}}"></div>
+                                    </div>
+                                    <div class="register-item">
+                                        <label>Address2</label>
+                                        <div class="col-xs-12"><input type="text" id="id_address_line_2" maxlength="100" name="address_line_2" value="{{default_address.address_line_2}}"></div>
+                                    </div>
+                                    <div class="register-item">
+                                        <label>City<i>*</i></label>
+                                        <div class="col-xs-12"><input type="text" id="id_city" maxlength="50" name="city" value="{{default_address.city}}"></div>
+                                    </div>
+                                    <div class="register-item">
+                                        <label>State/Province<i>*</i></label>
+                                        <div class="col-xs-12"><input type="text" maxlength="50" name="province" id="id_province" value="{{default_address.province}}"></div>
+                                    </div>
+
+
+                                    <div class="register-item">
+                                        <label>Country：</label>
+                                        <select onchange="country.value=this.options[this.selectedIndex].value">
+                                            <option value="">{{default_address.country|default:"Country"}}</option>
+                                            <optgroup label="广东省">
+                                                <option value="深圳">深圳</option>
+                                                <option value="广州">广州</option>
+                                                <option value="珠海">珠海</option>
+                                                <option value="惠州">惠州</option>
+                                            </optgroup>
+
+                                            <optgroup label="湖南省">
+                                                <option value="长沙">长沙</option>
+                                                <option value="株洲">株洲</option>
+                                                <option value="岳阳">岳阳</option>
+                                                <option value="张家界">张家界</option>
+                                            </optgroup>
+
+                                            <optgroup label="江西省">
+                                                <option value="南昌">南昌</option>
+                                                <option value="赣州">赣州</option>
+                                                <option value="宜春">宜春</option>
+                                                <option value="九江">九江</option>
+                                            </optgroup>
+                                        </select>
+                                        <input class="dropdown-item-input" type="hidden" maxlength="50" name="country" id="id_country" value=""/>
+                                    </div>
+
+
+                                    <div class="register-item">
+                                        <label>Zip/Postal Code<i>*</i></label>
+                                        <div class="col-xs-12"><input type="text" id="id_zipcode" maxlength="50" name="zipcode" value="{{default_address.zipcode}}"></div>
+                                    </div>
+                                    <div class="register-item">
+                                        <label>Telephone<i>*</i></label>
+                                        <div class="col-xs-12"><input type="text" id="id_tel" name="tel" value="{{default_address.tel}}"></div>
+                                    </div>
+                                    <div class="check-address-submit"><button type="button" class="btn-address-submit">Save Address</button></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <form id="place_order_form" method="post" action="/cart/place-order">
+                    {% csrf_token %}
+                    <input type="hidden" class="input-address-id" name="address_id" value="{{default_address.id}}" />
+                    <div class="col-md-8 col-xs-12 col-xy-8">
+                        <h2>Products</h2>
+                        <div class="carts-main">
+                            <div class="carts-title">
+                                <div class="carts-goods-img"></div>
+                                <div class="carts-goods-name">Product Name</div>
+                                <div class="carts-goods-pricet">Unit Price</div>
+                                <div class="carts-goods-qty">Qty</div>
+                                <div class="carts-goods-subt">Subtotal</div>
+                            </div>
+                            <!--购物车产品列表，“carts-item”为每一个产品-->
+                            <div class="carts-list">
+                                <!-- 商品一 -->
+                                {% for cart_product in product_list %}
+                                <div class="carts-item">
+                                    <input name="cart_product_id" type="hidden" value="{{cart_product.id}}">
+                                    <div class="carts-goods-img">
+                                        <a href="{{cart_product.product.get_url}}">
+                                            {% if cart_product.product_attribute %}
+                                            <img src="{{cart_product.product_attribute.image.thumb}}" alt="{{cart_product.product.name}}">
+                                            {% else %}
+                                            <img src="{{cart_product.product.thumb}}" alt="{{cart_product.product.name}}">
+                                            {% endif %}
+                                        </a>
+                                    </div>
+                                    <div class="carts-goods-name">
+                                        <div><a href="{{cart_product.product.get_url}}">{{cart_product.product.name}}</a></div>
+                                        <p>{{cart_product.get_short_product_attr}}</p>
+                                    </div>
+                                    <div class="carts-goods-price">${{cart_product.get_product_price|floatformat:"2"}}</div>
+                                    <div class="carts-goods-qty">
+                                        <input type="hidden" name="{{cart_product.product.id}}_qty" title='Qty' size='4' value="{{cart_product.quantity}}">
+                                        <div class="quy-item">{{cart_product.quantity}}</div>
+                                    </div>
+                                    <div class="carts-goods-sub">${{cart_product.get_total|floatformat:"2"}}</div>
+                                </div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="check-pay">
+                                <div class="row">
+                                    <div class="col-md-6 col-xs-12">
+                                        <h2>Shipping Method</h2>
+                                        <p>Express Fee</p>
+                                        {%for express in express_list%}
+                                        <div class="check-fee-item">
+                                            <input type="radio" name="express" value = "{{express.id}}" {%if express.id == default_express.id %}checked{%endif%}>
+                                            <a>{{express.name}}</a><span>${{express.price_fixed|floatformat:"2"}}</span>
+                                        </div>
+                                        {%endfor%}
+                                    </div>
+                                    <div class="col-md-6 col-xs-12">
+                                        <h2>Payment Method</h2>
+                                        <div class="check-pay-item">
+                                            <input type="radio" checked>
+
+                                            <img src="{% static 'client/911signal/images/ico/icon_paypal.jpg' %}">
+                                        </div>
+                                        <div class="check-pay-count">
+                                            <input name="sub_total" type="hidden" value="{{sub_total}}" />
+                                            <input name="shipping" type="hidden" value="{{shipping}}" />
+                                            <input name="discount" type="hidden" value="{{discount}}" />
+                                            <input name="total" type="hidden" value="{{total}}" />
+                                            <input name="remark" type="hidden" value="" />
+
+                                            <!-- <p>Discount<span>$</span><span id="discount_amount">{{discount|floatformat:"2"}}</span></p> -->
+                                            <p>Grand Total<span>$</span><span id="total_amount">{{total|floatformat:"2"}}</span></p>
+
+                                            <!--<input id="promotion_code" name="promotion_code" type="text" value="" /> <a class="delay try-promotion-code">USE PROMOTION CODE</a>-->
+                                            <a class="delay btn-place-order">Place Order Now</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'client/911signal/js/bootstrapValidator.js' %}"></script>
+<script type="text/javascript" src="{% static 'client/911signal/js/jquery.combo.select.js' %}"></script>
+<script>
+    $('#address-form').bootstrapValidator({
+//        live: 'disabled',
+        message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            first_name:{
+                validators: {
+                    notEmpty: {
+                        message: 'This is a required field.'
+                    }
+                }
+            },
+            province:{
+                validators: {
+                    notEmpty: {
+                        message: 'This is a required field.'
+                    }
+                }
+            },
+            zipcode:{
+                validators: {
+                    notEmpty: {
+                        message: 'This is a required field.'
+                    }
+                }
+            },
+            last_name:{
+                validators: {
+                    notEmpty: {
+                        message: 'This is a required field.'
+                    }
+                }
+            },
+            address_line_1:{
+                validators: {
+                    notEmpty: {
+                        message: 'This is a required field.'
+                    }
+                }
+            },
+            city:{
+                validators:{
+                    notEmpty: {
+                        message: 'This is a required field.'
+                    }
+                }
+            },
+            country:{
+                validators:{
+                    notEmpty: {
+                        message: 'This is a required field.'
+                    }
+                }
+            },
+            tel:{
+                validators:{
+                    notEmpty: {
+                        message: 'This is a required field.'
+                    }
+                }
+            },
+        }
+    });
+</script>
+<script>
+    $(function() {
+        $('select').comboSelect()
+    });
+</script>
+{% endblock %} 

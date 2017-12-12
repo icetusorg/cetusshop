@@ -1,0 +1,88 @@
+{% extends "client/glass_en/base.html" %}
+{%block head_extra%}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static "client/glass_en/css/products.css"%}" type="text/css"/>
+{%endblock%}
+{% block breadcrumbs %}
+<!--crumb-->
+<div class="crumb">
+    <div class="container">
+        <a href="/">HOME</a>
+
+        {% for c in product.get_one_category.get_leveled_parents %}
+        > <a href="{{c.get_url}}"><span>{{c.name}}</span></a>
+        {% endfor %}
+        > <a href="#0"><span>{{product.name}}</span></a>
+    </div>
+</div>
+<!--crumb end-->
+{% endblock%}
+{% block main %}
+{% load i18n %}
+<div class="product-detail">
+    <div class="container">
+        <div class="product-main-left">
+            <div id="preview" class="spec-preview">
+                            <span class="jqzoom">
+                                <img alt="{{image.alt_value}}" jqimg="{{product.image}}" src="{{product.image}}">
+                            </span>
+            </div>
+            <div class="spec-scroll">
+
+                <div class="items">
+                    <ul>
+                        {% for image in product.get_product_detail_images %}
+                        <li><img src="{{image.image}}" bimg="{{image.image}}" onmousemove="preview(this);"
+                                 alt="{{image.alt_value}}"></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="product-main-right">
+            <h1>{{product.name}}</h1>
+            <h2>{{product.item_number}}</h2>
+            <h3>Description</h3>
+            {% if ca_list = 'Silicon Powder' %}
+            <ul>
+                <li>1.Rubber industry</li>
+                <li>2.Rubber pipe industry</li>
+                <li>3.Painting industry</li>
+                <li>4.A variety of Prolinic dished</li>
+                <li>5.Shoe industry and polymer footwear floor</li>
+            </ul>
+            {% endif %}
+            <button class="product-btn" onclick="javascript:window.location.href='/contact-us.html'">Inquiry Now
+            </button>
+            <div class="footer-bottom-ico">
+                <a href="#"><i class="iconfont">&#xe66e;</i></a>
+                <a href="#"><i class="iconfont">&#xe601;</i></a>
+                <a href="#"><i class="iconfont">&#xe721;</i></a>
+                <a href="#"><i class="iconfont">&#xe763;</i></a>
+            </div>
+        </div>
+        <div class="product-contact">
+            <h3>Contact Info</h3>
+            <div id="contact-supplier">
+                <form id="inquiryForm" action="/inquiry/add/" method="POST" class="form-horizontal">
+                    <input class="product-contact-1" name="email" placeholder="Email Address" class=""
+                           type="text" value="">
+                    <input class="product-contact-2" type="text" name="quantity" value="" placeholder="Quantity">
+                    <textarea name="message"
+                              placeholder="Message"
+                              id="message"></textarea>
+                    <input name="product" value="{{product.id}}" type="hidden"/>
+                    <input name="name" value="{{user.first_name}} {{user.last_name}}" type="hidden"/>
+                    <button class="contact-supplier-button" type="button" id="inquiry-submit">SUBMIT</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'client/glass_en/js/base.js' %}"></script>
+<script type="text/javascript" src="{% static 'client/glass_en/js/jquery.jqzoom.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "client/sanyan/base.html" %}
+{% block breadcrumbs %}
+<div class="crumb">
+    <div class="container">
+        <a href="/">HOME</a> - <a href="#0"><span>{{article.title}}</span></a>
+    </div>
+</div>
+{% endblock %}
+{% block main %}
+{% load i18n %}
+{% load staticfiles %}
+<div class="article_contact">
+    <div class="container">
+        <h1>{{article.title}}</h1>
+        <div>
+            {{article.content|safe}}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+{% load staticfiles %}
+{% endblock %}

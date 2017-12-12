@@ -1,0 +1,115 @@
+{% extends "admin/default/content_base.html" %}
+{% block breadcrumbs %}
+    <section class="content-header">
+        <h1>招聘管理</h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+            <li class="active"><a href="#">招聘管理</a></li>
+        </ol>
+    </section>
+{% endblock %}
+
+{% block main %}
+    {% load i18n %}
+    {% load shopcart_extras %}
+    <section class="content">
+        <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+        <div class="row">
+            <div class="col-md-12">
+            </div>
+            <div class="col-md-12">
+                <div class="box xy-list-product">
+                    <div class="box-body no-padding">
+
+                        <form id="article_batch_form" method="POST">
+                            {% csrf_token %}
+
+                            <table id="main-content-table"
+                                   class="table table-striped recruit-table-striped">
+                                <tbody>
+                                <!--多余th为了调整表格色块-->
+                                <tr>
+                                    <th></th>
+                                </tr>
+                                <tr>
+                                    <th>选择</th>
+                                    <th>排序</th>
+                                    <th>岗位名称</th>
+                                    <th>招聘人数</th>
+                                    <th>学历要求</th>
+                                    <th>工作地点</th>
+                                    <th>工作类型</th>
+                                    <th>更新时间</th>
+                                    <th>操作</th>
+                                </tr>
+                                {% for recruit in recruit_list %}
+                                    <tr>
+                                        <td><input type="checkbox" name="is_oper" value="{{ recruit.id }}"></td>
+                                        <td><input type="text" name="sort_{{ recruit.id }}"
+                                                   value="{{ recruit.sort_order }}"></td>
+                                        <td><a href="../recruit-edit/?id={{ recruit.id }}">{{ recruit.title }}</a></td>
+                                        <td>{{ recruit.number }}</td>
+                                        <td>{{ recruit.education }}</td>
+                                        <td>{{ recruit.site }}</td>
+                                        <td>{{ recruit.type }}</td>
+                                        <td>{{ recruit.update_time|date:"Y-m-d H:i:s" }}</td>
+                                        <td><a href="{{ recruit.get_url }}" target="_blank">预览</a> | <a
+                                                href="../recruit-edit/?id={{ recruit.id }}" class="article-edit-link"
+                                                data-article-id="{{ recruit.id }}">编辑</a></td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                    <div class="box-footer clearfix">
+                        <div class="xy-box-select">
+                            <input class="recruit-checkbox" id="main-content-checkbox-all" type="checkbox">
+                            <a id="main-content-btn-all" href="#">全选</a>
+                            <button type="button" data-method="delete" class="btn btn-danger cust-page-recruit">删除
+                            </button>
+                            <a href="/admin/recruit-edit/" id="article-add-new" class="btn btn-primary">新增</a>
+                            <button type="button" data-method="sort" class="btn btn-primary cust-page-recruit">排序
+                            </button>
+                        </div>
+                        <div class="xy-pages-jump">
+                            <button type="button" class="btn btn-primary page-jump">跳转</button>
+                            <input type="text" name="page_number_to_jump" class="form-control">
+                            <p>跳转到：</p>
+
+
+                            <ul class="pagination pagination-sm no-margin pull-right">
+                                {% if recruit_list.has_previous %}
+                                    <li><a name="pageChange" data-tag="Previous" class="pageChage prev"
+                                           data-page="{{ article_list.previous_page_number }}">&lt;</a></li>
+                                {% else %}
+                                    <li><a>&lt;</a></li>
+                                {% endif %}
+
+                                {% for p in page_range %}
+                                    {% ifequal p current_page %}
+                                        <li><a class="pageChage current_page" data-page="{{ p }}" href="#"
+                                               title="{{ p }}">{{ p }}</a></li>
+                                    {% else %}
+                                        <li><a class="pageChage" data-page="{{ p }}" href="#"
+                                               title="{{ p }}">{{ p }}</a></li>
+                                    {% endifequal %}
+                                {% endfor %}
+                                {% if recruit_list.has_next %}
+                                    <li><a name="pageChange" class="pageChage next" data-page="{{ p }}"
+                                           data-page-range="{{ page_range }}" data-tag="Next">&gt;</a></li>
+                                {% else %}
+                                    <li><a>&gt;</a></li>
+                                {% endif %}
+                            </ul>
+                            <p>共 {{ recruit_count }} 条记录 , 共 {{ page_range|last }} 页，每页显示： {{ page_size }} 条</p>
+                        </div>
+                    </div>
+                </div><!-- /.box -->
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block scripts %}
+    {% load staticfiles %}
+{% endblock %}

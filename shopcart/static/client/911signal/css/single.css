@@ -1,0 +1,57 @@
+@charset "utf-8";
+.c26a1d0{color:#26a1d0}
+.cff6600{color:#ff6600}
+.cef4423{color:#ef4423}
+.c3b5998{color:#3b5998}
+.c52c0d4{color:#52c0d4}
+.c0099cc{color:#0099cc}
+.about-us h2{font-size: 30px;line-height: 30px;padding: 26px 0 ;width: 100%;color:#f7931d;}
+.about-us-main img{width:100%;}
+.about-us-main{padding-bottom:35px; border-bottom:1px solid #ddd; margin-bottom:30px;}
+.about-us-main h3{ line-height:20px; padding-bottom:12px; color:#333333; font-size:18px; margin-bottom:16px;}
+.about-us-main p,.about-us-main ul{ font-size:14px; color:#666666; line-height:24px;}
+.yellow-border{background:url("../images/about-border-line.jpg") no-repeat;}
+.blue-border{background:url("../images/about-border-line2.jpg") no-repeat;}
+.ul-even-bottom li:nth-child(even){padding-bottom:10px;}
+.about-us-footer{ border:none;}
+.delivery-main{padding-bottom:25px;}
+.list-square-yellow ul{list-style-type: square; font-size:20px; color:#ef4423;padding-left: 18px;}
+.list-square-yellow ul li{ font-size:20px; color:#ef4423;list-style-type: square; line-height:22px;}
+.list-square-yellow ul li span{font-size:14px; color:#666;}
+.delivery-color-span li span,.why-become-award li span{ font-weight:bold;}
+.why-become-why ul,.why-become-become p,.why-become-award ul{margin-bottom:0; padding-bottom:0;}
+@media (min-width:1200px){
+	.why-become-why ul,.why-become-become p,.why-become-award ul{height:150px;}
+}
+
+@media (min-width:993px) and (max-width:1199px){
+	.why-become-why ul,.why-become-become p,.why-become-award ul{height:194px;}
+}
+@media (min-width:769px) and (max-width:992px) {
+	.why-become-why ul,.why-become-become p,.why-become-award ul{height:248px;}
+}	
+
+@media (min-width:481px) and (max-width:992px) {
+	.about-us-main .col-xs-12{width:50% !important;}
+}
+
+
+@media (min-width:768px) {
+
+}
+
+@media (max-width:768px) {
+	.about-us-footer{margin-bottom:0;}
+	.why-become-why ul,.why-become-become p,.why-become-award ul{height:160px;}
+}
+
+@media (max-width:767px) { 
+	.why-become-why,.why-become-become,.why-become-award{width:100% !important;}
+	.why-become-why ul,.why-become-become p,.why-become-award ul{height:auto;padding-bottom:30px;}
+}
+@media (max-width:480px) {
+.about-us-main h3{margin-top:15px;}
+.delivery-main h3{margin-top:0;}
+
+}
+

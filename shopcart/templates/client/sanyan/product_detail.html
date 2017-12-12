@@ -1,0 +1,89 @@
+{% extends "client/sanyan/base.html" %}
+{%block head_extra%}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static "client/sanyan/css/products.css"%}" type="text/css"/>
+{%endblock%}
+{% block breadcrumbs %}
+
+
+<div class="crumb">
+    <div class="container">
+        <a href="/">HOME</a>
+
+        {% for c in product.get_one_category.get_leveled_parents %}
+        - <a href="{{c.get_url}}"><span>{{c.name}}</span></a>
+        {% endfor %}
+        - <a href="#"><span> {{product.name}}</span></a>
+
+    </div>
+</div>
+{% endblock%}
+{% block main %}
+{% load i18n %}
+
+<div class="product-detail">
+    <div class="container">
+        <div class="product-main-left">
+            <div id="preview" class="spec-preview">
+                            <span class="jqzoom">
+                                <img alt="{{image.alt_value}}" jqimg="{{product.image}}" src="{{product.image}}">
+                            </span>
+            </div>
+            <div class="spec-scroll">
+
+                <div class="items">
+                    <ul>
+
+                        {% for image in product.get_product_detail_images %}
+                        <li><img src="{{image.image}}" bimg="{{image.image}}"
+                                 onmousemove="preview(this);" alt="{{image.alt_value}}"></li>
+                        {% endfor %}
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="product-main-right">
+            <h1>{{product.name}}</h1>
+            <h2>FEATURE</h2>
+            {{product.description|safe}}
+
+            <h2>PARAMETER</h2>
+            <ul>
+                {%for para in product.parameters.all%}
+                <li><span>{{para.product_para.name}}: </span>{{para.value}}</li>
+                {%endfor%}
+            </ul>
+            <button><a href="/contact-us.html">INQUIRY</a></button>
+        </div>
+
+        <div class="product-des">
+            <h3>Description</h3>
+            {{product.description_2|safe}}
+        </div>
+
+
+        {% if product.related_products.all %}
+        <div class="recommended">
+            <h2>Recommended Products</h2>
+            <div class="row">
+                {% for p in product.related_products.all %}
+                <div class="recommended-list col-md-3 col-xs-6">
+                    <a href="{{p.get_url}}"><img src="{{p.image}}" alt="{{p.name}}"></a>
+                    <p>{{p.name}}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+
+
+{% endblock %}
+{% block scripts %}
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'client/sanyan/js/base.js' %}"></script>
+<script type="text/javascript" src="{% static 'client/sanyan/js/jquery.jqzoom.js' %}"></script>
+{% endblock %}

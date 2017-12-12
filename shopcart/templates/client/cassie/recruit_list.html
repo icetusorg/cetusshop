@@ -1,0 +1,59 @@
+{% extends "client/cassie/base.html" %}
+{% block head_extra %}
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'client/cassie/css/cart.css' %}" type="text/css"/>
+{% endblock %}
+{% block breadcrumbs %}
+    <div class="crumb main">
+        <div class="container">
+            <div class="row">
+                <a href="/">Home</a> &gt; Blogs
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block main %}
+    {% load i18n %}
+    {% load staticfiles %}
+    <div class="artical main">
+        <div class="container">
+            <div class="row">
+                <div class="artical-list col-md-9">
+                    <div class="row">
+                        <table  style=" margin: 60px 0 ;width: 100%">
+                            <tr>
+                                <th width="20%" height="50px">岗位名称</th>
+                                <th width="20%" height="50px">招聘人数</th>
+                                <th width="20%" height="50px">学历要求</th>
+                                <th width="20%" height="50px">工作地点</th>
+                                <th width="20%" height="50px">工作类型</th>
+                            </tr>
+                            {% for recruit in recruit_list %}
+                                <tr>
+                                    <td width="20%" height="50px"><a href="{{ recruit.get_url }}">{{ recruit.title }}</a></td>
+                                    <td width="20%" height="50px">{{ recruit.number }}</td>
+                                    <td width="20%" height="50px">{{ recruit.education }}</td>
+                                    <td width="20%" height="50px">{{ recruit.site }}</td>
+                                    <td width="20%" height="50px">{{ recruit.type }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+                <div class="artical-sidbar col-md-3">
+                    <div class="row">
+                        <h3>Follow Us</h3>
+                        <div class="artical-media">
+                            <a hre="#"><img src="{% static 'client/cassie/images/ico/facebook-footer.png' %}"></a>
+                            <a hre="#"><img src="{% static 'client/cassie/images/ico/twitter-footer.png' %}"></a>
+                            <a hre="#"><img src="{% static 'client/cassie/images/ico/linkin-footer.png' %}"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    {% load staticfiles %}
+{% endblock %}

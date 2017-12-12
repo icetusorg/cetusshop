@@ -1,0 +1,35 @@
+{% extends "client/cassie/base.html" %}
+{%block head_extra%}
+	{% load staticfiles %}
+	<link rel="stylesheet" href="{% static "client/cassie/css/single.css"%}" type="text/css"/>
+{%endblock%}
+{% block breadcrumbs %}
+<div class="crumb main">
+    <div class="container">
+        <div class="row">
+            {{article.breadcrumbs|safe}}
+        </div>
+    </div>
+</div>
+{% endblock%}
+{% block main %}
+{% load i18n %}
+{% load staticfiles %}
+<div class="artical">
+   <div class="container">
+       <div class="row">
+           <div class="artical-list col-md-9">
+              <div class="row">
+                 <div class="artical-content">
+                    {{article.content|safe}}
+                 </div>
+              </div>
+           </div>
+       </div>
+   </div>
+</div>
+{% endblock %}
+{% block scripts %}
+	{% load staticfiles %}
+{% endblock %}
+

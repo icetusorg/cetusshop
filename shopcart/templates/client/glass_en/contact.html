@@ -1,0 +1,138 @@
+{% extends "client/glass_en/base.html" %}
+{% block breadcrumbs %}
+    <!--crumb-->
+    <div class="crumb">
+        <div class="container">
+            <a href="/">HOME</a> > <a><span>CONTACT US</span></a>
+        </div>
+    </div>
+    <!--crumb end-->
+{% endblock %}
+{% block main %}
+    {% load i18n %}
+    {% load staticfiles %}
+    <div class="contact-us">
+        <div class="container">
+            <div class="row">
+                <div class="contact-left col-md-6 col-xs-12">
+                    <h2>Contact Info</h2>
+                    <ul>
+                        <li><span class="contact-left-fw">Add:</span>{{ system_para.contact_address }}</li>
+                        <li><span class="contact-left-fw">Email:</span><a
+                                href="mailto:{{ system_para.service_email }}">{{ system_para.service_email }}</a>
+                        </li>
+                        <li><span class="contact-left-fw">Tel:</span>{{ system_para.office_phone }}</li>
+                        <li><span class="contact-left-fw">Fax:</span>{{ system_para.hot_line }}</li>
+                    </ul>
+
+                </div>
+                <div class="contact-right col-md-6 col-xs-12">
+                    <h2>Contact Form</h2>
+                    <div class="contact-form">
+                        <div class="row">
+                            <form id="inquiryForm" action="/inquiry/add/" method="POST" class="form-horizontal">
+                                {% csrf_token %}
+                                <div class="col-md-12 col-xs-12">
+                                    <div class="form-group form-group-contact">
+                                        <div>
+                                            <div class="col-lg-12 col-md-12">
+                                                <input type="text" name="name" id="name" placeholder="NAME">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="col-lg-12 col-md-12">
+                                                <input type="text" name="email" id="email" placeholder="EMAIL">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="col-lg-12 col-md-12">
+                                                <input type="text" name="title" id="title" placeholder="TITLE">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="col-lg-12 col-md-12">
+                                                <textarea name="message" id="message" placeholder="MESSAGE"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <img id="check_code_img" src="/create_code/" onclick="refresh_check_code(this)">
+                                <input type="text" name="code">
+                                <div class="col-md-12 col-xs-12 contact-button">
+                                    <button type="button" id="inquiry-submit">SUBMIT</button>
+                                </div>
+                                <!--<input type="reset" style="display: none">-->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    {% load staticfiles %}
+    <script type="text/javascript" src="{% static 'client/glass_en/js/bootstrapValidator.js' %}"></script>
+    <script type="text/javascript">
+        $('#inquiryForm').bootstrapValidator({
+//        live: 'disabled',
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                name: {
+                    validators: {
+                        notEmpty: {
+                            message: 'This is a required field.'
+                        },
+                    }
+                },
+                email: {
+                    validators: {
+                        notEmpty: {
+                            message: 'This is a required field.'
+                        },
+                        emailAddress: {
+                            message: 'The input is not a valid email address.'
+                        }
+                    }
+                },
+                message: {
+                    validators: {
+                        notEmpty: {
+                            message: 'This is a required field.'
+                        },
+                    }
+                },
+            }
+        });
+    </script>
+    <script>
+        function refresh_check_code(ths) {
+            ths.src += '?';
+            //src后面加问好会自动刷新验证码img的src
+        }
+    </script>
+    <script type="text/javascript">
+
+        function initMap() {
+            var myLatLng = {lat: 29.8077981543, lng: 121.5567727463};
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 15,
+                center: myLatLng
+            });
+
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: 'Glass Holding Group'
+            });
+        }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBAD4V7OLhs-097iPNhYneZvCDbOVSzZvk&callback=initMap">
+    </script>
+{% endblock %}

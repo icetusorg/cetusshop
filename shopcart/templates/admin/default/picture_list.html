@@ -1,87 +1,101 @@
 {% extends "admin/default/content_base.html" %}
 
 {% block main %}
-{% load i18n %}
+    {% load i18n %}
 
-{% load staticfiles %}
-{% load shopcart_extras %}
-<div style="height:350px">
-<input type="hidden" id="selected_picture_id" value=""/>
+    {% load staticfiles %}
+    {% load shopcart_extras %}
+    <div style="height:350px">
+        <input type="hidden" id="selected_picture_id" value=""/>
 
-<div class="row album-image-show">
-	{%for image in image_list%}
-		<div class="tab-pane-album col-md-2 col-xs-2">
-			<img class="album-image" data-id="{{image.id}}" src="{{image.get_thumb_url}}" alt="{{image.alt_value|default:""}}">
-			<p></p>
-			{%if item_type == 'attribute'%}
-				<a href="#" class="select_picture" data-id="{{image.id}}">选择</a>
-			{%endif%}
+        <div class="row album-image-show">
+            {% for image in image_list %}
+                <div class="tab-pane-album col-md-2 col-xs-2">
+                    {% if item_type == 'product' %}
+                        <img class="album-image" data-id="{{ image.id }}" src="{{ image.get_thumb_url }}"
+                             alt="{{ image.alt_value|default:"" }}">
+                    {% endif %}
+                    {% if item_type == 'article' %}
+                        <img class="album-image" data-id="{{ image.id }}" src="{{ image.thumb }}"
+                             alt="{{ image.alt_value|default:"" }}">
+                    {% endif %}
+                    {% if item_type == 'attachment' %}
+                        <img class="album-image" data-id="{{ image.id }}" src="{{ image.thumb }}"
+                             alt="{{ image.alt_value|default:"" }}">
+                    {% endif %}
+                    <p></p>
+                    {% if item_type == 'attribute' %}
+                        <a href="#" class="select_picture" data-id="{{ image.id }}">选择</a>
+                    {% endif %}
 
-			<a href="#" class="set-picture-attr" data-method="delete" data-id="{{image.id}}" data-item-id="{{host_item_id}}" data-image-type="{{item_type}}">删除</a>
-		</div>
-	{%endfor%}
-</div>
+                    <a href="#" class="set-picture-attr" data-method="delete" data-id="{{ image.id }}"
+                       data-item-id="{{ host_item_id }}" data-image-type="{{ item_type }}">删除</a>
+                </div>
+            {% endfor %}
+        </div>
 
-<div class="box-footer clearfix tab-pane-footer">
+        <div class="box-footer clearfix tab-pane-footer">
 
-    <div class="xy-pages-jump">
-        <button type="button" class="btn btn-primary page-jump">跳转</button>
-        <input type="text" name="page_number_to_jump" class="form-control">
-        <p>跳转到：</p>
-    
-            <ul class="pagination pagination-sm no-margin pull-right">
-               {% if image_list.has_previous %}
-					<li><a name="pageChange" data-tag="Previous" class="pageChage prev" data-page="{{ image_list.previous_page_number }}">&lt;</a></li>
-				{% else %}
-					<li><a>&lt;</a></li>
-				{% endif %}	
-						
-				{% for p in page_range %}
-					{% ifequal p current_page %}
-						<li><a class="pageChage current_page"  data-page = "{{p}}" href="#" title="{{p}}">{{p}}</a></li>
-					{% else %}
-						<li><a class="pageChage"  data-page = "{{p}}" href="#" title="{{p}}">{{p}}</a></li>
-					{% endifequal %}
-				{% endfor %}
+            <div class="xy-pages-jump">
+                <button type="button" class="btn btn-primary page-jump">跳转</button>
+                <input type="text" name="page_number_to_jump" class="form-control">
+                <p>跳转到：</p>
+
+                <ul class="pagination pagination-sm no-margin pull-right">
+                    {% if image_list.has_previous %}
+                        <li><a name="pageChange" data-tag="Previous" class="pageChage prev"
+                               data-page="{{ image_list.previous_page_number }}">&lt;</a></li>
+                    {% else %}
+                        <li><a>&lt;</a></li>
+                    {% endif %}
+
+                    {% for p in page_range %}
+                        {% ifequal p current_page %}
+                            <li><a class="pageChage current_page" data-page="{{ p }}" href="#"
+                                   title="{{ p }}">{{ p }}</a></li>
+                        {% else %}
+                            <li><a class="pageChage" data-page="{{ p }}" href="#" title="{{ p }}">{{ p }}</a></li>
+                        {% endifequal %}
+                    {% endfor %}
                     {% if image_list.has_next %}
-						<li><a name="pageChange" class="pageChage next" data-page = "{{p}}" data-page-range="{{page_range}}" data-tag="Next">&gt;</a></li>
-					{% else %}
-						<li><a>&gt;</a></li>
-					{% endif %}
-           </ul>
-           <p>共{{item_count}}条记录 , 共{{page_range|last}}页，每页显示：{{page_size}}条</p>
+                        <li><a name="pageChange" class="pageChage next" data-page="{{ p }}"
+                               data-page-range="{{ page_range }}" data-tag="Next">&gt;</a></li>
+                    {% else %}
+                        <li><a>&gt;</a></li>
+                    {% endif %}
+                </ul>
+                <p>共{{ item_count }}条记录 , 共{{ page_range|last }}页，每页显示：{{ page_size }}条</p>
+            </div>
+        </div>
     </div>
-</div>
-</div>
 
 {% endblock %}
 {% block scripts %}
-	{% load staticfiles %}
-	<script>
-	$(document).ready(function($){
-			//相册中双击图片
-			jQuery(".album-image").on('dblclick',function(event){
-				var picture_id = $(this).data("id");
-				window.parent.album_dblclick_callback(picture_id);
-			});
-			
-			$(".select_picture").click(function(event){
-				var picture_id = $(this).data("id");
-				window.parent.album_dblclick_callback(picture_id);
-			});
-	});
-	
-	//刷新父页面的图片列表
-	function reload_picture_list(){
-		window.parent.reload_picture_list();
-	};
-	
+    {% load staticfiles %}
+    <script>
+        $(document).ready(function ($) {
+            //相册中双击图片
+            jQuery(".album-image").on('dblclick', function (event) {
+                console.log("相册中双击图片");
+                var picture_id = $(this).data("id");
+                window.parent.album_dblclick_callback(picture_id);
+            });
 
-	
-	function reload_myself(){
-		location.reload(true);
-	};
-	</script>
+            $(".select_picture").click(function (event) {
+                var picture_id = $(this).data("id");
+                window.parent.album_dblclick_callback(picture_id);
+            });
+        });
+
+        //刷新父页面的图片列表
+        function reload_picture_list() {
+            window.parent.reload_picture_list();
+        };
+
+        function reload_myself() {
+            location.reload(true);
+        };
+    </script>
 
 {% endblock %}
 

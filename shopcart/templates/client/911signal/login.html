@@ -1,0 +1,46 @@
+{% extends "client/911signal/base.html" %}
+{% block main %}
+{% load i18n %}
+
+    <div class="login main">
+        <div class="container">
+            <div class="row">
+                <h1>Login or Create an Account</h1>
+
+                <div class="login-main">
+                    <div class="login-left">
+                        <h2>New Customers</h2>
+
+                        <p>By creating an account with our store, you will be able to move through the checkout process
+                            faster, store multiple shipping addresses, view and track your orders in your account and
+                            more.</p>
+
+                        <div><a href="/user/register">{% trans 'Create an Account' %}</a></div>
+                    </div>
+                    <div class="login-right">
+                        <h2>{% trans 'Registered Customers' %}</h2>
+
+                        <p>If you have an account with us, please log in.</p>
+
+                        <form method="post" id="login_form" class="box" autocomplete="off">
+                            {% csrf_token %}
+
+                            <label>Email Address<i>*</i></label>
+                            <input type="email" name="email" id="email" required>
+                            <label>Password<i>*</i></label>
+                            <input type="password" name="password" id="password" required>
+                            <span>{{login_result}}</span>
+
+                            <div class="login-creat"><a href="/user/register">Create an Account</a></div>
+                            <div class="login-submit">
+                                <a class="forgot-word" href="/user/forget-password">{% trans 'Forgot Your Password' %}?</a>
+                                <input type="hidden" name="next" value="{{ next }}" />
+                                <button type="submit">{% trans 'Login' %}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

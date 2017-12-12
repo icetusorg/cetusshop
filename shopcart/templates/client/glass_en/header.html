@@ -1,0 +1,81 @@
+{% load staticfiles %}
+{% load i18n %}
+<!--phone menu-->
+<div class="neirong neirong-hide">
+    <div class="neirong-bd">
+        <a href="/">Home</a>
+        <a href="/About-Us.html">About Us<i></i></a>
+
+        <a href="/Silicon-Powder.html">Silicon Powder</a><i></i>
+        <a href="/Quartz-Sand.html">Quartz Sand</a><i></i>
+        <a href="/Calcium-Carbonate.html">Calcium Carbonate</a><i></i>
+        <a href="/Other-Minerals.html">Other Minerals</a><i></i>
+
+        <a href="/blog.html">News<i></i></a>
+        <a href="/contact-us.html">Contact Us<i></i></a>
+        <a href="http://cn.glassmining.com">中文<i></i></a>
+    </div>
+    <div class="neirong-close"></div>
+</div>
+<!--phone menu end-->
+<!--header-->
+<div class="header">
+    <div class="container">
+        <div class="logo">
+            <a href="/"><img src="{% static "client/glass_en/images/logo.png"%}" alt="logo"></a>
+        </div>
+        <section class="buttonset">
+            <div id="showLeftPush" class="glyphicon glyphicon-menu-hamburger buttonpush"></div>
+        </section>
+        <div class="header-search">
+            <form method="GET" action="/query/product/">
+                <input class="header-search-input" type="text" name="query" id="q"
+                       value="">
+                <button class="header-search-search" type="submit">Search</button>
+            </form>
+        </div>
+        <div class="header-right">
+            <p class="header-right-first">
+                <i class="iconfont">&#xe611;</i><span>{{system_para.office_phone}}</span>
+                <i class="iconfont">&#xe602;</i><a href="mailto:info@glassmining.com">info@glassmining.com</a>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="menu">
+    <div class="container">
+        <ul class="menu-ul">
+            <li><a class="menu-ul-a" href="/">Home</a></li>
+            <li><a class="menu-ul-a" href="/About-Us.html">About</a></li>
+            <li class="li1">
+                <a class="menu-ul-a" href="/Products.html">Categories</a>
+                <div class="row">
+                    <ul class="menu-first-ul">
+                        <li><a href="/Silicon-Powder.html">Silicon Powder</a></li>
+                        <li><a href="/Quartz-Sand.html">Quartz Sand</a></li>
+                        <li><a href="/Calcium-Carbonate.html">Calcium Carbonate</a></li>
+                        <li><a href="/Other-Minerals.html">Other Minerals</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li><a class="menu-ul-a" href="/Product.html">Products</a>
+                <!--<div class="row">-->
+                <!--<ul class="menu-first-ul">-->
+                <!--<li><a href="/why-us.html">FORMAL WEAR</a></li>-->
+                <!--<li><a href="/Factory-Profile.html">LEISURE</a></li>-->
+                <!--<li><a href="/our-team.html">MANUAL COAT</a></li>-->
+                <!--<li><a href="/Certification.html">LEISURE COAT</a></li>-->
+                <!--</ul>-->
+                <!--</div>-->
+            </li>
+            <li><a class="menu-ul-a" href="/blog.html">News</a></li>
+            <li><a class="menu-ul-a" href="/contact-us.html">Contact</a></li>
+        </ul>
+        <ul class="language">
+            <li><a href="http://cn.glassmining.com">中文</a></li>
+            <li>|</li>
+            <li><a href="/">English</a></li>
+        </ul>
+    </div>
+</div>
+<!--header end-->

@@ -2,7 +2,7 @@
 <html style="background-color: #ecf0f5;">
 <head>
     <meta charset="UTF-8">
-    <title>销售数据</title>
+    <title>控制面板</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <link href="{% static 'admin/default/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css"/>
     <!-- ICO -->
@@ -11,36 +11,56 @@
     <!--自定义CSS-->
     <link href="{% static 'admin/default/css/style.css' %}" rel="stylesheet" type="text/css"/>
 </head>
-<body class="skin-blue sidebar-mini">
+<body class="skin-blue sidebar-mini index-contact-body">
 <section class="content-header">
-    <h1>销售数据</h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
-        <li class="active"><a href="#">销售数据</a></li>
-    </ol>
+    <h1>控制面板</h1>
 </section>
 <section class="content ">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="box xy-search">
-                <div class="box-body">
-                    <div class="row">
-                        <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-                        <div id="order"  ></div>
-                        <div id="sales"  ></div>
-
-                    </div>
+    <div class="box-body index-contact-body">
+        <div class="row">
+            <div class="index-content-list  col-md-3">
+                <div class="index-content-list-content">
+                    <h2>服务到期时间</h2>
+                    <p>{{ maturity_data | slice:"10" }}</p>
+                    <a target="_blank" href="http://www.icetus.com/">续费</a>
                 </div>
             </div>
-            <div class="index-content">
-                <h2>订单概况</h2>
-                <ul>
-                    <li><a href="###">待支付 (<span class="index-content-span1" id="count_for_pay">&nbsp 0 &nbsp</span>)</a></li>
-                    <li><a href="###">待发货 (<span class="index-content-span3" id="count_for_ship">&nbsp 0 &nbsp</span>)</a></li>
-                    <li><a href="###">已关闭 (<span class="index-content-span4" id="count_for_close">&nbsp 0 &nbsp</span>)</a></li>
-                    <li><a href="###">已完成 (<span class="index-content-span5" id="count_for_finish">&nbsp 0 &nbsp</span>)</a></li>
-                    <li><a href="###">订单异常 (<span class="index-content-span6" id="count_for_error">&nbsp 0 &nbsp</span>)</a></li>
-                </ul>
+
+            <div class="index-content-list col-md-3">
+                <div class="index-content-list-content">
+                    <h2>询盘总数</h2>
+                    <p>{{ inquiry_num }}个</p>
+                    <a href="../inquiry-list/">今日询盘数 {{ inquiry_day_num }} 个</a>
+                </div>
+            </div>
+
+            <div class="index-content-list col-md-3">
+                <div class="index-content-list-content">
+                    <h2>独立访客数</h2>
+                    <p>{{ vistor }} IP</p>
+                    <a href="#0">今日访客数 {{ visitor_day_num }} IP</a>
+                </div>
+            </div>
+
+            <div class="index-content-list col-md-3">
+                <div class="index-content-list-content">
+                    <h2>产品数</h2>
+                    <p>{{ product_num }}个</p>
+                    <a href="../product/">今天上架产品数 {{ product_day_num }} 个</a>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="row index-chart">
+            <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+            <div class="row">
+                <div class="col-md-6 col-xs-12">
+                    <div id="visitor"></div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <div id="inquiry"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -53,214 +73,197 @@
 <script src="{% static 'admin/default/js/iCetus-admin.1.17.0928.js' %}" type="text/javascript"></script>
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		var order_count_chart = null;
-		var amount_chat = null;
-		order_count_chart = init_order_count_chart();
-		amount_chat = init_amount_chart();
-		
-		get_week_order_count(order_count_chart);
-		get_week_order_amount(amount_chat);
-		get_order_summary();
-	});
-	
-	function get_order_summary(){
-		var url = "/admin/report/orders/";
-		var postdata = {"method":"summary"};
-		
-		$.ajax({
-			cache: false,
-			type: "POST",
-			url:url,
-			data:postdata,
-			async: false,
-			error: function(request) {
-				alert("System error");
-			},
-			success: function(data) {
-				if(data.success==true){
-					$.each( data.data, function( key, val ) {
-						$("#" + this.control_id).text(" " + this.count + " ");
-					});
-				}
-			}
-		});
-	};
-	
-	
-	function get_week_order_amount(chart){
-		var option = chart.getOption();
-		var newdata = [];
-		var newdate = [];
-		var url = "/admin/report/orders/";
-		var postdata = {"method":"week_count"};
-		
-		$.ajax({
-			cache: false,
-			type: "POST",
-			url:url,
-			data:postdata,
-			async: false,
-			error: function(request) {
-				alert("System error");
-			},
-			success: function(data) {
-				if(data.success==true){
-					$.each( data.data, function( key, val ) {
-						newdata.push(this.amount);
-						newdate.push(this.date);
-					});
-					option.series[0].data = newdata;
-					option.xAxis[0].data = newdate;
-					chart.setOption(option);
-				}
-			}
-		});
-	};
+    $(document).ready(function () {
+        var visitor_count_chart = null;
+        var inquiry_chat = null;
+        visitor_count_chart = init_visitor_count_chart();
+        inquiry_chat = init_inquiry_count_chart();
 
-	
-	function get_week_order_count(chart){
-		var option = chart.getOption();
-		var newdata = [];
-		var newdate = [];
-		var url = "/admin/report/orders/";
-		var postdata = {"method":"week_count"};
-		
-		$.ajax({
-			cache: false,
-			type: "POST",
-			url:url,
-			data:postdata,
-			async: false,
-			error: function(request) {
-				alert("System error");
-			},
-			success: function(data) {
-				if(data.success==true){
-					$.each( data.data, function( key, val ) {
-						newdata.push(this.count);
-						newdate.push(this.date);
-					});
-					option.series[0].data = newdata;
-					option.xAxis[0].data = newdate;
-					chart.setOption(option);
-				}
-			}
-		});
-	};
+        get_sixmouth_visitor(visitor_count_chart);
+        get_sixmouth_inquiry(inquiry_chat);
+    });
+
+    function get_sixmouth_inquiry(chart) {
+        var option = chart.getOption();
+        var newdata = [];
+        var newdate = [];
+        var url = "/admin/report/orders/";
+        var postdata = {"method": "week_count"};
+
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: url,
+            data: postdata,
+            async: false,
+            error: function (request) {
+                alert("System error");
+            },
+            success: function (data) {
+                if (data.success == true) {
+                    $.each(data.data, function (key, val) {
+                        newdata.push(this.amount);
+                        newdate.push(this.date);
+                    });
+                    option.series[0].data = newdata;
+                    option.xAxis[0].data = newdate;
+                    chart.setOption(option);
+                }
+            }
+        });
+    };
 
 
-	function init_order_count_chart(order_count_chart){
-		// 基于准备好的dom，初始化echarts实例
-		order_count_chart = echarts.init(document.getElementById('order'));
-	
-		// 指定图表的配置项和数据
-		var order_count_option = {
-			title: {
-				text: '周订单'
-			},
-			color: ['#3398DB'],
-			tooltip: {
-				trigger: 'axis',
-				axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-					type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-				}
-			},
-			grid: {
-				left: '3%',
-				right: '4%',
-				bottom: '3%',
-				containLabel: true
-			},
-			xAxis: [
-				{
-					type: 'category',
-					data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
-					axisTick: {
-						alignWithLabel: true
-					}
-				}
-			],
-			yAxis: [
-				{
-					type: 'value'
-				}
-			],
-			series: [
-				{
-					name: '订单数量',
-					type: 'bar',
-					barWidth: '60%',
-					data: [0, 0, 0, 0, 0, 0, 0]
-				}
-			]
-		};
-	
-		// 使用刚指定的配置项和数据显示图表。
-		order_count_chart.setOption(order_count_option);
-		return order_count_chart;
-	};
-		
-	// 基于准备好的dom，初始化echarts实例
-	function init_amount_chart(amount_chat){
-		amount_chat = echarts.init(document.getElementById('sales'));
-		// 指定图表的配置项和数据
-		var option = {
-			title: {
-				text: '周成交额'
-			},
-			tooltip:{
-				trigger: 'axis',
-				axisPointer: {
-					type: 'cross',
-					label: {
-						backgroundColor: '#6a7985'
-					}
-				}
-			},
-			legend:{
-				data:['周成交额']
-			},
-			toolbox:{
-				feature: {
-					saveAsImage: {}
-				}
-			},
-			grid:{
-				left: '3%',
-				right: '4%',
-				bottom: '3%',
-				containLabel: true
-			},
-			xAxis:[
-				{
-					type : 'category',
-					boundaryGap : false,
-					data : ['周一','周二','周三','周四','周五','周六','周日']
-				}
-			],
-			yAxis:[
-				{
-					type : 'value'
-				}
-			],
-			series:[
-				{
-					name:'周成交额',
-					type:'line',
-					stack: '总量',
-					areaStyle: {normal: {}},
-					data:[0, 0, 0, 0, 0, 0, 0]
-				}
-			]
-		};
-	
-		// 使用刚指定的配置项和数据显示图表。
-		amount_chat.setOption(option);
-		return amount_chat;
-	};
-    
-	
+    function get_sixmouth_visitor(chart) {
+        var option = chart.getOption();
+        var newdata = [];
+        var newdate = [];
+        var url = "/admin/report/orders/";
+        var postdata = {"method": "week_count"};
+
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: url,
+            data: postdata,
+            async: false,
+            error: function (request) {
+                alert("System error");
+            },
+            success: function (data) {
+                if (data.success == true) {
+                    $.each(data.data, function (key, val) {
+                        newdata.push(this.count);
+                        newdate.push(this.date);
+                    });
+                    option.series[0].data = newdata;
+                    option.xAxis[0].data = newdate;
+                    chart.setOption(option);
+                }
+            }
+        });
+    };
+
+    // 访客数
+    function init_visitor_count_chart(visitor_count_chart) {
+        // 基于准备好的dom，初始化echarts实例
+        visitor_count_chart = echarts.init(document.getElementById('visitor'));
+
+        // 指定图表的配置项和数据
+        var visitor_count_option = {
+            title: {
+                text: '访客数(最近六个月)'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    label: {
+                        backgroundColor: '#6a7985'
+                    }
+                }
+            },
+            legend: {
+                data: ['访客个数']
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '访客个数',
+                    type: 'line',
+                    stack: '总量',
+                    areaStyle: {normal: {}},
+                    data: [0, 0, 0, 0, 0, 0, 0]
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        visitor_count_chart.setOption(visitor_count_option);
+        return visitor_count_chart;
+    };
+
+    // 询盘数
+    function init_inquiry_count_chart(inquiry_chat) {
+        inquiry_chat = echarts.init(document.getElementById('inquiry'));
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '询盘数(最近六个月)'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    label: {
+                        backgroundColor: '#6a7985'
+                    }
+                }
+            },
+            legend: {
+                data: ['询盘个数']
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '询盘个数',
+                    type: 'line',
+                    stack: '总量',
+                    areaStyle: {normal: {}},
+                    data: [0, 0, 0, 0, 0, 0, 0]
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        inquiry_chat.setOption(option);
+        return inquiry_chat;
+    };
+
 </script>
 </body>
 </html>

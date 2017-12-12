@@ -1,0 +1,120 @@
+{% extends "client/911signal/base.html" %}
+{%block head_extra%}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'client/911signal/css/cart.css'%}" type="text/css"/>
+{%endblock%}
+{% block main %}
+{% load i18n %}
+{% load staticfiles %}
+<div class="order add_new_address main">
+    <div class="container">
+        <div class="row">
+            <div class="row">
+                <div class="col-md-3 col-xy-12">
+                    {% include 'client/911signal/side_nav.html' %}
+                </div>
+                <div class="col-md-9 col-xs-12">
+                    <h2 class="color">Account Infomation</h2>
+                    <div class="add-address-border">
+                        <div class="check-new-address edit-account">
+                            <form id="userInfoForm" autocomplete="off" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <div class="register-item">
+                                        <label>First Name<i>*</i></label>
+                                        <div class="col-md-7 col-xs-12"><input type="text" name="first_name" id="first_name" value="{{user.first_name}}"></div>
+                                    </div>
+                                    <div class="register-item">
+                                        <label>Last Name<i>*</i></label>
+                                        <div class="col-md-7 col-xs-12"><input type="text" name="last_name" id="last_name" value="{{user.last_name}}"></div>
+                                    </div>
+                                    <div class="register-item">
+                                        <label>Email Address<i>*</i></label>
+                                        <div class="col-md-7 col-xs-12"><input  readonly="readonly" type="text" name="email" id="email" value="{{user.email}}"></div>
+                                    </div>
+                                    <div class="check-box">
+                                        <input name="changePassword" id="changePassword" type="checkbox" autocomplete="off">
+                                        <span>Change Password</span>
+                                    </div>
+                                    <!-- 点击change passowrd 之后显示修改密码输入框-->
+                                    <div class="change-password">
+                                        <div class="register-item">
+                                            <label>Password<i>*</i></label>
+                                            <div class="col-md-7 col-xs-12"><input type="password" name="password" id="password"></div>
+                                        </div>
+                                        <div class="register-item">
+                                            <label>Confirm Password<i>*</i></label>
+                                            <div class="col-md-7 col-xs-12"><input type="password" name="confirmPassword" id="confirmPassword"></div>
+                                        </div>
+                                    </div>
+                                    <div class="check-address-submit"><button type="submit" class="btn-userinfo-submit">Save</button></div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+{% block scripts %}
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'client/911signal/js/bootstrapValidator.js' %}"></script>
+<script type="text/javascript">
+    $('#userInfoForm').bootstrapValidator({
+//        live: 'disabled',
+        message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            first_name: {
+                validators: {
+                    notEmpty: {
+                        message: 'This is a required field.'
+                    }
+                }
+            },
+            last_name: {
+                validators: {
+                    notEmpty: {
+                        message: 'This is a required field.'
+                    }
+                }
+            },
+            password:{
+                validators: {
+                    notEmpty: {
+                        message: 'This is a required field.'
+                    },
+                    stringLength: {
+                        min: 6,
+                        max: 20,
+                        message: 'Please enter 6 - 20 characters. Leading or trailing spaces will be ignored.'
+                    },
+                    identical: {
+                        field: 'confirmPassword',
+                        message: 'The password and its confirm are not the same'
+                    }
+                }
+            },
+            confirmPassword: {
+                validators: {
+                    notEmpty: {
+                        message: 'The confirm password is required and cannot be empty'
+                    },
+                    identical: {
+                        field: 'password',
+                        message: 'The password and its confirm are not the same'
+                    }
+                }
+            },
+        }
+    });
+</script>
+{% endblock %}

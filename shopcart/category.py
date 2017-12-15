@@ -47,7 +47,7 @@ def get_all_top_categorys():
     return top_category_list
 
 
-def get_orgnized_category_list(prefix='--'):
+def get_orgnized_category_list(prefix='—'):
     top_list = get_all_top_categorys()
     result_list = []
     tmp = None

@@ -73,6 +73,7 @@ def oper(request, method):
         result = {}
         if method == 'set_order':
             id_list = request.POST.getlist('selected')
+            logger.error('id_list %s' % id_list)
             for id in id_list:
                 try:
                     cat = Category.objects.get(id=id)

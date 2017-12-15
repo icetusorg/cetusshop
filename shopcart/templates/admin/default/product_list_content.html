@@ -1,169 +1,199 @@
 {% extends "admin/default/content_base.html" %}
+
 {% block breadcrumbs %}
-<section class="content-header">
-    <h1>产品列表</h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
-        <li class="active"><a href="#">产品列表</a></li>
-    </ol>
-</section>
+    <section class="content-header">
+        <h1>产品列表 <span class="box-subtitle">产品管理</span></h1>
+    </section>
 {% endblock %}
 
 {% block main %}
-{% load i18n %}
-{% load shopcart_extras %}
-<section class="content">
-    <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
-    <div class="row">
-        <div class="col-md-12">
-            <div class="box xy-search">
-                <div class="box-header with-border">
-                    <h3 class="box-title">产品查询</h3>
-                </div>
-                <div class="box-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div>
-                                <form>
-                                    <div class="btn-group normal product-button-search">
-                                        <button type="button" class="btn btn-default inputBtn"><span
-                                                class="selected-text">{{query_item|is_equal:"item_name"|yesno:"产品名称,产品编号,"}}</span></button>
-                                        <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn"
-                                                data-toggle="dropdown">
-                                            <span class="caret"></span>
-                                            <span class="sr-only">Toggle Dropdown</span>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu" id="selectOption2">
-                                            <li class="dropdown-item" data-value="item_name">产品名称</li>
-                                            <li class="dropdown-item" data-value="item_number">产品编号</li>
-                                        </ul>
-                                        <input type="hidden" class="dropdown-item-input" name="query_item" value="{{query_item|default:"item_number"}}">
-                                    </div>
-									<div class="btn-group normal product-button-search">
-                                        <button type="button" class="btn btn-default inputBtn"><span
-                                                class="selected-text">{{query_category_name|default:"请选择分类"}}</span></button>
-                                        <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn"
-                                                data-toggle="dropdown">
-                                            <span class="caret"></span>
-                                            <span class="sr-only">Toggle Dropdown</span>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu" id="selectOption2">
-											<li class="dropdown-item" data-value="">请选择分类</li>
-											{%for cat in cat_list%}
-												<li class="dropdown-item" data-value="{{cat.id}}">{{cat.name}}</li>
-											{%endfor%}
-                                        </ul>
-                                        <input type="hidden" class="dropdown-item-input" name="query_category" value="{{query_category|default:""}}">
-                                    </div>
+    {% load i18n %}
+    {% load shopcart_extras %}
+    <script>
+        document.body.style.backgroundColor = "#f0f0f0";
+    </script>
+    <section class="content">
+        <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box xy-search product-list-content">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">产品查询 </h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12 product-search">
+                                <div>
+                                    <form>
+                                        <div class="btn-group normal product-button-search product-button-name">
+                                            <button type="button" class="btn btn-default inputBtn"><span
+                                                    class="selected-text">{{ query_item|is_equal:"item_name"|yesno:"产品名称,产品编号," }}</span>
+                                            </button>
+                                            <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn"
+                                                    data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <ul class="dropdown-menu product-name-dropdown" role="menu"
+                                                id="selectOption2">
+                                                <li class="dropdown-item" data-value="item_name">产品名称</li>
+                                                <li class="dropdown-item" data-value="item_number">产品编号</li>
+                                            </ul>
+                                            <input type="hidden" class="dropdown-item-input" name="query_item"
+                                                   value="{{ query_item|default:"item_number" }}">
+                                        </div>
+                                        <div class="btn-group normal product-button-search product-button-cate">
+                                            <button type="button" class="btn btn-default inputBtn"><span
+                                                    class="selected-text">{{ query_category_name|default:"请选择产品分类" }}</span>
+                                            </button>
+                                            <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn"
+                                                    data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <ul class="dropdown-menu product-cate-dropdown" role="menu"
+                                                id="selectOption2">
+                                                <li class="dropdown-item" data-value="">全部产品</li>
+                                                {% for cat in cat_list %}
+                                                    <li class="dropdown-item"
+                                                        data-value="{{ cat.id }}">{{ cat.name }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                            <input type="hidden" class="dropdown-item-input" name="query_category"
+                                                   value="{{ query_category|default:"" }}">
+                                        </div>
 
-                                    <div class="form-group">
-                                        <input type="text" name="item_value" value="{{item_value}}" class="form-control product-list-search-input">
-                                    </div>
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-primary">查询</button>
-                                    </div>
-                                </form>
+                                        <div class="form-group">
+                                            <input type="text" name="item_value" value="{{ item_value }}"
+                                                   class="form-control product-list-search-input">
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary">查询</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
-                        </div>
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-12">
-            <div class="box xy-list-product">
-                <div class="box-body no-padding">
-					<form id="product_batch_form">
-						<input name="method" id="product_batch_method" type="hidden" value="" />
-						<table id="main-content-table" class="table table-striped product-table-striped">
-							<tbody>
-							<!--多余th为了调整表格色块-->
-							<tr>
-								<th></th>
-							</tr>
-							<tr>
-								<th>选择</th>
-								<th>排序</th>
-								<th>商品图片</th>
-								<th>货号</th>
-								<th>名称</th>
-								<th>分类</th>
-								<th>更新时间</th>
-								<th>上架</th>
-								<th>操作</th>
-							</tr>
-
-							{% for product in product_list %}
-								<tr>
-									<td><input name="is_oper" data-order-id="{{product.id}}" value="{{product.id}}" type="checkbox"></td>
-									<td><input type="text" name="sort_{{product.id}}" value="{{product.sort_order}}"></td>
-									<td><a href="/admin/product-edit/?id={{product.id}}"><img src="{{product.get_main_image.get_thumb_url}}"></a></td>
-									<td>{{product.item_number}}</td>
-									<td><a href="/admin/product-edit/?id={{product.id}}">{{product.name}}</a></td>
-									<td>
-										<ul>
-											{%for cat in product.categorys.all%}
-											<li>{{cat.name}}</li>
-											{%endfor%}
-										</ul>
-									</td>
-									<td>{{product.update_time|date:"Y-m-d H:i:s"}}</td>
-									<td>{{product.is_publish|yesno:"是,否,未定义"}}</td>
-									<td><a href="{{product.get_url}}" target="_blank">预览</a> | <a href="/admin/product-edit/?id={{product.id}}">编辑</a> | <a class="message-delete product-batch-delete" data-product-id="{{product.id}}" href="#" >删除</a></td>
-
-								</tr>
-							{% endfor %}
-							</tbody>
-						</table>
-					</form>
-                </div>
-                <div class="box-footer clearfix">
-                    <div class="xy-box-select">
-                        <input class=" product-list-input-checkbox-all" type="checkbox" id="main-content-checkbox-all">
-                        <a id="main-content-btn-all" href="#">全选</a>
-                        <button type="button"  data-product-id="batch" class="btn btn-danger product-batch-delete">删除</button>
-                        <a href="/admin/product-edit/" id="product-add-new" class="btn btn-primary">新增</a>
-                        <button type="button" data-method="sort" class="btn btn-primary product-batch-oper">排序</button>
-                        <button type="button" data-method="onpublish" class="btn btn-primary product-batch-oper">上架</button>
-                        <button type="button" data-method="offpublish" class="btn btn-primary product-batch-oper">下架</button>
-						<button type="button" data-method="selection" class="btn btn-primary product-batch-export">导出</button>
-						<button type="button" data-method="all" class="btn btn-primary product-batch-export">导出全部商品</button>
+            <div class="col-md-12 ">
+                <div class="box xy-list-product">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">产品列表 </h3>
                     </div>
+                    <div class="box-body product-table">
+                        <form id="product_batch_form">
+                            <input name="method" id="product_batch_method" type="hidden" value=""/>
+                            <table id="main-content-table" class="table table-striped product-table-striped">
+                                <tbody>
+                                <tr>
+                                    <th>选择</th>
+                                    <th>排序</th>
+                                    <th>图片</th>
+                                    <th>编号</th>
+                                    <th>名称</th>
+                                    <th>分类</th>
+                                    <th>更新时间</th>
+                                    <th>上架</th>
+                                    <th>操作</th>
+                                </tr>
 
-                    <div class="xy-pages-jump">
-                        <button type="button" class="btn btn-primary page-jump">跳转</button>
-                        <input type="text" name="page_number_to_jump" class="form-control">
-                        <p>跳转到：</p>
+                                {% for product in product_list %}
+                                    <tr>
+                                        <td><input name="is_oper" data-order-id="{{ product.id }}"
+                                                   value="{{ product.id }}" type="checkbox"></td>
+                                        <td><input type="text" name="sort_{{ product.id }}"
+                                                   value="{{ product.sort_order }}"></td>
+                                        <td><a href="/admin/product-edit/?id={{ product.id }}"><img
+                                                src="{{ product.get_main_image.get_thumb_url }}"></a></td>
+                                        <td>{{ product.item_number }}</td>
+                                        <td><a href="/admin/product-edit/?id={{ product.id }}">{{ product.name }}</a>
+                                        </td>
+                                        <td>
+                                            <ul>
+                                                {% for cat in product.categorys.all %}
+                                                    <li>{{ cat.name }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        </td>
+                                        <td>{{ product.update_time|date:"Y-m-d H:i:s" }}</td>
+                                        <td>{{ product.is_publish|yesno:"是,否,未定义" }}</td>
+                                        <td><a href="{{ product.get_url }}" target="_blank">预览</a> | <a
+                                                href="/admin/product-edit/?id={{ product.id }}">编辑</a> | <a
+                                                class="message-delete product-batch-delete"
+                                                data-product-id="{{ product.id }}" href="#">删除</a></td>
 
-                        <ul class="pagination pagination-sm no-margin pull-right">
-                            {% if product_list.has_previous %}
-								<li><a name="pageChange" data-tag="Previous" class="pageChage prev" data-page="{{ product_list.previous_page_number }}">&lt;</a></li>
-							{% else %}
-								<li><a>&lt;</a></li>
-							{% endif %}
-
-							{% for p in page_range %}
-								{% ifequal p current_page %}
-									<li><a class="pageChage current_page"  data-page = "{{p}}" href="#" title="{{p}}">{{p}}</a></li>
-								{% else %}
-									<li><a class="pageChage"  data-page = "{{p}}" href="#" title="{{p}}">{{p}}</a></li>
-								{% endifequal %}
-							{% endfor %}
-							
-                            {% if product_list.has_next %}
-								<li><a name="pageChange" class="pageChage next" data-page = "{{p}}" data-page-range="{{page_range}}" data-tag="Next">&gt;</a></li>
-							{% else %}
-								<li><a>&gt;</a></li>
-							{% endif %}
-                        </ul>
-                        <p>共{{item_count}}条记录 , 共{{page_range|last}}页，每页显示：{{page_size}}条</p>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </form>
                     </div>
-                </div>
-            </div><!-- /.box -->
+                    <div class="box-footer clearfix">
+                        <div class="xy-box-select">
+                            <input class="product-list-input-checkbox-all" type="checkbox"
+                                   id="main-content-checkbox-all">
+                            <a id="main-content-btn-all" href="#">全选</a>
+                            <button type="button" data-product-id="batch" class="btn btn-danger product-batch-delete">
+                                删除
+                            </button>
+                            <a href="/admin/product-edit/" id="product-add-new" class="btn btn-primary">新增</a>
+                            <button type="button" data-method="sort" class="btn btn-primary product-batch-oper">排序
+                            </button>
+                            <button type="button" data-method="onpublish" class="btn btn-primary product-batch-oper">
+                                上架
+                            </button>
+                            <button type="button" data-method="offpublish" class="btn btn-primary product-batch-oper">
+                                下架
+                            </button>
+                            {#                            <button type="button" data-method="selection" class="btn btn-primary product-batch-export">#}
+                            {#                                导出#}
+                            {#                            </button>#}
+                            {#                            <button type="button" data-method="all" class="btn btn-primary product-batch-export">#}
+                            {#                                导出全部商品#}
+                            {#                            </button>#}
+                        </div>
+
+                        <div class="xy-pages-jump">
+                            <button type="button" class="btn btn-primary page-jump">跳转</button>
+                            <input type="text" name="page_number_to_jump" class="form-control">
+                            <p>跳转到：</p>
+
+                            <ul class="pagination pagination-sm no-margin pull-right">
+                                {% if product_list.has_previous %}
+                                    <li><a name="pageChange" data-tag="Previous" class="pageChage prev"
+                                           data-page="{{ product_list.previous_page_number }}">&lt;</a></li>
+                                {% else %}
+                                    <li><a>&lt;</a></li>
+                                {% endif %}
+
+                                {% for p in page_range %}
+                                    {% ifequal p current_page %}
+                                        <li><a class="pageChage current_page" data-page="{{ p }}" href="#"
+                                               title="{{ p }}">{{ p }}</a></li>
+                                    {% else %}
+                                        <li><a class="pageChage" data-page="{{ p }}" href="#"
+                                               title="{{ p }}">{{ p }}</a></li>
+                                    {% endifequal %}
+                                {% endfor %}
+
+                                {% if product_list.has_next %}
+                                    <li><a name="pageChange" class="pageChage next" data-page="{{ p }}"
+                                           data-page-range="{{ page_range }}" data-tag="Next">&gt;</a></li>
+                                {% else %}
+                                    <li><a>&gt;</a></li>
+                                {% endif %}
+                            </ul>
+                            <p>共{{ item_count }}条记录 , 共{{ page_range|last }}页，每页显示：{{ page_size }}条</p>
+                        </div>
+                    </div>
+                </div><!-- /.box -->
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 {% endblock %}
 {% block scripts %}
-	{% load staticfiles %}
+    {% load staticfiles %}
 {% endblock %}

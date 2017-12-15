@@ -1,7 +1,0 @@
-__pycache__
-*.pyc
-migrations
-/media
-*.log
-/static
-lightstart

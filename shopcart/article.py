@@ -28,12 +28,22 @@ def detail(request, id):
         raise Http404
 
     ctx['article'] = article
+
     if article.page_title:
         ctx['page_name'] = article.page_title
     else:
         ctx['page_name'] = article.title
-    ctx['page_key_words'] = article.keywords
-    ctx['page_description'] = article.short_desc
+
+    if article.keywords:
+        ctx['page_key_words'] = article.keywords
+    else:
+        ctx['page_key_words'] = article.title
+
+    if article.seo_desc:
+        ctx['page_description'] = article.seo_desc
+    else:
+        ctx['page_description'] = article.short_desc
+
 
     template = '/article.html'
 
@@ -91,7 +101,7 @@ def get_article_images(request):
             return JsonResponse(result)
 
         img_list_images = article.get_image_list_images()
-        img_list_attachment = article.get_image_list_pdf()
+        # img_list_attachment = article.get_image_list_pdf()
         data = []
         data_attachment = []
         for img in img_list_images:
@@ -104,21 +114,21 @@ def get_article_images(request):
             image['file_name'] = img.file_name
             data.append(image)
 
-        for img in img_list_attachment:
-            image = {}
-            image['image'] = img.image
-            image['thumb'] = img.thumb
-            image['id'] = img.id
-            image['alt'] = img.alt_value
-            image['article_id'] = article.id
-            image['file_name'] = img.file_name
-            data_attachment.append(image)
+        # for img in img_list_attachment:
+        #     image = {}
+        #     image['image'] = img.image
+        #     image['thumb'] = img.thumb
+        #     image['id'] = img.id
+        #     image['alt'] = img.alt_value
+        #     image['article_id'] = article.id
+        #     image['file_name'] = img.file_name
+        #     data_attachment.append(image)
 
 
 
         result['success'] = True
         result['image_list'] = data
-        result['image_attachment'] = data_attachment
+        # result['image_attachment'] = data_attachment
         return JsonResponse(result)
     else:
         raise Http404

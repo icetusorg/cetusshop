@@ -44,10 +44,21 @@ def detail(request, id):
     ctx['pdf'] = product
     ctx['page_key_words'] = product.keywords
     ctx['page_description'] = product.short_desc
+
     if product.page_title:
         ctx['page_name'] = product.page_title
     else:
         ctx['page_name'] = product.name
+
+    if product.keywords:
+        ctx['page_key_words'] = product.keywords
+    else:
+        ctx['page_key_words'] = product.name
+
+    if product.seo_desc:
+        ctx['page_description'] = product.seo_desc
+    else:
+        ctx['page_description'] = product.short_desc
 
     '''价格规则改成判断数量了，这段暂时不要
     price_min = product.price

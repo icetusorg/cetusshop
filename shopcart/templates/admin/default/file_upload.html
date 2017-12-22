@@ -18,7 +18,7 @@
             <form enctype="multipart/form-data" method="POST" action="{{ action_url }}">
                 {% csrf_token %}
                 <div class="tab-pane-item ">
-                    <label>选择文件：</label>
+                    <label>选择文件</label>
                     <div class="tab-pane-item-file">
                         <span>选择文件</span>
                         <input type="file" name="upload" onchange=""/>
@@ -27,7 +27,7 @@
                 </div>
                 {% if item_type == 'attachment' %}
                     <div class="tab-pane-item ">
-                        <label>选择对应图片：</label>
+                        <label>缩略图</label>
                         <div class="tab-pane-item-file">
                             <span>选择图片</span>
                             <input type="file" name="upload2" onchange=""/>
@@ -36,19 +36,19 @@
                     </div>
                 {% endif %}
 
-                {% if item_type == 'article' %}
-                    <div class="tab-pane-item ">
-                        <label>选择对应图片：</label>
-                        <div class="tab-pane-item-file">
-                            <span>选择图片</span>
-                            <input type="file" name="upload2" onchange=""/>
-                            <span id="filename_to_upload2"></span>
-                        </div>
-                    </div>
-                {% endif %}
+{#                {% if item_type == 'article' %}#}
+{#                    <div class="tab-pane-item ">#}
+{#                        <label>选择对应图片</label>#}
+{#                        <div class="tab-pane-item-file">#}
+{#                            <span>选择图片</span>#}
+{#                            <input type="file" name="upload2" onchange=""/>#}
+{#                            <span id="filename_to_upload2"></span>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                {% endif %}#}
 
                 <div class="tab-pane-item">
-                    <label>文件名生成方式：</label>
+                    <label>文件名生成方式</label>
                     <div class="btn-group normal product-button-search">
                         <button type="button" class="btn btn-default inputBtn"><span class="selected-text">原文件名</span>
                         </button>
@@ -76,11 +76,11 @@
                     </div>
                 </div>
                 <div class="tab-pane-item">
-                    <label>自定义文件名：</label>
-                    <input type="text" name="manual_name" value=" ">
+                    <label>自定义文件名</label>
+                    <input type="text" name="manual_name" class="tab-pane-item-alt-input" value=" ">
                 </div>
                 <div class="tab-pane-item">
-                    <label>重名处理：</label>
+                    <label>重名处理</label>
                     <div class="btn-group normal product-button-search">
                         <button type="button" class="btn btn-default inputBtn"><span class="selected-text">覆盖</span>
                         </button>
@@ -104,14 +104,14 @@
                     <input type="hidden" class="tab-pane-item-checkbox" name="is_show_in_product_detail" value="true"/>
                 {% endif %}
 
-                <div class="tab-pane-item">
-                    <label>排序号：</label>
-                    <input type="text" class="tab-pane-item-alt-input" name="sort" value="0"/>
-                </div>
+{#                <div class="tab-pane-item">#}
+{#                    <label>排序号：</label>#}
+{#                    <input type="text" class="tab-pane-item-alt-input" name="sort" value="0"/>#}
+{#                </div>#}
 
                 {% if item_type == 'slider' %}
                     <div class="tab-pane-item">
-                        <label>链接地址：</label>
+                        <label>链接地址</label>
                         <input class="tab-pane-item-alt-input" type="text" name="href" value="http://">
                         <div class="message">
                             <span>?</span>
@@ -128,7 +128,7 @@
 
                 {% if item_type != 'attachment' %}
                     <div class="tab-pane-item">
-                        <label>alt值：</label>
+                        <label>Alt值</label>
                         <input class="tab-pane-item-alt-input" type="text" name="alt_value" value=" ">
                         <div class="message">
                             <span>?</span>

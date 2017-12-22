@@ -55,13 +55,14 @@ class article_busi_category_form(forms.ModelForm):
     page_title = forms.CharField(required=False)
     static_file_name = forms.CharField(required=False)
     short_desc = forms.CharField(required=False)
+    description = forms.CharField(required=False)
     category_template = forms.CharField(required=False)
 
     class Meta:
         model = ArticleBusiCategory
         fields = (
             'name', 'code', 'sort_order', 'keywords', 'page_title', 'static_file_name', 'short_desc',
-            'category_template')
+            'category_template', 'description')
 
 
 # 只验证captcha字段的form
@@ -109,53 +110,51 @@ class product_add_form(forms.ModelForm):
 
 class product_basic_info_form(forms.ModelForm):
     keywords = forms.CharField(required=False)
-    youtube = forms.CharField(required=False)
-    static_file_name = forms.CharField(required=False)
-    page_title = forms.CharField(required=False)
     short_desc = forms.CharField(required=False)
-    type = forms.CharField(required=False)
     sort_order = forms.CharField(required=False)
+    detail_template = forms.CharField(required=False)
 
     class Meta:
         model = Product
         # fields = ('item_number','name','is_publish','price','market_price','quantity','min_order_quantity')
-        fields = ('item_number', 'name', 'youtube', 'keywords', 'page_title', 'static_file_name', 'type', 'short_desc',
-                  'sort_order', 'is_publish')
+        fields = ('item_number', 'name', 'short_desc', 'sort_order', 'is_publish', 'detail_template')
 
 
 class product_detail_info_form(forms.ModelForm):
     market_price = forms.CharField(required=False)
-    detail_template = forms.CharField(required=False)
+    seo_desc = forms.CharField(required=False)
     description = forms.CharField(required=False)
+    static_file_name = forms.CharField(required=False)
+    page_title = forms.CharField(required=False)
 
     class Meta:
         model = Product
         fields = (
-            'market_price', 'quantity', 'min_order_quantity', 'weight', 'cuboid_long', 'cuboid_width', 'cuboid_height',
-            'detail_template', 'description')
+            'market_price', 'page_title', 'static_file_name', 'keywords', 'youtube', 'seo_desc', 'description')
 
 
 class article_basic_info_form(forms.ModelForm):
-    keywords = forms.CharField(required=False)
-    page_title = forms.CharField(required=False)
     sort_order = forms.CharField(required=False)
     short_desc = forms.CharField(required=False)
-    static_file_name = forms.CharField(required=False)
+
     detail_template = forms.CharField(required=False)
     breadcrumbs = forms.CharField(required=False)
 
     class Meta:
         model = Article
-        fields = ('title', 'sort_order', 'keywords', 'page_title', 'short_desc', 'static_file_name', 'breadcrumbs',
-                  'detail_template', 'category')
+        fields = ('title', 'sort_order', 'short_desc', 'breadcrumbs', 'detail_template', 'category',)
 
 
 class article_detail_info_form(forms.ModelForm):
+    keywords = forms.CharField(required=False)
+    page_title = forms.CharField(required=False)
+    static_file_name = forms.CharField(required=False)
     content = forms.CharField(required=False)
+    seo_desc = forms.CharField(required=False)
 
     class Meta:
         model = Product
-        fields = ('content',)
+        fields = ('content', 'keywords', 'page_title', 'static_file_name', 'seo_desc',)
 
 
 class order_shippment_form(forms.ModelForm):
@@ -264,10 +263,11 @@ class recruit_basic_info_form(forms.ModelForm):
     sort_order = forms.CharField(required=False)
     static_file_name = forms.CharField(required=False)
     content = forms.CharField(required=False)
+
     class Meta:
         model = Recruit
-        fields = ('title', 'sort_order', 'keywords', 'content', 'number', 'education', 'site', 'type','static_file_name',)
-
+        fields = (
+            'title', 'sort_order', 'keywords', 'content', 'number', 'education', 'site', 'type', 'static_file_name',)
 
 # class recruit_detail_info_form(forms.ModelForm):
 #     content = forms.CharField(required=False)

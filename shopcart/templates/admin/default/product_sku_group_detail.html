@@ -1,205 +1,220 @@
 {% extends "admin/default/content_base.html" %}
 {% block breadcrumbs %}
-<section class="content-header">
-    <h1>编辑参数组</h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
-        <li class="active"><a href="#">编辑参数组</a></li>
-    </ol>
-</section>
+    <section class="content-header">
+        <h1>SKU管理 <span class="box-subtitle">产品管理</span></h1>
+    </section>
 {% endblock %}
 
 {% block main %}
-{% load i18n %}
-{% load shopcart_extras %}
-<section class="content">
-    <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
-    <div class="row">
-        <div class="col-md-12">
-            <div class="box xy-search">
-                <div class="box-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div>
-                                <form method="POST" id="product_sku_group_detail_form">
-                                    <div class="form-group edit-sku-from-div">
-                                        <label>SKU组名称 :</label>
-                                        <input type="text" name="name" value="{{sku_group.name}}" class="form-control">
-                                    </div>
-                                    <div class="form-group edit-sku-from-div">
-                                        <label>SKU组代码 :</label>
-                                        <input type="text" name="code" value="{{sku_group.code}}" class="form-control">
-                                        <div class="message">
-                                            <span>?</span>
-                                            <div class="ico">
-                                                <div class="text">
-                                                    <h4>描述</h4>
-                                                    <p>用于区分同名的SKU组</p>
+    {% load i18n %}
+    {% load shopcart_extras %}
+    <script>
+        document.body.style.backgroundColor = "#f0f0f0";
+    </script>
+    <section class="content">
+        <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="para-list-content">
+                    <div class="box xy-search sku-content">
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form method="POST" id="product_sku_group_detail_form">
+                                        <h1 class="add-product-h1 para-h1">SKU组列表</h1>
+                                        <div class="form-group edit-sku-from-div">
+                                            <label>SKU组名称</label>
+                                            <input type="text" name="name" value="{{ sku_group.name }}"
+                                                   class="form-control">
+                                        </div>
+                                        <div class="form-group edit-sku-from-div">
+                                            <label>SKU组代码</label>
+                                            <input type="text" name="code" value="{{ sku_group.code }}"
+                                                   class="form-control">
+                                            <div class="message">
+                                                <span>?</span>
+                                                <div class="ico">
+                                                    <div class="text">
+                                                        <h4>描述</h4>
+                                                        <p>用于区分同名的SKU组</p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div class="form-group edit-sku-from-div">
-                                        <label>SKU类型:</label>
-                                        <div class="btn-group normal product-button-search">
-                                            <button type="button" class="btn btn-default inputBtn inputBtn2"><span
-                                                    class="selected-text">{{sku_group.group_type|is_equal:"image"|yesno:"图片,文字"}}</span></button>
-                                            <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn"
-                                                    data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu dropdown-menu2" role="menu" id="selectOption">
-                                                <li class="dropdown-item" data-value="image">图片</li>
-                                                <li class="dropdown-item" data-value="text">文字</li>
-                                            </ul>
-                                            <input type="hidden" class="dropdown-item-input" name="group_type" value="{{sku_group.group_type|is_equal:"image"|yesno:"image,text"}}">
+                                        <div class="form-group edit-sku-from-div">
+                                            <label>选择属性组</label>
+                                            <div class="btn-group normal product-button-search">
+                                                <button type="button" class="btn btn-default inputBtn inputBtn2"><span
+                                                        class="selected-text">{{ sku_group.group_type|is_equal:"image"|yesno:"图片,文字" }}</span>
+                                                </button>
+                                                <button type="button"
+                                                        class="btn btn-foursquare dropdown-toggle selectBtn"
+                                                        data-toggle="dropdown">
+                                                    <span class="caret"></span>
+                                                    <span class="sr-only">Toggle Dropdown</span>
+                                                </button>
+                                                <ul class="dropdown-menu  edit-sku-from-ul" role="menu"
+                                                    id="selectOption">
+                                                    <li class="dropdown-item" data-value="image">图片</li>
+                                                    <li class="dropdown-item" data-value="text">文字</li>
+                                                </ul>
+                                                <input type="hidden" class="dropdown-item-input" name="group_type"
+                                                       value="{{ sku_group.group_type|is_equal:"image"|yesno:"image,text" }}">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group edit-sku-from-div">
-										<input type="hidden" name="sku_group_id" value="{{sku_group.id}}" />
-                                        <button type="button" id="product_sku_group_detail_submit" class="btn btn-primary edit-sku-from-button">保存SKU组</button>
-                                    </div>
-                                </form>
+                                        <div class="form-group edit-sku-from-div">
+                                            <input type="hidden" name="sku_group_id" value="{{ sku_group.id }}"/>
+                                            <button type="button" id="product_sku_group_detail_submit"
+                                                    class="btn btn-primary edit-sku-from-button">保存
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+
                             </div>
                         </div>
-
                     </div>
+                    <div class="box xy-list-product edit-sku-content">
+                        <div class="box-body  edit-sku-from-projuct">
+                            <div class="box-body no-padding">
+                                <table id="edit-sku-from-table" class="table  edit-sku-from-table ">
+                                    <tbody>
+                                    <tr>
+                                        <th>SKU项目名称</th>
+                                        <th>内部代码</th>
+                                        <th>图片</th>
+                                        <th>序号</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    {% for sku in sku_group.attributes.all %}
+                                        <tr>
+                                            <form id="{{ sku.id }}_sku_item_detail_form">
+                                                <td><input type="text" name="name" value="{{ sku.name }}"></td>
+                                                <td><input type="text" name="code" value="{{ sku.code }}"></td>
+                                                <td><img id="img_{{ sku.id }}" src="{{ sku.thumb }}" alt=""></td>
+                                                <td><input type="text" name="position" value="{{ sku.position }}"></td>
+                                                <td><input type="hidden" name="attribute_id" value="{{ sku.id }}"/>
+                                                    <a href="#" class="sku-item-save-btn" data-id="{{ sku.id }}">保存</a>
+                                                    <a
+                                                            href="#" data-type="attribute" data-trigger-name="sku_item"
+                                                            data-sku-id="{{ sku.id }}" data-id="{{ sku_group.id }}"
+                                                            data-extra-info="{{ sku.id }}"
+                                                            class="cd-popup-trigger cd-popup-trigger2">上传</a> <a
+                                                            href="#"
+                                                            data-id="{{ sku.id }}"
+                                                            class="sku-item-delete ">删除</a>
+                                                </td>
+                                            </form>
+                                        </tr>
+                                    {% endfor %}
+
+                                    <tr>
+                                        <form id="sku_item_detail_form">
+                                            <td><input type="text" name="name" value="" placeholder="新增SKU项目名称"/></td>
+                                            <td><input type="text" name="code" value="" placeholder="新增SKU项目代码"/></td>
+                                            <td><img src="" alt=""></td>
+                                            <td><input type="text" name="position" value="" placeholder="序号"/></td>
+                                            <td>
+                                                <input type="hidden" name="attribute_id" value=""/>
+                                                <input type="hidden" name="group_id" value="{{ sku_group.id }}"/>
+                                                <a href="#" class="sku-item-save-btn" data-id="createnew">保存</a> <a
+                                                    href="#"
+                                                    data-type="attribute"
+                                                    data-trigger-name="sku_item"
+                                                    data-id=""
+                                                    class="cd-popup-trigger cd-popup-trigger2">上传</a>
+                                            </td>
+                                        </form>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div><!-- /.box -->
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
-            <div class="box xy-list-product">
-                <div class="box-body  edit-sku-from-projuct">
-                    <h3>SKU项目</h3>
-                    <div class="box-body no-padding">
-                        <table class="table  edit-sku-from-table">
-                            <tbody>
-                            <!--多余th为了调整表格色块-->
-                            <tr>
-                                <th></th>
-                            </tr>
-                            <tr>
-                                <th>SKU项目名称</th>
-                                <th>内部代码</th>
-                                <th>图片</th>
-                                <th>序号</th>
-                                <th>操作</th>
-                            </tr>
-							{%for sku in sku_group.attributes.all%}
-								<tr>
-									<form id="{{sku.id}}_sku_item_detail_form">
-										<td><input type="text" name="name" value="{{sku.name}}"></td>
-										<td><input type="text" name="code" value="{{sku.code}}"></td>
-										<td><img id="img_{{sku.id}}" src="{{sku.thumb}}" alt=""></td>
-										<td><input type="text" name="position" value="{{sku.position}}"></td>
-										<td><input type="hidden" name="attribute_id" value="{{sku.id}}" />
-										<a href="#" class="sku-item-save-btn" data-id="{{sku.id}}">保存</a>  <a href="#" data-type="attribute" data-trigger-name="sku_item" data-sku-id="{{sku.id}}"  data-id="{{sku_group.id}}" data-extra-info="{{sku.id}}" class="cd-popup-trigger cd-popup-trigger2">上传</a> <a href="#" data-id="{{sku.id}}" class="sku-item-delete ">删除</a> </td>
-									</form>
-								</tr>
-							{%endfor%}
-							
-							<tr>
-								<form id="sku_item_detail_form">
-									<td><input type="text" name="name" value="" placeholder="新增SKU项目名称" /></td>
-									<td><input type="text" name="code" value="" placeholder="新增SKU项目代码" /></td>
-									<td><img src="" alt=""></td>
-									<td><input type="text" name="position" value="" placeholder="序号"/></td>
-									<td>
-										<input type="hidden" name="attribute_id" value="" />
-										<input type="hidden" name="group_id" value="{{sku_group.id}}" />
-										<a href="#" class="sku-item-save-btn" data-id="createnew">保存</a> <a href="#" data-type="attribute" data-trigger-name="sku_item"  data-id=""  class="cd-popup-trigger cd-popup-trigger2">上传</a>
-									</td>
-								</form>
-							</tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div><!-- /.box -->
-        </div>
-    </div>
-</section>
-<input type="hidden" id="open_file_upload_trigger" value="" />
-<input type="hidden" id="album_trigger_sku_id" value="" />
-<!--弹出-->
-{% include 'admin/default/album_modal_win.html' %}
-<!-- cd-popup-container -->
+    </section>
+    <input type="hidden" id="open_file_upload_trigger" value=""/>
+    <input type="hidden" id="album_trigger_sku_id" value=""/>
+    <!--弹出-->
+    {% include 'admin/default/album_modal_win.html' %}
+    <!-- cd-popup-container -->
 
 {% endblock %}
 {% block scripts %}
-	{% load staticfiles %}
-	<script src="{% static 'admin/default/js/upload.1.0.2.js' %}" type="text/javascript"></script>
-	<script>
-	function reload_picture_list(extra){
-		//console.log("extra info : " + extra)
-		if (extra!=null){
-			console.log("imgid:" + extra.img_id);
-			console.log("skuid:"+extra.extra_info);
-			var sku_id = extra.extra_info;
-			var id = extra.img_id;
-			
-			
-			var method = "set_sku";
-			var url = "/admin/product-sku-item-set-image/";
-			
-			var postdata = {"sku_id":sku_id,"picture_id":id,"method":method};
-			$.ajax({
-				cache: false,
-				type: "POST",
-				url:url,
-				data:postdata,
-				async: false,
-				error: function(request) {
-					alert("System error");
-				},
-				success: function(data) {
-					if(data.success==true){
-						$("#img_"+sku_id).attr("src",data.thumb);
-						$(".cd-popup").removeClass("is-visible");
-					}			
-				}
-			});
-			
-		}
-		
-	};
-	
-	function album_dblclick_callback(id){
-		var type = 'attribute';
-		var method = "set_sku";
-		var sku_id = $("#album_trigger_sku_id").val();
-		var trigger = $("#open_file_upload_trigger").val();
-		
-		var url = "";
-		if (type = "product"){
-			url = "/admin/product-sku-item-set-image/";
-		}
-		
-		var postdata = {"sku_id":sku_id,"picture_id":id,"method":method};
-		$.ajax({
-			cache: false,
-			type: "POST",
-			url:url,
-			data:postdata,
-			async: false,
-			error: function(request) {
-				alert("System error");
-			},
-			success: function(data) {
-				if(data.success==true){
+    {% load staticfiles %}
+    <script src="{% static 'admin/default/js/upload.1.0.2.js' %}" type="text/javascript"></script>
+    <script>
+        function reload_picture_list(extra) {
+            //console.log("extra info : " + extra)
+            if (extra != null) {
+                console.log("imgid:" + extra.img_id);
+                console.log("skuid:" + extra.extra_info);
+                var sku_id = extra.extra_info;
+                var id = extra.img_id;
 
-					if (trigger=='sku_item'){
-						$("#img_"+sku_id).attr("src",data.thumb);
-					}
-					$(".cd-popup").removeClass("is-visible");
-				}			
-			}
-		});
-	
-		
-	};
-	
-	</script>
+
+                var method = "set_sku";
+                var url = "/admin/product-sku-item-set-image/";
+
+                var postdata = {"sku_id": sku_id, "picture_id": id, "method": method};
+                $.ajax({
+                    cache: false,
+                    type: "POST",
+                    url: url,
+                    data: postdata,
+                    async: false,
+                    error: function (request) {
+                        alert("System error");
+                    },
+                    success: function (data) {
+                        if (data.success == true) {
+                            $("#img_" + sku_id).attr("src", data.thumb);
+                            $(".cd-popup").removeClass("is-visible");
+                        }
+                    }
+                });
+
+            }
+
+        };
+
+        function album_dblclick_callback(id) {
+            var type = 'attribute';
+            var method = "set_sku";
+            var sku_id = $("#album_trigger_sku_id").val();
+            var trigger = $("#open_file_upload_trigger").val();
+
+            var url = "";
+            if (type = "product") {
+                url = "/admin/product-sku-item-set-image/";
+            }
+
+            var postdata = {"sku_id": sku_id, "picture_id": id, "method": method};
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: url,
+                data: postdata,
+                async: false,
+                error: function (request) {
+                    alert("System error");
+                },
+                success: function (data) {
+                    if (data.success == true) {
+
+                        if (trigger == 'sku_item') {
+                            $("#img_" + sku_id).attr("src", data.thumb);
+                        }
+                        $(".cd-popup").removeClass("is-visible");
+                    }
+                }
+            });
+
+
+        };
+
+    </script>
 {% endblock %}

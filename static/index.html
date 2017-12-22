@@ -1,0 +1,88 @@
+﻿{% extends "client/cassie/base.html" %}
+{% block main %}
+{% load i18n %}
+{% load staticfiles %}
+    <div class="home main">
+        <div class="container">
+            <div class="row">
+                <!--<div class="sliders">-->
+                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#myCarousel" data-slide-to="1"></li>
+                            <li data-target="#myCarousel" data-slide-to="2"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <img src="http://www.cassiehairbrush.com/media/index/slider1.jpg" style="width: 100%" data-src=" " alt="First slide">
+                            </div>
+                            <div class="item">
+                                <img src="http://www.cassiehairbrush.com/media/index/slider2.jpg" style="width: 100%" data-src="" alt="Second slide">
+                            </div>
+                            <div class="item">
+                                <img src="http://www.cassiehairbrush.com/media/index/slider3.jpg" style="width: 100%" data-src="" alt="Third slide">
+                            </div>
+                        </div>
+                        <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left">
+	</span></a><a class="right carousel-control" href="#myCarousel" data-slide="next"><span
+                            class="glyphicon glyphicon-chevron-right"></span></a>
+                    </div>
+                </div>
+            </div>
+        <!--</div>-->
+        <div class="container">
+        <div class="row home-products">
+            <h1>Better Hairbrush</h1>
+            <p class="home-product-des">Make a chance for your hair as well as your pocket</p>
+            <div class="row home-products-main">
+            <div class="col-md-3 col-xs-6">
+                    <a href="http://www.cassiehairbrush.com/Paddle-Brush-for-long-hair.html"><img src="http://www.cassiehairbrush.com/media/product/4/Detangling-Paddle-Brush-For-Hair-Extension-Front-View.jpg"></a>
+                   <h2><a href="http://www.cassiehairbrush.com/Paddle-Brush-for-long-hair.html">Air-cushioned paddle detangling hair brush for hair extension</a></h2>
+                   <p>$9.9</p>
+            </div>
+            <div class="col-md-3 col-xs-6">
+                    <a  href="http://www.cassiehairbrush.com/Professional-Colorful-massage-hair-brush.html"><img src="http://www.cassiehairbrush.com/media/product/7/Pink-Blue-Detangling-Massage-Hair-Brush.jpg"></a>
+                    <h2><a href="http://www.cassiehairbrush.com/Professional-Colorful-massage-hair-brush.html">Professional Colorful massage hair brush</a></h2>
+                    <p>$9.9</p>
+            </div>
+			<div class="col-md-3 col-xs-6">
+                    <a href="http://www.cassiehairbrush.com/No-Tangle-Hairbrush-ball.html"><img src="http://www.cassiehairbrush.com/media/product/1/Top-quality-no-tangle-360-hair-brush-ball.jpg"></a>
+                    <h2><a href="http://www.cassiehairbrush.com/No-Tangle-Hairbrush-ball.html">Top-quality no tangle 360° hair brush ball</a></h2>
+                    <p>$9.9</p>
+            </div>
+            <div class="col-md-3 col-xs-6">
+                    <a href="http://www.cassiehairbrush.com/Plastic-Wet-Brush.html"><img src="http://www.cassiehairbrush.com/media/product/2/Plastic-Wet-Purple-Hair-Brush-Front-View.jpg"></a>
+                    <h2><a href="http://www.cassiehairbrush.com/Plastic-Wet-Brush.html">Top sellers plastic detangling hair brush wet brush</a></h2>
+                    <p>$9.9</p>
+            </div>
+            </div>
+            </div>
+    </div>
+    <div class="container">
+        <div class="row">
+        <div class="row">
+            <div  class="home-about">
+            <div class="pinte col-md-4">
+                <a data-pin-do="embedUser" data-pin-board-width="370" data-pin-scale-height="190" data-pin-scale-width="80" href="https://www.pinterest.com/cassiehairbrush/"></a>
+            </div>
+            <a href="#" class="col-md-8 col-xs-8"><img src="http://www.cassiehairbrush.com/media/index/home-about-right.jpg"></a>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="container">
+        <div class="row">
+        <div class="row home-adv">
+
+                <div class="col-md-4 col-xs-4"><h4>Why Choose Us</h4><a href="/about_us/why-become-awards.html"><img src="http://www.cassiehairbrush.com/media/index/Why-Choose-Us.jpg"></a></div>
+                <div class="col-md-4 col-xs-4"><h4>Become A Dealer</h4><a href="/about_us/why-become-awards.html"><img src="http://www.cassiehairbrush.com/media/index/Become-a-Dealer.jpg"></a></div>
+                <div class="col-md-4 col-xs-4"><h4>Awards</h4><a href="/about_us/why-become-awards.html"><img src="http://www.cassiehairbrush.com/media/index/Awards.jpg"></a></div>
+        </div>
+        </div>
+    </div>
+    </div>
+{%endblock%}    
+{% block scripts %}
+	{% load staticfiles %}
+{% endblock %}

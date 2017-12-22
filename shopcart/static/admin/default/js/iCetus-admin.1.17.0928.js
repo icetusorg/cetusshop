@@ -430,26 +430,81 @@ jQuery(".article-batch-oper").click(function (e) {
     url = url + method + "/";
 
 
-    $.ajax({
-        cache: false,
-        type: "POST",
-        url: url,
-        data: $("#article_batch_form").serialize(),
-        async: false,
-        error: function (request) {
-            alert("System error");
-        },
-        success: function (data) {
-            $("#infoMessage").html(data.message);
-            if (data.success == true) {
-                $('#myModal').on('hidden.bs.modal', function (e) {
-                    var newurl = location.href;
-                    location.href = newurl;
-                })
+    if (method == 'sort') {
+        console.log("进入排序");
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: url,
+            data: $("#article_batch_form").serialize(),
+            async: false,
+            error: function (request) {
+                alert("System error");
+            },
+            success: function (data) {
+                $("#infoMessage").html(data.message);
+                if (data.success == true) {
+                    $('#myModal').on('hidden.bs.modal', function (e) {
+                        var newurl = location.href;
+                        location.href = newurl;
+                    })
+                }
+                $("#myModal").modal('toggle');
             }
-            $("#myModal").modal('toggle');
+        });
+    }
+
+    if (method == 'delete') {
+        console.log("进入删除");
+        var $myform = $("<form>", {
+            id: 'article_batch_form',
+        });
+        var $input = $("<input>", {
+            name: 'method',
+            value: 'delete',
+        }).appendTo($myform);
+
+        //判断来自单条删除的还是批量的删除 
+        var article_id = $(this).data("article-id");
+
+        if ("batch" == article_id) {
+            //批量的
+            $("#main-content-table").find("input[type='checkbox']:checked").each(function () {
+                var $input = $("<input>", {
+                    name: 'is_oper',
+                    value: $(this).val(),
+                }).appendTo($myform);
+            });
+
+        } else {
+            var $input = $("<input>", {
+                name: 'is_oper',
+                value: article_id,
+            }).appendTo($myform);
         }
-    });
+
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: url,
+            data: $myform.serialize(),
+            async: false,
+            error: function (request) {
+                alert("System error");
+            },
+            success: function (data) {
+                $("#infoMessage").html(data.message);
+                if (data.success == true) {
+                    $('#myModal').on('hidden.bs.modal', function (e) {
+                        location.reload(true);
+                    })
+                }
+                $("#myModal").modal('toggle');
+            }
+        });
+    }
+
+
 });
 
 
@@ -478,7 +533,30 @@ jQuery("#article-basic-info-submit-btn").click(function (event) {
         }
     });
 });
+jQuery("#article-basic-info-submit-btn-title").click(function (event) {
+    event.preventDefault();
+    var url = "/admin/article-edit/";
 
+    $.ajax({
+        cache: false,
+        type: "POST",
+        url: url,
+        data: $("#article-basic-info-form").serialize(),
+        async: false,
+        error: function (request) {
+            alert("System error");
+        },
+        success: function (data) {
+            $("#infoMessage").html(data.message);
+            if (data.success == true) {
+                $('#myModal').on('hidden.bs.modal', function (e) {
+                    location.href = url + "?id=" + data.data.article_id;
+                })
+            }
+            $("#myModal").modal('toggle');
+        }
+    });
+});
 
 //文章详细信息提交
 jQuery("#article-detail-info-submit-btn").click(function (event) {
@@ -1902,7 +1980,6 @@ jQuery(".product-batch-delete").click(function (e) {
 
 jQuery("#product-basic-info-submit-btn").click(function (e) {
     var url = "/admin/product-edit/";
-    //由于使用了ckeditor，直接获取文本域的值，会丢失修改部分的信息，因此要先用api获取修改以后的值填到文本域中
 
     $.ajax({
         cache: false,
@@ -1924,7 +2001,29 @@ jQuery("#product-basic-info-submit-btn").click(function (e) {
         }
     });
 });
+jQuery("#product-basic-info-submit-btn-title").click(function (e) {
+    var url = "/admin/product-edit/";
 
+    $.ajax({
+        cache: false,
+        type: "POST",
+        url: url,
+        data: $("#product-basic-info-form").serialize(),
+        async: false,
+        error: function (request) {
+            alert("System error");
+        },
+        success: function (data) {
+            $("#infoMessage").html(data.message);
+            if (data.success == true) {
+                $('#myModal').on('hidden.bs.modal', function (e) {
+                    location.href = url + "?id=" + data.data.product_id;
+                })
+            }
+            $("#myModal").modal('toggle');
+        }
+    });
+});
 
 jQuery("#product-detail-info-submit-btn").click(function (e) {
     var url = "/admin/product-detail-manage/";

@@ -808,6 +808,12 @@ def set_image(request):
             product.thumb = picture.thumb
             product.save()
 
+            # 产品小图排序
+
+            Product_Images.objects.filter(product_id=product_id).update(sort=0)  # 先把所有图的sort设为0
+
+            Product_Images.objects.filter(id=picture_id).update(sort=-1)  # 需要设为首图的Sort设为1
+
             result['success'] = True
             result['message'] = '商品图片信息保存成功'
             return JsonResponse(result)
@@ -837,7 +843,7 @@ def set_image(request):
 
 
         elif method == 'delete-attachment':
-            logger.info('进行附件的删除' )
+            logger.info('进行附件的删除')
             picture_id = request.POST.get('picture_id', '')
             picture = None
 
@@ -1002,26 +1008,13 @@ def product_basic_edit(request):
             logger.info('New product to store.')
 
         if form.is_valid():
-            # 判断自定义文件名是否重复
-            url = form.cleaned_data['static_file_name']
-            if url:
-                try:
-                    p = Product.objects.get(static_file_name=url)
-                except Exception as err:
-                    p = None
-
-                if p and p != product:
-                    # 能找到，说明重名了
-                    result['success'] = False
-                    result['message'] = '自定义URL与%s商品重复！' % p.name
-                    return JsonResponse(result)
 
             product = form.save()
             # 处理商品分段价格
-            if is_new:
-                logger.debug('New product.Create price list.')
-                for n in [0, 1, 2]:
-                    p = ProductPrice.objects.create(product=product, sort_order=n, price=0.0, quantity=0)
+            # if is_new:
+            #     logger.debug('New product.Create price list.')
+            #     for n in [0, 1, 2]:
+            #         p = ProductPrice.objects.create(product=product, sort_order=n, price=0.0, quantity=0)
 
             # 处理商品归属的分类
             category_id_list = request.POST.getlist('category_check')
@@ -1058,33 +1051,50 @@ def product_detail_info_manage(request):
     result['message'] = '商品详细信息保存失败'
     if request.method == 'POST':
         try:
+            logger.info('进入产品上传')
             product = Product.objects.get(id=request.POST['id'])
             form = product_detail_info_form(request.POST, instance=product)
+            logger.info('FORM验证完毕')
         except Exception as err:
             logger.error('Error: %s' % err)
             raise Http404
 
         if form.is_valid():
+            # 判断自定义文件名是否重复
+            url = form.cleaned_data['static_file_name']
+            if url:
+                try:
+                    p = Product.objects.get(static_file_name=url)
+                except Exception as err:
+                    p = None
+
+                if p and p != product:
+                    # 能找到，说明重名了
+                    result['success'] = False
+                    result['message'] = '自定义URL与%s商品重复！' % p.name
+                    return JsonResponse(result)
+
             product = form.save()
+            logger.info('数据库保存完毕')
 
             # 处理商品分段价格
-            if not product.prices.all():  # 兼容老版本，可能有存量商品没有加过存量价格
-                logger.debug('Create price list.')
-                for n in [0, 1, 2]:
-                    p = ProductPrice.objects.create(product=product, sort_order=n, price=0.0, quantity=0)
+            # if not product.prices.all():  # 兼容老版本，可能有存量商品没有加过存量价格
+            #     logger.debug('Create price list.')
+            #     for n in [0, 1, 2]:
+            #         p = ProductPrice.objects.create(product=product, sort_order=n, price=0.0, quantity=0)
 
             # 遍历POST中的参数，找出quantity_leve 和 price_level开头的参数
-            for n in [0, 1, 2]:
-                quantity = request.POST['quantity_level_%s' % n]
-                price = request.POST['price_level_%s' % n]
-                try:
-                    p = ProductPrice.objects.get(product=product, sort_order=n)
-                    p.quantity = quantity
-                    p.price = price
-                    p.save()
-                except Exception as err:
-                    logger.error('Can not find price list in product [%s]. \n Error Message:%s' % (product.id, err))
-                    return JsonResponse(result)
+            # for n in [0, 1, 2]:
+            #     quantity = request.POST['quantity_level_%s' % n]
+            #     price = request.POST['price_level_%s' % n]
+            #     try:
+            #         p = ProductPrice.objects.get(product=product, sort_order=n)
+            #         p.quantity = quantity
+            #         p.price = price
+            #         p.save()
+            #     except Exception as err:
+            #         logger.error('Can not find price list in product [%s]. \n Error Message:%s' % (product.id, err))
+            #         return JsonResponse(result)
 
             result['success'] = True
             result['message'] = '商品详细信息保存成功'

@@ -44,8 +44,11 @@ def set_image(request):
                 logger.info(
                     'Can not find article [%s] or picture [%s]. \n Error Message: %s' % (article_id, picture_id, err))
 
-            article.image = picture.image
+            article.image = picture.thumb
             article.save()
+            Album.objects.filter(item_id=article_id).update(sort=0)  # 先把所有图的sort设为0
+
+            Album.objects.filter(id=picture_id).update(sort=-1)  # 需要设为首图的Sort设为1
 
             result['success'] = True
             result['message'] = '文章图片信息保存成功'
@@ -217,20 +220,6 @@ def article_basic_edit(request):
             logger.info('New article to store.')
 
         if form.is_valid():
-            # 判断自定义文件名是否重复
-            url = form.cleaned_data['static_file_name']
-            if url:
-                try:
-                    a = Article.objects.get(static_file_name=url)
-                except Exception as err:
-                    a = None
-
-                if a and a != article:
-                    # 能找到，说明重名了
-                    result['success'] = False
-                    result['message'] = '自定义URL与%s商品重复！' % a.title
-                    return JsonResponse(result)
-
             article = form.save()
 
             # 只有属于博客类的文章才需要保存分类
@@ -278,6 +267,19 @@ def article_detail_info_manage(request):
             raise Http404
 
         if form.is_valid():
+            # 判断自定义文件名是否重复
+            url = form.cleaned_data['static_file_name']
+            if url:
+                try:
+                    a = Article.objects.get(static_file_name=url)
+                except Exception as err:
+                    a = None
+
+                if a and a != article:
+                    # 能找到，说明重名了
+                    result['success'] = False
+                    result['message'] = '自定义URL与%s商品重复！' % a.title
+                    return JsonResponse(result)
             article = form.save()
             logger.debug('article:%s' % article.short_desc)
             result['success'] = True

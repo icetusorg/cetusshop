@@ -16,14 +16,14 @@
         <div class="detail-main">
             <div id="preview" class="spec-preview">
       <span class="jqzoom">
-        <img id="product-big-image" jqimg="{{ product.image }}" alt="" src="{{ product.image }}" class="cart-move-img"/>      </span>
+        <img id="product-big-image" jqimg="{{product.get_main_image.get_image_url}}" alt="{{image.alt_value}}" src="{{product.get_main_image.get_image_url}}" class="cart-move-img"/>      </span>
             </div>
             <div class="spec-scroll">
                 <div class="items">
                     <ul>
-                        {% for image in product.get_main_image_list %}
-                            <li><img alt="" bimg="{{ image.image }}" src="{{ image.image }}"
-                                     onMouseMove="preview(this);"></li>
+                        {% for image in product.get_product_detail_images %}
+                            <li><img alt="{{image.alt_value}}" bimg="{{image.get_image_url}}" src="{{image.get_image_url}}"
+                                     onMouseMove="preview(this);" ></li>
                         {% endfor %}
                     </ul>
                 </div>

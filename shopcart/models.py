@@ -214,7 +214,7 @@ class Category(models.Model):
 class Product(models.Model):
     item_number = models.CharField(max_length=100, default='', db_index=True, blank=True, verbose_name='商品编号')
     name = models.CharField(max_length=100, default='', db_index=True, verbose_name='商品名称')
-    type = models.CharField(max_length=20, default='B2C', verbose_name='商品类型')
+    type = models.CharField(max_length=20, default='B2B+B2C', verbose_name='商品类型')
     click_count = models.IntegerField(default=0, verbose_name='浏览次数')
     quantity = models.IntegerField(default=0, verbose_name='库存数量')
     warn_quantity = models.IntegerField(default=0, verbose_name='预警库存')
@@ -223,6 +223,7 @@ class Product(models.Model):
     page_title = models.CharField(max_length=100, blank=True, default='', verbose_name='网页标题')
     keywords = models.CharField(max_length=254, default='', blank=True, verbose_name='关键字')
     short_desc = models.CharField(max_length=1024, default='', blank=True, verbose_name='简略描述')
+    seo_desc = models.CharField(max_length=1024, default='', blank=True, verbose_name='SEO描述')
     description = models.TextField(blank=True, verbose_name='详细描述')
     youtube = models.CharField(max_length=1024, default='', blank=True, verbose_name='youtube视频地址')
     thumb = models.URLField(verbose_name='主缩略图')
@@ -241,6 +242,8 @@ class Product(models.Model):
     cuboid_long = models.FloatField(default=0.0, verbose_name='体积_长_毫米')
     cuboid_width = models.FloatField(default=0.0, verbose_name='体积_宽_毫米')
     cuboid_height = models.FloatField(default=0.0, verbose_name='体积_高_毫米')
+
+
 
     create_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now=True)
@@ -1089,6 +1092,7 @@ class Article(models.Model):
     keywords = models.CharField(max_length=254, null=True, blank=True, verbose_name='关键字')
     page_title = models.CharField(max_length=100, blank=True, default='', verbose_name='网页标题')
     short_desc = models.CharField(max_length=1024, default='', blank=True, verbose_name='简略描述')
+    seo_desc = models.CharField(max_length=1024, default='', blank=True, verbose_name='描述')
     static_file_name = models.CharField(max_length=254, db_index=True, null=True, blank=True, verbose_name='静态文件名')
     folder = models.CharField(max_length=254, null=True, blank=True, verbose_name='静态文件目录')
     breadcrumbs = models.CharField(max_length=254, null=True, blank=True, verbose_name='导航位置')
@@ -1146,7 +1150,7 @@ class Article(models.Model):
         return new_images_list
 
     def get_image_list_images(self):
-        image_list = Album.objects.filter(item_type='article', item_id=self.id)
+        image_list = Album.objects.filter(item_type='article', item_id=self.id).order_by('sort')
 
         main_image = None
         logger.info(image_list)

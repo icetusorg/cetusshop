@@ -1,0 +1,59 @@
+{% extends "client/cassie/base.html" %}
+{% block head_extra %}
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'client/cassie/css/cart.css' %}" type="text/css"/>
+{% endblock %}
+{% block main %}
+    {% load i18n %}
+    <div class="carts main">
+        <div class="container">
+            <div class="row">
+                <div class="row">
+                    <div class="col-md-3 col-xs-12">
+                        {% include 'client/cassie/side_nav.html' %}
+                    </div>
+                    <div class="col-md-9 col-xs-12 order-view">
+                        <h2>My Inquiry</h2>
+                        <div class="carts-main">
+                            <div class="carts-title">
+                                <div class="carts-goods-img"></div>
+                                <div class="carts-goods-name">Product Name</div>
+                                <div class="carts-goods-qty">Qty</div>
+                                <div class="carts-goods-subt">SKU</div>
+                                <div class="carts-goods-subt">item_number</div>
+                            </div>
+                            <!--购物车产品列表，“carts-item”为每一个产品-->
+                            <div class="carts-list">
+                                <!-- 商品一 -->
+
+                                {% for op in inquiry.Inquiry_Products.all %}
+                                    <div class="carts-item">
+                                        <div class="carts-goods-img">
+                                            <a href="/product/{{ op.product_id }}/">
+                                                <img src="{{ op.thumb }}" alt="{{ op.name }}">
+                                            </a>
+                                        </div>
+                                        <div class="carts-goods-name">
+                                            <div>
+                                                <a href="/product/{{ op.product_id }}/">{{ op.name }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="carts-goods-qty">
+                                            <div class="quy-item">{{ op.quantity }}</div>
+                                        </div>
+                                        <div class="carts-goods-sub">{{ op.product_attribute_name }}</div>
+                                        <div class="carts-goods-sub">{{ op.item_number }}</div>
+                                    </div>
+                                {% endfor %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    {% load staticfiles %}
+{% endblock %}

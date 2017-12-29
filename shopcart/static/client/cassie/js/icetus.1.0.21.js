@@ -136,7 +136,7 @@ $(document).ready(function () {
 
 
     function imycartAddProductToCart(product_id, product_attribute_id, quantity, callback, triggerControl, extraInfo) {
-        var url = "/cart/add";
+        var url = "/quote/add";
         var cart = new Object();
         cart.product_id = product_id;
         cart.product_attribute_id = product_attribute_id;
@@ -148,7 +148,7 @@ $(document).ready(function () {
 
     function imycartAddProductToCartCallBack(result, triggerControl, extraInfo) {
         if (result.success == true) {
-            location.href = "/cart/show/";
+            location.href = "/quote/show/";
             //$.addcartFlyEfect(triggerControl);
         } else {
             $("#infoMessage").html(result.message);
@@ -167,7 +167,7 @@ $(document).ready(function () {
 
 //鼠标滑过顶部的购物车数量时的事件
     jQuery(".top-cart-num-link").hover(function (e) {
-        var url = '/cart/show/';
+        var url = '/quote/show/';
         var triggerControl = $(this);
         imycartAjaxCallWithCallback(url, null, imycartAjaxGetCartInfoCallback, triggerControl, null);
     });
@@ -185,6 +185,33 @@ $(document).ready(function () {
         event.preventDefault();
         var url = '/inquiry/add/';
 
+        $.ajax({
+            beforeSend: function (xhr, settings) {
+                console.log("Start to set csrftoken.......");
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    console.log("Set the csrf token successful.");
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            },
+            cache: false,
+            type: "POST",
+            url: url,
+            data: $('#inquiryForm').serialize(),
+            async: false,
+            error: function (request) {
+                alert('Sorry.An error occured.Please try again.');
+            },
+            success: function (result) {
+                $("#infoMessage").html(result.message);
+                $("#myModal").modal('toggle');
+            }
+        });
+    });
+
+    // 提交购物车询盘
+    jQuery("#quote-submit").click(function (event) {
+        event.preventDefault();
+        var url = '/quote/add/';
         $.ajax({
             beforeSend: function (xhr, settings) {
                 console.log("Start to set csrftoken.......");
@@ -378,7 +405,7 @@ $(document).ready(function () {
     });
 
     jQuery(".return-to-cart").click(function () {
-        var url = "/cart/show";
+        var url = "/quote/show";
         location.href = url;
     });
     /***

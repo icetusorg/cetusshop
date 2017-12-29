@@ -1,7 +1,7 @@
 {% extends "admin/default/content_base.html" %}
 {% block breadcrumbs %}
     <section class="content-header">
-        <h1>文章管理 <span class="box-subtitle">{{ is_blog|yesno:"文章管理,页面管理" }}</span></h1>
+        <h1>文章管理 <span class="box-subtitle">文章管理</span></h1>
     </section>
 {% endblock %}
 
@@ -40,10 +40,6 @@
                                             <input type="hidden" class="dropdown-item-input" name="query_item"
                                                    value="{{ query_item|default:"title" }}">
                                         </div>
-                                        <div class="form-group">
-                                            <input type="text" name="item_value" value="{{ item_value }}"
-                                                   class="form-control product-list-search-input">
-                                        </div>
 
                                         <div class="btn-group normal product-button-search">
                                             <button type="button" class="btn btn-default inputBtn"><span
@@ -64,6 +60,13 @@
                                             <input type="hidden" class="dropdown-item-input" name="query_busi_category"
                                                    value="{{ query_busi_category_id|default:"" }}">
                                         </div>
+
+                                        <div class="form-group">
+                                            <input type="text" name="item_value" value="{{ item_value }}"
+                                                   class="form-control product-list-search-input">
+                                        </div>
+
+
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-primary">查询</button>
                                         </div>

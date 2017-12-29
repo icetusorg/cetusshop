@@ -26,7 +26,7 @@
             <div class="add-content active" id="tag_basic_info">
                 <div class="product-content">
                     <form id="article-basic-info-form">
-                        <div class="item item2">
+                        <div class="item product-btn-item">
                             <label>{{ is_blog|yesno:"文章名称,页面名称" }}<span class="point">*</span></label>
                             <input type="text" value="{{ article.title }}" name="title" class="form-control ">
                             <button type="button" id="article-basic-info-submit-btn-title"
@@ -68,16 +68,20 @@
                                     <input class="dropdown-item-input" type="hidden" name="busi_category"
                                            value="{{ article.busi_category.id }}">
                                 </div>
-                                <a class="article-add-btn" href="/admin/article-busi-category-list/"
-                                   target="_blank">添加文章分类</a>
+                                <a class="article-add-btn" href="/admin/article-busi-category-list/">添加文章分类</a>
                             </div>
                         {% endif %}
-                        <div class="item item-area item2"><label>简要描述</label><textarea type="text" name="short_desc"
-                                                                                       class="form-control">{{ article.short_desc|default:"" }}</textarea>
+                        <div class="item item-area article-short-desc"><label>简要描述</label><textarea type="text"
+                                                                                                    name="short_desc"
+                                                                                                    class="form-control">{{ article.short_desc|default:"" }}</textarea>
                         </div>
+
+                        {% if is_blog %}
                         <div class="item article-sort "><label>排序号</label><input type="text" name="sort_order"
                                                                                  value="{{ article.sort_order }}"
                                                                                  class="form-control"></div>
+                        {% endif %}
+
                         <div class="item">
                             <label>自定义模板</label>
 
@@ -105,7 +109,8 @@
                             <input type="hidden" name="breadcrumbs" value=""/>
                             <input type="hidden" name="id" value="{{ article.id }}"/>
                             <input type="hidden" name="category" value="{{ is_blog|yesno:"0,20" }}"/>
-                            <button type="button" id="article-basic-info-submit-btn" class="btn btn-primary addPSubmit article-content-add-btn">
+                            <button type="button" id="article-basic-info-submit-btn"
+                                    class="btn btn-primary addPSubmit article-content-add-btn">
                                 保存
                             </button>
                         </div>

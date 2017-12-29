@@ -1,0 +1,139 @@
+{% extends "client/cassie/base.html" %}
+{% block head_extra %}
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'client/cassie/css/cart.css' %}" type="text/css"/>
+{% endblock %}
+{% block main %}
+    {% load i18n %}
+    <div class="carts main">
+        <div class="container">
+            <div class="row">
+                <form id="inquiryForm" action="/quote/add/" method="POST" class="form-horizontal">
+                    <h1>quote Cart</h1>
+                    <div class="row">
+                        <div class="col-md-12 col-xs-12 ">
+                            <div class="carts-main">
+                                <div class="carts-title">
+                                    <div class="carts-goods-img"></div>
+                                    <div class="carts-goods-name">{% trans 'Product Name' %}</div>
+                                    <div class="carts-goods-pricet">{% trans 'Unit Price' %}</div>
+                                    <div class="carts-goods-qty">{% trans 'Quantity' %}</div>
+                                    <div class="carts-goods-sub">{% trans 'Item Number' %}</div>
+                                    <div class="carts-goods-move"></div>
+                                </div>
+                                <!--购物车产品列表，“carts-item”为每一个产品-->
+                                <div class="carts-list">
+                                    {% for cart_product in cart.cart_products.all %}
+                                        <div class="carts-item" id="goods1">
+                                            <input name="cart_product_id" type="hidden" value="{{ cart_product.id }}"/>
+                                            <div class="carts-goods-img">
+                                                <a href="{{ cart_product.product.get_url }}">
+                                                    {% if cart_product.product_attribute.image.thumb %}
+                                                        <img src="{{ cart_product.product_attribute.image.thumb }}"
+                                                             alt="{{ cart_product.product.name }}">
+                                                    {% else %}
+                                                        <img src="{{ cart_product.product.thumb }}"
+                                                             alt="{{ cart_product.product.name }}">
+                                                    {% endif %}
+                                                </a>
+                                            </div>
+                                            <div class="carts-goods-name">
+                                                <div>
+                                                    <a href="{{ cart_product.product.get_url }}">{{ cart_product.product.name }}</a>
+                                                </div>
+                                                <p>{{ cart_product.get_short_product_attr }}</p>
+                                            </div>
+                                            <div class="carts-goods-price price1"
+                                                 id="product-price-{{ cart_product.id }}">
+                                                ${{ cart_product.get_product_price|floatformat:"2" }}</div>
+                                            <div class="carts-goods-qty">
+                                                <div class="quy-item">
+                                                    <!-- 下面两个a中的data和“input的id”对应起来即可-->
+                                                    <a class="decrease qty-decrease"
+                                                       data-cartid="{{ cart_product.id }}">-</a>
+                                                    <!-- 下面input中的price属性值和价格中的类名price是对应的，并且和小计中的id值是对应的-->
+                                                    <input maxlength="999999" class="cart-qty"
+                                                           data-cartid="{{ cart_product.id }}"
+                                                           id="cartqty-{{ cart_product.id }}" price="price1" type="text"
+                                                           value="{{ cart_product.quantity }}" autocomplete="off">
+                                                    <a class="increase qty-increase"
+                                                       data-cartid="{{ cart_product.id }}">+</a>
+                                                </div>
+                                            </div>
+                                            <div class="carts-goods-sub">{{ cart_product.get_item_number }}</div>
+                                            <div class="carts-goods-move">
+                                                <!-- 下面的data和上面“class=‘carts-item’中的id”对应起来即可-->
+                                                <a href="#" class="remove-item" title="Delete"
+                                                   data-cartid="{{ cart_product.id }}"><span
+                                                        class="glyphicon glyphicon-remove cartmoveico"
+                                                        data="goods1"></span></a>
+
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="container">
+                                    <h2>Send your message to this supplier</h2>
+                                    <div class="contact-supplier-email">
+                                        <span class="contact-supplier-span"><i>*</i>Name:</span>
+                                        <input name="name" placeholder="name" class="" type="text"
+                                               value="">
+                                    </div>
+                                    <div class="contact-supplier-email">
+                                        <span class="contact-supplier-span"><i>*</i>E-mail:</span>
+                                        <input name="email" placeholder="Email Address" class="" type="text"
+                                               value="">
+                                    </div>
+                                    <div class="contact-supplier-message">
+                                        <span class="contact-supplier-span"><i>*</i>Message:  </span>
+                                        <textarea name="message"
+                                                  placeholder="Enter your inquiry details such as product name , color, size, MOQ, FOB, etc."
+                                                  id="message"></textarea>
+                                        <p>Your message must be between 20-8000 characters</p>
+                                    </div>
+                                    <img style="cursor: pointer" id="check_code_img" src="/create_code/"
+                                         onclick="refresh_check_code(this)">
+                                    <input type="text" name="code">
+
+                                    {% if user.id %}
+                                        <input type="hidden" name="user" value="{{ user.id }}">
+                                    {% else %}
+                                        <input type="hidden" name="user" value="1">
+                                    {% endif %}
+
+                                    <button class="contact-supplier-button" type="button" id="quote-submit">
+                                        Send
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+                <div class="carts-end">
+                    <div class="carts-continue"><a href="/product/"
+                                                   class="delay">{% trans 'Continue Shopping' %}</a>
+                    </div>
+                    <div class="carts-clear"><a id="empty_cart_button" data-cartid='{{ cart.id }}'
+                                                class="delay carts-clear">{% trans 'Clear Cart' %}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        $("#checkOutLink").click(function (e) {
+            var form_id = $(this).data("form-id");
+            $("#" + form_id).submit();
+        });
+    </script>
+    <script>
+        function refresh_check_code(ths) {
+            ths.src += '?';
+            //src后面加问好会自动刷新验证码img的src
+        }
+    </script>
+{% endblock %}

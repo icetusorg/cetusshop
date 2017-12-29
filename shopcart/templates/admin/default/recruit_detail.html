@@ -15,6 +15,9 @@
     {% load i18n %}
     {% load staticfiles %}
     {% load shopcart_extras %}
+    <script>
+        document.body.style.backgroundColor = "#f0f0f0";
+    </script>
     <section class="content">
         <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
         <div class="col-md-12 add-product ">
@@ -85,24 +88,24 @@
                 </form>
             </div>
 
-{#            <div class="add-content" id="tag_detail_info">#}
-{#                <form id="recruit-detail-info-form">#}
-{#                    <div class="item item-area">#}
-{#                        <label>详细描述:</label>#}
-{#                    </div>#}
-{#                    <div class="item item-area">#}
-{#                        <textarea type="text" id="recruit_content_editor" name="content"#}
-{#                                  class="form-control">{{ recruit.content|default:"" }}</textarea>#}
-{#                    </div>#}
-{##}
-{#                    <div class="submit-item item">#}
-{#                        <input type="hidden" name="id" value="{{ recruit.id }}"/>#}
-{#                        <button type="button" id="recruit-detail-info-submit-btn" class="btn btn-primary addPSubmit">#}
-{#                            提交#}
-{#                        </button>#}
-{#                    </div>#}
-{#                </form>#}
-{#            </div>#}
+            {#            <div class="add-content" id="tag_detail_info">#}
+            {#                <form id="recruit-detail-info-form">#}
+            {#                    <div class="item item-area">#}
+            {#                        <label>详细描述:</label>#}
+            {#                    </div>#}
+            {#                    <div class="item item-area">#}
+            {#                        <textarea type="text" id="recruit_content_editor" name="content"#}
+            {#                                  class="form-control">{{ recruit.content|default:"" }}</textarea>#}
+            {#                    </div>#}
+            {##}
+            {#                    <div class="submit-item item">#}
+            {#                        <input type="hidden" name="id" value="{{ recruit.id }}"/>#}
+            {#                        <button type="button" id="recruit-detail-info-submit-btn" class="btn btn-primary addPSubmit">#}
+            {#                            提交#}
+            {#                        </button>#}
+            {#                    </div>#}
+            {#                </form>#}
+            {#            </div>#}
         </div>
     </section>
     {% include 'admin/default/album_modal_win.html' %}

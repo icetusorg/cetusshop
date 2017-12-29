@@ -60,9 +60,14 @@
                             </div>
                         </div>
 
-                        <img style="cursor: pointer" id="check_code_img" src="/create_code/" onclick="refresh_check_code(this)">
+                        <img style="cursor: pointer" id="check_code_img" src="/create_code/"
+                             onclick="refresh_check_code(this)">
                         <input type="text" name="code">
-
+                        {% if user.id %}
+                            <input type="hidden" name="user" value="{{ user.id }}">
+                        {% else %}
+                            <input type="hidden" name="user" value="1">
+                        {% endif %}
                         <div class="col-md-12 col-xs-12">
                             <button type="button" id="inquiry-submit">Submit</button>
                         </div>

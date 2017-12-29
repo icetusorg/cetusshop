@@ -1,0 +1,66 @@
+{% extends "client/cassie/base.html" %}
+{% block head_extra %}
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'client/cassie/css/cart.css' %}" type="text/css"/>
+{% endblock %}
+{% block main %}
+    {% load i18n %}
+    <div class="order main">
+        <div class="container">
+            <div class="row">
+                <div class="row">
+                    <div class="col-md-3 col-xs-4 col-xy-12">
+                        {% include 'client/cassie/side_nav.html' %}
+                    </div>
+                    <div class="col-md-9 col-xs-8 col-xy-12">
+                        <div class="order-main">
+                            <h2>My Order</h2>
+                            <ul class="order-title">
+                                <li>name</li>
+                                <li>Date</li>
+                                <li>操作</li>
+                            </ul>
+                            <div class="order-list">
+                                {% for inquiry in inquiry_list %}
+                                    <ul class="order-item" title="container_order_{{ inquiry.id }}">
+                                        <li>{{ inquiry.name }}</li>
+                                        <li>{{ inquiry.create_time|date:"M/d/Y" }}</li>
+                                        <li><a href="/inquiry/show/{{ inquiry.id }}/">View Order</a></li>
+                                    </ul>
+                                {% endfor %}
+                            </div>
+                            <div class="order-pages">
+                                {% if order_list.has_previous %}
+                                    <a name="pageChange" data-tag="Previous" class="pageChage prev"
+                                       data-page="{{ order_list.previous_page_number }}"></a>
+                                {% else %}
+                                    <a class="prev"></a>
+                                {% endif %}
+
+
+                                {% for p in page_range %}
+                                    {% ifequal p objects.number %}
+                                        <span>{{ p }}</span>
+                                    {% else %}
+                                        <a class="pageChage" data-page="{{ p }}" href="#" title="{{ p }}">{{ p }}</a>
+                                    {% endifequal %}
+                                {% endfor %}
+                                {% if order_list.has_next %}
+                                    <a name="pageChange" class="pageChage next" data-page="{{ p }}"
+                                       data-page-range="{{ page_range }}" data-tag="Next"></a>
+                                {% else %}
+                                    <a class="next"></a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    {% load staticfiles %}
+{% endblock %}

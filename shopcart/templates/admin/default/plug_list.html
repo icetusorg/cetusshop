@@ -1,74 +1,82 @@
 {% extends "admin/default/content_base.html" %}
 {% block breadcrumbs %}
-{% load shopcart_extras %}
-<section class="content-header">
-    <h1>插件列表</h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
-        <li class="active"><a href="#">插件列表</a></li>
-    </ol>
-</section>
+    {% load shopcart_extras %}
+    <section class="content-header">
+        <h1>插件列表 <span class="box-subtitle">插件管理</span></h1>
+    </section>
 {% endblock %}
 
 
 {% block main %}
-{% load i18n %}
-{% load staticfiles %}
-{% load shopcart_extras %}
-<section class="content ">
-    <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
-    <div class="row">
-        <div class="col-md-12">
-            <div class="box xy-list page-list-content ">
-                <div class="box-body no-padding">
-                    <table class="table table-striped page-table-list add-sku-list">
-                        <tbody>
-                        <tr>
-                            <th>插件名称</th>
-                            <th>插件类型</th>
-                            <th>操作</th>
-                        </tr>
-                        <tr>
-                            <td><a href="/admin/slider-list/">幻灯片插件</a></td>
-                            <td>官方插件</td>
-                            <td><a href="/admin/slider-list/">管理</a></td>
-                        </tr>
-                        <tr>
-                            <td><a href="/admin/product-push-list/">商品推荐插件</a></td>
-                            <td>官方插件</td>
-                            <td><a href="/admin/product-push-list/">管理</a></td>
-                        </tr>
-						<tr>
-                            <td><a href="/admin/promotion-list/">优惠码插件</a></td>
-                            <td>官方插件</td>
-                            <td><a href="/admin/promotion-list/">管理</a></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="box-footer clearfix">
-
-                    <div class="xy-pages-jump">
-                        <button type="submit" class="btn btn-primary">跳转</button>
-                        <input type="text" class="form-control">
-                        <p>跳转到：</p>
-
-                        <ul class="pagination pagination-sm no-margin pull-right">
-                            <li><a href="#">&lt;</a></li>
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">&gt;</a></li>
-                        </ul>
-                        <p>共2条记录 , 共1页，每页显示：15条</p>
+    {% load i18n %}
+    {% load staticfiles %}
+    {% load shopcart_extras %}
+    <script>
+        document.body.style.backgroundColor = "#f0f0f0";
+    </script>
+    <section class="content ">
+        <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box xy-list page-list-content ">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">插件列表</h3>
                     </div>
-                </div>
-            </div><!-- /.box -->
+                    <div class="box-body product-table">
+                        <table class="table plug-table ">
+                            <tbody>
+                            <tr>
+                                <th>插件名称</th>
+                                <th>插件类型</th>
+                                <th>操作</th>
+                            </tr>
+                            <tr>
+                                <td><a href="../edit-menu/">菜单管理</a></td>
+                                <td>官方插件</td>
+                                <td><a href="../edit-menu/">管理</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="/admin/slider-list/">幻灯片插件</a></td>
+                                <td>官方插件</td>
+                                <td><a href="/admin/slider-list/">管理</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="/admin/product-push-list/">商品推荐插件</a></td>
+                                <td>官方插件</td>
+                                <td><a href="/admin/product-push-list/">管理</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="../recruit-list/">招聘管理</a></td>
+                                <td>官方插件</td>
+                                <td><a href="../recruit-list/">管理</a></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="box-footer clearfix">
+
+                        <div class="xy-pages-jump">
+                            <button type="submit" class="btn btn-primary">跳转</button>
+                            <input type="text" class="form-control">
+                            <p>跳转到：</p>
+
+                            <ul class="pagination pagination-sm no-margin pull-right">
+                                <li><a href="#">&lt;</a></li>
+                                <li class="active"><a href="#">1</a></li>
+                                <li><a href="#">&gt;</a></li>
+                            </ul>
+                            <p>共2条记录 , 共1页，每页显示：15条</p>
+                        </div>
+                    </div>
+                </div><!-- /.box -->
+            </div>
         </div>
-    </div>
-</section>
-{% include 'admin/default/album_modal_win.html' %}
+    </section>
+    {% include 'admin/default/album_modal_win.html' %}
 
 
 {% endblock %}
 {% block scripts %}
-	{% load staticfiles %}
+    {% load staticfiles %}
 {% endblock %}

@@ -46,8 +46,12 @@ urlpatterns = patterns("",
                        url(r'^validate/user/(.+)/$', 'shopcart.validate.ajax_validate_user',
                            name='validate_ajax_validate_user'),
                        url(r'^cart/add$', 'shopcart.cart.add_to_cart', name='cart_add_to_cart'),
+                       url(r'^quote/add$', 'shopcart.cart.add_to_cart', name='cart_add_to_cart'),
+
                        url(r'^cart/modify$', 'shopcart.cart.ajax_modify_cart', name='cart_ajax_modify_cart'),
                        url(r'^cart/show/$', 'shopcart.cart.view_cart', name='cart_view_cart'),
+                       url(r'^quote/show/$', 'shopcart.cart.view_quote_cart', name='cart_view_quote_cart'),
+
                        url(r'^cart/check-out$', 'shopcart.cart.check_out', name='cart_check_out'),
                        url(r'^cart/re-calculate-price/$', 'shopcart.cart.re_calculate_price',
                            name='re_calculate_price'),
@@ -108,6 +112,10 @@ urlpatterns = patterns("",
 
                        url(r'^contact/show/$', 'shopcart.views.contact_page', name='views_contact_page'),
                        url(r'^inquiry/add/$', 'shopcart.inquiry.add', name='inquiry.add'),
+                       url(r'^quote/add/$', 'shopcart.inquiry.quote_add', name='inquiry.quote_add'),
+                       url(r'^inquiry/show/$', 'shopcart.inquiry.show_order', name='inquiry.show_order'),
+                       url(r'^inquiry/show/(\d+)/$', 'shopcart.inquiry.inquiry_detail', name='inquiry_detail'),
+
                        # url('^admin/ckediter/(.+)/(.+)/$', 'shopcart.myadmin.file.ckediter',name='admin_ckediter'),
                        # url('^admin/product/make-static/$', 'shopcart.myadmin.product.product_make_static',name='admin_product_make_static'),
 
@@ -118,6 +126,7 @@ urlpatterns = patterns("",
 
                        # 招聘
                        url('^recruit/$', 'shopcart.recruit.view_list_view', name='admin_recruit_view_list_view'),
+
                        url('^recruit/(\d+)/$', 'shopcart.recruit.detail', name='admin_recruit_detail'),
 
                        # 统计
@@ -328,6 +337,13 @@ urlpatterns = patterns("",
                            name='recruit_list_view'),
                        url('^admin/recruit-delete/$', 'shopcart.myadmin.recruit.delete', name='admin_recruit_delete'),
                        url('^admin/recruit-sort/$', 'shopcart.myadmin.recruit.sort', name='admin_recruit_sort'),
+                       url('^admin/edit-menu/$', 'shopcart.myadmin.menu.list_view', name='myadmin_menu_list_view'),
+                       url('^admin/edit-menu-detail/$', 'shopcart.myadmin.menu.edit', name='myadmin_menu_edit'),
+                       url('^admin/edit-menu-detail-submit/$', 'shopcart.myadmin.menu.edit', name='myadmin_menu_edit'),
+                       url('^admin/menu-detele/(\d+)/$', 'shopcart.myadmin.menu.delete',
+                           name='admin_menu_delete'),
+                       url('^admin/ajax_add_menu/$', 'shopcart.myadmin.menu.ajax_add_menu',
+                           name='admin_category_ajax_add_menu'),
 
                        # 下面是初始化方法
                        url(r'^initdb/$', 'shopcart.views.init_database', name='init_database'),

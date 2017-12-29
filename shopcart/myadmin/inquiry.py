@@ -1,7 +1,7 @@
 # coding=utf-8
 from django.shortcuts import render, redirect, render_to_response
 from django.core.urlresolvers import reverse
-from shopcart.models import System_Config, Inquiry, Product
+from shopcart.models import System_Config, Inquiry, Product, Inquiry_Products
 from shopcart.utils import my_pagination, get_system_parameters
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse, Http404
@@ -33,14 +33,19 @@ def detail(request, id=None):
     ctx['system_para'] = get_system_parameters()
     ctx['page_name'] = 'Inquiry Detail'
     try:
+
+
         inquiry = Inquiry.objects.get(id=id)
+        ip = Inquiry_Products.objects.filter(inquiry=inquiry.id)
+
+
     except Exception as err:
         logger.error("Can not find inquiry which id is %s" % id)
         raise Http404
 
     get_product_detail_for_inquiry(inquiry)
     ctx['inquiry'] = inquiry
-
+    ctx['inquiry_products'] = ip
     return TemplateResponse(request, System_Config.get_template_name('admin') + '/inquiry_detail.html', ctx)
 
 

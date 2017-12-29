@@ -16,14 +16,16 @@
         <div class="detail-main">
             <div id="preview" class="spec-preview">
       <span class="jqzoom">
-        <img id="product-big-image" jqimg="{{product.get_main_image.get_image_url}}" alt="{{image.alt_value}}" src="{{product.get_main_image.get_image_url}}" class="cart-move-img"/>      </span>
+        <img id="product-big-image" jqimg="{{ product.get_main_image.get_image_url }}" alt="{{ image.alt_value }}"
+             src="{{ product.get_main_image.get_image_url }}" class="cart-move-img"/>      </span>
             </div>
             <div class="spec-scroll">
                 <div class="items">
                     <ul>
                         {% for image in product.get_product_detail_images %}
-                            <li><img alt="{{image.alt_value}}" bimg="{{image.get_image_url}}" src="{{image.get_image_url}}"
-                                     onMouseMove="preview(this);" ></li>
+                            <li><img alt="{{ image.alt_value }}" bimg="{{ image.get_image_url }}"
+                                     src="{{ image.get_image_url }}"
+                                     onMouseMove="preview(this);"></li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -136,6 +138,40 @@
                         {{ product.description|safe }}
                     </div>
                 </div>
+                <div class="contact-supplier" id="contact-supplier">
+                    <form id="inquiryForm" action="/inquiry/add/" method="POST" class="form-horizontal">
+                        <div class="container">
+                            <h2>Send your message to this supplier</h2>
+                            <div class="contact-supplier-email">
+                                <span class="contact-supplier-span"><i>*</i>E-mail:</span><input name="email"
+                                                                                                 placeholder="Email Address"
+                                                                                                 class="" type="text"
+                                                                                                 value="">
+                            </div>
+                            <div class="contact-supplier-message">
+                                <span class="contact-supplier-span"><i>*</i>Message:  </span>
+                                <textarea name="message"
+                                          placeholder="Enter your inquiry details such as product name , color, size, MOQ, FOB, etc."
+                                          id="message"></textarea>
+                                <p>Your message must be between 20-8000 characters</p>
+                            </div>
+                            <div class="contact-supplier-Quantity">
+                                <!--<p>Please enter the content.</p>-->
+                                <span class="contact-supplier-span"><i>*</i>Quantity:</span>
+                                <input class="" type="text" name="quantity" value="0">
+                                <div class="btn-group normal message-list-input">
+                                    <p>Pieces</p>
+                                </div>
+                            </div>
+                            <img style="cursor: pointer" id="check_code_img" src="/create_code/"
+                                 onclick="refresh_check_code(this)">
+                            <input type="text" name="code">
+                            <input name="product" value="{{ product.id }}" type="hidden">
+                            <input name="name" value=" " type="hidden">
+                            <button class="contact-supplier-button" type="button" id="inquiry-submit">Send</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
         <!-- 关联商品 -->
@@ -158,5 +194,11 @@
     {% load staticfiles %}
     <script type="text/javascript" src="{% static 'client/cassie/js/base.js' %}"></script>
     <script type="text/javascript" src="{% static 'client/cassie/js/jquery.jqzoom.js' %}"></script>
+    <script>
+        function refresh_check_code(ths) {
+            ths.src += '?';
+            //src后面加问好会自动刷新验证码img的src
+        }
+    </script>
 {% endblock %}
 

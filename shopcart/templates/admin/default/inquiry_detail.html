@@ -1,90 +1,90 @@
 {% extends "admin/default/content_base.html" %}
 {% block breadcrumbs %}
-<section class="content-header">
-    <h1>留言管理</h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
-        <li class="active"><a href="#">留言管理</a></li>
-    </ol>
-</section>
+    <section class="content-header">
+        <h1>留言管理</h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
+            <li class="active"><a href="#">留言管理</a></li>
+        </ol>
+    </section>
 {% endblock %}
 
 {% block main %}
-{% load i18n %}
-{% load shopcart_extras %}
-<section class="content">
-    <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
-    <div class="row">
-        <div class="col-md-12">
-            <div class="box xy-search">
-                <div class="box-header with-border">
-                    <h3 class="box-title">留言查询</h3>
-                    <table class="table message-detail-table">
-                        <tbody>
-                        <tr>
-                            <td>Email:</td>
-                            <td>{{inquiry.email}}</td>
-                        </tr>
-                        <tr>
-                            <td>姓名:</td>
-                            <td>{{inquiry.name}}</td>
-                        </tr>
-                        <tr>
-                            <td>留言时间:</td>
-                            <td>{{inquiry.create_time|date:"Y-m-d H:i:s"}}</td>
-                        </tr>
-                        <tr>
-                            <td>IP:</td>
-                            <td>{{inquiry.ip_address|default:'未能获取对方IP'}}</td>
-                        </tr>
-                        <tr>
-                            <td>留言标题:</td>
-                            <td>{{inquiry.title|default:"未填写"}}</td>
-                        </tr>
-                        <tr>
-                            <td>留言内容:</td>
-                            <td>{{inquiry.message}}
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+    {% load i18n %}
+    {% load shopcart_extras %}
+    <section class="content">
+        <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box xy-search">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">留言查询</h3>
+                        <table class="table message-detail-table">
+                            <tbody>
+                            <tr>
+                                <td>Email:</td>
+                                <td>{{ inquiry.email }}</td>
+                            </tr>
+                            <tr>
+                                <td>姓名:</td>
+                                <td>{{ inquiry.name }}</td>
+                            </tr>
+                            <tr>
+                                <td>留言时间:</td>
+                                <td>{{ inquiry.create_time|date:"Y-m-d H:i:s" }}</td>
+                            </tr>
+                            <tr>
+                                <td>IP:</td>
+                                <td>{{ inquiry.ip_address|default:'未能获取对方IP' }}</td>
+                            </tr>
+                            <tr>
+                                <td>留言标题:</td>
+                                <td>{{ inquiry.title|default:"未填写" }}</td>
+                            </tr>
+                            <tr>
+                                <td>留言内容:</td>
+                                <td>{{ inquiry.message }}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
+
+            {% if inquiry_products %}
+                <div class="col-md-12">
+                    <div class="box xy-list">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">产品信息</h3>
+                        </div>
+                        <table class="table message-detail-table-content">
+                            <tbody>
+                            <tr>
+                                <th>商品图片:</th>
+                                <th>名称:</th>
+                                <th>数量:</th>
+                                <th>SKU:</th>
+                            </tr>
+                            {% for op in inquiry_products %}
+                                <tr>
+                                    <td><img src="{{ op.thumb }}"></td>
+                                    <td><a href="/product/{{ op.product_id }}/"
+                                           target="_blank">{{ op.name }}</a></td>
+                                    <td>{{ op.quantity }}</td>
+                                    <td>{{ op.product_attribute_name }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            {% endif %}
         </div>
-		
-        <div class="col-md-12">
-			{% if inquiry.product_detail %}
-				<div class="box xy-list">
-					<div class="box-header with-border">
-						<h3 class="box-title">产品信息</h3>
-					</div>
-					<table class="table message-detail-table-content">
-						<tbody>
-						<tr>
-							<th>商品图片:</th>
-							<th>名称:</th>
-							<th>数量:</th>
-							<th>单位:</th>
-						</tr>
-						<tr>
-							<td><img src="{{inquiry.product_detail.thumb}}"></td>
-							<td><a href="{{inquiry.product_detail.get_url}}" target="_blank">{{inquiry.product_detail.name}}</a></td>
-							<td>{{inquiry.quantity}}</td>
-							<td>{{inquiry.unit|default:"未填写"}}</td>
-						</tr>
-						</tbody>
-					</table>
-				</div><!-- /.box -->
-			{% else %}
-				<div class="box xy-list">
-					<p>这个留言没有关联任何商品</p>
-				</div>
-			{% endif %}
-        </div>
-    </div>
-</section>
+    </section>
 {% endblock %}
 {% block scripts %}
-	{% load staticfiles %}
+    {% load staticfiles %}
 {% endblock %}
 

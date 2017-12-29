@@ -243,8 +243,6 @@ class Product(models.Model):
     cuboid_width = models.FloatField(default=0.0, verbose_name='体积_宽_毫米')
     cuboid_height = models.FloatField(default=0.0, verbose_name='体积_高_毫米')
 
-
-
     create_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now=True)
 
@@ -637,6 +635,9 @@ class Cart_Products(models.Model):
     quantity = models.IntegerField(default=0)
     create_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now=True)
+
+    def get_item_number(self):
+        return self.product.item_number
 
     def get_total(self):
         return self.quantity * self.get_product_price()
@@ -1246,6 +1247,7 @@ class Inquiry(models.Model):
     unit = models.CharField(max_length=100, null=True, verbose_name='数量单位')
     create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建日期')
     update_time = models.DateTimeField(auto_now=True, verbose_name='更新日期')
+    user = models.ForeignKey(MyUser, null=True, related_name='inquiry', verbose_name='用户')
 
     def __str__(self):
         return self.name
@@ -1253,6 +1255,31 @@ class Inquiry(models.Model):
     class Meta:
         verbose_name = '询盘信息'
         verbose_name_plural = '询盘信息'
+
+
+@python_2_unicode_compatible
+class Inquiry_Products(models.Model):
+    product_id = models.IntegerField(default=0, verbose_name='商品ID')
+    # product_attribute = models.ForeignKey(Product_Attribute,null=True)
+    product_attribute_id = models.IntegerField(null=True, blank=True, verbose_name='SKU的id')
+    product_attribute_item_number = models.CharField(max_length=100, null=True, blank=True, verbose_name='SKU编号')
+    product_attribute_name = models.CharField(max_length=1000, default='', verbose_name='选中的商品属性文字说明')
+    inquiry = models.ForeignKey(Inquiry, null=True, related_name='Inquiry_Products')
+    name = models.CharField(max_length=100, default='', verbose_name='商品名称')
+    item_number = models.CharField(max_length=100, default='', verbose_name='商品编号')
+    short_desc = models.CharField(max_length=1024, default='')
+    thumb = models.URLField()
+    image = models.URLField()
+    quantity = models.IntegerField(default=0, verbose_name='订购数量')
+    create_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = '询盘商品'
+        verbose_name_plural = '询盘商品'
 
 
 @python_2_unicode_compatible
@@ -1587,3 +1614,15 @@ class Visitor(models.Model):
 
     def __str__(self):
         return self.ip_address
+
+
+@python_2_unicode_compatible
+class Menu(models.Model):
+    name = models.CharField(max_length=100, default='', verbose_name='菜单名称')
+    url = models.CharField(max_length=100, default='', verbose_name='菜单URL')
+    sort_order = models.CharField(max_length=100, default='', verbose_name='排序序号')
+    parent = models.ForeignKey('self', null=True, default=None, related_name='childrens', blank=True,
+                               verbose_name='上级分类')
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
+    update_time = models.DateTimeField(auto_now=True, verbose_name='更新时间')
+

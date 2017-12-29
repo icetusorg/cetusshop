@@ -1,57 +1,61 @@
 {% extends "admin/default/content_base.html" %}
 {% block breadcrumbs %}
-<section class="content-header">
-    <h1>幻灯片管理</h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
-        <li class="active"><a href="#">幻灯片管理</a></li>
-    </ol>
-</section>
+    <section class="content-header">
+        <h1>幻灯片管理</h1>
+    </section>
 {% endblock %}
 
 {% block main %}
-{% load i18n %}
-{% load shopcart_extras %}
-<section class="content">
-    <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
-    <div class="col-md-12 add-product plug-in-slider-detail">
-		<form id="slider_detail_form">
-        <div class="add-content active">
-            <div class="item item2">
-                <label>幻灯片代码</label>
-                <input type="text" class="form-control " name="code" value="{{slider.code}}">
-            </div>
-            <div class="item item2">
-                <label>幻灯片备注</label>
-                <input type="text" class="form-control " name="name" value="{{slider.name}}">
-            </div>
-            <div class="item add-product-tree article-add-title plug-in-slider-detail-save">
-                <button type="button" class="btn btn-primary" data-id="{{slider.id}}" id="slider_detail_submit_btn">保存</button>
-            </div>
-            <div class="item add-product-tree ">
-                <button type="button" class="btn btn-primary cd-popup-trigger" data-type="slider" data-id="{{slider.id}}">上传图片</button>
-            </div>
-            <div id="slider_main_picture_show" class="item product-images plug-in-slider-detail-img">
-				{%for img in slider.get_image_list%}
-                <div class="images article-images-list col-md-1">
-                    <a href="{{img.image}}" target="_blank"><img src="{{img.thumb}}"></a>
-					<a href="#" class="set-picture-attr" data-method="delete" data-id="{{img.id}}" data-slider-id="{{slider.id}}" data-image-type="slider">删除 </a>
+    {% load i18n %}
+    {% load shopcart_extras %}
+    <script>
+        document.body.style.backgroundColor = "#f0f0f0";
+    </script>
+    <section class="content">
+        <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+        <div class="col-md-12 add-product plug-in-slider-detail">
+            <form id="slider_detail_form">
+                <div class="add-content active">
+                    <div class="item item2">
+                        <label>幻灯片代码</label>
+                        <input type="text" class="form-control " name="code" value="{{ slider.code }}">
+                    </div>
+                    <div class="item item2">
+                        <label>幻灯片备注</label>
+                        <input type="text" class="form-control " name="name" value="{{ slider.name }}">
+                    </div>
+                    <div class="item add-product-tree article-add-title plug-in-slider-detail-save">
+                        <button type="button" class="btn btn-primary" data-id="{{ slider.id }}"
+                                id="slider_detail_submit_btn">保存
+                        </button>
+                    </div>
+                    <div class="item add-product-tree ">
+                        <button type="button" class="btn btn-primary cd-popup-trigger" data-type="slider"
+                                data-id="{{ slider.id }}">上传图片
+                        </button>
+                    </div>
+                    <div id="slider_main_picture_show" class="item product-images plug-in-slider-detail-img">
+                        {% for img in slider.get_image_list %}
+                            <div class="images article-images-list col-md-1">
+                                <a href="{{ img.image }}" target="_blank"><img src="{{ img.thumb }}"></a>
+                                <a href="#" class="set-picture-attr" data-method="delete" data-id="{{ img.id }}"
+                                   data-slider-id="{{ slider.id }}" data-image-type="slider">删除 </a>
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
-				{%endfor%}
-            </div>
+            </form>
         </div>
-		</form>
-    </div>
-</section>
-{% include 'admin/default/album_modal_win.html' %}
+    </section>
+    {% include 'admin/default/album_modal_win.html' %}
 
 {% endblock %}
 {% block scripts %}
-	{% load staticfiles %}
-	<script src="{% static 'admin/default/js/upload.1.0.2.js' %}"></script>
-	<script>
-		function reload_picture_list(){
-			location.reload(true); 
-		};
-	</script>
+    {% load staticfiles %}
+    <script src="{% static 'admin/default/js/upload.1.0.2.js' %}"></script>
+    <script>
+        function reload_picture_list() {
+            location.reload(true);
+        };
+    </script>
 {% endblock %}

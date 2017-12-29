@@ -1,0 +1,80 @@
+{% extends "admin/default/content_base.html" %}
+{% block breadcrumbs %}
+    <section class="content-header">
+        <h1><a href="../edit-menu/">菜单编辑</a> <span class="box-subtitle">产品管理</span></h1>
+    </section>
+{% endblock %}
+
+{% block main %}
+    {% load i18n %}
+
+    {% load staticfiles %}
+    {% load shopcart_extras %}
+    <script>
+        document.body.style.backgroundColor = "#f0f0f0";
+    </script>
+    <section class="content">
+        <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+        <div class="col-md-12 add-product category-set category-detail-shadow ">
+            <div class="system-attr-mian">
+                <p class="signal-title category-title ">分类管理</p>
+                <!--页签-->
+                <div class="add-content website-info active category-input-content">
+                    <form id="category_detail_form">
+                        {% csrf_token %}
+                        <div class="item">
+                            <label>上级分类</label>
+                            <div class="btn-group normal">
+                                <p>{{ menu.parent.name|default:"一级菜单" }}</p>
+                            </div>
+                        </div>
+
+                        <div class="item"><label>菜单名称</label><input type="text" name="name" class="form-control"
+                                                                    value="{{ menu.name }}"></div>
+                        <div class="item"><label>菜单URL</label><input type="text" name="url" class="form-control"
+                                                                     value="{{ menu.url }}"></div>
+
+
+                        <div class="submit-item">
+                            <input type="hidden" value="{{ category.id }}" name="id"/>
+                            <button type="button" id="menu_detail_submit_btn"
+                                    class="btn btn-primary next-steep category-btn-save">保存
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--页签结束-->
+        </div>
+    </section>
+{% endblock %}
+{% block scripts %}
+    {% load staticfiles %}
+    <script>
+        //提交
+        jQuery("#menu_detail_submit_btn").click(function (e) {
+            var url = "/admin/edit-menu-detail-submit/";
+
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: url,
+                data: $("#category_detail_form").serialize(),
+                async: false,
+                error: function (request) {
+                    alert("System error");
+                },
+                success: function (data) {
+                    $("#infoMessage").html(data.message);
+                    if (data.success == true) {
+                        $('#myModal').on('hidden.bs.modal', function (e) {
+                            location.reload(true);
+                        })
+                    }
+                    $("#myModal").modal('toggle');
+                }
+            });
+        });
+    </script>
+{% endblock %}

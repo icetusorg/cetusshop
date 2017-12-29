@@ -2,7 +2,7 @@
 from django import forms
 from shopcart.models import MyUser, Address, Product, Inquiry, OrderShippment, Email, Article, Express, ExpressType, \
     Category, CustomizeURL, ArticleBusiCategory, ProductParaGroup, Attribute_Group, Slider, Promotion, ProductPushGroup, \
-    Recruit
+    Recruit, Menu
 from captcha.fields import CaptchaField
 from django.utils.translation import ugettext as _
 from django.core.exceptions import ValidationError
@@ -245,7 +245,7 @@ class inquiry_form(forms.ModelForm):
 
     class Meta:
         model = Inquiry
-        fields = ('name', 'company', 'email', 'message', 'product', 'quantity', 'unit', 'title')
+        fields = ('name', 'company', 'email', 'message', 'product', 'quantity', 'unit', 'title', 'user')
 
 
 class customize_url_detail_form(forms.ModelForm):
@@ -269,9 +269,24 @@ class recruit_basic_info_form(forms.ModelForm):
         fields = (
             'title', 'sort_order', 'keywords', 'content', 'number', 'education', 'site', 'type', 'static_file_name',)
 
+
 # class recruit_detail_info_form(forms.ModelForm):
 #     content = forms.CharField(required=False)
 #
 #     class Meta:
 #         model = Recruit
 #         fields = ('content',)
+
+class menu_simple_form(forms.ModelForm):
+    class Meta:
+        model = Menu
+        fields = ('name', 'url', 'sort_order')
+
+
+class menu_form(forms.ModelForm):
+    name = forms.CharField(required=False)
+    url = forms.CharField(required=False)
+
+    class Meta:
+        model = Menu
+        fields = ('name', 'url', )

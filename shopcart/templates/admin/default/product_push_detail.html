@@ -54,9 +54,9 @@
                                 <td><input name="is_oper" id="checkbox_{{p.id}}"  value="{{p.id}}" type="checkbox"></td>
                                 <td><input type="text" name="sort_order" value="{{p.sort_order}}"></td>
                                 <td><input type="text" name="title" value="{{p.title}}"></td>
-                                <td><img src="{{p.product.thumb}}"></td>
+                                <td><a href="/admin/product-edit/?id={{ p.product_id }}"><img src="{{p.product.thumb}}"></a></td>
                                 <td>{{p.product.item_number}}</td>
-                                <td>{{p.product.name}}</td>
+                                <td><a href="/admin/product-edit/?id={{ p.product_id }}">{{p.product.name}}</a></td>
                                 <td>
 									<ul>
 										{%for cat in p.product.categorys.all%}

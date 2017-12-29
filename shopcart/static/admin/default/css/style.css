@@ -1973,32 +1973,90 @@ iframe {
     margin: 5px 0 !important;
 }
 
-.user-table-list tr th:nth-child(1) {
-    width: 5% !important;
+.user-table-list tr th:nth-child(1), .user-table-list tr td:nth-child(1) {
+    width: 5%;
+    text-align: center;
+    vertical-align: middle;
 }
 
-.user-table-list tr th:nth-child(2), .user-table-list tr th:nth-child(3), .user-table-list tr th:nth-child(4), .user-table-list tr th:nth-child(5), .user-table-list tr th:nth-child(6), .user-table-list tr th:nth-child(7), .user-table-list tr th:nth-child(8) {
-    width: 10% !important;
+.user-table-list tr th:nth-child(2), .user-table-list tr td:nth-child(2) {
+    width: 25%;
+    text-align: center;
+    vertical-align: middle;
 }
 
-.user-table-list tr th:nth-child(9) {
-    width: 20%;
+.user-table-list tr th:nth-child(3), .user-table-list tr td:nth-child(3) {
+    width: 10%;
+    text-align: center;
+    vertical-align: middle;
 }
 
-.user-table-list tr td:nth-child(1) {
-    width: 5% !important;
+.user-table-list tr th:nth-child(4), .user-table-list tr td:nth-child(4) {
+    width: 15%;
+    text-align: center;
+    vertical-align: middle;
 }
 
-.user-table-list tr td:nth-child(2), .user-table-list tr td:nth-child(3), .user-table-list tr td:nth-child(4), .user-table-list tr td:nth-child(5), .user-table-list tr td:nth-child(6), .user-table-list tr td:nth-child(7), .user-table-list tr td:nth-child(8) {
-    width: 10% !important;
+.user-table-list tr th:nth-child(5), .user-table-list tr td:nth-child(5) {
+    width: 15%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.user-table-list tr th:nth-child(6), .user-table-list tr td:nth-child(6) {
+    width: 10%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.user-table-list tr th:nth-child(7), .user-table-list tr td:nth-child(7) {
+    width: 10%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.user-table-list tr th:nth-child(8), .user-table-list tr td:nth-child(8) {
+    width: 10%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.user-table-list tr:first-child {
+    background: #ffffff !important;
+    height: 40px;
+}
+
+.user-table-list tr {
+    border-bottom: 1px solid #eee;
+}
+
+.user-table-list > tbody > tr:nth-of-type(odd) {
+    background-color: #fcfcfc;
+}
+
+.user-add {
+    padding-left: 65px;
+}
+
+.user-add-btn {
+    margin: 23px 0 50px 130px;
+    float: left;
+}
+
+.user-btn {
+    padding: 0px !important;
+    margin-left: 8px !important;
+    font-size: 14px !important;
+    width: 80px;
+    height: 34px;
 }
 
 .user-table-list tr td a {
-    color: #3c8dbc;
+    color: #2196F3;
 }
 
 .btn-danger-user {
-    color: #dd4b39 !important;
+    color: #ff0000 !important;
 }
 
 .user-table-list tr td:nth-child(9) {
@@ -2879,7 +2937,7 @@ iframe {
 }
 
 .form-control-sort {
-    width: 3% !important;
+    width: 5% !important;
 }
 
 .form-control-product-content {
@@ -3334,7 +3392,7 @@ iframe {
     position: relative;
     display: inline-block;
     border: 1px solid #ccc;
-    padding: 0 10px 0;
+    padding: 0 30px 0;
     border-radius: 5px;
 }
 
@@ -4889,6 +4947,45 @@ a {
 .article-content-add-btn {
     margin: 20px 0 0px 130px;
 }
-.article-busi-category-checkbox input{
-        margin: 8px 8px 0 6%!important;
+
+.article-busi-category-checkbox input {
+    margin: 8px 8px 0 6% !important;
+}
+
+.article-short-desc textarea {
+    height: 120px;
+}
+
+/*插件*/
+.plug-table tr td:nth-child(1), .plug-table tr th:nth-child(1) {
+    width: 10%;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.plug-table tr td:nth-child(2), .plug-table tr th:nth-child(2) {
+    width: 80%;
+    vertical-align: middle;
+    text-align: left;
+    padding-left: 130px;
+}
+
+.plug-table tr td:nth-child(3), .plug-table tr th:nth-child(3) {
+    width: 10%;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.plug-table tr {
+    height: 40px;
+    border-bottom: 1px solid #eee;
+}
+
+.plug-table tr:first-child {
+    background: #ffffff !important;
+
+}
+
+.plug-table tr:nth-child(odd) {
+    background: #fcfcfc;
 }

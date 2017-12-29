@@ -60,7 +60,7 @@
                         <div class="item"><label>编号</label><input type="text" name="item_number" class="form-control product-item-number"
                                                                   value="{{ product.item_number }}"></div>
                         <div class="item add-product-tree">
-                            <label>分类（<a href="/admin/category-list/" target='_blank'>新增</a>）</label>
+                            <label>分类（<a href="/admin/category-list/">新增</a>）</label>
                             <div class="trees" id="product_category_selection">
                                 <ul>
                                     {% for cat in top_cat_list %}
@@ -346,6 +346,7 @@
                     </div>
                 </form>
             </div>
+
             <div class="add-content photo " id="tag_sku">
                 <h1 class="add-product-h1 related-product-h1">SKU编辑</h1>
                 <div class="item-free  item product-choose-attribute product-choose-attribute2">
@@ -491,7 +492,7 @@
                                     <tr>
                                         <td><input name="is_oper" id="rp_checkbox_{{ p.id }}" value="{{ p.id }}"
                                                    type="checkbox"></td>
-                                        <td><img src="{{ p.get_main_image.get_thumb_url }}"></td>
+                                        <td><a href="/admin/product-edit/?id={{ p.id }}"><img src="{{ p.get_main_image.get_thumb_url }}"></a></td>
                                         <td>{{ p.item_number }}</td>
                                         <td><a href="/admin/product-edit/?id={{ p.id }}">{{ p.name }}</a></td>
                                         <td>

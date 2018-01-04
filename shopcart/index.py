@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.shortcuts import render, redirect
-from shopcart.models import System_Config, CustomizeURL, ClientMenu, Slider
+from shopcart.models import System_Config, CustomizeURL, ClientMenu, Slider,Menu
 from captcha.models import CaptchaStore
 from captcha.helpers import captcha_image_url
 from django.http import HttpResponse
@@ -23,6 +23,12 @@ def view_index(request, tdk=None):
     ctx['system_para'] = get_system_parameters()
     ctx['menu_products'] = get_menu_products()
 
+    def get_all_top_menu():
+        top_menu_list = Menu.objects.filter(parent=None)
+        return top_menu_list
+
+    top_menu_list = get_all_top_menu()
+    ctx['menu_list'] = top_menu_list
     if not tdk:
         try:
             cust = CustomizeURL.objects.get(name='首页')

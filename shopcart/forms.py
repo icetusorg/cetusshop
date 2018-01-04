@@ -117,7 +117,8 @@ class product_basic_info_form(forms.ModelForm):
     class Meta:
         model = Product
         # fields = ('item_number','name','is_publish','price','market_price','quantity','min_order_quantity')
-        fields = ('item_number', 'name', 'short_desc', 'sort_order', 'is_publish', 'detail_template')
+        fields = ('item_number', 'name', 'short_desc', 'sort_order', 'is_publish', 'detail_template', 'quantity',
+                  'min_order_quantity')
 
 
 class product_detail_info_form(forms.ModelForm):
@@ -134,15 +135,11 @@ class product_detail_info_form(forms.ModelForm):
 
 
 class article_basic_info_form(forms.ModelForm):
-    sort_order = forms.CharField(required=False)
-    short_desc = forms.CharField(required=False)
-
-    detail_template = forms.CharField(required=False)
     breadcrumbs = forms.CharField(required=False)
 
     class Meta:
         model = Article
-        fields = ('title', 'sort_order', 'short_desc', 'breadcrumbs', 'detail_template', 'category',)
+        fields = ('title', 'breadcrumbs', 'category',)
 
 
 class article_detail_info_form(forms.ModelForm):
@@ -151,10 +148,14 @@ class article_detail_info_form(forms.ModelForm):
     static_file_name = forms.CharField(required=False)
     content = forms.CharField(required=False)
     seo_desc = forms.CharField(required=False)
+    sort_order = forms.CharField(required=False)
+    short_desc = forms.CharField(required=False)
+    detail_template = forms.CharField(required=False)
 
     class Meta:
-        model = Product
-        fields = ('content', 'keywords', 'page_title', 'static_file_name', 'seo_desc',)
+        model = Article
+        fields = ('content', 'keywords', 'page_title', 'static_file_name', 'seo_desc', 'sort_order', 'short_desc',
+                  'detail_template',)
 
 
 class order_shippment_form(forms.ModelForm):
@@ -248,6 +249,14 @@ class inquiry_form(forms.ModelForm):
         fields = ('name', 'company', 'email', 'message', 'product', 'quantity', 'unit', 'title', 'user')
 
 
+class email_inquiry_form(forms.ModelForm):
+    email = forms.CharField(required=False)
+
+    class Meta:
+        model = Inquiry
+        fields = ('email',)
+
+
 class customize_url_detail_form(forms.ModelForm):
     target_url = forms.CharField(required=False)
     keywords = forms.CharField(required=False)
@@ -289,4 +298,4 @@ class menu_form(forms.ModelForm):
 
     class Meta:
         model = Menu
-        fields = ('name', 'url', )
+        fields = ('name', 'url',)

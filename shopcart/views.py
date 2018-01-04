@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
 from django.http import JsonResponse, QueryDict
 from shopcart.models import System_Config, Product, Product_Images, Category, MyUser, Email, Reset_Password, Address, \
-    Product_Attribute, Attribute_Group, Attribute, Article, Express, ExpressType, ArticleBusiCategory, Recruit
+    Product_Attribute, Attribute_Group, Attribute, Article, Express, ExpressType, ArticleBusiCategory, Recruit, Menu
 from shopcart.utils import my_send_mail, get_serial_number, customize_tdk
 from django.db import transaction
 from django.utils.translation import ugettext as _
@@ -25,6 +25,13 @@ def contact_page(request, tdk=None):
     ctx['menu_products'] = get_menu_products()
     ctx['page_name'] = 'Contact us'
 
+    def get_all_top_menu():
+        top_menu_list = Menu.objects.filter(parent=None)
+        return top_menu_list
+
+    top_menu_list = get_all_top_menu()
+
+    ctx['menu_list'] = top_menu_list
     customize_tdk(ctx, tdk)
 
     return TemplateResponse(request, System_Config.get_template_name() + '/contact.html', ctx)
@@ -110,7 +117,6 @@ def url_dispatch(request, url):
                 tdk['page_title'] = cust.page_name
                 tdk['keywords'] = cust.keywords
                 tdk['short_desc'] = cust.short_desc
-
             return function(request, tdk)
         else:
             return redirect(cust.target_url)

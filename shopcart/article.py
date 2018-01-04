@@ -1,7 +1,7 @@
 # coding=utf-8
 from django.shortcuts import render
 from django.template.loader import render_to_string
-from shopcart.models import System_Config, Article, ArticleBusiCategory
+from shopcart.models import System_Config, Article, ArticleBusiCategory, Menu
 from shopcart.utils import my_pagination, get_system_parameters, customize_tdk
 import json, os
 from django.http import JsonResponse
@@ -22,6 +22,14 @@ def detail(request, id):
     ctx['system_para'] = get_system_parameters()
     ctx['menu_products'] = get_menu_products()
     ctx['page_name'] = 'Blog'
+
+    def get_all_top_menu():
+        top_menu_list = Menu.objects.filter(parent=None)
+        return top_menu_list
+
+    top_menu_list = get_all_top_menu()
+
+    ctx['menu_list'] = top_menu_list
     try:
         article = Article.objects.get(id=id)
     except:
@@ -43,7 +51,6 @@ def detail(request, id):
         ctx['page_description'] = article.seo_desc
     else:
         ctx['page_description'] = article.short_desc
-
 
     template = '/article.html'
 
@@ -101,7 +108,7 @@ def get_article_images(request):
             return JsonResponse(result)
 
         img_list_images = article.get_image_list_images()
-        # img_list_attachment = article.get_image_list_pdf()
+        img_list_attachment = article.get_image_list_pdf()
         data = []
         data_attachment = []
         for img in img_list_images:
@@ -114,21 +121,19 @@ def get_article_images(request):
             image['file_name'] = img.file_name
             data.append(image)
 
-        # for img in img_list_attachment:
-        #     image = {}
-        #     image['image'] = img.image
-        #     image['thumb'] = img.thumb
-        #     image['id'] = img.id
-        #     image['alt'] = img.alt_value
-        #     image['article_id'] = article.id
-        #     image['file_name'] = img.file_name
-        #     data_attachment.append(image)
-
-
+        for img in img_list_attachment:
+            image = {}
+            image['image'] = img.image
+            image['thumb'] = img.thumb
+            image['id'] = img.id
+            image['alt'] = img.alt_value
+            image['article_id'] = article.id
+            image['file_name'] = img.file_name
+            data_attachment.append(image)
 
         result['success'] = True
         result['image_list'] = data
-        # result['image_attachment'] = data_attachment
+        result['image_attachment'] = data_attachment
         return JsonResponse(result)
     else:
         raise Http404
@@ -144,6 +149,12 @@ def view_blog_list(request, category_id=None, tdk=None):
     ctx['menu_products'] = get_menu_products()
     ctx['page_name'] = 'Blog'
 
+    def get_all_top_menu():
+        top_menu_list = Menu.objects.filter(parent=None)
+        return top_menu_list
+
+    top_menu_list = get_all_top_menu()
+    ctx['menu_list'] = top_menu_list
     if tdk:
         customize_tdk(ctx, tdk)
 

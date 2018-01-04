@@ -1,86 +1,103 @@
 {% extends "admin/default/content_base.html" %}
 {% block breadcrumbs %}
     <section class="content-header">
-        <h1>留言管理</h1>
-        <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
-            <li class="active"><a href="#">留言管理</a></li>
-        </ol>
+        <h1>询盘详情<span class="box-subtitle">询盘管理</span></h1>
     </section>
 {% endblock %}
 
 {% block main %}
     {% load i18n %}
     {% load shopcart_extras %}
+    <script>
+        document.body.style.backgroundColor = "#f0f0f0";
+    </script>
     <section class="content">
         <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
         <div class="row">
-            <div class="col-md-12">
-                <div class="box xy-search">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">留言查询</h3>
-                        <table class="table message-detail-table">
-                            <tbody>
-                            <tr>
-                                <td>Email:</td>
-                                <td>{{ inquiry.email }}</td>
-                            </tr>
-                            <tr>
-                                <td>姓名:</td>
-                                <td>{{ inquiry.name }}</td>
-                            </tr>
-                            <tr>
-                                <td>留言时间:</td>
-                                <td>{{ inquiry.create_time|date:"Y-m-d H:i:s" }}</td>
-                            </tr>
-                            <tr>
-                                <td>IP:</td>
-                                <td>{{ inquiry.ip_address|default:'未能获取对方IP' }}</td>
-                            </tr>
-                            <tr>
-                                <td>留言标题:</td>
-                                <td>{{ inquiry.title|default:"未填写" }}</td>
-                            </tr>
-                            <tr>
-                                <td>留言内容:</td>
-                                <td>{{ inquiry.message }}
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+            <div class="box xy-list inquiry-detail">
+                <div class="box-header with-border">
+                    <h1 class="inquiry-detail-title">询盘详情</h1>
+                    <div class="inquiry-detail-content">
+                        <div class="col-md-6">
+                            <div class="inquiry-detail-list">
+                                <span>Email</span>
+                                <span>{{ inquiry.email }}</span>
+                            </div>
+                            <div class="inquiry-detail-list">
+                                <span>用户名</span>
+                                <span></span>
+                            </div>
+                            <div class="inquiry-detail-list">
+                                <span>姓名</span>
+                                <span>{{ inquiry.name }}</span>
+                            </div>
+
+                            <div class="inquiry-detail-list">
+                                <span>公司名称</span>
+                                <span>{{ inquiry.company }}</span>
+                            </div>
+                            <div class="inquiry-detail-list">
+                                <span>标题</span>
+                                <span>{{ inquiry.title }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="inquiry-detail-list">
+                                <span>留言类型</span>
+                                <span>
+                        {% if inquiry.type == 'contact' %}
+                            用户留言
+                        {% elif inquiry.type == 'quote' %}
+                            产品询盘
+                        {% else %}
+                            邮件订阅
+                        {% endif %}
+                        </span>
+                            </div>
+                            <div class="inquiry-detail-list">
+                                <span>IP</span>
+                                <span>{{ inquiry.ip_address|default:'未能获取对方IP' }}</span>
+                            </div>
+                            <div class="inquiry-detail-list">
+                                <span>国家</span>
+                                <span></span>
+                            </div>
+                            <div class="inquiry-detail-list">
+                                <span>留言时间</span>
+                                <span>{{ inquiry.title|default:"未填写" }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="inquiry-detail-list">
+                                <span>内容</span>
+                                <span>{{ inquiry.message }}</span>
+                            </div>
+                        </div>
                     </div>
+                    <h1 class="inquiry-detail-title2">产品信息</h1>
+                    <table class="table message-detail-table-content">
+                        <tbody>
+                        <tr>
+                            <th>图片</th>
+                            <th>名称</th>
+                            <th>编号</th>
+                            <th>SKU</th>
+                            <th>数量</th>
+                        </tr>
+                        {% for op in inquiry_products %}
+                            <tr>
+                                <td><img src="{{ op.thumb }}"></td>
+                                <td><a href="/product/{{ op.product_id }}/"
+                                       target="_blank">{{ op.name }}</a></td>
+                                <td>{{ op.item_number }}</td>
+                                <td>{{ op.product_attribute_name }}</td>
+                                <td>{{ op.quantity }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
-
-            {% if inquiry_products %}
-                <div class="col-md-12">
-                    <div class="box xy-list">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">产品信息</h3>
-                        </div>
-                        <table class="table message-detail-table-content">
-                            <tbody>
-                            <tr>
-                                <th>商品图片:</th>
-                                <th>名称:</th>
-                                <th>数量:</th>
-                                <th>SKU:</th>
-                            </tr>
-                            {% for op in inquiry_products %}
-                                <tr>
-                                    <td><img src="{{ op.thumb }}"></td>
-                                    <td><a href="/product/{{ op.product_id }}/"
-                                           target="_blank">{{ op.name }}</a></td>
-                                    <td>{{ op.quantity }}</td>
-                                    <td>{{ op.product_attribute_name }}</td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-
-                </div>
-            {% endif %}
         </div>
     </section>
 {% endblock %}

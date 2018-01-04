@@ -455,14 +455,8 @@ jQuery(".article-batch-oper").click(function (e) {
     }
 
     if (method == 'delete') {
-        console.log("进入删除");
-        var $myform = $("<form>", {
-            id: 'article_batch_form',
-        });
-        var $input = $("<input>", {
-            name: 'method',
-            value: 'delete',
-        }).appendTo($myform);
+        var $myform = $("<form>", {id: 'article_batch_form'});
+        var $input = $("<input>", {name: 'method', value: 'delete'}).appendTo($myform);
 
         //判断来自单条删除的还是批量的删除 
         var article_id = $(this).data("article-id");
@@ -470,17 +464,10 @@ jQuery(".article-batch-oper").click(function (e) {
         if ("batch" == article_id) {
             //批量的
             $("#main-content-table").find("input[type='checkbox']:checked").each(function () {
-                var $input = $("<input>", {
-                    name: 'is_oper',
-                    value: $(this).val(),
-                }).appendTo($myform);
+                var $input = $("<input>", {name: 'is_oper', value: $(this).val()}).appendTo($myform);
             });
-
         } else {
-            var $input = $("<input>", {
-                name: 'is_oper',
-                value: article_id,
-            }).appendTo($myform);
+            var $input = $("<input>", {name: 'is_oper', value: article_id}).appendTo($myform);
         }
 
         $.ajax({
@@ -579,10 +566,12 @@ jQuery("#article-detail-info-submit-btn").click(function (event) {
         },
         success: function (data) {
             $("#infoMessage").html(data.message);
-            $("#myModal").modal('toggle');
             if (data.success == true) {
-                ;
+                $('#myModal').on('hidden.bs.modal', function (e) {
+                    location.reload(true);
+                })
             }
+            $("#myModal").modal('toggle');
         }
     });
 });
@@ -1023,9 +1012,6 @@ jQuery("#product-attribute-submit-btn").click(function () {
                 var newurl = changeURLArg(url, "tab_name", "tag_sku");
                 location.href = newurl;//跳转到对应的页面
             });
-
-            $("#myModal").modal('toggle');
-
         }
     });
 
@@ -1748,7 +1734,6 @@ jQuery("#article_main_picture_show2").on('click', ".set-picture-attr", function 
 
 // 附件删除
 jQuery("#product_main_picture_show2").on('click', ".set-picture-attr", function (event) {
-    console.log("jinru");
     event.preventDefault();
     var img_url = $(this).data("image-url");
     var type = $(this).data("image-type");
@@ -2358,6 +2343,32 @@ jQuery(".category-batch-oper").click(function (e) {
         type: "POST",
         url: url,
         data: $("#category_batch_form").serialize(),
+        async: false,
+        error: function (request) {
+            alert("System error");
+        },
+        success: function (data) {
+            $("#infoMessage").html(data.message);
+            if (data.success == true) {
+                $('#myModal').on('hidden.bs.modal', function (e) {
+                    var newurl = location.href;
+                    location.href = newurl;
+                })
+            }
+            $("#myModal").modal('toggle');
+        }
+    });
+});
+
+//菜单排序
+jQuery(".menu-set_order").click(function (e) {
+    var url = "/admin/menu-sort/";
+    console.log('进入菜单排序JS ');
+    $.ajax({
+        cache: false,
+        type: "POST",
+        url: url,
+        data: $("#menu_batch_form").serialize(),
         async: false,
         error: function (request) {
             alert("System error");

@@ -1,8 +1,8 @@
 # coding=utf-8
 from django.shortcuts import render, redirect
-from shopcart.models import Article, System_Config, Album, ArticleBusiCategory, Recruit
+from shopcart.models import Article, System_Config, Album, ArticleBusiCategory, Recruit, Menu
 from shopcart.forms import recruit_basic_info_form
-from shopcart.utils import my_pagination, get_serial_number, get_system_parameters
+from shopcart.utils import my_pagination, get_serial_number, get_system_parameters, customize_tdk
 from django.http import HttpResponse, JsonResponse, Http404
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.admin.views.decorators import staff_member_required
@@ -21,11 +21,18 @@ def get_page_size():
         size = 8
     return size
 
+
 def detail(request, id):
     ctx = {}
     ctx['system_para'] = get_system_parameters()
 
+    def get_all_top_menu():
+        top_menu_list = Menu.objects.filter(parent=None)
+        return top_menu_list
 
+    top_menu_list = get_all_top_menu()
+
+    ctx['menu_list'] = top_menu_list
     if request.method == 'GET':
         try:
             try:
@@ -36,7 +43,6 @@ def detail(request, id):
                 logger.error('找不到编号为 %s 。' % [id, ])
                 raise Http404
 
-
             return TemplateResponse(request, System_Config.get_template_name() + '/recruit_detail.html', ctx)
         except Exception as err:
             logger.error("Can not find artice which id is %s . \n Error message: %s" % (id, err))
@@ -44,11 +50,21 @@ def detail(request, id):
     else:
         raise Http404
 
-def view_list_view(request):
+
+def view_list_view(request, tdk=None):
     ctx = {}
     ctx['system_para'] = get_system_parameters()
-    if request.method == 'GET':
 
+    def get_all_top_menu():
+        top_menu_list = Menu.objects.filter(parent=None)
+        return top_menu_list
+
+    top_menu_list = get_all_top_menu()
+
+    ctx['menu_list'] = top_menu_list
+    if tdk:
+        customize_tdk(ctx, tdk)
+    if request.method == 'GET':
         all = Recruit.objects.all().order_by('-sort_order')
 
         page_size = get_page_size()
@@ -72,4 +88,3 @@ def view_list_view(request):
         return TemplateResponse(request, System_Config.get_template_name() + '/recruit_list.html', ctx)
     else:
         raise Http404
-

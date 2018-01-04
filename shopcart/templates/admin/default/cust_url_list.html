@@ -25,18 +25,27 @@
                             <tr>
                                 <th>页面类型</th>
                                 <th>页面名称</th>
-                                <th>网页标题</th>
+                                <th>网页Title</th>
                                 <th>URL</th>
                                 <th>操作</th>
                             </tr>
                             {% for url in url_list %}
                                 <tr>
-                                    <td>系统默认</td>
+                                    {% if url.name == 'recruit' %}
+                                        <td>功能页面</td>
+                                    {% else %}
+                                        <td>系统默认</td>
+                                    {% endif %}
                                     <td><a href="../customize-url-detail/{{ url.id }}/">{{ url.name }}</a></td>
                                     <td><a href="../customize-url-detail/{{ url.id }}/">{{ url.page_name }}</a></td>
                                     <td><a href="../customize-url-detail/{{ url.id }}/">{{ url.url }}</a></td>
                                     <td data="message_list1"><a href="{{ url.get_url }}" target="_blank">预览</a> | <a
-                                            href="../customize-url-detail/{{ url.id }}/">编辑</a></td>
+                                            href="../customize-url-detail/{{ url.id }}/">编辑</a>
+                                        {% if url.name == 'recruit' %}
+                                            | <a href="../recruit-list/">管理</a>
+                                        {% endif %}
+                                    </td>
+
                                 </tr>
                             {% endfor %}
                             {% for article in article_list %}
@@ -57,7 +66,7 @@
                             {% endfor %}
                             </tbody>
                         </table>
-                        <a href="../article-edit/?method=cust_page"  class="btn btn-primary cust-url-list-add" >新增</a>
+                        <a href="../article-edit/?method=cust_page" class="btn btn-primary cust-url-list-add">新增</a>
                     </div>
                 </div>
             </div>

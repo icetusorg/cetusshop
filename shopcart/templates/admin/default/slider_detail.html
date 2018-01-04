@@ -1,7 +1,7 @@
 {% extends "admin/default/content_base.html" %}
 {% block breadcrumbs %}
     <section class="content-header">
-        <h1>幻灯片管理</h1>
+        <h1>图片展示 <span class="box-subtitle">插件管理</span></h1>
     </section>
 {% endblock %}
 
@@ -25,23 +25,31 @@
                         <input type="text" class="form-control " name="name" value="{{ slider.name }}">
                     </div>
                     <div class="item add-product-tree article-add-title plug-in-slider-detail-save">
-                        <button type="button" class="btn btn-primary" data-id="{{ slider.id }}"
+                        <label></label>
+                        <button type="button" class="btn btn-primary index-img-add-btn" data-id="{{ slider.id }}"
                                 id="slider_detail_submit_btn">保存
                         </button>
                     </div>
                     <div class="item add-product-tree ">
-                        <button type="button" class="btn btn-primary cd-popup-trigger" data-type="slider"
-                                data-id="{{ slider.id }}">上传图片
+                        <label></label>
+                        <button type="button" class="btn btn-primary cd-popup-trigger index-img-add-btn"
+                                data-type="slider"
+                                data-id="{{ slider.id }}">添加图片
                         </button>
                     </div>
                     <div id="slider_main_picture_show" class="item product-images plug-in-slider-detail-img">
+                        <label></label>
                         {% for img in slider.get_image_list %}
                             <div class="images article-images-list col-md-1">
                                 <a href="{{ img.image }}" target="_blank"><img src="{{ img.thumb }}"></a>
-                                <a href="#" class="set-picture-attr" data-method="delete" data-id="{{ img.id }}"
+                                <a href="#" class="set-picture-attr point" data-method="delete" data-id="{{ img.id }}"
                                    data-slider-id="{{ slider.id }}" data-image-type="slider">删除 </a>
                             </div>
                         {% endfor %}
+                    </div>
+                    <div class="item index-img-bottom-btn">
+                        <label></label>
+                        <button type="button" onclick="javascript:window.location.href='/admin/slider-list/'" class="btn btn-primary index-img-add-btn">提交</button>
                     </div>
                 </div>
             </form>

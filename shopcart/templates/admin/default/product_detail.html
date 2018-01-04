@@ -55,6 +55,8 @@
                         <div class="item product-btn-item">
                             <label>产品名称<span class="point">*</span></label>
                             <input type="text" name="name" class="form-control" value="{{ product.name }}">
+                            <input type="hidden" name="min_order_quantity" value="1">
+                            <input type="hidden" name="quantity" value="999999">
                             <button type="button" class="btn btn-primary " id="product-basic-info-submit-btn-title">保存</button>
                         </div>
                         <div class="item"><label>编号</label><input type="text" name="item_number" class="form-control product-item-number"
@@ -288,8 +290,6 @@
 
                         <div class="submit-item">
                             <input type="hidden" name="id" value="{{ product.id }}">
-                            <input type="hidden" name="min_order_quantity" value="1">
-                            <input type="hidden" name="quantity" value="999999">
                             <button id="product-detail-info-submit-btn" type="button"
                                     class="btn btn-primary next-steep product-add-btn">
                                 保存

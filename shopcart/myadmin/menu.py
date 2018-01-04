@@ -74,31 +74,18 @@ def ajax_add_menu(request):
 
 @staff_member_required
 @transaction.atomic()
-def edit(request):
+def edit(request, id):
     ctx = {}
     ctx['system_para'] = get_system_parameters()
     ctx['page_name'] = '菜单管理'
 
-    if request.method == 'GET':
-
-        try:
-            id = request.GET.get('id', '')
-            menu = Menu.objects.get(id=id)
-        except Exception as err:
-            logger.error('Can not find Category which id is [%s].\n Error Message: %s' % (id, err))
-            menu = None
-
-        ctx['menu'] = menu
-        return TemplateResponse(request, System_Config.get_template_name('admin') + '/menu_detail.html', ctx)
-    elif request.method == 'POST':
+    if request.method == 'POST':
         result = {}
         result['success'] = False
         result['message'] = '菜单信息保存失败'
 
         menu = None
-
         try:
-            id = request.POST.get('id', '')
             menu = Menu.objects.get(id=id)
         except Exception as err:
             logger.info('Can not find category which id is [%s]. Create one. \n Error Message: %s' % (id, err))
@@ -109,7 +96,6 @@ def edit(request):
             form = menu_form(request.POST)
         # form = category_simple_form(request.POST)
 
-        logger.debug("测试")
         logger.debug('name:' + request.POST.get('name'))
 
         if form.is_valid():
@@ -122,6 +108,35 @@ def edit(request):
 
         return JsonResponse(result)
 
+    else:
+        raise Http404
+
+
+@staff_member_required
+@transaction.atomic()
+def sort(request):
+    if request.method == 'POST':
+        result = {}
+        id_list = request.POST.getlist('selected')
+        logger.error('id_list %s' % id_list)
+        for id in id_list:
+            try:
+                menu = Menu.objects.get(id=id)
+            except Exception as err:
+                logger.error('Can not find menu %s .\n Error Message: %s' % (id, err))
+                menu = None
+            if menu:
+                try:
+                    sort = request.POST.get('sort_%s' % id)
+                except:
+                    sort = None
+                if sort:
+                    menu.sort_order = sort
+                    menu.save()
+        result['success'] = True
+        result['message'] = '菜单排序保存成功'
+
+        return JsonResponse(result)
     else:
         raise Http404
 

@@ -34,7 +34,6 @@ def detail(request, id=None):
     ctx['page_name'] = 'Inquiry Detail'
     try:
 
-
         inquiry = Inquiry.objects.get(id=id)
         ip = Inquiry_Products.objects.filter(inquiry=inquiry.id)
 

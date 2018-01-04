@@ -23,7 +23,7 @@ def order_report(request):
             logger.debug('today:%s' % date_time_util.datetime())
 
             date_list = []
-            for i in range(6):  # i in 0-7
+            for i in range(6):
                 date_list.append(date_time_util.get_today_only_month(-i))
 
             date_list.reverse()

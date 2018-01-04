@@ -90,7 +90,9 @@ def delete(request):
     result_dict['success'] = False
     result_dict['message'] = '表单填写的内容不合法，请检查。'
     if request.method == 'POST':
+        logger.info('进入删除')
         article_id_list = request.POST.getlist('is_oper', [])
+        logger.info('id %s' % article_id_list)
         count = 0
         if article_id_list:
             for id in article_id_list:
@@ -139,7 +141,7 @@ def detail(request, id):
         try:
             article = Article.objects.get(id=id)
             ctx['article'] = article
-            ctx['method'] = artice.category
+            ctx['method'] = article.category
             return TemplateResponse(request, System_Config.get_template_name('admin') + '/article_detail.html', ctx)
         except Exception as err:
             logger.error("Can not find artice which id is %s . \n Error message: %s" % (id, err))
@@ -222,20 +224,20 @@ def article_basic_edit(request):
         if form.is_valid():
             article = form.save()
 
-            # 只有属于博客类的文章才需要保存分类
-            if article.category == Article.ARTICLE_CATEGORY_BLOG:
-                category_id = request.POST.get('busi_category', '')
-                if category_id:
-                    try:
-                        category = ArticleBusiCategory.objects.get(id=category_id)
-                    except Exception as err:
-                        logger.error('Can not find article_busi_category [%s].\nError Message:%s' % (category_id, err))
-                        result['success'] = False
-                        result['message'] = '文章保存失败，请选择文章分类。'
-                        result['data'] = {}
-                        return JsonResponse(result)
-                    article.busi_category = category
-                    article.save()
+            # # 只有属于博客类的文章才需要保存分类
+            # if article.category == Article.ARTICLE_CATEGORY_BLOG:
+            #     category_id = request.POST.get('busi_category', '')
+            #     if category_id:
+            #         try:
+            #             category = ArticleBusiCategory.objects.get(id=category_id)
+            #         except Exception as err:
+            #             logger.error('Can not find article_busi_category [%s].\nError Message:%s' % (category_id, err))
+            #             result['success'] = False
+            #             result['message'] = '文章保存失败，请选择文章分类。'
+            #             result['data'] = {}
+            #             return JsonResponse(result)
+            #         article.busi_category = category
+            #         article.save()
 
             result['success'] = True
             result['message'] = '文章保存成功'
@@ -281,6 +283,20 @@ def article_detail_info_manage(request):
                     result['message'] = '自定义URL与%s商品重复！' % a.title
                     return JsonResponse(result)
             article = form.save()
+            # 只有属于博客类的文章才需要保存分类
+            if article.category == Article.ARTICLE_CATEGORY_BLOG:
+                category_id = request.POST.get('busi_category', '')
+                if category_id:
+                    try:
+                        category = ArticleBusiCategory.objects.get(id=category_id)
+                    except Exception as err:
+                        logger.error('Can not find article_busi_category [%s].\nError Message:%s' % (category_id, err))
+                        result['success'] = False
+                        result['message'] = '文章保存失败，请选择文章分类。'
+                        result['data'] = {}
+                        return JsonResponse(result)
+                    article.busi_category = category
+                    article.save()
             logger.debug('article:%s' % article.short_desc)
             result['success'] = True
             result['message'] = '文章详细信息保存成功'

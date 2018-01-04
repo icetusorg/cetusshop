@@ -187,6 +187,7 @@ def getyearandmonth_only(n=0):
     thisyear = int(year)
     thismon = int(mon)
     totalmon = thismon + n
+
     if (n >= 0):
         if (totalmon <= 12):
             totalmon = addzero(totalmon)
@@ -197,7 +198,10 @@ def getyearandmonth_only(n=0):
             if (j == 0):
                 i -= 1
                 j = 12
-            thisyear += i
+            if (i < 0):
+                thisyear -= 1
+            else:
+                thisyear += i
             j = addzero(j)
             return (str(thisyear), str(j))
     else:
@@ -210,7 +214,8 @@ def getyearandmonth_only(n=0):
             if (j == 0):
                 i -= 1
                 j = 12
-            thisyear += i
+            if (i < 0):
+                thisyear -= 1
             j = addzero(j)
             return (str(thisyear), str(j))
 

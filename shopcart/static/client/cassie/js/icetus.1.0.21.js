@@ -180,7 +180,7 @@ $(document).ready(function () {
     };
 
 
-//提交询盘问题
+    //提交询盘问题
     jQuery("#inquiry-submit").click(function (event) {
         event.preventDefault();
         var url = '/inquiry/add/';
@@ -207,6 +207,35 @@ $(document).ready(function () {
             }
         });
     });
+
+    //提交邮件订阅
+    jQuery("#email-inquiry-submit").click(function (event) {
+        event.preventDefault();
+        var url = '/inquiry/email-add/';
+        console.log("进入邮件订阅");
+        $.ajax({
+            beforeSend: function (xhr, settings) {
+                console.log("Start to set csrftoken.......");
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    console.log("Set the csrf token successful.");
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            },
+            cache: false,
+            type: "POST",
+            url: url,
+            data: $('#email_inquiryForm').serialize(),
+            async: false,
+            error: function (request) {
+                alert('Sorry.An error occured.Please try again.');
+            },
+            success: function (result) {
+                $("#infoMessage").html(result.message);
+                $("#myModal").modal('toggle');
+            }
+        });
+    });
+
 
     // 提交购物车询盘
     jQuery("#quote-submit").click(function (event) {

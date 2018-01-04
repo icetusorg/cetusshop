@@ -2,34 +2,84 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="91cd60c5-dbea-4579-97d4-fe20f2991676" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/article/18/attachment/2.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/article/18/attachment/675lt.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/article/18/attachment/911gt3rs.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/article/18/images/2.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/article/18/images/675lt.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/article/18/images/911gt3rs.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0001_initial.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0002_auto_20160930_1359.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0003_customizeurl.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0004_order_express_type_id.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0005_auto_20161019_1111.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0006_auto_20161128_1335.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0007_auto_20170503_1101.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0008_auto_20170830_1618.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0009_product_description_2.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0010_inquiry_phone.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0011_auto_20170831_1717.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0012_batchtaskmonitor.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0013_product_pdf.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0014_product_pdf_thumb.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0015_auto_20171121_1618.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0016_auto_20171122_0918.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0017_product_pdf.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0018_auto_20171123_1532.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0019_recruiting.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0020_auto_20171204_1059.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0021_auto_20171206_1401.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0022_recruit_static_file_name.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0023_visitor.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0024_auto_20171208_1622.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0025_remove_visitor_number.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0026_auto_20171218_0921.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0027_auto_20171218_0923.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0028_auto_20171219_1023.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0029_auto_20171220_1611.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0030_inquiry_products.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0031_inquiry_user.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/migrations/0032_menu.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/menu_detail.html" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/icetus/urls.py" afterPath="$PROJECT_DIR$/icetus/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/all.log" afterPath="$PROJECT_DIR$/logs/all.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/cart.py" afterPath="$PROJECT_DIR$/shopcart/cart.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/article.py" afterPath="$PROJECT_DIR$/shopcart/article.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/forms.py" afterPath="$PROJECT_DIR$/shopcart/forms.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/functions/date_time_util.py" afterPath="$PROJECT_DIR$/shopcart/functions/date_time_util.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/index.py" afterPath="$PROJECT_DIR$/shopcart/index.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/inquiry.py" afterPath="$PROJECT_DIR$/shopcart/inquiry.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/models.py" afterPath="$PROJECT_DIR$/shopcart/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/myadmin/article.py" afterPath="$PROJECT_DIR$/shopcart/myadmin/article.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/myadmin/inquiry.py" afterPath="$PROJECT_DIR$/shopcart/myadmin/inquiry.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/order.py" afterPath="$PROJECT_DIR$/shopcart/order.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/myadmin/menu.py" afterPath="$PROJECT_DIR$/shopcart/myadmin/menu.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/myadmin/report.py" afterPath="$PROJECT_DIR$/shopcart/myadmin/report.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/product.py" afterPath="$PROJECT_DIR$/shopcart/product.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/recruit.py" afterPath="$PROJECT_DIR$/shopcart/recruit.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/static/admin/default/css/style.css" afterPath="$PROJECT_DIR$/shopcart/static/admin/default/css/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/static/admin/default/js/iCetus-admin.1.17.0928.js" afterPath="$PROJECT_DIR$/shopcart/static/admin/default/js/iCetus-admin.1.17.0928.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/static/client/cassie/js/icetus.1.0.21.js" afterPath="$PROJECT_DIR$/shopcart/static/client/cassie/js/icetus.1.0.21.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/article_busi_category_list.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/article_busi_category_list.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/article_detail.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/article_detail.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/article_list.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/article_list.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/cust_url_detail.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/cust_url_detail.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/cust_url_list.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/cust_url_list.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/edit_menu.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/edit_menu.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/file_upload.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/file_upload.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/inquiry_detail.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/inquiry_detail.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/inquiry_list.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/inquiry_list.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/menu.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/menu.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/plug_list.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/plug_list.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/product_detail.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/product_detail.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/product_push_detail.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/product_push_detail.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/recruit_detail.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/recruit_detail.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/recruit_list.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/recruit_list.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/product_push_list.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/product_push_list.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/slider_detail.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/slider_detail.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/slider_list.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/slider_list.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/user_admin_detail.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/user_admin_detail.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/user_list.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/user_list.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/client/cassie/contact.html" afterPath="$PROJECT_DIR$/shopcart/templates/client/cassie/contact.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/client/cassie/footer.html" afterPath="$PROJECT_DIR$/shopcart/templates/client/cassie/footer.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/client/cassie/header.html" afterPath="$PROJECT_DIR$/shopcart/templates/client/cassie/header.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/client/cassie/product_detail.html" afterPath="$PROJECT_DIR$/shopcart/templates/client/cassie/product_detail.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/client/cassie/side_nav.html" afterPath="$PROJECT_DIR$/shopcart/templates/client/cassie/side_nav.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/client/cassie/quote.html" afterPath="$PROJECT_DIR$/shopcart/templates/client/cassie/quote.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/views.py" afterPath="$PROJECT_DIR$/shopcart/views.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -48,69 +98,25 @@
     <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
   </component>
   <component name="DockManager">
-    <window id="1">
+    <window id="3">
       <content type="file-editors">
         <state>
-          <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <leaf>
+            <file leaf-file-name="icetus.1.0.21.js" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/shopcart/static/client/cassie/js/icetus.1.0.21.js">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="356">
+                    <caret line="282" column="0" lean-forward="false" selection-start-line="282" selection-start-column="0" selection-end-line="282" selection-end-column="0" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
             <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/icetus/urls.py">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="340">
-                    <caret line="340" column="9" lean-forward="false" selection-start-line="340" selection-start-column="9" selection-end-line="340" selection-end-column="9" />
-                    <folding />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-            <file leaf-file-name="category_list.html" pinned="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/category_list.html">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="186">
-                    <caret line="119" column="13" lean-forward="false" selection-start-line="119" selection-start-column="13" selection-end-line="119" selection-end-column="13" />
-                    <folding />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-            <file leaf-file-name="category_detail.html" pinned="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/category_detail.html">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="186">
-                    <caret line="79" column="4" lean-forward="false" selection-start-line="79" selection-start-column="4" selection-end-line="79" selection-end-column="4" />
-                    <folding />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-            <file leaf-file-name="category.py" pinned="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/shopcart/category.py">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="280">
-                    <caret line="58" column="25" lean-forward="false" selection-start-line="58" selection-start-column="24" selection-end-line="58" selection-end-column="25" />
-                    <folding>
-                      <element signature="e#15#50#0" expanded="true" />
-                    </folding>
-                  </state>
-                </provider>
-              </entry>
-            </file>
-            <file leaf-file-name="order.py" pinned="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/shopcart/order.py">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="5940">
-                    <caret line="284" column="46" lean-forward="false" selection-start-line="284" selection-start-column="46" selection-end-line="284" selection-end-column="46" />
-                    <folding>
-                      <element signature="e#15#80#0" expanded="true" />
-                    </folding>
-                  </state>
-                </provider>
-              </entry>
-            </file>
-            <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/shopcart/models.py">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="486">
-                    <caret line="1623" column="87" lean-forward="false" selection-start-line="1623" selection-start-column="78" selection-end-line="1623" selection-end-column="87" />
+                  <state relative-caret-position="412">
+                    <caret line="119" column="69" lean-forward="false" selection-start-line="119" selection-start-column="69" selection-end-line="119" selection-end-column="69" />
                     <folding />
                   </state>
                 </provider>
@@ -119,43 +125,33 @@
             <file leaf-file-name="iCetus-admin.1.17.0928.js" pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/shopcart/static/admin/default/js/iCetus-admin.1.17.0928.js">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="459">
-                    <caret line="2305" column="35" lean-forward="true" selection-start-line="2305" selection-start-column="35" selection-end-line="2305" selection-end-column="35" />
+                  <state relative-caret-position="466">
+                    <caret line="1012" column="49" lean-forward="false" selection-start-line="1012" selection-start-column="49" selection-end-line="1012" selection-end-column="49" />
                     <folding>
-                      <element signature="e#13489#13791#0" expanded="false" />
+                      <element signature="e#12376#13101#0" expanded="false" />
                     </folding>
                   </state>
                 </provider>
               </entry>
             </file>
-            <file leaf-file-name="icetus.1.0.21.js" pinned="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/shopcart/static/client/cassie/js/icetus.1.0.21.js">
+            <file leaf-file-name="product_list_content.html" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/product_list_content.html">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="256">
-                    <caret line="154" column="42" lean-forward="true" selection-start-line="154" selection-start-column="42" selection-end-line="154" selection-end-column="42" />
-                    <folding />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-            <file leaf-file-name="order_view.html" pinned="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/shopcart/templates/client/cassie/order_view.html">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="1518">
-                    <caret line="69" column="102" lean-forward="false" selection-start-line="69" selection-start-column="102" selection-end-line="69" selection-end-column="102" />
-                    <folding />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-            <file leaf-file-name="category.py" pinned="false" current-in-tab="true">
-              <entry file="file://$PROJECT_DIR$/shopcart/myadmin/category.py">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="308">
-                    <caret line="118" column="37" lean-forward="true" selection-start-line="118" selection-start-column="37" selection-end-line="118" selection-end-column="37" />
+                  <state relative-caret-position="266">
+                    <caret line="92" column="47" lean-forward="true" selection-start-line="92" selection-start-column="47" selection-end-line="92" selection-end-column="47" />
                     <folding>
-                      <element signature="e#15#60#0" expanded="true" />
+                      <element signature="e#820#4816#0#HTML" expanded="false" />
                     </folding>
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="product_detail.html" pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/product_detail.html">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="242">
+                    <caret line="11" column="4" lean-forward="true" selection-start-line="11" selection-start-column="4" selection-end-line="13" selection-end-column="13" />
+                    <folding />
                   </state>
                 </provider>
               </entry>
@@ -168,46 +164,49 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="forms.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/shopcart/forms.py">
+      <file leaf-file-name="inquiry_list.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/inquiry_list.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="511">
-              <caret line="281" column="20" lean-forward="true" selection-start-line="281" selection-start-column="20" selection-end-line="281" selection-end-column="20" />
-              <folding>
-                <element signature="e#23#47#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="edit_menu.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/edit_menu.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
-              <caret line="287" column="34" lean-forward="false" selection-start-line="287" selection-start-column="34" selection-end-line="287" selection-end-column="34" />
+            <state relative-caret-position="396">
+              <caret line="66" column="35" lean-forward="true" selection-start-line="66" selection-start-column="35" selection-end-line="66" selection-end-column="35" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="menu_detail.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/menu_detail.html">
+      <file leaf-file-name="inquiry_detail.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/inquiry_detail.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-594">
-              <caret line="3" column="44" lean-forward="false" selection-start-line="3" selection-start-column="44" selection-end-line="3" selection-end-column="44" />
+            <state relative-caret-position="519">
+              <caret line="94" column="33" lean-forward="true" selection-start-line="94" selection-start-column="33" selection-end-line="94" selection-end-column="33" />
+              <folding>
+                <element signature="n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#section#1;n#!!top" expanded="false" />
+                <element signature="n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#section#1;n#!!top" expanded="false" />
+                <element signature="n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#section#1;n#!!top" expanded="false" />
+                <element signature="n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#section#1;n#!!top" expanded="false" />
+                <element signature="n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#section#1;n#!!top" expanded="false" />
+                <element signature="n#div#3;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#section#1;n#!!top" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/shopcart/static/admin/default/css/style.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="519">
+              <caret line="5177" column="22" lean-forward="true" selection-start-line="5177" selection-start-column="22" selection-end-line="5177" selection-end-column="22" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="menu.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/shopcart/myadmin/menu.py">
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/shopcart/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="135" column="29" lean-forward="true" selection-start-line="135" selection-start-column="29" selection-end-line="135" selection-end-column="29" />
-              <folding>
-                <element signature="e#0#45#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="509">
+              <caret line="1269" column="15" lean-forward="false" selection-start-line="1269" selection-start-column="4" selection-end-line="1269" selection-end-column="15" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -224,36 +223,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>user</find>
-      <find>carts-goods-img</find>
-      <find>Info</find>
-      <find>quote/add</find>
-      <find>checkOutLink</find>
-      <find>cart_to_order_form</find>
-      <find>logger</find>
-      <find>quote-submit</find>
-      <find>cate</find>
-      <find>url</find>
-      <find>deleteInput</find>
-      <find>admin/ajax_add_category</find>
-      <find>Menu</find>
-      <find>sort</find>
-      <find>code</find>
-      <find>categorySubmit</find>
-      <find>categorySort</find>
-      <find>admin/ajax_add_menu</find>
-      <find>category_list</find>
-      <find>category_util</find>
-      <find>category-btn-save</find>
-      <find>category</find>
-      <find>category_detail_submit_btn</find>
-      <find>admin/category-edit</find>
-      <find>category_form</find>
-      <find>category-edit</find>
-      <find>deleteCategory</find>
-      <find>category-detele</find>
-      <find>分类</find>
-      <find>childrens</find>
+      <find>log</find>
+      <find>article-batch-oper</find>
+      <find>delete</find>
+      <find>product-batch-delete</find>
+      <find>batch</find>
+      <find>article-delete</find>
+      <find>article-detail-info-submit-btn</find>
+      <find>article_id</find>
+      <find>reload</find>
+      <find>menu-list</find>
+      <find>inquiry/add</find>
+      <find>email_inquiry_form</find>
+      <find>inquiryForm</find>
+      <find>inquiry/email-add</find>
+      <find>email-inquiry-submit</find>
+      <find>进入邮件订阅</find>
+      <find>Sorry.An error occured.Please try again</find>
+      <find>xhr</find>
+      <find>inquiry-submit</find>
+      <find>form-horizontal</find>
+      <find>add-to-emaillist</find>
+      <find>email-list/add/</find>
+      <find>product-detail-info-submit-btn</find>
+      <find>product-attribute-submit-btn</find>
+      <find>inquiry-list</find>
+      <find>inqu</find>
+      <find>inquiry-detail</find>
+      <find>message-detail-table-content</find>
+      <find>prod</find>
+      <find>product</find>
     </findStrings>
     <replaceStrings>
       <replace>recruit</replace>
@@ -279,57 +278,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/product_list_modal_win.html" />
-        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/product_para_list_content.html" />
-        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/album_modal_win.html" />
-        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/product_para_detail.html" />
-        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/product_sku_group_list.html" />
-        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/product_sku_group_detail.html" />
-        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/file_upload.html" />
-        <option value="$PROJECT_DIR$/shopcart/myadmin/article.py" />
-        <option value="$PROJECT_DIR$/shopcart/article.py" />
-        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/cust_url_list.html" />
-        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/category_detail.html" />
-        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/article_busi_category_detail.html" />
-        <option value="$PROJECT_DIR$/shopcart/templates/client/cassie/base.html" />
-        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/category_list.html" />
-        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/product_list_content.html" />
-        <option value="$PROJECT_DIR$/shopcart/static/admin/default/js/iCetus-admin.1.17.0928.js" />
-        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/article_list.html" />
-        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/article_busi_category_list.html" />
-        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/product_detail.html" />
-        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/product_push_detail.html" />
-        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/article_detail.html" />
         <option value="$PROJECT_DIR$/shopcart/templates/admin/default/user_list.html" />
         <option value="$PROJECT_DIR$/shopcart/templates/admin/default/user_admin_detail.html" />
         <option value="$PROJECT_DIR$/shopcart/templates/admin/default/recruit_list.html" />
         <option value="$PROJECT_DIR$/shopcart/templates/admin/default/recruit_detail.html" />
-        <option value="$PROJECT_DIR$/shopcart/static/admin/default/css/style.css" />
         <option value="$USER_HOME$/Desktop/911/NEWTYPE.py" />
-        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/slider_list.html" />
-        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/slider_detail.html" />
         <option value="$PROJECT_DIR$/shopcart/cart.py" />
         <option value="$PROJECT_DIR$/shopcart/templates/client/cassie/cart_detail.html" />
-        <option value="$PROJECT_DIR$/shopcart/templates/client/cassie/product_detail.html" />
-        <option value="$PROJECT_DIR$/shopcart/static/client/cassie/js/icetus.1.0.21.js" />
         <option value="$PROJECT_DIR$/shopcart/templates/client/cassie/check_out.html" />
         <option value="$PROJECT_DIR$/shopcart/order.py" />
-        <option value="$PROJECT_DIR$/shopcart/myadmin/inquiry.py" />
         <option value="$PROJECT_DIR$/shopcart/templates/client/cassie/side_nav.html" />
         <option value="$PROJECT_DIR$/shopcart/templates/client/cassie/inquiry.html" />
         <option value="$PROJECT_DIR$/shopcart/templates/client/cassie/inquiry_view.html" />
-        <option value="$PROJECT_DIR$/shopcart/inquiry.py" />
-        <option value="$PROJECT_DIR$/shopcart/templates/client/cassie/quote.html" />
-        <option value="$PROJECT_DIR$/shopcart/templates/client/cassie/contact.html" />
-        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/inquiry_detail.html" />
+        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/menu_detail.html" />
+        <option value="D:/icetus/trunk/1设计文档/模板原始设计/后台/HTML/categorys-list.html" />
+        <option value="$PROJECT_DIR$/shopcart/templates/client/cassie/header.html" />
+        <option value="$PROJECT_DIR$/shopcart/index.py" />
+        <option value="$PROJECT_DIR$/shopcart/myadmin/report.py" />
+        <option value="$PROJECT_DIR$/shopcart/functions/date_time_util.py" />
+        <option value="$PROJECT_DIR$/shopcart/myadmin/menu.py" />
+        <option value="$PROJECT_DIR$/shopcart/product.py" />
         <option value="$PROJECT_DIR$/shopcart/templates/admin/default/menu.html" />
+        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/file_upload.html" />
+        <option value="$PROJECT_DIR$/shopcart/article.py" />
+        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/product_detail.html" />
+        <option value="$PROJECT_DIR$/shopcart/views.py" />
+        <option value="$PROJECT_DIR$/shopcart/recruit.py" />
+        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/cust_url_list.html" />
+        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/slider_detail.html" />
+        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/product_push_list.html" />
+        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/slider_list.html" />
         <option value="$PROJECT_DIR$/shopcart/templates/admin/default/plug_list.html" />
+        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/product_push_detail.html" />
+        <option value="$PROJECT_DIR$/shopcart/myadmin/article.py" />
+        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/article_list.html" />
+        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/article_detail.html" />
+        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/edit_menu.html" />
+        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/cust_url_detail.html" />
         <option value="$PROJECT_DIR$/shopcart/models.py" />
         <option value="$PROJECT_DIR$/shopcart/forms.py" />
-        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/menu_detail.html" />
         <option value="$PROJECT_DIR$/icetus/urls.py" />
-        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/edit_menu.html" />
-        <option value="$PROJECT_DIR$/shopcart/myadmin/menu.py" />
+        <option value="$PROJECT_DIR$/shopcart/static/client/cassie/js/icetus.1.0.21.js" />
+        <option value="$PROJECT_DIR$/shopcart/templates/client/cassie/contact.html" />
+        <option value="$PROJECT_DIR$/shopcart/inquiry.py" />
+        <option value="$PROJECT_DIR$/shopcart/templates/client/cassie/quote.html" />
+        <option value="$PROJECT_DIR$/shopcart/static/admin/default/js/iCetus-admin.1.17.0928.js" />
+        <option value="$PROJECT_DIR$/shopcart/templates/client/cassie/footer.html" />
+        <option value="$PROJECT_DIR$/shopcart/templates/client/cassie/product_detail.html" />
+        <option value="$PROJECT_DIR$/shopcart/myadmin/inquiry.py" />
+        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/inquiry_list.html" />
+        <option value="$PROJECT_DIR$/shopcart/static/admin/default/css/style.css" />
+        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/inquiry_detail.html" />
       </list>
     </option>
   </component>
@@ -363,7 +362,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -405,70 +403,13 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cetusshop" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cetusshop" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="shopcart" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="default" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cetusshop" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cetusshop" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="shopcart" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="myadmin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cetusshop" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cetusshop" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="icetus" />
+              <option name="myItemId" value="migrations" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -819,9 +760,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11302083" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11302083" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16084656" sideWeight="0.50208336" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -856,287 +796,149 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/shopcart/promotion_impl/common_function.py">
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/article_busi_category_list.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
+        <state relative-caret-position="-1557">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/static/admin/default/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="753">
-          <caret line="4990" column="1" lean-forward="false" selection-start-line="4990" selection-start-column="1" selection-end-line="4990" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/product_detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="880">
-          <caret line="538" column="54" lean-forward="true" selection-start-line="538" selection-start-column="54" selection-end-line="538" selection-end-column="54" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Desktop/911/NEWTYPE.py" />
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/article_list.html">
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/article_busi_category_detail.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="10" column="4" lean-forward="false" selection-start-line="10" selection-start-column="4" selection-end-line="12" selection-end-column="13" />
+        <state relative-caret-position="638">
+          <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/functions/product_util_func.py">
+    <entry file="file://D:/icetus/trunk/3源代码/iCetus_孙祺/修改后文件/后台模板/file_upload.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+        <state relative-caret-position="3476">
+          <caret line="158" column="55" lean-forward="false" selection-start-line="158" selection-start-column="55" selection-end-line="158" selection-end-column="55" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/utils.py">
+    <entry file="file://$PROJECT_DIR$/shopcart/static/admin/default/js/upload.1.0.2.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="24" column="21" lean-forward="true" selection-start-line="24" selection-start-column="21" selection-end-line="24" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/icetus/trunk/3源代码/iCetus_孙祺/修改后文件/后台模板/article_detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="217">
+          <caret line="220" column="36" lean-forward="false" selection-start-line="220" selection-start-column="17" selection-end-line="220" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/myadmin/customize_url.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="71">
+          <caret line="35" column="55" lean-forward="true" selection-start-line="35" selection-start-column="55" selection-end-line="35" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/python/Lib/site-packages/django/shortcuts.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="305">
-          <caret line="139" column="4" lean-forward="false" selection-start-line="139" selection-start-column="4" selection-end-line="139" selection-end-column="4" />
+          <caret line="93" column="4" lean-forward="false" selection-start-line="93" selection-start-column="4" selection-end-line="93" selection-end-column="4" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/python/Lib/site-packages/django/contrib/auth/decorators.py">
+    <entry file="file://D:/python/Lib/importlib/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="305">
-          <caret line="39" column="4" lean-forward="false" selection-start-line="39" selection-start-column="4" selection-end-line="39" selection-end-column="4" />
+          <caret line="107" column="4" lean-forward="false" selection-start-line="107" selection-start-column="4" selection-end-line="107" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2017.1/system/python_stubs/-287100998/builtins.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="305">
+          <caret line="167" column="4" lean-forward="false" selection-start-line="167" selection-start-column="4" selection-end-line="167" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/index.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="45" column="52" lean-forward="true" selection-start-line="45" selection-start-column="52" selection-end-line="45" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="31" column="38" lean-forward="true" selection-start-line="31" selection-start-column="38" selection-end-line="31" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/article.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="26" column="56" lean-forward="false" selection-start-line="26" selection-start-column="56" selection-end-line="26" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/cust_url_list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="423">
+          <caret line="24" column="32" lean-forward="true" selection-start-line="24" selection-start-column="32" selection-end-line="24" selection-end-column="32" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/slider_detail.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="15" column="53" lean-forward="false" selection-start-line="15" selection-start-column="53" selection-end-line="15" selection-end-column="53" />
+        <state relative-caret-position="902">
+          <caret line="41" column="62" lean-forward="false" selection-start-line="41" selection-start-column="62" selection-end-line="41" selection-end-column="62" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/slider_list.html">
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/category_list.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="22" column="21" lean-forward="false" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
+        <state relative-caret-position="396">
+          <caret line="18" column="20" lean-forward="false" selection-start-line="18" selection-start-column="20" selection-end-line="20" selection-end-column="26" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/cassie/cart_detail.html">
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/product_push_detail.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="819">
-          <caret line="86" column="26" lean-forward="true" selection-start-line="70" selection-start-column="23" selection-end-line="86" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/check_code.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/myadmin/article.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2200">
-          <caret line="109" column="4" lean-forward="false" selection-start-line="109" selection-start-column="4" selection-end-line="109" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/myadmin/customize_url.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1342">
-          <caret line="75" column="40" lean-forward="false" selection-start-line="75" selection-start-column="40" selection-end-line="75" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/product_list_content.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1870">
-          <caret line="85" column="56" lean-forward="false" selection-start-line="85" selection-start-column="56" selection-end-line="85" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/icetus/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="333">
-          <caret line="154" column="52" lean-forward="false" selection-start-line="154" selection-start-column="52" selection-end-line="154" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/cassie/check_out.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="170" column="75" lean-forward="false" selection-start-line="170" selection-start-column="60" selection-end-line="170" selection-end-column="75" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/myadmin/order.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="40" column="87" lean-forward="false" selection-start-line="40" selection-start-column="81" selection-end-line="40" selection-end-column="87" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/cassie/product_detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="163" column="38" lean-forward="true" selection-start-line="163" selection-start-column="38" selection-end-line="163" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/myadmin/article_busi_category.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="684">
-          <caret line="164" column="36" lean-forward="false" selection-start-line="164" selection-start-column="36" selection-end-line="164" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/cart.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9746">
-          <caret line="457" column="32" lean-forward="false" selection-start-line="457" selection-start-column="32" selection-end-line="457" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/cassie/user_info.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/cassie/orders.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="24" column="31" lean-forward="false" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/cassie/side_nav.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="3" column="32" lean-forward="false" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/myadmin/inquiry.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-677">
-          <caret line="60" column="0" lean-forward="true" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/cassie/inquiry.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="27" column="61" lean-forward="false" selection-start-line="27" selection-start-column="61" selection-end-line="27" selection-end-column="61" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/cassie/inquiry_view.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="534">
-          <caret line="48" column="34" lean-forward="true" selection-start-line="48" selection-start-column="34" selection-end-line="48" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/cassie/product_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="22" column="57" lean-forward="true" selection-start-line="22" selection-start-column="57" selection-end-line="22" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/cassie/modal_win.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="9" column="24" lean-forward="false" selection-start-line="9" selection-start-column="20" selection-end-line="9" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/python/Lib/site-packages/django/db/transaction.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
-          <caret line="275" column="4" lean-forward="false" selection-start-line="275" selection-start-column="4" selection-end-line="275" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/inquiry.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="81" column="21" lean-forward="true" selection-start-line="81" selection-start-column="21" selection-end-line="81" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/cassie/contact.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1188">
-          <caret line="84" column="46" lean-forward="true" selection-start-line="84" selection-start-column="46" selection-end-line="84" selection-end-column="46" />
-          <folding>
-            <element signature="e#2798#2821#0#HTML" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/cassie/quote.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="731">
-          <caret line="113" column="39" lean-forward="true" selection-start-line="113" selection-start-column="39" selection-end-line="113" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/inquiry_detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="577">
-          <caret line="81" column="22" lean-forward="true" selection-start-line="81" selection-start-column="22" selection-end-line="81" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/order.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5940">
-          <caret line="284" column="46" lean-forward="false" selection-start-line="284" selection-start-column="46" selection-end-line="284" selection-end-column="46" />
-          <folding>
-            <element signature="e#15#80#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/cassie/order_view.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1518">
-          <caret line="69" column="102" lean-forward="false" selection-start-line="69" selection-start-column="102" selection-end-line="69" selection-end-column="102" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/menu.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1364">
-          <caret line="62" column="36" lean-forward="true" selection-start-line="62" selection-start-column="36" selection-end-line="62" selection-end-column="36" />
+        <state relative-caret-position="616">
+          <caret line="37" column="23" lean-forward="true" selection-start-line="37" selection-start-column="23" selection-end-line="37" selection-end-column="23" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/plug_list.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="35" column="71" lean-forward="true" selection-start-line="35" selection-start-column="71" selection-end-line="35" selection-end-column="71" />
+        <state relative-caret-position="484">
+          <caret line="22" column="57" lean-forward="false" selection-start-line="22" selection-start-column="57" selection-end-line="22" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/slider_list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="335">
+          <caret line="19" column="72" lean-forward="false" selection-start-line="19" selection-start-column="72" selection-end-line="19" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/product_push_list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="21" column="20" lean-forward="false" selection-start-line="21" selection-start-column="20" selection-end-line="23" selection-end-column="26" />
           <folding />
         </state>
       </provider>
@@ -1149,108 +951,265 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/category_detail.html">
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/file_upload.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="79" column="4" lean-forward="false" selection-start-line="79" selection-start-column="4" selection-end-line="79" selection-end-column="4" />
+        <state relative-caret-position="440">
+          <caret line="48" column="0" lean-forward="true" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/forms.py">
+    <entry file="file://$PROJECT_DIR$/shopcart/myadmin/product.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="511">
-          <caret line="281" column="20" lean-forward="true" selection-start-line="281" selection-start-column="20" selection-end-line="281" selection-end-column="20" />
-          <folding>
-            <element signature="e#23#47#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/category.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="58" column="25" lean-forward="false" selection-start-line="58" selection-start-column="24" selection-end-line="58" selection-end-column="25" />
-          <folding>
-            <element signature="e#15#50#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/static/admin/default/js/iCetus-admin.1.17.0928.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="2305" column="35" lean-forward="true" selection-start-line="2305" selection-start-column="35" selection-end-line="2305" selection-end-column="35" />
-          <folding>
-            <element signature="e#13489#13791#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/static/client/cassie/js/icetus.1.0.21.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="154" column="42" lean-forward="true" selection-start-line="154" selection-start-column="42" selection-end-line="154" selection-end-column="42" />
+        <state relative-caret-position="267">
+          <caret line="1323" column="34" lean-forward="true" selection-start-line="1323" selection-start-column="34" selection-end-line="1323" selection-end-column="34" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/menu_detail.html">
+    <entry file="file://$PROJECT_DIR$/shopcart/myadmin/article.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-594">
-          <caret line="3" column="44" lean-forward="false" selection-start-line="3" selection-start-column="44" selection-end-line="3" selection-end-column="44" />
+        <state relative-caret-position="462">
+          <caret line="93" column="61" lean-forward="false" selection-start-line="93" selection-start-column="61" selection-end-line="93" selection-end-column="61" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/edit_menu.html">
+    <entry file="file://$PROJECT_DIR$/shopcart/functions/date_time_util.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="287" column="34" lean-forward="false" selection-start-line="287" selection-start-column="34" selection-end-line="287" selection-end-column="34" />
+        <state relative-caret-position="90">
+          <caret line="193" column="35" lean-forward="false" selection-start-line="193" selection-start-column="35" selection-end-line="193" selection-end-column="35" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/icetus/urls.py">
+    <entry file="file://$PROJECT_DIR$/shopcart/myadmin/report.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="340" column="9" lean-forward="false" selection-start-line="340" selection-start-column="9" selection-end-line="340" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/category_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="119" column="13" lean-forward="false" selection-start-line="119" selection-start-column="13" selection-end-line="119" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="1623" column="87" lean-forward="false" selection-start-line="1623" selection-start-column="78" selection-end-line="1623" selection-end-column="87" />
+        <state relative-caret-position="44">
+          <caret line="26" column="56" lean-forward="false" selection-start-line="26" selection-start-column="56" selection-end-line="26" selection-end-column="56" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/shopcart/myadmin/category.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="118" column="37" lean-forward="true" selection-start-line="118" selection-start-column="37" selection-end-line="118" selection-end-column="37" />
+        <state relative-caret-position="110">
+          <caret line="70" column="4" lean-forward="false" selection-start-line="70" selection-start-column="4" selection-end-line="70" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/recruit.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="63" column="36" lean-forward="false" selection-start-line="63" selection-start-column="36" selection-end-line="63" selection-end-column="36" />
           <folding>
-            <element signature="e#15#60#0" expanded="true" />
+            <element signature="e#15#60#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/myadmin/menu.py">
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/article_detail.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="135" column="29" lean-forward="true" selection-start-line="135" selection-start-column="29" selection-end-line="135" selection-end-column="29" />
+        <state relative-caret-position="159">
+          <caret line="200" column="47" lean-forward="true" selection-start-line="200" selection-start-column="47" selection-end-line="200" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/cust_url_detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="24" column="61" lean-forward="false" selection-start-line="24" selection-start-column="61" selection-end-line="24" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/edit_menu.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="377">
+          <caret line="138" column="16" lean-forward="false" selection-start-line="138" selection-start-column="16" selection-end-line="138" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/migrations/0001_initial.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2178">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/cassie/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="682">
+          <caret line="58" column="65" lean-forward="true" selection-start-line="58" selection-start-column="65" selection-end-line="58" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="327">
+          <caret line="140" column="26" lean-forward="false" selection-start-line="140" selection-start-column="26" selection-end-line="140" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="537">
+          <caret line="251" column="24" lean-forward="false" selection-start-line="251" selection-start-column="6" selection-end-line="251" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/cassie/quote.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="103" column="81" lean-forward="false" selection-start-line="103" selection-start-column="81" selection-end-line="103" selection-end-column="81" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/icetus/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="412">
+          <caret line="119" column="69" lean-forward="false" selection-start-line="119" selection-start-column="69" selection-end-line="119" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/static/client/cassie/js/icetus.1.0.21.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="356">
+          <caret line="282" column="0" lean-forward="false" selection-start-line="282" selection-start-column="0" selection-end-line="282" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/cassie/footer.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="29" column="25" lean-forward="true" selection-start-line="29" selection-start-column="25" selection-end-line="29" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/static/admin/default/js/iCetus-admin.1.17.0928.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="466">
+          <caret line="1012" column="49" lean-forward="false" selection-start-line="1012" selection-start-column="49" selection-end-line="1012" selection-end-column="49" />
           <folding>
-            <element signature="e#0#45#0" expanded="true" />
+            <element signature="e#12376#13101#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/article_list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="949">
+          <caret line="124" column="68" lean-forward="false" selection-start-line="124" selection-start-column="68" selection-end-line="124" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/content_base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/cassie/product_detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="638">
+          <caret line="170" column="73" lean-forward="false" selection-start-line="170" selection-start-column="73" selection-end-line="170" selection-end-column="73" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/inquiry.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2464">
+          <caret line="112" column="20" lean-forward="true" selection-start-line="112" selection-start-column="20" selection-end-line="112" selection-end-column="20" />
+          <folding>
+            <element signature="e#15#80#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/myadmin/inquiry.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="89" column="47" lean-forward="false" selection-start-line="89" selection-start-column="47" selection-end-line="89" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/product_list_content.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="92" column="47" lean-forward="true" selection-start-line="92" selection-start-column="47" selection-end-line="92" selection-end-column="47" />
+          <folding>
+            <element signature="e#820#4816#0#HTML" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/cassie/contact.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1298">
+          <caret line="59" column="34" lean-forward="true" selection-start-line="59" selection-start-column="34" selection-end-line="59" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/product_detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="11" column="4" lean-forward="true" selection-start-line="11" selection-start-column="4" selection-end-line="13" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/inquiry_list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="66" column="35" lean-forward="true" selection-start-line="66" selection-start-column="35" selection-end-line="66" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/static/admin/default/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="519">
+          <caret line="5177" column="22" lean-forward="true" selection-start-line="5177" selection-start-column="22" selection-end-line="5177" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="509">
+          <caret line="1269" column="15" lean-forward="false" selection-start-line="1269" selection-start-column="4" selection-end-line="1269" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/inquiry_detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="519">
+          <caret line="94" column="33" lean-forward="true" selection-start-line="94" selection-start-column="33" selection-end-line="94" selection-end-column="33" />
+          <folding>
+            <element signature="n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#section#1;n#!!top" expanded="false" />
+            <element signature="n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#section#1;n#!!top" expanded="false" />
+            <element signature="n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#section#1;n#!!top" expanded="false" />
+            <element signature="n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#section#1;n#!!top" expanded="false" />
+            <element signature="n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#section#1;n#!!top" expanded="false" />
+            <element signature="n#div#3;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#section#1;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>

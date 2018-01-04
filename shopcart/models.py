@@ -1248,6 +1248,7 @@ class Inquiry(models.Model):
     create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建日期')
     update_time = models.DateTimeField(auto_now=True, verbose_name='更新日期')
     user = models.ForeignKey(MyUser, null=True, related_name='inquiry', verbose_name='用户')
+    type = models.CharField(max_length=100, null=True, verbose_name='询盘类型')
 
     def __str__(self):
         return self.name
@@ -1625,4 +1626,3 @@ class Menu(models.Model):
                                verbose_name='上级分类')
     create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
     update_time = models.DateTimeField(auto_now=True, verbose_name='更新时间')
-

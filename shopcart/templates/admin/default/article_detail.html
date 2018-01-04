@@ -17,35 +17,41 @@
     <section class="content">
         <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
         <div class="col-md-12 add-product ">
-            <ul class="tag">
-                <li class="active" data="tag_basic_info">基本信息</li>
-                <li data="tag_detail_info">详细信息</li>
-            </ul>
+            {#            <ul class="tag">#}
+            {#                <li class="active" data="tag_basic_info">基本信息</li>#}
+            {#                <li data="tag_detail_info">详细信息</li>#}
+            {#            </ul>#}
 
 
-            <div class="add-content active" id="tag_basic_info">
+            <div class="add-content active">
+                <h1 class="add-product-h1 add-product-seo-h1">基本信息</h1>
                 <div class="product-content">
                     <form id="article-basic-info-form">
                         <div class="item product-btn-item">
                             <label>{{ is_blog|yesno:"文章名称,页面名称" }}<span class="point">*</span></label>
                             <input type="text" value="{{ article.title }}" name="title" class="form-control ">
+                            <input type="hidden" name="breadcrumbs" value=""/>
+                            <input type="hidden" name="id" value="{{ article.id }}"/>
+                            <input type="hidden" name="category" value="{{ is_blog|yesno:"0,20" }}"/>
                             <button type="button" id="article-basic-info-submit-btn-title"
                                     class="btn btn-primary article-add-btn">保存
                             </button>
                         </div>
-                        {#                    <div class="item btn-item btn-item2">#}
-                        {#                        <label>自定义URL<span class="point">*</span>：</label><input type="text" name="static_file_name"#}
-                        {#                                                                                 value="{{ article.static_file_name|default:"" }}"#}
-                        {#                                                                                 class="form-control">#}
-                        {#                        <button type="button" id="static_file_name_advice" class="btn btn-primary">推荐</button>#}
-                        {#                    </div>#}
+                    </form>
+                    {#                    <div class="item btn-item btn-item2">#}
+                    {#                        <label>自定义URL<span class="point">*</span>：</label><input type="text" name="static_file_name"#}
+                    {#                                                                                 value="{{ article.static_file_name|default:"" }}"#}
+                    {#                                                                                 class="form-control">#}
+                    {#                        <button type="button" id="static_file_name_advice" class="btn btn-primary">推荐</button>#}
+                    {#                    </div>#}
 
-                        {#                    <div class="item item2"><label>网页标题：</label><input type="text" name="page_title"#}
-                        {#                                                                       class="form-control"#}
-                        {#                                                                       value="{{ article.page_title }}"></div>#}
-                        {#                    <div class="item item2"><label>关键字：</label><input type="text" name="keywords"#}
-                        {#                                                                      value="{{ article.keywords|default:"" }}"#}
-                        {#                                                                      class="form-control"></div>#}
+                    {#                    <div class="item item2"><label>网页标题：</label><input type="text" name="page_title"#}
+                    {#                                                                       class="form-control"#}
+                    {#                                                                       value="{{ article.page_title }}"></div>#}
+                    {#                    <div class="item item2"><label>关键字：</label><input type="text" name="keywords"#}
+                    {#                                                                      value="{{ article.keywords|default:"" }}"#}
+                    {#                                                                      class="form-control"></div>#}
+                    <form id="article-detail-info-form">
                         {% if is_blog %}
                             <div class="item add-product-tree">
                                 <label>分类</label>
@@ -77,9 +83,9 @@
                         </div>
 
                         {% if is_blog %}
-                        <div class="item article-sort "><label>排序号</label><input type="text" name="sort_order"
-                                                                                 value="{{ article.sort_order }}"
-                                                                                 class="form-control"></div>
+                            <div class="item article-sort "><label>排序号</label><input type="text" name="sort_order"
+                                                                                     value="{{ article.sort_order }}"
+                                                                                     class="form-control"></div>
                         {% endif %}
 
                         <div class="item">
@@ -105,26 +111,20 @@
                                        value="{{ article.detail_template }}">
                             </div>
                         </div>
-                        <div class="submit-item">
-                            <input type="hidden" name="breadcrumbs" value=""/>
-                            <input type="hidden" name="id" value="{{ article.id }}"/>
-                            <input type="hidden" name="category" value="{{ is_blog|yesno:"0,20" }}"/>
-                            <button type="button" id="article-basic-info-submit-btn"
-                                    class="btn btn-primary addPSubmit article-content-add-btn">
-                                保存
-                            </button>
-                        </div>
-                    </form>
+                        {#                        <div class="submit-item">#}
+                        {#                            <button type="button" id="article-basic-info-submit-btn"#}
+                        {#                                    class="btn btn-primary addPSubmit article-content-add-btn">#}
+                        {#                                保存#}
+                        {#                            </button>#}
+                        {#                        </div>#}
                 </div>
-            </div>
-
-            <div class="add-content" id="tag_detail_info">
+                <h1 class="add-product-h1 add-product-seo-h1">详细信息</h1>
                 <div class="product-content">
                     <div class="item add-product-tree article-add-title">
                         <h2>文章主图：</h2>
                         <button type="button" class="btn btn-primary cd-popup-trigger product-images-btn"
                                 data-type="article"
-                                data-id="{{ article.id }}">添加主图
+                                data-id="{{ article.id }}">添加
                         </button>
                     </div>
                     <div class="row">
@@ -153,35 +153,39 @@
                             {% endfor %}
                         </div>
                     </div>
-                    {#                <div class="item add-product-tree article-add-title">#}
-                    {#                    <h2>文章附件：</h2>#}
-                    {#                </div>#}
-                    {#                <div id="article_main_picture_show2" class="item product-images product-images2">#}
-                    {#                    {% for image in article.get_image_list_pdf %}#}
-                    {#                        <div class="images col-md-1 accessory-images-list2">#}
-                    {#                            <a href='{{ image.get_image_url }}' target="_blank"><img src='{{ image.thumb }}'#}
-                    {#                                                                                     alt='{{ image.alt_value }}'>#}
-                    {#                                <p>{{ image.file_name }}</p>#}
-                    {#                            </a>#}
-                    {#                            <div class="image-operaion">#}
-                    {#                                <a href="#" class="set-picture-attr-delete set-picture-attr" data-method="delete"#}
-                    {#                                   data-id="{{ image.id }}"#}
-                    {#                                   data-article-id="{{ article.id }}" data-image-type="article">删除 </a>#}
-                    {##}
-                    {#                            </div>#}
-                    {#                        </div>#}
-                    {#                    {% empty %}#}
-                    {#                        <p>There is no attachment at all.</p>#}
-                    {#                    {% endfor %}#}
-                    {#                </div>#}
-                    <form id="article-detail-info-form">
-                        <div class="item item-area">
-                            <label>详细描述:</label>
+                    {% if  article.get_image_list_pdf %}
+                        <div class="item add-product-tree article-add-title">
+                            <h2>文章附件：</h2>
                         </div>
-                        <div class="item item-area">
+                        <div id="article_main_picture_show2" class="item product-images product-images2">
+                            {% for image in article.get_image_list_pdf %}
+                                <div class="images col-md-1 accessory-images-list2">
+                                    <a href='{{ image.get_image_url }}' target="_blank"><img src='{{ image.thumb }}'
+                                                                                             alt='{{ image.alt_value }}'>
+                                        <p class="attachment-picture-title">{{ image.file_name }}</p>
+                                    </a>
+                                    <div class="image-operaion">
+                                        <a href="#" class="set-picture-attr-delete set-picture-attr attachment-picture"
+                                           data-method="delete"
+                                           data-id="{{ image.id }}"
+                                           data-article-id="{{ article.id }}" data-image-type="article">删除 </a>
+
+                                    </div>
+                                </div>
+                            {% empty %}
+                                <p>没有上传附件</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+
+                    <div class="item item-area">
+                        <label>详细描述:</label>
+                    </div>
+                    <div class="item item-area">
                         <textarea type="text" id="article_content_editor" name="content"
                                   class="form-control">{{ article.content|default:"" }}</textarea>
-                        </div>
+                    </div>
                 </div>
                 <h1 class="add-product-h1 add-product-seo-h1">SEO设置</h1>
                 <div class="product-content">
@@ -213,9 +217,12 @@
                         </button>
                     </div>
                 </div>
-
                 </form>
             </div>
+
+            {#            <div class="add-content" id="tag_detail_info">#}
+            {##}
+            {#            </div>#}
         </div>
     </section>
     {% include 'admin/default/album_modal_win.html' %}
@@ -296,22 +303,22 @@
                                 + '</div>'
                                 + '</div>';
                         });
-                        {#                        var tmpHtml2 = "";#}
-                        {#                        $.each(data.image_attachment, function (key, val) {#}
-                        {#                            console.log(key, val, this);#}
-                        {#                            console.log(this.image);#}
-                        {##}
-                        {#                            tmpHtml2 = tmpHtml2#}
-                        {#                                + '<div class="images col-md-1 accessory-images-list2">'#}
-                        {#                                + '<a href="' + this.image + '" target="_blank"><img src="' + this.thumb + '" alt="' + this.alt + '"><p>' + this.file_name + '</p></a>'#}
-                        {#                                + '<div class="image-operaion">'#}
-                        {#                                + '<a href="#" class="set-picture-attr-delete set-picture-attr" data-method="delete" data-id="' + this.id + '" data-article-id="' + this.article_id + '" data-image-type="article">删除 </a> '#}
-                        {##}
-                        {#                                + '</div>'#}
-                        {#                                + '</div>';#}
-                        {#                        });#}
+                        var tmpHtml2 = "";
+                        $.each(data.image_attachment, function (key, val) {
+                            console.log(key, val, this);
+                            console.log(this.image);
+
+                            tmpHtml2 = tmpHtml2
+                                + '<div class="images col-md-1 accessory-images-list2">'
+                                + '<a href="' + this.image + '" target="_blank"><img src="' + this.thumb + '" alt="' + this.alt + '"><p class="attachment-picture-title">' + this.file_name + '</p></a>'
+                                + '<div class="image-operaion">'
+                                + '<a href="#" class="set-picture-attr-delete set-picture-attr attachment-picture" data-method="delete" data-id="' + this.id + '" data-article-id="' + this.article_id + '" data-image-type="article">删除 </a> '
+
+                                + '</div>'
+                                + '</div>';
+                        });
                         $("#article_main_picture_show").html(tmpHtml);
-                        {#                        $("#article_main_picture_show2").html(tmpHtml2);#}
+                        $("#article_main_picture_show2").html(tmpHtml2);
                     }
                 }
             });

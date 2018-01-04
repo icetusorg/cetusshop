@@ -4,32 +4,38 @@
 <!--手机左侧菜单-->
 <div class="menu-phone">
     <ul class="menu-phone-main">
-        <li><a href="{{system_para.base_url}}/">home</a></li>
-		<li><a href="{{system_para.base_url}}/about_us/about-us.html">about us</a>
+        <li><a href="{{ system_para.base_url }}/">home</a></li>
+        <li><a href="{{ system_para.base_url }}/about_us/about-us.html">about us</a>
             <span class="glyphicon glyphicon-plus menu-phone-plus" data="about_us_plus" status="close"></span>
             <ul class="menu-low-one" id="about_us_plus">
-				<li><a href="{{system_para.base_url}}/hair-brush-manufacturer-profile.html"><i></i>Who We Are</a></li>
-				<li><a href="{{system_para.base_url}}/china-hair-brush-factory.html"><i></i>Our Factory</a></li>
-				<li><a href="{{system_para.base_url}}/meet-our-team.html"><i></i>Meet Our Team</a></li>				
+                <li><a href="{{ system_para.base_url }}/hair-brush-manufacturer-profile.html"><i></i>Who We Are</a></li>
+                <li><a href="{{ system_para.base_url }}/china-hair-brush-factory.html"><i></i>Our Factory</a></li>
+                <li><a href="{{ system_para.base_url }}/meet-our-team.html"><i></i>Meet Our Team</a></li>
             </ul>
         </li>
-        <li><a href="{{system_para.base_url}}/Products.html">products</a>
+        <li><a href="{{ system_para.base_url }}/Products.html">products</a>
             <span class="glyphicon glyphicon-plus menu-phone-plus" data="products_plus" status="close"></span>
             <ul class="menu-low-one" id="products_plus">
-				<li><a href="{{system_para.base_url}}/Products/detangling-hair-brush.html"><i></i>Detangle Hair Brush</a></li>
-				<li><a href="{{system_para.base_url}}/Products/plastic-combs.html"><i></i>Plastic Combs</a></li>
-				<li><a href="{{system_para.base_url}}/Products/plastic-hair-brushes.html"><i></i>Plastic Hair Brushes</a></li>
-				<li><a href="{{system_para.base_url}}/Products/hair-dye-brush-accessories.html"><i></i>Hair Dyeing Brush And Bowl</a></li>
-				<li><a href="{{system_para.base_url}}/Products/hand-made-combs.html"><i></i>Hand-Made Combs</a></li>
-				<li><a href="{{system_para.base_url}}/Products/foldable-round-comb-with-mirror.html"><i></i>Foldable Round Comb With Mirror</a></li>
-				<li><a href="{{system_para.base_url}}/Products/carbon-fiber-comb-hair-brush.html"><i></i>Carbon Fiber Combs</a></li>
-				<li><a href="{{system_para.base_url}}/Products/hair-brush-set.html"><i></i>Hair Brush Set</a></li>
+                <li><a href="{{ system_para.base_url }}/Products/detangling-hair-brush.html"><i></i>Detangle Hair Brush</a>
+                </li>
+                <li><a href="{{ system_para.base_url }}/Products/plastic-combs.html"><i></i>Plastic Combs</a></li>
+                <li><a href="{{ system_para.base_url }}/Products/plastic-hair-brushes.html"><i></i>Plastic Hair Brushes</a>
+                </li>
+                <li><a href="{{ system_para.base_url }}/Products/hair-dye-brush-accessories.html"><i></i>Hair Dyeing
+                    Brush And Bowl</a></li>
+                <li><a href="{{ system_para.base_url }}/Products/hand-made-combs.html"><i></i>Hand-Made Combs</a></li>
+                <li><a href="{{ system_para.base_url }}/Products/foldable-round-comb-with-mirror.html"><i></i>Foldable
+                    Round Comb With Mirror</a></li>
+                <li><a href="{{ system_para.base_url }}/Products/carbon-fiber-comb-hair-brush.html"><i></i>Carbon Fiber
+                    Combs</a></li>
+                <li><a href="{{ system_para.base_url }}/Products/hair-brush-set.html"><i></i>Hair Brush Set</a></li>
             </ul>
         </li>
-		<li><a href="{{system_para.base_url}}/customize-your-hair-brush.html">Customize</a></li>
-		<li><a href="{{system_para.base_url}}/blog-list.html">Blog</a></li>
-        <li><a href="{{system_para.base_url}}/Contact-us.html">Contact Us</a></li>
+        <li><a href="{{ system_para.base_url }}/customize-your-hair-brush.html">Customize</a></li>
+        <li><a href="{{ system_para.base_url }}/blog-list.html">Blog</a></li>
+        <li><a href="{{ system_para.base_url }}/Contact-us.html">Contact Us</a></li>
     </ul>
+
 </div>
 <!--头部-->
 <div class="wapper">
@@ -38,47 +44,57 @@
         <div class="container">
             <div class="row">
                 <div class="top-language">
-					<form id="changeLocaleForm" action="{% url 'set_language' %}" method="post">
-						{% csrf_token %}
-						<input name="next" type="hidden" value="{{ redirect_to }}" />
-						
-						{% get_current_language as LANGUAGE_CODE %}
-						
-						{% if 'zh-hans' == LANGUAGE_CODE %}
-							<input name="language" value="en" type="hidden" />
-							<ul>
-								<li>
-									<a href="#" class="change_locale_btn"><img src="{% static "client/cassie/images/ico/Chinese.jpg"%}">简体中文<span class="ico-down"></span></a>
-									<ul>
-										<li><a href="#" class="change_locale_btn"><img src="{% static "client/cassie/images/ico/America.jpg"%}">English</a></li>
-									</ul>
-								</li>
-							</ul>
-						{% else %}
-							<input name="language" value="zh-hans" type="hidden" />
-		                    <ul>
-								<li>
-									<a href="#" class="change_locale_btn"><img src="{% static "client/cassie/images/ico/America.jpg"%}">English<span class="ico-down"></span></a>
-									<ul>
-										<li><a href="#" class="change_locale_btn"><img src="{% static "client/cassie/images/ico/Chinese.jpg"%}">简体中文</a></li>
-									</ul>
-								</li>
-							</ul>
-						{% endif %}
-					</form>
+                    <form id="changeLocaleForm" action="{% url 'set_language' %}" method="post">
+                        {% csrf_token %}
+                        <input name="next" type="hidden" value="{{ redirect_to }}"/>
+
+                        {% get_current_language as LANGUAGE_CODE %}
+
+                        {% if 'zh-hans' == LANGUAGE_CODE %}
+                            <input name="language" value="en" type="hidden"/>
+                            <ul>
+                                <li>
+                                    <a href="#" class="change_locale_btn"><img
+                                            src="{% static "client/cassie/images/ico/Chinese.jpg" %}">简体中文<span
+                                            class="ico-down"></span></a>
+                                    <ul>
+                                        <li><a href="#" class="change_locale_btn"><img
+                                                src="{% static "client/cassie/images/ico/America.jpg" %}">English</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        {% else %}
+                            <input name="language" value="zh-hans" type="hidden"/>
+                            <ul>
+                                <li>
+                                    <a href="#" class="change_locale_btn"><img
+                                            src="{% static "client/cassie/images/ico/America.jpg" %}">English<span
+                                            class="ico-down"></span></a>
+                                    <ul>
+                                        <li><a href="#" class="change_locale_btn"><img
+                                                src="{% static "client/cassie/images/ico/Chinese.jpg" %}">简体中文</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        {% endif %}
+                    </form>
                 </div>
                 <div class="top-link">
                     <ul>
-                        <li>{{user.get_short_name|default:"^_^"}} Welcome!</li>
-                        <li><a href="{{system_para.base_url}}/order/show">{% trans 'MY ACCOUNT' %}</a></li>					
-                        <li><a href="{{system_para.base_url}}/wishlist">{% trans ' My WISHLIST' %}</a></li>
+                        <li>{{ user.get_short_name|default:"^_^" }} Welcome!</li>
+                        <li><a href="{{ system_para.base_url }}/order/show">{% trans 'MY ACCOUNT' %}</a></li>
+                        <li><a href="{{ system_para.base_url }}/wishlist">{% trans ' My WISHLIST' %}</a></li>
                         <li>
-							{%	if user.is_authenticated %}          
-								<div class="login"><a href="{{system_para.base_url}}/user/logout/"><span class="hidden-xs">{%trans 'LOG OUT' %}</span></a></div>    
-							{% else %}
-								<div class="logout"><a href="{{system_para.base_url}}/user/login/" class="loginModalLink"><span class="hidden-xs">{% trans 'LOG IN' %}</span></a></div>
-							{% endif %}
-						</li>
+                            {% if user.is_authenticated %}
+                                <div class="login"><a href="{{ system_para.base_url }}/user/logout/"><span
+                                        class="hidden-xs">{% trans 'LOG OUT' %}</span></a></div>
+                            {% else %}
+                                <div class="logout"><a href="{{ system_para.base_url }}/user/login/"
+                                                       class="loginModalLink"><span
+                                        class="hidden-xs">{% trans 'LOG IN' %}</span></a></div>
+                            {% endif %}
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -88,10 +104,10 @@
         <div class="container">
             <div class="row">
                 <div class="top-search">
-					<form method="GET" action="{{system_para.base_url}}/query/product/">
-						<input class="form-control" placeholder="Search..." name="query" id="q" value="" type="text">
-						<button class="glyphicon glyphicon-search" type="submit"></button>
-					</form>
+                    <form method="GET" action="{{ system_para.base_url }}/query/product/">
+                        <input class="form-control" placeholder="Search..." name="query" id="q" value="" type="text">
+                        <button class="glyphicon glyphicon-search" type="submit"></button>
+                    </form>
                 </div>
                 <div class="menu-phone-ico">
                     <button type="button" class="navbar-toggle" id="menu-ico">
@@ -102,46 +118,96 @@
                     </button>
                 </div>
                 <div class="top-logo">
-                    <a href="#"><img src="{% static "client/cassie/images/logo.jpg"%}" class="logo"></a>
+                    <a href="#"><img src="{% static "client/cassie/images/logo.jpg" %}" class="logo"></a>
                 </div>
                 <div class="top-middle-right">
-                    <div class="top-phone"><span class="glyphicon glyphicon-earphone"></span><span>{{system_para.hot_line}}</span></div>
+                    <div class="top-phone"><span
+                            class="glyphicon glyphicon-earphone"></span><span>{{ system_para.hot_line }}</span></div>
                     <div class="top-cart">
-                        <span class="top-cart-num"><a class="top-cart-num-link" href="{{base_url}}/cart/show/">0</a></span>
+                        <span class="top-cart-num"><a class="top-cart-num-link"
+                                                      href="{{ base_url }}/cart/show/">0</a></span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- 菜单 -->	
+    <!-- 菜单 -->
     <div class="menu">
         <div class="container">
             <div class="row">
                 <ul>
-                    <li><a href="{{system_para.base_url}}/">home</a></li>
-                    <li><a href="{{system_para.base_url}}/about_us/about-us.html">about us <img src="{% static "client/cassie/images/ico/menu-arrow.png"%}"></a>
-						<ul class="menu-low-one" id="phone-plus1">
-							<li><a href="{{system_para.base_url}}/hair-brush-manufacturer-profile.html"><i></i>Who We Are</a></li>
-							<li><a href="{{system_para.base_url}}/china-hair-brush-factory.html"><i></i>Our Factory</a></li>
-							<li><a href="{{system_para.base_url}}/meet-our-team.html"><i></i>Meet Our Team</a></li>				
-						</ul>
-					</li>
-                    <li><a href="{{system_para.base_url}}/Products.html">products <img src="{% static "client/cassie/images/ico/menu-arrow.png"%}"></a>
-						<ul class="menu-low-one" id="phone-plus1">
-							<li><a href="{{system_para.base_url}}/Products/detangling-hair-brush.html"><i></i>Detangle Hair Brush</a></li>
-							<li><a href="{{system_para.base_url}}/Products/plastic-combs.html"><i></i>Plastic Combs</a></li>
-							<li><a href="{{system_para.base_url}}/Products/plastic-hair-brushes.html"><i></i>Plastic Hair Brushes</a></li>
-							<li><a href="{{system_para.base_url}}/Products/hair-dye-brush-accessories.html"><i></i>Hair Dyeing Brush And Bowl</a></li>
-							<li><a href="{{system_para.base_url}}/Products/hand-made-combs.html"><i></i>Hand-Made Combs</a></li>
-							<li><a href="{{system_para.base_url}}/Products/foldable-round-comb-with-mirror.html"><i></i>Foldable Round Comb With Mirror</a></li>
-							<li><a href="{{system_para.base_url}}/Products/carbon-fiber-comb-hair-brush.html"><i></i>Carbon Fiber Combs</a></li>
-							<li><a href="{{system_para.base_url}}/Products/hair-brush-set.html"><i></i>Hair Brush Set</a></li>
-						</ul>
+                    <li><a href="{{ system_para.base_url }}/">home</a></li>
+                    <li><a href="{{ system_para.base_url }}/about_us/about-us.html">about us <img
+                            src="{% static "client/cassie/images/ico/menu-arrow.png" %}"></a>
+                        <ul class="menu-low-one" id="phone-plus1">
+                            <li><a href="{{ system_para.base_url }}/hair-brush-manufacturer-profile.html"><i></i>Who We
+                                Are</a></li>
+                            <li><a href="{{ system_para.base_url }}/china-hair-brush-factory.html"><i></i>Our
+                                Factory</a></li>
+                            <li><a href="{{ system_para.base_url }}/meet-our-team.html"><i></i>Meet Our Team</a></li>
+                        </ul>
                     </li>
-					<li><a href="{{system_para.base_url}}/customize-your-hair-brush.html">Customize</a></li>
-					<li><a href="{{system_para.base_url}}/blog-list.html">Blog</a></li>
-                    <li><a href="{{system_para.base_url}}/Contact-us.html">Contact Us</a></li>
+                    <li><a href="{{ system_para.base_url }}/Products.html">products <img
+                            src="{% static "client/cassie/images/ico/menu-arrow.png" %}"></a>
+                        <ul class="menu-low-one" id="phone-plus1">
+                            <li><a href="{{ system_para.base_url }}/Products/detangling-hair-brush.html"><i></i>Detangle
+                                Hair Brush</a></li>
+                            <li><a href="{{ system_para.base_url }}/Products/plastic-combs.html"><i></i>Plastic
+                                Combs</a></li>
+                            <li><a href="{{ system_para.base_url }}/Products/plastic-hair-brushes.html"><i></i>Plastic
+                                Hair Brushes</a></li>
+                            <li><a href="{{ system_para.base_url }}/Products/hair-dye-brush-accessories.html"><i></i>Hair
+                                Dyeing Brush And Bowl</a></li>
+                            <li><a href="{{ system_para.base_url }}/Products/hand-made-combs.html"><i></i>Hand-Made
+                                Combs</a></li>
+                            <li>
+                                <a href="{{ system_para.base_url }}/Products/foldable-round-comb-with-mirror.html"><i></i>Foldable
+                                    Round Comb With Mirror</a></li>
+                            <li><a href="{{ system_para.base_url }}/Products/carbon-fiber-comb-hair-brush.html"><i></i>Carbon
+                                Fiber Combs</a></li>
+                            <li><a href="{{ system_para.base_url }}/Products/hair-brush-set.html"><i></i>Hair Brush Set</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="{{ system_para.base_url }}/customize-your-hair-brush.html">Customize</a></li>
+                    <li><a href="{{ system_para.base_url }}/blog-list.html">Blog</a></li>
+                    <li><a href="{{ system_para.base_url }}/Contact-us.html">Contact Us</a></li>
                 </ul>
+            </div>
+        </div>
+    </div>
+
+
+    {#测试菜单#}
+    <div class="menu">
+        <div class="container">
+            <div class="row">
+
+                <ul>
+                    {% for cat in menu_list %}
+                        <li>
+                            {% if cat.childrens.all %}
+                                <a href="{{ cat.url }}">{{ cat.name }}<img
+                                        src="{% static "client/cassie/images/ico/menu-arrow.png" %}"></a>
+                            {% else %}
+                                <a href="{{ cat.url }}">{{ cat.name }}</a>
+                            {% endif %}
+
+
+                            {% if  cat.childrens.all %}
+                                <ul class="menu-low-one" id="phone-plus1">
+                                    {% for cat2 in cat.childrens.all %}
+                                        <li><a href="{{ cat2.url }}">{{ cat2.name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+
+
+                        </li>
+                    {% endfor %}
+                </ul>
+
+
             </div>
         </div>
     </div>

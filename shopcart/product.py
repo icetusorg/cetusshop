@@ -1,7 +1,8 @@
 # coding=utf-8
 from django.shortcuts import render
 from django.template.loader import render_to_string
-from shopcart.models import System_Config, Product, Product_Images, Category, Attribute, ProductPush, ProductPushGroup
+from shopcart.models import System_Config, Product, Product_Images, Category, Attribute, ProductPush, ProductPushGroup, \
+    Menu
 from shopcart.utils import my_pagination, get_system_parameters
 import json, os
 from django.http import JsonResponse
@@ -34,6 +35,13 @@ def detail(request, id):
     ctx['menu_products'] = get_menu_products()
     ctx['page_name'] = 'Product'
 
+    def get_all_top_menu():
+        top_menu_list = Menu.objects.filter(parent=None)
+        return top_menu_list
+
+    top_menu_list = get_all_top_menu()
+
+    ctx['menu_list'] = top_menu_list
     try:
         product = Product.objects.get(id=id)
     except Exception as err:
@@ -146,6 +154,12 @@ def view_list(request, category_id=None):
     ctx['menu_products'] = get_menu_products()
     ctx['page_name'] = 'Product'
 
+    def get_all_top_menu():
+        top_menu_list = Menu.objects.filter(parent=None)
+        return top_menu_list
+
+    top_menu_list = get_all_top_menu()
+    ctx['menu_list'] = top_menu_list
     template = '/product_list.html'
 
     logger.debug('Parameters in request:%s' % request.GET)

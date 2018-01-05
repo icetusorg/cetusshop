@@ -1,89 +1,66 @@
 {% extends "admin/default/content_base.html" %}
 {% block breadcrumbs %}
-<section class="content-header">
-    <h1>{{page_name}}</h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
-        <li class="active"><a href="#">系统参数管理</a></li>
-    </ol>
-</section>
+    <section class="content-header">
+        <h1>系统设置<span class="box-subtitle">系统管理</span></h1>
+    </section>
 {% endblock %}
 
 {% block main %}
-{% load i18n %}
-{% load shopcart_extras %}
-<section class="content">
-    <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
-    <div class="col-md-12 add-product system-attr">
-        <div class="system-attr-mian">
-			<ul class="tag">
-				<li class="{{current_page|equalornot:"site_config,active,"}}" data="tag_site_config"><a href="../site_config/">网站信息</a></li>
-				<li class="{{current_page|equalornot:"email_config,active,"}}" data="tag_email_config"><a href="../email_config/">通知配置</a></li>
-				<li class="{{current_page|equalornot:"display_config,active,"}}" data="tag_display_config"><a href="../display_config/">显示配置</a></li>
-			</ul>
-        <!--页签-->
-        <div class="add-content email-config active" id="tag_email_config">
-            <p class="title">邮箱管理</p>
-
-            <div class="item-free attr-array">
-                <div class="attr-array-list title">
-                    <dl>
-                        <dd>模板名称</dd>
-                        <dd>是否发送</dd>
-                        <dd>发送邮箱</dd>
-                        <dd>发送对象</dd>
-                        <dd>操作</dd>
-                    </dl>
-                </div>
-                <div class="attr-array-list">			
-					{% for email in email_list %}
-						<dl>
-							<dd>{{email.useage_name}}</dd>
-							<dd>
-								<input type="radio" name="{{email.id}}_is_send" {{email.is_send|yesno:"checked,,"}} disabled><label>是</label>
-								<input type="radio" name="{{email.id}}_is_send" {{email.is_send|yesno:",checked,"}} disabled><label>否</label>
-							</dd>
-							<dd>{{email.email_address}}</dd>
-							<dd>客户</dd>
-							<dd><a class="edit" href="/admin/email-config-manage/?id={{email.id}}&type=email">编辑</a></dd>
-						</dl>
-					{% endfor %}
-					
-					{% for email in notice_email_type_list %}
-						<dl>
-							<dd>{{email.name}}</dd>
-							<dd>
-								<input type="radio" name="notice_{{email.id}}_is_send" {{email.is_send|yesno:"checked,,"}} disabled><label>是</label>
-								<input type="radio" name="notice_{{email.id}}_is_send" {{email.is_send|yesno:",checked,"}} disabled><label>否</label>
-							</dd>
-							<dd>{{email.sender}}</dd>
-							<dd>管理员</dd>
-							<dd><a class="edit" href="/admin/email-config-manage/?id={{email.id}}&type=notice">编辑</a></dd>
-						</dl>
-					{% endfor %}
-                </div>
-                <div class="box-footer clearfix">
-                    <!--
-					<div class="xy-pages-jump">
-                        <ul class="pagination pagination-sm no-margin pull-right">
-                            <li><a href="#">&lt;</a></li>
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">&gt;</a></li>
-                        </ul>
-                        <p>共7条记录 , 共3页，每页显示：15条</p>
+    {% load i18n %}
+    {% load shopcart_extras %}
+    <script>
+        document.body.style.backgroundColor = "#f0f0f0";
+    </script>
+    <section class="content">
+        <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+        <div class="col-md-12 add-product system-attr system-email-attr">
+            <div class="system-attr-mian">
+                <ul class="tag system-attr-mian-tag">
+                    <li class="{{ current_page|equalornot:"site_config,active," }}" data="tag_site_config"><a
+                            href="../site_config/">网站信息</a></li>
+                    <li class="{{ current_page|equalornot:"email_config,active," }}" data="tag_email_config"><a
+                            href="../email_config/">通知配置</a></li>
+                    <li class="{{ current_page|equalornot:"display_config,active," }}" data="tag_display_config"><a
+                            href="../display_config/">显示配置</a></li>
+                </ul>
+                <!--页签-->
+                <div class="add-content email-config active" id="tag_email_config">
+                    <div class="box-header with-border">
+                        <h3 class=" system-email-title"><b>邮件通知列表</b></h3>
                     </div>
-					-->
+                    <div class="box-body">
+                        <table class="table system-email-table">
+                            <tr>
+                                <th>模板名称</th>
+                                <th>发送邮箱</th>
+                                <th>发送对象</th>
+                                <th>操作</th>
+                            </tr>
+                            {% for email in email_list %}
+                                <tr>
+                                    <td>{{ email.useage_name }}</td>
+                                    <td>{{ email.email_address }}</td>
+                                    <td>客户</td>
+                                    <td><a class="edit" href="/admin/email-config-manage/?id={{ email.id }}&type=email">编辑</a></td>
+                                </tr>
+                            {% endfor %}
+                            {% for email in notice_email_type_list %}
+                                <tr>
+                                    <td>{{ email.name }}</td>
+                                    <td>{{ email.sender }}</td>
+                                    <td>管理员</td>
+                                    <td><a class="edit" href="/admin/email-config-manage/?id={{ email.id }}&type=notice">编辑</a></td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
                 </div>
+
             </div>
+            <!--页签结束-->
         </div>
-        
-        </div>
-        <!--页签结束-->
-    </div>
-</section>
+    </section>
 {% endblock %}
 {% block scripts %}
-	{% load staticfiles %}
+    {% load staticfiles %}
 {% endblock %}

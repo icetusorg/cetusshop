@@ -1,72 +1,97 @@
 {% extends "admin/default/content_base.html" %}
 {% block breadcrumbs %}
-<section class="content-header">
-    <h1>{{page_name}}</h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
-        <li class="active"><a href="#">系统参数管理</a></li>
-    </ol>
-</section>
+    <section class="content-header">
+        <h1>系统设置<span class="box-subtitle">系统管理</span></h1>
+    </section>
 {% endblock %}
 
 {% block main %}
-{% load i18n %}
-{% load shopcart_extras %}
-<section class="content">
-    <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
-    <div class="col-md-12 add-product system-attr">
-        <div class="system-attr-mian">
-			<ul class="tag">
-				<li class="{{current_page|equalornot:"site_config,active,"}}" data="tag_site_config"><a href="../system-config/site_config/">网站信息</a></li>
-				<li class="{{current_page|equalornot:"email_config,active,"}}" data="tag_email_config"><a href="../system-config/email_config/">邮箱配置</a></li>
-				<li class="{{current_page|equalornot:"display_config,active,"}}" data="tag_display_config"><a href="../system-config/display_config/">显示配置</a></li>
-			</ul>
-        <!--页签-->
-        <div class="email-edit active">
-			<form id="email_detail_config_form">
-				{% csrf_token %}
-				<p class="title">邮件设置：{{email.useage_name}}</p>
-				<div class="item"><label>是否启用：</label><input type="checkbox" name="is_send" value="1" {{email.is_send|yesno:"checked,,"}}></div>
-				<div class="item"><label>发件邮箱：</label><input type="text" name="email_address" value="{{email.email_address}}" class="form-control"></div>
+    {% load i18n %}
+    {% load shopcart_extras %}
+    <script>
+        document.body.style.backgroundColor = "#f0f0f0";
+    </script>
+    <section class="content">
+        <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+        <div class="col-md-12 add-product system-attr">
+            <div class="system-attr-mian">
+                <ul class="tag system-attr-mian-tag">
+                    <li class="{{ current_page|equalornot:"site_config,active," }}" data="tag_site_config"><a
+                            href="../system-config/site_config/">网站信息</a></li>
+                    <li class="{{ current_page|equalornot:"email_config,active," }}" data="tag_email_config"><a
+                            href="../system-config/email_config/">邮箱配置</a></li>
+                    <li class="{{ current_page|equalornot:"display_config,active," }}" data="tag_display_config"><a
+                            href="../system-config/display_config/">显示配置</a></li>
+                </ul>
+                <!--页签-->
+                <div class="email-edit active">
+                    <form id="email_detail_config_form">
+                        {% csrf_token %}
+                        <div class="item"><label>是否启用：</label><input type="checkbox" name="is_send"
+                                                                     value="1" {{ email.is_send|yesno:"checked,," }}>
+                        </div>
+                        <div class="item"><label>发件邮箱：</label><input type="text" name="email_address"
+                                                                     value="{{ email.email_address }}"
+                                                                     class="form-control"></div>
 
-				<div class="item"><label>发件对象：</label><input type="text" name="target_type" value="{{email.target_type|is_equal:'notice'|yesno:'管理员,客户,'}}" class="form-control" disabled></div>
+                        <div class="item"><label>发件对象：</label><input type="text" name="target_type"
+                                                                     value="{{ email.target_type|is_equal:'notice'|yesno:'管理员,客户,' }}"
+                                                                     class="form-control" disabled></div>
 
-				{% ifequal email.target_type 'notice' %}
-				<div class="item website-info email-input-long"><label>收件人：</label><input placeholder="多个邮箱用','隔开" type="text" name="target_list" value="{{email.target_list}}" class="form-control">
-					<div class="message">
-						<span>?</span>
-						<div class="ico">
-							<div class="text">
-								<h4>描述</h4>
-								<p>多个邮箱请用','隔开</p>
-							</div>
-						</div>
-					</div>
-				</div>
-				{% endifequal %}
-				
-				<div class="item"><label>邮件主题：</label><input type="text" name="title" value="{{email.title}}" class="form-control"></div>
-				<div class="item"><label>SMTP地址：</label><input type="text" name="smtp_host" value="{{email.smtp_host}}" class="form-control"></div>
-				<div class="item"><label>用户名：</label><input type="text" name="username" value="{{email.username}}" class="form-control"></div>
-				<div class="item"><label>密码：</label><input type="text" name="password" value="{{email.password}}" class="form-control"></div>
-				<div class="item"><label>是否SSL：</label><input type="checkbox" name="need_ssl" value="1" {{email.need_ssl|yesno:"checked,,"}}></div>
-				<div class="item"><label>模板组：</label><input type="text" name="template" value="{{email.template}}" class="form-control"></div>
-				<div class="item"><label>模板文件：</label><input type="text" name="template_file" value="{{email.template_file}}" class="form-control"></div>
-				
-				<div class="submit-item">
-					<input type="hidden" name="useage_name" value="{{email.useage_name}}" />
-					<input type="hidden" name="target_type" value="{{email.target_type}}" />
-					<input type="hidden" name="id" value="{{email.id}}" />
-					<button type="button" id="email_detail_config_submit_btn" class="btn btn-primary" id="emailEditSubmit">提交</button>
-				</div>
-			</form>
+                        {% ifequal email.target_type 'notice' %}
+                            <div class="item website-info email-input-long"><label>收件人：</label><input
+                                    placeholder="多个邮箱用','隔开" type="text" name="target_list"
+                                    value="{{ email.target_list }}" class="form-control">
+                                <div class="message">
+                                    <span>?</span>
+                                    <div class="ico">
+                                        <div class="text">
+                                            <h4>描述</h4>
+                                            <p>多个邮箱请用','隔开</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endifequal %}
+
+                        <div class="item"><label>邮件主题：</label><input type="text" name="title" value="{{ email.title }}"
+                                                                     class="form-control"></div>
+                        <div class="item"><label>SMTP地址：</label><input type="text" name="smtp_host"
+                                                                       value="{{ email.smtp_host }}"
+                                                                       class="form-control"></div>
+                        <div class="item"><label>用户名：</label><input type="text" name="username"
+                                                                    value="{{ email.username }}" class="form-control">
+                        </div>
+                        <div class="item"><label>密码：</label><input type="text" name="password"
+                                                                   value="{{ email.password }}" class="form-control">
+                        </div>
+                        <div class="item"><label>是否SSL：</label><input type="checkbox" name="need_ssl"
+                                                                      value="1" {{ email.need_ssl|yesno:"checked,," }}>
+                        </div>
+                        <div class="item"><label>模板组：</label><input type="text" name="template"
+                                                                    value="{{ email.template }}" class="form-control">
+                        </div>
+                        <div class="item"><label>模板文件：</label><input type="text" name="template_file"
+                                                                     value="{{ email.template_file }}"
+                                                                     class="form-control"></div>
+
+                        <div class="submit-item item system-site-btn">
+                            <label></label>
+                            <input type="hidden" name="useage_name" value="{{ email.useage_name }}"/>
+                            <input type="hidden" name="target_type" value="{{ email.target_type }}"/>
+                            <input type="hidden" name="id" value="{{ email.id }}"/>
+                            <button type="button" id="email_detail_config_submit_btn" class="btn btn-primary email-detail-add-btn"
+                                    id="emailEditSubmit">保存
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            <!--页签结束-->
         </div>
-		
-        </div>
-        <!--页签结束-->
-    </div>
-</section>
+    </section>
 {% endblock %}
 {% block scripts %}
-	{% load staticfiles %}
+    {% load staticfiles %}
 {% endblock %}

@@ -35,9 +35,10 @@ def add(request):
 
         code = request.POST.get('code', '')
         if code == request.session.get('check_code', 'error'):
+            logger.info('测试1')
             if form.is_valid():  # 验证表单
                 inquiry = form.save()
-
+                logger.info('测试2')
                 if inquiry.name == None or inquiry.name.strip() == '':
                     logger.info('Inquiry customer name is Null.')
                     inquiry.name = 'None'

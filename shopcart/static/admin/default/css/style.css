@@ -5247,3 +5247,86 @@ a {
 .message-detail-table-content tr:nth-child(even) {
     background: #FCFCFC;
 }
+
+.system-attr-mian-tag li a {
+    color: #000;
+}
+
+.system-attr-mian-tag .active a {
+    color: #2196F3 !important;
+}
+
+.system-site-btn {
+    padding-top: 20px;
+    height: 70px !important;
+}
+
+.system-email-table th:nth-child(1), .system-email-table tr td:nth-child(1) {
+    width: 10% !important;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.system-email-table th:nth-child(2), .system-email-table tr td:nth-child(2) {
+    width: 40% !important;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.system-email-table th:nth-child(3), .system-email-table tr td:nth-child(3) {
+    width: 25% !important;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.system-email-table th:nth-child(4), .system-email-table tr td:nth-child(4) {
+    width: 25% !important;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.system-email-table tr {
+    height: 40px;
+    border-bottom: 1px solid #EEEEEE;
+}
+
+.system-email-table tr:first-child {
+    background: #fff !important;
+}
+
+.system-email-table tr:nth-child(odd) {
+    background: #FCFCFC;
+}
+
+.system-email-attr {
+    padding: 0 20px;
+}
+
+.system-email-title {
+    display: block;
+    font-size: 16px;
+    margin: 20px 0 0px;
+    color: #000000;
+}
+
+.email-config {
+    padding-bottom: 100px;
+}
+
+.system-site-form {
+    padding-left: 70px;
+    padding-top: 30px;
+}
+
+.system-display-div .item label {
+    width: 190px;
+}
+
+#email_detail_config_form {
+    padding-left: 70px;
+}
+.email-detail-add-btn{
+    width: 100px;
+    height: 40px;
+    padding: 0px;
+}

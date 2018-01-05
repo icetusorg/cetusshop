@@ -1,46 +1,70 @@
 {% extends "admin/default/content_base.html" %}
 {% block breadcrumbs %}
-<section class="content-header">
-    <h1>{{page_name}}</h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
-        <li class="active"><a href="#">系统参数管理</a></li>
-    </ol>
-</section>
+    <section class="content-header">
+        <h1>系统设置<span class="box-subtitle">系统管理</span></h1>
+    </section>
 {% endblock %}
 
 {% block main %}
-{% load i18n %}
-{% load shopcart_extras %}
-<section class="content">
-    <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
-    <div class="col-md-12 add-product system-attr">
-        <div class="system-attr-mian">
-			<ul class="tag">
-				<li class="{{current_page|equalornot:"site_config,active,"}}" data="tag_site_config"><a href="../site_config/">网站信息</a></li>
-				<li class="{{current_page|equalornot:"email_config,active,"}}" data="tag_email_config"><a href="../email_config/">通知配置</a></li>
-				<li class="{{current_page|equalornot:"display_config,active,"}}" data="tag_display_config"><a href="../display_config/">显示配置</a></li>
-				<!--<li class="{{current_page|equalornot:"picture_config,active,"}}" data="tag_picture_config"><a href="../picture_config/">图片配置</a></li>-->
-			</ul>
-        <!--页签-->
-		<form id="display_config_form">
-			{% csrf_token %}
-			<div class="add-content show-config active" id="tag_display_config">
-				<div class="item"><label>商品列表默认个数：</label><input type="text" name="system_config_product_page_size" class="form-control" value = "{{system_para.product_page_size}}"></div>
-				<div class="item"><label>文章列表默认个数：</label><input type="text" name="system_config_blog_list_page_size" class="form-control" value = "{{system_para.blog_list_page_size}}"></div>
-				<div class="item"><label>订单列表默认个数：</label><input type="text" name="system_config_order_list_page_size" class="form-control" value = "{{system_para.order_list_page_size}}"></div>
-				<div class="item"><label>愿望列表默认个数：</label><input type="text" name="system_config_wish_list_page_size" class="form-control" value = "{{system_para.wish_list_page_size}}"></div>
-				<div class="item"><label>用户地址个数限制：</label><input type="text" name="system_config_common_user_address_limit" class="form-control" value = "{{system_para.common_user_address_limit}}"></div>
-				<div class="submit-item">
-					<button type="button" id="display_config_submit_btn" class="btn btn-primary next-steep">保存</button>
-				</div>
-			</div>
-		</form>
+    {% load i18n %}
+    {% load shopcart_extras %}
+    <script>
+        document.body.style.backgroundColor = "#f0f0f0";
+    </script>
+    <section class="content">
+        <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+        <div class="col-md-12 add-product system-attr">
+            <div class="system-attr-mian">
+                <ul class="tag system-attr-mian-tag">
+                    <li class="{{ current_page|equalornot:"site_config,active," }}" data="tag_site_config"><a
+                            href="../site_config/">网站信息</a></li>
+                    <li class="{{ current_page|equalornot:"email_config,active," }}" data="tag_email_config"><a
+                            href="../email_config/">通知配置</a></li>
+                    <li class="{{ current_page|equalornot:"display_config,active," }}" data="tag_display_config"><a
+                            href="../display_config/">显示配置</a></li>
+                    <!--<li class="{{current_page|equalornot:"picture_config,active,"}}" data="tag_picture_config"><a href="../picture_config/">图片配置</a></li>-->
+                </ul>
+                <!--页签-->
+                <form id="display_config_form"  class="system-site-form">
+                    {% csrf_token %}
+                    <div class="add-content show-config active system-display-div" id="tag_display_config">
+                        <div class="item"><label>商品列表默认显示条数</label><input type="text"
+                                                                         name="system_config_product_page_size"
+                                                                         class="form-control"
+                                                                         value="{{ system_para.product_page_size }}">
+                        </div>
+                        <div class="item"><label>文章列表默认显示条数</label><input type="text"
+                                                                         name="system_config_blog_list_page_size"
+                                                                         class="form-control"
+                                                                         value="{{ system_para.blog_list_page_size }}">
+                        </div>
+{#                        <div class="item"><label>订单列表默认个数：</label><input type="text"#}
+{#                                                                         name="system_config_order_list_page_size"#}
+{#                                                                         class="form-control"#}
+{#                                                                         value="{{ system_para.order_list_page_size }}">#}
+{#                        </div>#}
+{#                        <div class="item"><label>愿望列表默认个数：</label><input type="text"#}
+{#                                                                         name="system_config_wish_list_page_size"#}
+{#                                                                         class="form-control"#}
+{#                                                                         value="{{ system_para.wish_list_page_size }}">#}
+{#                        </div>#}
+{#                        <div class="item"><label>用户地址个数限制：</label><input type="text"#}
+{#                                                                         name="system_config_common_user_address_limit"#}
+{#                                                                         class="form-control"#}
+{#                                                                         value="{{ system_para.common_user_address_limit }}">#}
+{#                        </div>#}
+                        <div class="submit-item item system-site-btn">
+                            <label></label>
+                            <button type="button" id="display_config_submit_btn" class="btn btn-primary next-steep">保存
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--页签结束-->
         </div>
-        <!--页签结束-->
-    </div>
-</section>
+    </section>
 {% endblock %}
 {% block scripts %}
-	{% load staticfiles %}
+    {% load staticfiles %}
 {% endblock %}

@@ -169,6 +169,11 @@
                             <input name="product" value="{{ product.id }}" type="hidden">
                             <input name="name" value=" " type="hidden">
                             <input type="hidden" name="type" value="quote">
+                            {% if user.id %}
+                                <input type="hidden" name="user" value="{{ user.id }}">
+                            {% else %}
+                                <input type="hidden" name="user" value="1">
+                            {% endif %}
                             <button class="contact-supplier-button" type="button" id="inquiry-submit">Send</button>
                         </div>
                     </form>

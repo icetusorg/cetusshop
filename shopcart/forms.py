@@ -241,12 +241,11 @@ class inquiry_form(forms.ModelForm):
     name = forms.CharField(required=False)
     product = forms.CharField(required=False)
     quantity = forms.CharField(required=False)
-    unit = forms.CharField(required=False)
     title = forms.CharField(required=False)
 
     class Meta:
         model = Inquiry
-        fields = ('name', 'company', 'email', 'message', 'product', 'quantity', 'unit', 'title', 'user')
+        fields = ('name', 'company', 'email', 'message', 'product', 'quantity', 'title', 'user')
 
 
 class email_inquiry_form(forms.ModelForm):

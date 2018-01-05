@@ -17,15 +17,15 @@
             <div class="col-md-12">
                 <div class="box xy-search category-content">
                     <div class="box-header with-border">
-                        <h3 class="box-title">菜单列表</h3>
+                        <h3 class="box-title"><b>菜单列表</b></h3>
                     </div>
-                    <div class="box-body ">
+                    <div class="box-body product-table">
                         <div class="row">
                             <form id="menu_batch_form">
                                 <div class="col-md-12 category  menu_list" id="main-content-table">
                                     <ul class="category_title">
                                         <li class="name">选择</li>
-                                        <li class="view">排序</li>
+                                        <li class="view"></li>
                                         <li class="name">菜单名称</li>
                                         <li class="url">菜单URL</li>
                                         <li class="operate">操作</li>
@@ -35,8 +35,9 @@
                                     {% for cat in menu_list %}
                                         <ul class="category_01 category-list menu_list" id="list_{{ cat.id }}">
                                             <li><input type="checkbox" name="selected" value="{{ cat.id }}"></li>
-                                            <li><input type="text" class="sort" name="sort_{{ cat.id }}"
-                                                       value="{{ cat.sort_order|default:'0' }}"></li>
+                                            {#                                            <li><input type="text" class="sort" name="sort_{{ cat.id }}"#}
+                                            {#                                                       value="{{ cat.sort_order|default:'0' }}"></li>#}
+                                            <li></li>
                                             <li class="name">
                                                 <!-- data_level代表分类的级数，暂时从1级到4级-->
                                                 <span class="categoryIco" data_level="1">|--</span>
@@ -57,8 +58,9 @@
                                                 <ul class="category_02" id="list_{{ cat2.id }}">
                                                     <li><input type="checkbox" name="selected" value="{{ cat2.id }}">
                                                     </li>
-                                                    <li><input type="text" class="sort" name="sort_{{ cat2.id }}"
-                                                               value="{{ cat2.sort_order|default:'0' }}"></li>
+                                                    {#                                                    <li><input type="text" class="sort" name="sort_{{ cat2.id }}"#}
+                                                    {#                                                               value="{{ cat2.sort_order|default:'0' }}"></li>#}
+                                                    <li></li>
                                                     <li class="name">
                                                         <span class="categoryIco" data_level="2">|--</span>
                                                         <span class="nameText">{{ cat2.name }}</span>
@@ -80,9 +82,10 @@
                                                         <ul class="category_03" id="list_{{ cat3.id }}">
                                                             <li><input type="checkbox" name="selected"
                                                                        value="{{ cat3.id }}"></li>
-                                                            <li><input type="text" class="sort"
-                                                                       name="sort_{{ cat3.id }}"
-                                                                       value="{{ cat3.sort_order|default:'0' }}"></li>
+                                                            {#                                                            <li><input type="text" class="sort"#}
+                                                            {#                                                                       name="sort_{{ cat3.id }}"#}
+                                                            {#                                                                       value="{{ cat3.sort_order|default:'0' }}"></li>#}
+                                                            <li></li>
                                                             <li class="name">
                                                                 <span class="categoryIco" data_level="3">|--</span>
                                                                 <span class="nameText">{{ cat3.name }}</span>
@@ -99,33 +102,6 @@
                                                                     class="editCategory">编辑</a><span>|</span><a
                                                                     class="deleteCategory">删除</a>
                                                             </li>
-                                                            <!--"四级分类"-->
-                                                            {% for cat4 in cat3.childrens.all %}
-                                                                <ul class="category_04" id="list_{{ cat4.id }}">
-                                                                    <li><input type="checkbox" name="selected"
-                                                                               value="{{ cat4.id }}"></li>
-                                                                    <li><input type="text" class="sort"
-                                                                               name="sort_{{ cat4.id }}"
-                                                                               value="{{ cat4.sort_order|default:'0' }}">
-                                                                    </li>
-                                                                    <li class="name">
-                                                                        <span class="categoryIco"
-                                                                              data_level="4">|--</span>
-                                                                        <span class="nameText">{{ cat4.name }}</span>
-                                                                    </li>
-
-                                                                    <li class="url">
-                                                                        <!-- data_level代表分类的级数，暂时从1级到4级-->
-                                                                        <span class="urlText">{{ cat4.url }}</span>
-                                                                    </li>
-
-                                                                    <li class="operate" data="list_{{ cat4.id }}"
-                                                                        data-cat-id="{{ cat4.id }}"><a class="addChild">添加子分类</a>
-                                                                        <span>|</span> <a
-                                                                                class="editCategory">编辑</a><span>|</span><a
-                                                                                class="deleteCategory">删除</a></li>
-                                                                </ul>
-                                                            {% endfor %}
                                                         </ul>
                                                     {% endfor %}
                                                 </ul>
@@ -136,12 +112,12 @@
                             </form>
                             <div class="xy-box-select category-xy-box-select menu-list">
 
-                                <input class="category-checkbox-all" type="checkbox"
-                                       id="main-content-checkbox-all">
-                                <a id="main-content-btn-all" href="#">全选</a>
-                                <button type="button" class="btn menu-set_order menu-btn">
-                                    排序
-                                </button>
+                                {#                                <input class="category-checkbox-all" type="checkbox"#}
+                                {#                                       id="main-content-checkbox-all">#}
+                                {#                                <a id="main-content-btn-all" href="#">全选</a>#}
+                                {#                                <button type="button" class="btn menu-set_order menu-btn">#}
+                                {#                                    排序#}
+                                {#                                </button>#}
                                 <a class="btn btn-primary btn-primary-add btn-add category-add menu-btn">新增</a>
 
 
@@ -158,7 +134,7 @@
 {% block scripts %}
     {% load staticfiles %}
     <script>
-        var maxCategoryNum = 4; //最多层级数4
+        var maxCategoryNum = 3; //最多层级数4
 
         //分类层级点击展开，收回效果
         {#        $(".categoryIco").on("click", function () {#}
@@ -183,7 +159,8 @@
             $(".addInputList").remove();
             var insertHtml = '<ul class="addInputList category_01" style="display:block;">' +
                 '<li><input type="checkbox" name="selected"></li>' +
-                '<li><input type="text" id="categorySort" name="sort" value="0"></li>' +
+                {#                '<li><input type="text" id="categorySort" name="sort" value="0"></li>' +#}
+                '<li><input style="display:none" type="text" id="categorySort" name="sort" value="0"></li>' +
                 '<li class="name"><span class="categoryIco active"></span>' +
                 '<input type="text" class="form-control form-control-hidden" id="categoryName" placeholder="菜单名称"></li>' +
                 '<li class="url"><input type="text" class="form-control" id="categoryURL" placeholder="菜单URL"></li>' +
@@ -225,7 +202,8 @@
 
             var insertHtml = '<ul class="addInputList category_0' + level + '" style="display:block;">' +
                 '<li><input type="checkbox" name="selected"></li>' +
-                '<li><input type="text" id="categorySort" name="sort" value="0"></li>' +
+                {#                '<li><input type="text" id="categorySort" name="sort" value="0"></li>' +#}
+                '<li><input style="display:none" type="text" id="categorySort" name="sort" value="0"></li>' +
                 '<li class="name"><span class="categoryIco active"></span>' +
 
 
@@ -330,7 +308,8 @@
 
                             var tmpHtml = '<ul class="category_0' + level + '" id="list_' + newId + '" style="display:block;">' +
                                 '<li><input type="checkbox" name="selected" value="' + newId + '"></li>' +
-                                '<li><input type="text" class="sort" name="sort_' + newId + '" value="' + sort + '"></li>' +
+                                {#                                '<li><input type="text" class="sort" name="sort_' + newId + '" value="' + sort + '"></li>' +#}
+                                '<li></li>' +
                                 '<li class="name"><span class="categoryIco active" data_level="' + level + '"></span>|--</span><span class="nameText">' + name + '</span></li>' +
                                 '<li class="url"><span class="urlText">' + menu_url + '</span></li>' +
                                 '<li class="operate" data="list_' + newId + '" data-cat-id="' + newId + '"><a class="addChild">添加子分类</a> | ' +
@@ -344,7 +323,10 @@
                                 $("#" + listId).append(tmpHtml);
                             }
 
-                            console.info('enter 5 ...');
+                            console.info('enter 5 刷新...');
+                            $('#myModal').on('hidden.bs.modal', function (e) {
+                                location.reload(true);
+                            });
 
                         }
                         $("#myModal").modal('toggle');

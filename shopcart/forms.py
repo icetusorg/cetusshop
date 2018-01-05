@@ -275,7 +275,8 @@ class recruit_basic_info_form(forms.ModelForm):
     class Meta:
         model = Recruit
         fields = (
-            'title', 'sort_order', 'keywords', 'content', 'number', 'education', 'site', 'type', 'static_file_name',)
+            'title', 'sort_order', 'keywords', 'content', 'number', 'pay', 'phone', 'site', 'type',
+            'static_file_name','page_title','short_desc')
 
 
 # class recruit_detail_info_form(forms.ModelForm):

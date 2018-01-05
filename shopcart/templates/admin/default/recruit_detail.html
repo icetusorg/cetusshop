@@ -2,11 +2,7 @@
 {% block breadcrumbs %}
     {% load shopcart_extras %}
     <section class="content-header">
-        <h1>招聘管理</h1>
-        <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
-            <li class="active"><a href="#">{{ is_blog|yesno:"招聘管理" }}</a></li>
-        </ol>
+        <h1>招聘管理 <span class="box-subtitle">页面管理</span></h1>
     </section>
 {% endblock %}
 
@@ -21,54 +17,31 @@
     <section class="content">
         <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
         <div class="col-md-12 add-product ">
-            <ul class="tag">
-                <li class="active" data="tag_basic_info">基本信息</li>
-            </ul>
-
-
             <div class="add-content active" id="tag_basic_info">
                 <form id="recruit-basic-info-form">
+                    <h1 class="add-product-h1 add-product-seo-h1">基本信息</h1>
                     <div class="item item2">
-                        <label>岗位名称<span class="point">*</span>：</label>
+                        <label>招聘岗位<span class="point">*</span>：</label>
                         <input type="text" value="{{ recruit.title }}" name="title" class="form-control ">
                     </div>
-                    <div class="item btn-item btn-item2">
-                        <label>自定义URL<span class="point">*</span>：</label><input type="text" name="static_file_name"
-                                                                                 value="{{ recruit.static_file_name|default:"" }}"
-                                                                                 class="form-control">
-                        <button type="button" id="static_file_name_advice" class="btn btn-primary">推荐</button>
-                    </div>
-
-                    {#                    <div class="item item2"><label>网页标题：</label><input type="text" name="page_title"#}
-                    {#                                                                       class="form-control"#}
-                    {#                                                                       value="{{ recruit.page_title }}"></div>#}
-
-                    <div class="item item2"><label>关键字：</label><input type="text" name="keywords"
-                                                                      value="{{ recruit.keywords|default:"" }}"
+                    <div class="item item2"><label>工作类型</label><input type="text" name="type"
+                                                                      value="{{ recruit.type }}"
+                                                                      class="form-control"></div>
+                    <div class="item item2"><label>招聘人数</label><input type="text" name="number"
+                                                                      value="{{ recruit.number }}"
+                                                                      class="form-control"></div>
+                    <div class="item item2"><label>工作地点</label><input type="text" name="site"
+                                                                      value="{{ recruit.site }}"
+                                                                      class="form-control"></div>
+                    <div class="item item2"><label>薪资</label><input type="text" name="pay"
+                                                                    value="{{ recruit.pay }}"
+                                                                    class="form-control"></div>
+                    <div class="item item2"><label>联系方式</label><input type="text" name="phone"
+                                                                      value="{{ recruit.phone }}"
                                                                       class="form-control"></div>
 
-                    <div class="item item2"><label>招聘人数：</label><input type="text" name="number"
-                                                                       value="{{ recruit.number }}"
-                                                                       class="form-control"></div>
-
-                    <div class="item item2"><label>学历要求：</label><input type="text" name="education"
-                                                                       value="{{ recruit.education }}"
-                                                                       class="form-control"></div>
-
-                    <div class="item item2"><label>工作地点：</label><input type="text" name="site"
-                                                                       value="{{ recruit.site }}"
-                                                                       class="form-control"></div>
-
-                    <div class="item item2"><label>工作类型：</label><input type="text" name="type"
-                                                                       value="{{ recruit.type }}"
-                                                                       class="form-control"></div>
-
-
-                    {#                    <div class="item item-area item2"><label>简要描述：</label><textarea type="text" name="short_desc"#}
-                    {#                                                                                    class="form-control">{{ recruit.short_desc|default:"" }}</textarea>#}
-                    {#                    </div>#}
                     <div class="item item-area">
-                        <label>详细信息:</label>
+                        <label>详细描述</label>
                     </div>
                     <div class="item item-area">
                         <textarea type="text" id="recruit_content_editor" name="content"
@@ -76,10 +49,32 @@
                     </div>
 
 
-                    <div class="item item2"><label>排序号：</label><input type="text" name="sort_order"
+
+                    <h1 class="add-product-h1 add-product-seo-h1">SEO设置</h1>
+                    <div class="item btn-item btn-item2">
+                        <label>自定义URL<span class="point">*</span>：</label><input type="text" name="static_file_name"
+                                                                                 value="{{ recruit.static_file_name|default:"" }}"
+                                                                                 class="form-control">
+                        <button type="button" id="static_file_name_advice" class="btn btn-primary">推荐</button>
+                    </div>
+
+                    <div class="item item2"><label>标题 Title</label><input type="text" name="page_title"
+                                                                          class="form-control"
+                                                                          value="{{ recruit.page_title }}">
+                    </div>
+
+                    <div class="item item2"><label>关键词 Keywords</label><input type="text" name="keywords"
+                                                                              value="{{ recruit.keywords|default:"" }}"
+                                                                              class="form-control"></div>
+                    <div class="item item-area item2"><label>描述 Descrption</label><textarea type="text"
+                                                                                            name="short_desc"
+                                                                                            class="form-control">{{ recruit.short_desc|default:"" }}</textarea>
+                    </div>
+                    <div class="item recruit-sort"><label>排序号：</label><input type="text" name="sort_order"
                                                                       value="{{ recruit.sort_order }}"
                                                                       class="form-control"></div>
-                    <div class="submit-item item">
+                    <div class="submit-item item system-site-btn">
+                        <label ></label>
                         <input type="hidden" name="breadcrumbs" value=""/>
                         <input type="hidden" name="id" value="{{ recruit.id }}"/>
                         <button type="button" id="recruit-basic-info-submit-btn" class="btn btn-primary addPSubmit">保存

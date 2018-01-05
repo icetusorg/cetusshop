@@ -1,11 +1,7 @@
 {% extends "admin/default/content_base.html" %}
 {% block breadcrumbs %}
     <section class="content-header">
-        <h1>招聘管理</h1>
-        <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> 后台首页</a></li>
-            <li class="active"><a href="#">招聘管理</a></li>
-        </ol>
+        <h1>招聘管理 <span class="box-subtitle">页面管理</span></h1>
     </section>
 {% endblock %}
 
@@ -19,30 +15,25 @@
         <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
         <div class="row">
             <div class="col-md-12">
-            </div>
-            <div class="col-md-12">
                 <div class="box xy-list-product">
-                    <div class="box-body no-padding">
-
+                    <div class="box-header with-border">
+                        <h3 class="box-title">产品列表 </h3>
+                    </div>
+                    <div class="box-body product-table">
                         <form id="article_batch_form" method="POST">
                             {% csrf_token %}
 
                             <table id="main-content-table"
-                                   class="table table-striped recruit-table-striped">
+                                   class="table recruit-table-striped">
                                 <tbody>
                                 <!--多余th为了调整表格色块-->
                                 <tr>
-                                    <th></th>
-                                </tr>
-                                <tr>
                                     <th>选择</th>
                                     <th>排序</th>
-                                    <th>岗位名称</th>
-                                    <th>招聘人数</th>
-                                    <th>学历要求</th>
+                                    <th>招聘岗位</th>
                                     <th>工作地点</th>
-                                    <th>工作类型</th>
-                                    <th>更新时间</th>
+                                    <th>招聘人数</th>
+                                    <th>薪资</th>
                                     <th>操作</th>
                                 </tr>
                                 {% for recruit in recruit_list %}
@@ -51,11 +42,9 @@
                                         <td><input type="text" name="sort_{{ recruit.id }}"
                                                    value="{{ recruit.sort_order }}"></td>
                                         <td><a href="../recruit-edit/?id={{ recruit.id }}">{{ recruit.title }}</a></td>
-                                        <td>{{ recruit.number }}</td>
-                                        <td>{{ recruit.education }}</td>
                                         <td>{{ recruit.site }}</td>
-                                        <td>{{ recruit.type }}</td>
-                                        <td>{{ recruit.update_time|date:"Y-m-d H:i:s" }}</td>
+                                        <td>{{ recruit.number }}</td>
+                                        <td>{{ recruit.pay }}</td>
                                         <td><a href="{{ recruit.get_url }}" target="_blank">预览</a> | <a
                                                 href="../recruit-edit/?id={{ recruit.id }}" class="article-edit-link"
                                                 data-article-id="{{ recruit.id }}">编辑</a></td>

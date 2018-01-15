@@ -206,7 +206,7 @@
                 '<li><input type="checkbox" name="selected"></li>' +
                 '<li><input type="text" id="categorySort" name="sort" value="0"></li>' +
                 '<li class="name"><span class="categoryIco active"></span>' +
-                '<input type="text" class="form-control form-control-hidden" id="categoryCode" placeholder="分类代码"> <input type="text" class="form-control" id="categoryName" placeholder="分类名称"></li>' +
+                '<input type="hidden" class="form-control form-control-hidden" id="categoryCode" placeholder="分类代码"> <input type="text" class="form-control" id="categoryName" placeholder="分类名称"></li>' +
                 '<li class="operate"><a id="categorySubmit" class="addBtn">确定</a><a class="deleteInput">删除</a></li></ul>';
 
             $("#" + listId).append(insertHtml);
@@ -216,32 +216,32 @@
             })
             $("#categorySubmit").click(function () {
                 var name = $("#categoryName").val();
-                var code = $("#categoryCode").val();
+{#                var code = $("#categoryCode").val();#}
                 var sort = $("#categorySort").val();
                 if (level <= maxCategoryNum) {
-                    addCategory(level, listId, name, code, parent_id, sort);
+                    addCategory(level, listId, name, parent_id, sort);
                 }
             })
         };
 
 
         //模拟"增加分类"提交服务器:  给级别为level，ID为listId的分类增加子分类，子分类名称为name，网址为url
-        function addCategory(level, listId, name, code, parent_id, sort) {
-            console.info("Level: " + level + " ListId: " + listId + " Name: " + name + " Code: " + code + " ParentId:" + parent_id + " Sort:" + sort);
+        function addCategory(level, listId, name, parent_id, sort) {
+            console.info("Level: " + level + " ListId: " + listId + " Name: " + name  + " ParentId:" + parent_id + " Sort:" + sort);
 
             if (name == "") {
                 $("#categoryName").addClass("warning");
             }
-            if (code == "") {
-                $("#categoryCode").addClass("warning");
-            }
+{#            if (code == "") {#}
+{#                $("#categoryCode").addClass("warning");#}
+{#            }#}
 
             //提交服务器如果成功，删除输入行，增加新添加的行
-            if (name != "" && code != "") {
+            if (name != "") {
                 //提价服务器
 
                 var url = "/admin/ajax_add_category/";
-                var postdata = {"name": name, "code": code, "parent_id": parent_id, "sort_order": sort};
+                var postdata = {"name": name, "parent_id": parent_id, "sort_order": sort};
 
                 $.ajax({
                     cache: false,

@@ -21,13 +21,13 @@
                             <div class="col-md-12">
                                 <div>
                                     <form method="POST" id="product_para_group_detail_form">
-                                        <h1 class="add-product-h1 para-h1">属性组列表</h1>
+                                        <h1 class="add-product-h1 para-h1">属性组编辑 </h1>
                                         {% csrf_token %}
                                         <input type="hidden" value="{{ para_group.id }}" name="para_group_id"
                                                id="para_group_id"/>
                                         <div class="form-group edit-attr-from-div">
                                             <label>参数组名称:</label>
-                                            <input type="text" class="form-control" name="name"
+                                            <input type="text" class="form-control product-para-name" name="name"
                                                    value="{{ para_group.name }}">
 
                                             <button type="button" id="product_para_group_detail_submit"
@@ -40,7 +40,7 @@
                                             <tbody>
                                             <tr>
                                                 <th>属性名称</th>
-                                                <th>操作</th>
+                                                <th class="attribute-table-th2">操作</th>
                                             </tr>
                                             {% for para in para_group.paras.all %}
                                                 <tr id="attr-{{ para.id }}">
@@ -56,6 +56,7 @@
                                         </table>
                                         <div class="form-group edit-sku-from-div edit-attr-from-btn">
                                             <a class="addChild btn btn-primary">新增</a>
+                                            <a href="../product-para-list/" class=" btn btn-primary">提交</a>
                                         </div>
                                     </form>
                                 </div>

@@ -1012,6 +1012,7 @@ jQuery("#product-attribute-submit-btn").click(function () {
                 var newurl = changeURLArg(url, "tab_name", "tag_sku");
                 location.href = newurl;//跳转到对应的页面
             });
+            $("#myModal").modal('toggle');
         }
     });
 
@@ -1186,8 +1187,8 @@ jQuery("#product_sku_group_detail_submit").click(function (event) {
         success: function (data) {
             $("#infoMessage").html(data.message);
             $('#myModal').on('hidden.bs.modal', function (e) {
-                var url = location.href;
-                location.href = url + "?id=" + data.sku_group_id;
+                var newurl = location.href;
+                    location.href = newurl;
             });
 
             $("#myModal").modal('toggle');

@@ -25,7 +25,7 @@
                                 <div>
                                     <form>
                                         <div class="form-group">
-                                            <div class="btn-group normal message-list-input">
+                                            <div class="btn-group normal message-list-input inquiry-list-search">
                                                 <button type="button" class="btn btn-default inputBtn"><span
                                                         class="selected-text">Email</span></button>
                                                 <button type="button"
@@ -34,16 +34,15 @@
                                                     <span class="caret"></span>
                                                     <span class="sr-only">Toggle Dropdown</span>
                                                 </button>
-                                                <ul class="dropdown-menu" role="menu">
+                                                <ul class="dropdown-menu " role="menu">
                                                     <li class="dropdown-item" data-value="email">Email</li>
-                                                    <li class="dropdown-item" data-value="title">标题</li>
-                                                    <li class="dropdown-item" data-value="message">内容</li>
+{#                                                    <li class="dropdown-item" data-value="title">标题</li>#}
+                                                    <li class="dropdown-item" data-value="name">姓名</li>
                                                 </ul>
-                                                <input class="dropdown-item-input" type="hidden" name="qry_field"
-                                                       value="email"/>
+                                                <input class="dropdown-item-input" type="hidden" name="qry_field" value="email"/>
                                             </div>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group inquiry-list-input">
                                             <input type="text" class="form-control" name="qry_value"/>
                                         </div>
                                         <div class="form-group">
@@ -70,7 +69,7 @@
                                 <th>用户名</th>
                                 <th>Email</th>
                                 <th>类型</th>
-                                <th>询盘标题</th>
+                                <th>询盘内容</th>
                                 <th>询盘时间</th>
                                 <th>IP</th>
                                 <th>操作</th>
@@ -78,7 +77,7 @@
                             {% for inquiry in inquiry_list %}
                                 <tr id="message_list1">
                                     <td><input type="checkbox" name="inquiry_id" value="{{ inquiry.id }}"></td>
-                                    <td>{{ inquiry.user.first_name }} {{ inquiry.user.last_name }}</td>
+                                    <td>{{ inquiry.name }}</td>
                                     <td><a href="../inquiry-detail/{{ inquiry.id }}/">{{ inquiry.email }}</a></td>
 
                                     <td>
@@ -92,8 +91,8 @@
                                     </td>
 
                                     <td>
-                                        {% if inquiry.title %}
-                                            <a href="../inquiry-detail/{{ inquiry.id }}/">{{ inquiry.title }}</a>
+                                        {% if inquiry.message  %}
+                                            <a href="../inquiry-detail/{{ inquiry.id }}/">{{ inquiry.message | slice:"50" }}</a>
                                         {% else %}
                                             未填写
                                         {% endif %}

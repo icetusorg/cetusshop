@@ -480,131 +480,131 @@ def handle_uploaded_attachment_file(f, f2, type='other', product_sn='-1', file_n
             destination.close()
     return file_names
 
-def handle_uploaded_attachment_article_file(f, f2, type='other', product_sn='-1', file_name_type='random', manual_name='noname',
-                                    same_name_handle='reject'):
-    file_name = ""
-
-    file_names = {}
-    if f2 is None:
-        f2 = f
-
-    if not type.endswith('/'):
-        type += '/'
-    if not product_sn.endswith('/'):
-        product_sn += '/'
-
-    destination = None
-    try:
-        path_images = 'media/' + 'article/' + product_sn + 'images/'
-        path_attachment = 'media/' + 'article/' + product_sn + 'attachment/'
-
-        import os
-        if not os.path.exists(path_images):
-            os.makedirs(path_images)
-        if not os.path.exists(path_attachment):
-            os.makedirs(path_attachment)
-        ext = f.name.split('.')[-1]
-        ext2 = f2.name.split('.')[-1]
-        logger.debug('filename origin:' + str(f.name))
-        logger.debug('filename origin:' + str(f2.name))
-        logger.debug(str(ext))
-        logger.debug(str(ext2))
-        # 允许上传的类型
-        file_allow = ['JPG', 'JPEG', 'PNG', 'GIF', 'PDF', 'ZIP', 'RAR']
-        if ext.upper() not in file_allow:
-            raise Exception('%s File type is not allowed to upload.' % [ext])
-        if ext2.upper() not in file_allow:
-            raise Exception('%s File type is not allowed to upload.' % [ext])
-        # 20160616,koala加入对文件名生成的生成规则
-        real_name = ''
-        real_thumb = ''
-
-        real_path_images = path_images
-        real_path_attachment = path_attachment
-        if file_name_type == 'random':
-            random_name = str(uuid.uuid1())
-            file_name = real_path_attachment + random_name + '.' + ext
-            file_thumb_name = real_path_images + random_name + '-thumb' + '.' + ext2
-            real_name = random_name + '.' + ext
-            real_thumb = random_name + '-thumb' + '.' + ext2
-
-        elif file_name_type == 'origin':
-
-            file_name = real_path_attachment + f.name
-            name_list_tmp = f.name.split('.')
-            length = len(name_list_tmp)
-            name_list_tmp[length - 2] = name_list_tmp[length - 2] + '-thumb'
-            file_thumb_name = real_path_images + f2.name
-
-            real_name = f.name
-            real_thumb = f2.name
-
-
-        elif file_name_type == 'manual':
-            file_name = real_path_attachment + manual_name + '.' + ext
-            file_thumb_name = real_path_images + manual_name + '-thumb' + '.' + ext2
-            real_name = manual_name + '.' + ext
-            real_thumb = manual_name + '-thumb' + '.' + ext2
-
-        else:
-            raise Exception('file upload failed')
-
-        logger.info('real_name : %s' % (real_name))
-        logger.info('thumb_name : %s' % (real_thumb))
-        # 判断文件是否已经存在
-        if os.path.exists(file_name):
-            if same_name_handle == 'reject':
-                file_names['upload_result'] = False
-                file_names['upload_error_msg'] = 'File already exists.'
-                raise Exception('File already exists.')
-            elif same_name_handle == 'rewrite':
-                # 覆盖，无需处理
-                pass
-            else:
-                raise Exception('No such method: %s' % same_name_handle)
-
-        destination = open(file_name, 'wb+')
-        logger.debug('file_name: %s' % file_name)
-        for chunk in f.chunks():
-            destination.write(chunk)
-        destination.close()
-
-        destination2 = open(file_thumb_name, 'wb+')
-        logger.debug('file_thumb_name: %s' % file_thumb_name)
-        for chunk in f2.chunks():
-            destination2.write(chunk)
-        destination2.close()
-
-        # result = thumbnail(file_name, file_thumb_name)
-        # if not result:
-        #     file_names['upload_result'] = False
-        # file_names['upload_error_msg'] = 'Thumbnail failed.'
-        # raise Exception('Thumbnail failed.')
-        # else:
-
-        file_names['upload_result'] = True
-
-        file_names['image'] = file_name
-
-        file_names['thumb'] = file_thumb_name
-
-        file_names['real_name'] = real_name
-
-        file_names['real_thumb'] = real_thumb
-
-        file_names['real_path'] = real_path_attachment
-
-        file_names['image_url'] = System_Config.get_base_url() + '/' + file_name
-
-        file_names['thumb_url'] = System_Config.get_base_url() + '/' + file_thumb_name
-
-    except Exception as e:
-        # pass
-        logger.error(str(e))
-    finally:
-        if destination:
-            destination.close()
-    return file_names
+# def handle_uploaded_attachment_article_file(f, type='other', product_sn='-1', file_name_type='random', manual_name='noname',
+#                                     same_name_handle='reject'):
+#     file_name = ""
+#
+#     file_names = {}
+#     # if f2 is None:
+#     #     f2 = f
+#
+#     if not type.endswith('/'):
+#         type += '/'
+#     if not product_sn.endswith('/'):
+#         product_sn += '/'
+#
+#     destination = None
+#     try:
+#         path_images = 'media/' + 'article/' + product_sn + 'images/'
+#         path_attachment = 'media/' + 'article/' + product_sn + 'attachment/'
+#
+#         import os
+#         if not os.path.exists(path_images):
+#             os.makedirs(path_images)
+#         if not os.path.exists(path_attachment):
+#             os.makedirs(path_attachment)
+#         ext = f.name.split('.')[-1]
+#         # ext2 = f2.name.split('.')[-1]
+#         logger.debug('filename origin:' + str(f.name))
+#         # logger.debug('filename origin:' + str(f2.name))
+#         logger.debug(str(ext))
+#         # logger.debug(str(ext2))
+#         # 允许上传的类型
+#         file_allow = ['JPG', 'JPEG', 'PNG', 'GIF', 'PDF', 'ZIP', 'RAR']
+#         if ext.upper() not in file_allow:
+#             raise Exception('%s File type is not allowed to upload.' % [ext])
+#         if ext2.upper() not in file_allow:
+#             raise Exception('%s File type is not allowed to upload.' % [ext])
+#         # 20160616,koala加入对文件名生成的生成规则
+#         real_name = ''
+#         real_thumb = ''
+#
+#         real_path_images = path_images
+#         real_path_attachment = path_attachment
+#         if file_name_type == 'random':
+#             random_name = str(uuid.uuid1())
+#             file_name = real_path_attachment + random_name + '.' + ext
+#             file_thumb_name = real_path_images + random_name + '-thumb' + '.' + ext2
+#             real_name = random_name + '.' + ext
+#             real_thumb = random_name + '-thumb' + '.' + ext2
+#
+#         elif file_name_type == 'origin':
+#
+#             file_name = real_path_attachment + f.name
+#             name_list_tmp = f.name.split('.')
+#             length = len(name_list_tmp)
+#             name_list_tmp[length - 2] = name_list_tmp[length - 2] + '-thumb'
+#             file_thumb_name = real_path_images + f2.name
+#
+#             real_name = f.name
+#             real_thumb = f2.name
+#
+#
+#         elif file_name_type == 'manual':
+#             file_name = real_path_attachment + manual_name + '.' + ext
+#             file_thumb_name = real_path_images + manual_name + '-thumb' + '.' + ext2
+#             real_name = manual_name + '.' + ext
+#             real_thumb = manual_name + '-thumb' + '.' + ext2
+#
+#         else:
+#             raise Exception('file upload failed')
+#
+#         logger.info('real_name : %s' % (real_name))
+#         logger.info('thumb_name : %s' % (real_thumb))
+#         # 判断文件是否已经存在
+#         if os.path.exists(file_name):
+#             if same_name_handle == 'reject':
+#                 file_names['upload_result'] = False
+#                 file_names['upload_error_msg'] = 'File already exists.'
+#                 raise Exception('File already exists.')
+#             elif same_name_handle == 'rewrite':
+#                 # 覆盖，无需处理
+#                 pass
+#             else:
+#                 raise Exception('No such method: %s' % same_name_handle)
+#
+#         destination = open(file_name, 'wb+')
+#         logger.debug('file_name: %s' % file_name)
+#         for chunk in f.chunks():
+#             destination.write(chunk)
+#         destination.close()
+#
+#         destination2 = open(file_thumb_name, 'wb+')
+#         logger.debug('file_thumb_name: %s' % file_thumb_name)
+#         for chunk in f2.chunks():
+#             destination2.write(chunk)
+#         destination2.close()
+#
+#         # result = thumbnail(file_name, file_thumb_name)
+#         # if not result:
+#         #     file_names['upload_result'] = False
+#         # file_names['upload_error_msg'] = 'Thumbnail failed.'
+#         # raise Exception('Thumbnail failed.')
+#         # else:
+#
+#         file_names['upload_result'] = True
+#
+#         file_names['image'] = file_name
+#
+#         file_names['thumb'] = file_thumb_name
+#
+#         file_names['real_name'] = real_name
+#
+#         file_names['real_thumb'] = real_thumb
+#
+#         file_names['real_path'] = real_path_attachment
+#
+#         file_names['image_url'] = System_Config.get_base_url() + '/' + file_name
+#
+#         file_names['thumb_url'] = System_Config.get_base_url() + '/' + file_thumb_name
+#
+#     except Exception as e:
+#         # pass
+#         logger.error(str(e))
+#     finally:
+#         if destination:
+#             destination.close()
+#     return file_names
 
 
 # 获取一个文件内容

@@ -202,12 +202,11 @@ class email_form(forms.ModelForm):
 class category_simple_form(forms.ModelForm):
     class Meta:
         model = Category
-        fields = ('name', 'code', 'sort_order')
+        fields = ('name', 'sort_order')
 
 
 class category_form(forms.ModelForm):
     name = forms.CharField(required=False)
-    code = forms.CharField(required=False)
     page_title = forms.CharField(required=False)
     keywords = forms.CharField(required=False)
     short_desc = forms.CharField(required=False)
@@ -220,7 +219,7 @@ class category_form(forms.ModelForm):
     class Meta:
         model = Category
         fields = (
-            'name', 'code', 'page_title', 'keywords', 'short_desc', 'sort_order', 'description', 'detail_template',
+            'name',  'page_title', 'keywords', 'short_desc', 'sort_order', 'description', 'detail_template',
             'category_template', 'static_file_name')
 
 

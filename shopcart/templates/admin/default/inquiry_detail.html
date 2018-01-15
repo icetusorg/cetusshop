@@ -64,13 +64,13 @@
                             </div>
                             <div class="inquiry-detail-list">
                                 <span>留言时间</span>
-                                <span>{{ inquiry.title|default:"未填写" }}</span>
+                                <span>{{inquiry.create_time|date:"Y-m-d H:i:s"}}</span>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="inquiry-detail-list">
                                 <span>内容</span>
-                                <span>{{ inquiry.message }}</span>
+                                <p>{{ inquiry.message }}</p>
                             </div>
                         </div>
                     </div>
@@ -84,16 +84,29 @@
                             <th>SKU</th>
                             <th>数量</th>
                         </tr>
-                        {% for op in inquiry_products %}
+                        {% if  inquiry_products %}
+                            {% for op in inquiry_products %}
+                                <tr>
+                                    <td><img src="{{ op.thumb }}"></td>
+                                    <td><a href="/product/{{ op.product_id }}/"
+                                           target="_blank">{{ op.name }}</a></td>
+                                    <td>{{ op.item_number }}</td>
+                                    <td>{{ op.product_attribute_name }}</td>
+                                    <td>{{ op.quantity }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% elif inquiry.product_detail %}
                             <tr>
-                                <td><img src="{{ op.thumb }}"></td>
-                                <td><a href="/product/{{ op.product_id }}/"
-                                       target="_blank">{{ op.name }}</a></td>
-                                <td>{{ op.item_number }}</td>
-                                <td>{{ op.product_attribute_name }}</td>
-                                <td>{{ op.quantity }}</td>
+                                <td><img src="{{ inquiry.product_detail.thumb }}"></td>
+                                <td><a href="/product/{{ inquiry.product_detail.product_id }}/"
+                                       target="_blank">{{ inquiry.product_detail.name }}</a></td>
+                                <td>{{ inquiry.product_detail.item_number }}</td>
+                                <td>None</td>
+                                <td>{{inquiry.quantity}}</td>
                             </tr>
-                        {% endfor %}
+                        {% else %}
+                            <p style="padding-left: 10px">没有相关产品</p>
+                        {% endif %}
                         </tbody>
                     </table>
                 </div>

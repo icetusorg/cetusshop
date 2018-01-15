@@ -258,6 +258,13 @@ def query_product_show(request):
     ctx['page_name'] = 'Product'
 
     if request.method == 'GET':
+        def get_all_top_menu():
+            top_menu_list = Menu.objects.filter(parent=None)
+            return top_menu_list
+
+        top_menu_list = get_all_top_menu()
+
+        ctx['menu_list'] = top_menu_list
         query_condition = request.GET.get('query', '')
         logger.debug('Query_String is %s ' % query_condition)
         from django.db.models import Q

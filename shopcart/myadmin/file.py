@@ -2,7 +2,7 @@
 from django.shortcuts import render, redirect
 from shopcart.models import Product, System_Config, Product_Images, Album, Article, Attribute, Attribute_Group, Slider
 from shopcart.forms import product_add_form
-from shopcart.utils import handle_uploaded_file, my_pagination, handle_uploaded_attachment_file,handle_uploaded_attachment_article_file
+from shopcart.utils import handle_uploaded_file, my_pagination, handle_uploaded_attachment_file
 from django.http import Http404, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.template.response import TemplateResponse
@@ -170,16 +170,8 @@ def file_upload(request, item_type, item_id):
                 item = Article.objects.get(id=item_id)
             except:
                 raise Http404
-
-            upload = request.FILES.get('upload', None)
-            upload2 = request.FILES.get('upload2', None)
-
-            if not upload2:
-                upload2 = upload
-
-            filenames = handle_uploaded_attachment_article_file(upload, upload2, item_type, item_id, filename_type,
-                                                 manual_name,
-                                                 same_name_handle)
+            filenames = handle_uploaded_file(request.FILES['upload'], item_type, item_id, filename_type, manual_name,
+                                             same_name_handle)
             if filenames['upload_result'] == False:
                 ctx['result_message'] = filenames['upload_error_msg']
                 return TemplateResponse(request, System_Config.get_template_name('admin') + '/file_upload.html', ctx)
@@ -201,6 +193,7 @@ def file_upload(request, item_type, item_id):
                 item.save()
             result_extra['img_id'] = ai.id
             logger.debug('ai success!!!')
+
         elif item_type == 'attribute':
             try:
                 item = Attribute_Group.objects.get(id=item_id)

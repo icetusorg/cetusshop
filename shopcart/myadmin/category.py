@@ -45,7 +45,22 @@ def ajax_add_category(request):
 
         logger.debug('1111')
         if form.is_valid():
+
             category = form.save()
+
+            # 前端取消Code输入，改为后端自动生成。
+            name = request.POST.get('name', '')
+            import random, string
+            ran = string.ascii_lowercase + string.digits# 随机生成字符
+            char = ''
+            for i in range(4):
+                char += random.choice(ran)
+            logger.info('生成的随机字符%s' %char)
+            code = name + char
+            category.code = code
+            category.save()
+
+
             parent_id = request.POST.get('parent_id', '')
             if parent_id != '':
                 try:
@@ -192,7 +207,22 @@ def edit(request):
         logger.debug('name:' + request.POST.get('name'))
 
         if form.is_valid():
+
             category = form.save()
+
+            # 前端取消Code输入，改为后端自动生成。
+            name = request.POST.get('name', '')
+            import random, string
+            ran = string.ascii_lowercase + string.digits  # 随机生成字符
+            char = ''
+            for i in range(4):
+                char += random.choice(ran)
+            logger.info('生成的随机字符%s' % char)
+            code = name + char
+            category.code = code
+            category.save()
+
+
             result['success'] = True
             result['message'] = '分类信息保存成功'
             result['category_id'] = category.id

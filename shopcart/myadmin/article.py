@@ -50,6 +50,8 @@ def set_image(request):
 
             Album.objects.filter(id=picture_id).update(sort=-1)  # 需要设为首图的Sort设为1
 
+
+
             result['success'] = True
             result['message'] = '文章图片信息保存成功'
             return JsonResponse(result)

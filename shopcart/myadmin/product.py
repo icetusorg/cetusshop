@@ -1225,6 +1225,7 @@ def product_sku_attribute_manage(request):
     result_dict['message'] = ''
 
     if request.method == 'POST':
+        logger.info('进入SKU保存页面')
         pa_id_list = request.POST.getlist("pa_id")
         logger.debug("ids:%s" % pa_id_list)
 
@@ -1235,7 +1236,6 @@ def product_sku_attribute_manage(request):
             # pa.price_adjusment = request.POST.get('pa-price_adjusment-%s' % pa_id)
             # pa.min_order_quantity = request.POST.get('pa-min_order_quantity-%s' % pa_id)
             pa.save()
-            logger.debug("pa.quantity:%s" % pa.quantity)
 
     result_dict['success'] = True
     result_dict['message'] = '成功'

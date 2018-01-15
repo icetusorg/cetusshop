@@ -35,10 +35,8 @@ def add(request):
 
         code = request.POST.get('code', '')
         if code == request.session.get('check_code', 'error'):
-            logger.info('测试1')
             if form.is_valid():  # 验证表单
                 inquiry = form.save()
-                logger.info('测试2')
                 if inquiry.name == None or inquiry.name.strip() == '':
                     logger.info('Inquiry customer name is Null.')
                     inquiry.name = 'None'
@@ -59,7 +57,7 @@ def add(request):
                 signals.inquiry_received.send(sender='Inquiry', inquiry=inquiry)
             else:
                 result_dict['success'] = False
-                result_dict['message'] = _('Opration faild.')
+                result_dict['message'] = _('Email Format Error.')
         else:
             result_dict['message'] = _('Captcha Error')
         return JsonResponse(result_dict)
@@ -99,7 +97,7 @@ def email_add(request):
             signals.inquiry_received.send(sender='Inquiry', inquiry=inquiry)
         else:
             result_dict['success'] = False
-            result_dict['message'] = _('Opration faild.')
+            result_dict['message'] = _('Email Format Error.')
         return JsonResponse(result_dict)
 
 
@@ -166,7 +164,7 @@ def quote_add(request):
                 signals.inquiry_received.send(sender='Inquiry', inquiry=inquiry)
             else:
                 result_dict['success'] = False
-                result_dict['message'] = _('Opration faild.')
+                result_dict['message'] = _('Email Format Error.')
         else:
             result_dict['message'] = _('Captcha Error')
         return JsonResponse(result_dict)

@@ -73,10 +73,10 @@ def list_view(request):
             from django.db.models import Q
             if qry_field == 'email':
                 inquiry_list = inquiry_list.filter(Q(email__icontains=qry_value))
-            elif qry_field == 'title':
-                inquiry_list = inquiry_list.filter(Q(title__icontains=qry_value))
-            elif qry_field == 'message':
-                inquiry_list = inquiry_list.filter(Q(message__icontains=qry_value))
+            # elif qry_field == 'title':
+            #     inquiry_list = inquiry_list.filter(Q(title__icontains=qry_value))
+            elif qry_field == 'name':
+                inquiry_list = inquiry_list.filter(Q(name__icontains=qry_value))
             else:
                 pass
 

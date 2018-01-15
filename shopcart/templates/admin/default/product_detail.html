@@ -338,15 +338,14 @@
                     <div class="submit-item product-para-btn">
                         <input type="hidden" id="prd_method" name="method" value="save"/>
                         <button type="button" id="product_para_value_submit"
-                                class="btn btn-primary next-steep make-sku-list">保存
+                                class="btn btn-primary next-steep product-para-sku-btn">保存
                         </button>
                         <button type="button" id="product_para_value_clear"
-                                class="btn btn-primary next-steep make-sku-list">清空
+                                class="btn btn-primary next-steep product-para-sku-btn">清空
                         </button>
                     </div>
                 </form>
             </div>
-
             <div class="add-content photo " id="tag_sku">
                 <h1 class="add-product-h1 related-product-h1">SKU编辑</h1>
                 <div class="item-free  item product-choose-attribute product-choose-attribute2">
@@ -465,10 +464,10 @@
 
                 <div class="submit-item product-choose-sku-button">
                     <button type="button" id="product-attribute-submit-btn"
-                            class="btn btn-primary next-steep make-sku-list">保存
+                            class="btn btn-primary next-steep product-para-sku-btn">保存
                     </button>
-                    <button type="button" id="product-attribute-clear-btn " data-product-id="{{ product.id }}"
-                            class="btn btn-primary next-steep make-sku-list">清空
+                    <button type="button" id="product-attribute-clear-btn" data-product-id="{{ product.id }}"
+                            class="btn btn-primary next-steep product-para-sku-btn">清空
                     </button>
                 </div>
             </div>
@@ -523,8 +522,6 @@
                             <button type="button" data-method="delete"
                                     class="btn btn-danger related-product-batch-oper">删除
                             </button>
-
-
                         </div>
 
                     </div>

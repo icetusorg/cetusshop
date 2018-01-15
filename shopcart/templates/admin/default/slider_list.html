@@ -33,18 +33,18 @@
                                     <td><a href="/admin/slider-edit/?id={{ slider.id }}">{{ slider.code }}</a></td>
                                     <td>{{ slider.name }}</td>
                                     <td>{{ slider.create_time|date:"Y-m-d H:i:s" }}</td>
-                                    <td><a href="/admin/slider-edit/?id={{ slider.id }}">编辑</a> | <a
-                                            class="deleteCategory message-delete slider-oper" data-method="delete"
-                                            data-id="{{ slider.id }}">删除</a></td>
+                                    <td><a href="/admin/slider-edit/?id={{ slider.id }}">编辑</a>
+{#                                        | <a class="deleteCategory message-delete slider-oper" data-method="delete" data-id="{{ slider.id }}">删除</a>#}
+                                    </td>
                                 </tr>
                             {% endfor %}
                             </tbody>
                         </table>
                     </div>
                     <div class="box-footer clearfix">
-                        <div class="xy-box-select">
-                            <a href="/admin/slider-edit/" class="btn btn-primary page-list-content-btn">新增</a>
-                        </div>
+{#                        <div class="xy-box-select">#}
+{#                            <a href="/admin/slider-edit/" class="btn btn-primary page-list-content-btn">新增</a>#}
+{#                        </div>#}
                         <div class="xy-pages-jump">
                             <button type="button" class="btn btn-primary page-jump">跳转</button>
                             <input type="text" name="page_number_to_jump" class="form-control">

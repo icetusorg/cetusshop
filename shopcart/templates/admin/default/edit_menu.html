@@ -163,7 +163,7 @@
                 '<li><input style="display:none" type="text" id="categorySort" name="sort" value="0"></li>' +
                 '<li class="name"><span class="categoryIco active"></span>' +
                 '<input type="text" class="form-control form-control-hidden" id="categoryName" placeholder="菜单名称"></li>' +
-                '<li class="url"><input type="text" class="form-control" id="categoryURL" placeholder="菜单URL"></li>' +
+                '<li class="url"><input type="text" class="form-control menu-url" id="categoryURL" placeholder="菜单URL"></li>' +
                 '<li class="operate"><a id="categorySubmit" class="addBtn">确定</a><a class="deleteInput">删除</a></li></ul>';
             $(".category").append(insertHtml);
             $("#categoryName").focus();
@@ -209,7 +209,7 @@
 
                 '<input type="text" class="form-control form-control-hidden" id="categoryName" placeholder="菜单名称"></li> ' +
 
-                '<li class="url"><input type="text" class="form-control" id="categoryURL" placeholder="菜单URL"></li>' +
+                '<li class="url"><input type="text" class="form-control menu-url" id="categoryURL" placeholder="菜单URL"></li>' +
 
                 '<li class="operate"><a id="categorySubmit" class="addBtn">确定</a><a class="deleteInput">删除</a></li></ul>';
 
@@ -238,7 +238,7 @@
             var url = $(this).parent().prev().find(".urlText").text();
 
             $(this).parent().prev().prev().find(".nameText").html('<input value="' + name + '" type="text" class="form-control" id="categoryName" placeholder="菜单名称">');
-            $(this).parent().prev().find(".urlText").html('<input value="' + url + '" type="text" class="form-control" id="categoryURL" placeholder="菜单URL">');
+            $(this).parent().prev().find(".urlText").html('<input value="' + url + '" type="text" class="form-control menu-url" id="categoryURL" placeholder="菜单URL">');
             $(this).prev().parent().find("a,span").hide();
             $(this).parent().append('<div class="editCategoryBtn"><a id="categorySubmit" class="editCategorySubmit">确定</a><span class="slash"> | </span><a class="editCategoryCancel">取消</a></div>');
             {#            var this_span = $(this).parent().prev().prev().find(".categoryIco");#}

@@ -1,6 +1,6 @@
 # coding=utf-8
 from django.shortcuts import render, redirect
-from shopcart.models import Cart, Product, Cart_Products, System_Config, ExpressType, Address
+from shopcart.models import Cart, Product, Cart_Products, System_Config, ExpressType, Address,Menu
 from django.core.context_processors import csrf
 from django.http import HttpResponse, JsonResponse
 import json, uuid
@@ -316,6 +316,14 @@ def view_quote_cart(request):
             ctx['cart'] = cart
             response = TemplateResponse(request, System_Config.get_template_name() + '/quote.html', ctx)
             response.set_cookie('cart_id', cart.id, max_age=3600 * 24 * 365)
+
+            def get_all_top_menu():
+                top_menu_list = Menu.objects.filter(parent=None)
+                return top_menu_list
+
+            top_menu_list = get_all_top_menu()
+
+            ctx['menu_list'] = top_menu_list
             return response
 
 

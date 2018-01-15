@@ -82,9 +82,8 @@
                                     <tbody>
                                     <tr>
                                         <th>SKU项目名称</th>
-                                        <th>内部代码</th>
+                                        <th>SKU项目代码</th>
                                         <th>图片</th>
-                                        <th>序号</th>
                                         <th>操作</th>
                                     </tr>
                                     {% for sku in sku_group.attributes.all %}
@@ -93,14 +92,16 @@
                                                 <td><input type="text" name="name" value="{{ sku.name }}"></td>
                                                 <td><input type="text" name="code" value="{{ sku.code }}"></td>
                                                 <td><img id="img_{{ sku.id }}" src="{{ sku.thumb }}" alt=""></td>
-                                                <td><input type="text" name="position" value="{{ sku.position }}"></td>
-                                                <td><input type="hidden" name="attribute_id" value="{{ sku.id }}"/>
+
+                                                <td>
+                                                    <input type="hidden" name="position" value="1">
+                                                    <input type="hidden" name="attribute_id" value="{{ sku.id }}"/>
                                                     <a href="#" class="sku-item-save-btn" data-id="{{ sku.id }}">保存</a>
-                                                    <a
+                                                    | <a
                                                             href="#" data-type="attribute" data-trigger-name="sku_item"
                                                             data-sku-id="{{ sku.id }}" data-id="{{ sku_group.id }}"
                                                             data-extra-info="{{ sku.id }}"
-                                                            class="cd-popup-trigger cd-popup-trigger2">上传</a> <a
+                                                            class="cd-popup-trigger cd-popup-trigger2">上传</a> | <a
                                                             href="#"
                                                             data-id="{{ sku.id }}"
                                                             class="sku-item-delete ">删除</a>
@@ -111,14 +112,14 @@
 
                                     <tr>
                                         <form id="sku_item_detail_form">
-                                            <td><input type="text" name="name" value="" placeholder="新增SKU项目名称"/></td>
-                                            <td><input type="text" name="code" value="" placeholder="新增SKU项目代码"/></td>
+                                            <td><input type="text" name="name" value=""/></td>
+                                            <td><input type="text" name="code" value=""/></td>
                                             <td><img src="" alt=""></td>
-                                            <td><input type="text" name="position" value="" placeholder="序号"/></td>
                                             <td>
+                                                <input type="hidden" name="position" value="1" placeholder="序号"/>
                                                 <input type="hidden" name="attribute_id" value=""/>
                                                 <input type="hidden" name="group_id" value="{{ sku_group.id }}"/>
-                                                <a href="#" class="sku-item-save-btn" data-id="createnew">保存</a> <a
+                                                <a href="#" class="sku-item-save-btn" data-id="createnew">保存</a> | <a
                                                     href="#"
                                                     data-type="attribute"
                                                     data-trigger-name="sku_item"

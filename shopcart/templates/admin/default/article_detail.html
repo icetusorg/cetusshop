@@ -303,22 +303,22 @@
                                 + '</div>'
                                 + '</div>';
                         });
-                        var tmpHtml2 = "";
-                        $.each(data.image_attachment, function (key, val) {
-                            console.log(key, val, this);
-                            console.log(this.image);
-
-                            tmpHtml2 = tmpHtml2
-                                + '<div class="images col-md-1 accessory-images-list2">'
-                                + '<a href="' + this.image + '" target="_blank"><img src="' + this.thumb + '" alt="' + this.alt + '"><p class="attachment-picture-title">' + this.file_name + '</p></a>'
-                                + '<div class="image-operaion">'
-                                + '<a href="#" class="set-picture-attr-delete set-picture-attr attachment-picture" data-method="delete" data-id="' + this.id + '" data-article-id="' + this.article_id + '" data-image-type="article">删除 </a> '
-
-                                + '</div>'
-                                + '</div>';
-                        });
+{#                        var tmpHtml2 = "";#}
+{#                        $.each(data.image_attachment, function (key, val) {#}
+{#                            console.log(key, val, this);#}
+{#                            console.log(this.image);#}
+{##}
+{#                            tmpHtml2 = tmpHtml2#}
+{#                                + '<div class="images col-md-1 accessory-images-list2">'#}
+{#                                + '<a href="' + this.image + '" target="_blank"><img src="' + this.thumb + '" alt="' + this.alt + '"><p class="attachment-picture-title">' + this.file_name + '</p></a>'#}
+{#                                + '<div class="image-operaion">'#}
+{#                                + '<a href="#" class="set-picture-attr-delete set-picture-attr attachment-picture" data-method="delete" data-id="' + this.id + '" data-article-id="' + this.article_id + '" data-image-type="article">删除 </a> '#}
+{##}
+{#                                + '</div>'#}
+{#                                + '</div>';#}
+{#                        });#}
                         $("#article_main_picture_show").html(tmpHtml);
-                        $("#article_main_picture_show2").html(tmpHtml2);
+{#                        $("#article_main_picture_show2").html(tmpHtml2);#}
                     }
                 }
             });

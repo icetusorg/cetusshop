@@ -1,0 +1,248 @@
+{% extends "client/demo/base.html" %}
+{% block head_extra %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static "client/demo/css/products.css" %}" type="text/css"/>
+{% endblock %}
+{% block breadcrumbs %}
+<div class="crumb">
+    <div class="container">
+        <a href="/">Home</a>
+
+        {% for c in product.get_one_category.get_leveled_parents %}
+        / <a href="{{ c.get_url }}"><span>{{ c.name }}</span></a>
+        {% endfor %}
+        / <a href="#0"><span>{{ product.name }}</span></a>
+
+    </div>
+</div>
+{% endblock%}
+{% block main %}
+{% load i18n %}
+<!-- product-->
+<div class="products-detail container">
+    <!--产品信息-->
+    <div class="product-detail-content">
+        <div class="product-main-left">
+            <div id="preview" class="spec-preview">
+                <span class="jqzoom">
+                    <img jqimg="{{ product.get_main_image.get_image_url }}"
+                         src="{{ product.get_main_image.get_image_url }}">
+                </span>
+            </div>
+            <div class="spec-scroll">
+
+                <div class="items">
+                    <ul>
+
+                        {% for image in product.get_product_detail_images %}
+
+                        <li><img src="{{ image.get_image_url }}" bimg="{{ image.get_image_url }}"
+                                 onmousemove="preview(this);" alt="{{ image.alt_value }}"></li>
+
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="product-main-right detail-attr">
+            <h1>{{ product.name }}</h1>
+            <p class="product-item">{{ product.item_number }}</p>
+            <p class="product-des">
+                {{ product.short_desc }}
+            </p>
+
+            <ul class="product-detail-para">
+                {%for para in product.parameters.all%}
+
+                <li>{{para.product_para.name}}: {{para.value}}</li>
+
+                {%endfor%}
+            </ul>
+
+            <div class="product-attributes">
+                <!-- 先找出商品关联的所有的attributes，然后找出分组 -->
+                <input type="hidden" id="product-attribute-id" value=""/>
+                <input type="hidden" id="current_attrobute_id" name="current_attrobute_id" value=""/>
+                {% for group in product.get_attributes %}
+                {% for attr in group.attr_list %}
+                {% if group.group_type == 'text' %}
+                {% if forloop.first %}
+                <div class="product-attribute-group-div" data-attribute-group-name="{{ group.name }}">
+                    <input type='hidden' class="product-attribute-group-selected" title="{{ group.code }}"
+                           value=""/>
+                    <ul class="detail-color">
+                        <li>{{ group.name }}:</li>
+                        {% endif %}
+                        <li class="attr-text sku-text-available"><span class="product-attribute-item"
+                                                                       data-attribute-id="{{ attr.id }}"
+                                                                       data-group-code="{{ group.code }}"
+                                                                       data-product-id="{{ product.id }}"
+                                                                       name="{{ group.code }}">{{ attr.name }}</span>
+                        </li>
+                        {% if forloop.last %}
+                    </ul>
+                </div>
+                {% endif %}
+                {% elif group.group_type == 'image' %}
+                {% if forloop.first %}
+                <div class="product-attribute-group-div" data-attribute-group-name="{{ group.name }}">
+                    <input type='hidden' class="product-attribute-group-selected" title="{{ group.code }}"
+                           value=""/>
+                    <ul class="detail-color">
+                        <li>{{ group.name }}:</li>
+                        {% endif %}
+                        <li class="attr-img sku-available">
+                            <img class="product-attribute-item" data-attribute-id="{{ attr.id }}"
+                                 data-group-code="{{ group.code }}" data-product-id="{{ product.id }}"
+                                 src='{{ attr.thumb }}' alt='{{ attr.name }}' title='{{ attr.name }}'/>
+                        </li>
+                        {% if forloop.last %}
+                    </ul>
+                </div>
+                {% endif %}
+                {% else %}
+                <p>{{ attr.name }}</p>
+                {% endif %}
+                {% endfor %}
+                {% endfor %}
+            </div>
+
+            <input type="hidden" class="small-quality" id="qty" name="qty" placeholder="1" value="1">
+            <button id="addToCartBtn" data-product-id="{{ product.id }}" class="detail-add-btn delay">Quota Now</button>
+            <!--社交分享-->
+            <div class='oss-widget-interface'></div>
+        </div>
+    </div>
+    <!--产品信息结束-->
+
+    <!--页签-->
+    <div class="products-detail-tab">
+        <ul class="nav nav-tabs" id="myTab">
+            <li class="active"><a href="#Description">Description</a></li>
+            <li><a href="#Video">Video</a></li>
+            <li><a href="#Download">Download</a></li>
+        </ul>
+
+        <div class="tab-content tab-content-content">
+            <div class="tab-pane active" id="Description">
+                {{ product.description|safe }}
+            </div>
+            <div class="tab-pane" id="Video">
+                {% if product.youtube %}
+                <iframe width="560" height="315" src="{{ product.youtube }}" frameborder="0"
+                        allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                {% endif %}
+            </div>
+            <div class="tab-pane" id="Download">
+
+                <div class="row">
+
+                    {% for image in product.get_main_image_list_attachment_rar %}
+                    <div class="product-download-list col-xs-6">
+                        <img src="{{ image.thumb }}" alt="{{ image.file_name }}">
+                        <a href="{{ image.get_image_url }}"><p>{{ image.file_name }}</p></a>
+                    </div>
+                    {% endfor %}
+
+                    {% for image in product.get_main_image_list_attachment_pdf %}
+                    <div class="product-download-list col-xs-6">
+                        <a href="{{ image.get_image_url }}" target="_blank">
+                            <img src="{{ image.thumb }}" alt="{{ image.file_name }}">
+                            <p>{{ image.file_name }}</p>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <!--页签结束-->
+
+    <!--相关产品-->
+    <div class="related-product">
+        <h2>RELATED PRODUCT</h2>
+        <div class="row">
+
+            {% for p in product.related_products.all %}
+            <div class="col-md-3 col-xs-6">
+                <div class="product-list-block">
+                    <a href="{{p.get_url}}"><img src="{{p.image}}" alt="{{p.name}}">
+                        <p>{{p.name}}</p></a>
+                    <a class="product-list-add-quote" href="{{p.get_url}}">ADD TO QUOTE LIST</a>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+    <!--相关产品结束-->
+
+    <!--询盘提交-->
+    <div class="contact-supplier" id="contact-supplier">
+        <h2>SEND YOUR MESSAGE</h2>
+        <form id="inquiryForm" action="/inquiry/add/" method="POST" class="form-horizontal">
+            <div class="row">
+                <div class="contact-supplier-input col-md-6 col-xs-12">
+                    <input name="email" placeholder="Email" type="text" value="">
+                </div>
+                <div class="contact-supplier-input col-md-6 col-xs-12">
+                    <input name="quantity" placeholder="Quantity" type="text" value="">
+                </div>
+                <div class="contact-supplier-message col-md-12">
+                    <textarea name="message" placeholder="Messages" id="message"></textarea>
+                </div>
+                <div class="code col-xs-12">
+                    <img style="cursor: pointer" id="check_code_img" src="/create_code/"
+                         onclick="refresh_check_code(this)"/>
+                    <input type="text" name="code">
+                </div>
+                <input name="product" value="{{ product.id }}" type="hidden">
+                <input name="name" value=" " type="hidden">
+                <input type="hidden" name="type" value="quote">
+                {% if user.id %}
+                <input type="hidden" name="user" value="{{ user.id }}">
+                {% else %}
+                <input type="hidden" name="user" value="1">
+                {% endif %}
+            </div>
+            <button class="contact-supplier-button" type="button" id="inquiry-submit">QUOTE</button>
+        </form>
+    </div>
+    <!--询盘提交结束-->
+
+</div>
+<!-- product end-->
+
+{% endblock %}
+{% block scripts %}
+{% load staticfiles %}
+<script>
+    $('#myTab a').hover(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    })
+</script>
+<script type="text/javascript" src="{% static 'client/demo/js/base.js' %}"></script>
+<script type="text/javascript" src="{% static 'client/demo/js/jquery.jqzoom.js' %}"></script>
+<script type="text/javascript" src="//sharecdn.social9.com/v2/js/opensocialshare.js"></script>
+<script type="text/javascript" src="//sharecdn.social9.com/v2/js/opensocialsharedefaulttheme.js"></script>
+<link rel="stylesheet" type="text/css" href="//sharecdn.social9.com/v2/css/os-share-widget-style.css"/>
+<script type="text/javascript">var shareWidget = new OpenSocialShare();
+shareWidget.init({
+    isHorizontalLayout: 1,
+    widgetIconSize: "32",
+    widgetStyle: "square",
+    theme: 'OpenSocialShareDefaultTheme',
+    providers: {top: ["Facebook", "GooglePlus", "LinkedIn", "Twitter"]}
+});
+shareWidget.injectInterface(".oss-widget-interface");
+shareWidget.setWidgetTheme(".oss-widget-interface");</script>
+<script>
+    function refresh_check_code(ths) {
+        ths.src += '?';
+        //src后面加问好会自动刷新验证码img的src
+    }
+</script>
+{% endblock %}

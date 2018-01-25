@@ -1,0 +1,491 @@
+@font-face { font-family: opensans; src: url("../fonts/opensans.ttf")  }
+* {
+    font-family: 'opensans';
+}
+.buttonpush {
+    display: none;
+}
+/*头部*/
+.gf-logo .gf-pnav a {
+    color: #000;
+    padding-top: 22px;
+}
+
+.gf-logo .gf-pnav {
+    position: absolute;
+    top: 0;
+    padding-top: 0;
+    height: 66px;
+    z-index: 2;
+}
+
+.gf-logo .gf-public {
+    display: none;
+    height: 66px;
+    background-color: #fff;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+}
+
+.neirong {
+    display: none;
+}
+
+.gf-logo {
+    position: fixed;
+    z-index: 200;
+    top: 0;
+    width: 100%;
+}
+
+.gf-logo h1 {
+    width: 125px;
+    height: 36px;
+    position: absolute;
+    top: 0;
+    right: 4%;
+    z-index: 2;
+    margin-top: 0px;
+}
+
+.gf-logo h1 a {
+    background: url(../images/logo2.png) no-repeat center center;
+    width: 160px;
+    height: 66px;
+    display: block;
+    line-height: 36px;
+    text-align: center;
+}
+
+.gf-header {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background-color: #000;
+}
+
+.gf-header .index_pfocus {
+    position: relative;
+}
+
+.gf-header .pfocus img {
+    width: 100%;
+    height: auto;
+}
+
+.morecase a i, .gf-case-detail .gf-state a i, .gf-link-case a i, .gf-pnav a i {
+    width: 100%;
+    height: 1px;
+    display: block;
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    -o-transform: translateX(-100%);
+    transform: translateX(-100%);
+}
+
+.gf-pnav {
+    position: absolute;
+    padding-top: 30px;
+    padding-left: 4%;
+    top: 0;
+    left: 0;
+    z-index: 3;
+}
+
+.gf-pnav a {
+    color: #fff;
+    margin-right: 20px;
+    z-index: 2;
+}
+
+.gf-header .focus-text {
+    position: absolute;
+    left: 4%;
+    z-index: 2;
+    color: #fff;
+}
+
+.gf-header .focus-text {
+    bottom: 70px;
+}
+
+.gf-header .focus-text .p1 {
+    font-size: 16px;
+    padding-bottom: 10px;
+}
+
+.gf-header .focus-text .p2 {
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.morecase a, .gf-case-detail .gf-state a, .gf-link-case a, .gf-pnav a {
+    overflow: hidden;
+    display: inline-block;
+}
+
+.morecase a i, .gf-case-detail .gf-state a i, .gf-link-case a i, .gf-logo .gf-pnav a i, .gf-header .black a i {
+    background-color: #000;
+}
+
+.gf-pnav a i {
+    background-color: #fff;
+}
+
+.morecase a, .gf-case-detail .gf-state a, .gf-link-case a, .gf-pnav a {
+    overflow: hidden;
+    display: inline-block;
+}
+
+.morecase a i, .gf-case-detail .gf-state a i, .gf-link-case a i, .gf-pnav a i {
+    width: 100%;
+    height: 1px;
+    display: block;
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    -o-transform: translateX(-100%);
+    transform: translateX(-100%);
+}
+
+.gf-link-case a i {
+    -webkit-transform: translateX(-200%);
+    -moz-transform: translateX(-200%);
+    -ms-transform: translateX(-200%);
+    -o-transform: translateX(-200%);
+    transform: translateX(-200%);
+}
+
+.morecase a:hover i, .gf-case-detail .gf-state a:hover i, .gf-link-case a:hover i, .gf-pnav a:hover i {
+    -webkit-transform: translateX(0);
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -o-transform: translateX(0);
+    transform: translateX(0);
+    -webkit-transition: all .3s linear;
+    -moz-transition: all .3s linear;
+    -ms-transition: all .3s linear;
+    -o-transition: all .3s linear;
+    transition: all .3s linear;
+}
+
+@media (min-width: 768px) {
+    .gf-header .afocus {
+        display: none;
+    }
+}
+
+@media (max-width: 767px) {
+    .gf-header .afocus {
+        display: block;
+        width: 935px;
+        height: 375px;
+        margin-left: -170px;
+    }
+
+    .pfocus {
+        display: none;
+    }
+
+    .gf-header .afocus {
+        display: block;
+        width: 935px;
+        height: 375px;
+        margin-left: -170px;
+    }
+
+    @media (max-width: 768px) {
+        .buttonpush {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .gf-header .afocus img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .gf-header .afocus {
+            display: block;
+            background-color: #000;
+        }
+
+        .gf-header .focus-text .p2 {
+            font-size: 30px !important;
+        }
+
+        .gf-header .focus-text .p1 {
+            font-size: 12px !important;
+            padding-bottom: 10px !important;
+        }
+
+        .gf-header .focus-text {
+            bottom: 30px;
+        }
+    }
+    .gf-header {
+        height: 300px;
+    }
+
+    .gf-logo h1 a {
+        -webkit-background-size: 60% auto;
+        background-size: 60% auto;
+    }
+
+    .content {
+        overflow-x: hidden;
+        left: 0;
+        position: relative;
+    }
+
+    .gf-logo {
+        position: absolute;
+    }
+
+    .gf-logo h1, .gf-logo h1 a {
+        /*width: 50px;*/
+        /*height: 50px;*/
+        /*line-height: 50px;*/
+    }
+
+    .neirong a {
+        display: block;
+        height: 47px;
+        line-height: 47px;
+        color: #fff;
+        font-size: 16px;
+        border-bottom: 1px solid #333;
+        -webkit-transition: all .35s ease-out;
+        -moz-transition: all .35s ease-out;
+        -ms-transition: all .35s ease-out;
+        -o-transition: all .35s ease-out;
+        transition: all .35s ease-out;
+    }
+
+    .neirong {
+        display: block;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        /* left: -163px; */
+        overflow-y: auto;
+        left: 0;
+        touch-action: pan-y;
+        -webkit-user-select: none;
+        -webkit-user-drag: none;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+
+    .neirong.neirong-hide {
+        background-color: rgba(0, 0, 0, .8);
+        height: 0;
+        -webkit-transition: background 0.35s linear, height 0.25s ease-in 200ms;
+        -moz-transition: background 0.35s linear, height 0.25s ease-in 200ms;
+        -ms-transition: background 0.35s linear, height 0.25s ease-in 200ms;
+        -o-transition: background 0.35s linear, height 0.25s ease-in 200ms;
+        transition: background 0.35s linear, height 0.25s ease-in 200ms;
+    }
+
+
+    .buttonpush {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+}
+
+/*手机菜单样式开始-----------*/
+.neirong {
+    display: block;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000; /*left: -163px;*/
+    overflow-y: auto;
+    left: 0;
+    touch-action: pan-y;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.neirong .neirong-bd {
+    padding-bottom: 20px;
+    padding-top: 50px;
+    padding-left: 50px;
+    padding-right: 50px;
+    visibility: hidden;
+}
+
+.neirong a {
+    display: block;
+    height: 47px;
+    line-height: 47px;
+    color: #fff;
+    font-size: 16px;
+    border-bottom: 1px solid #333;
+    -webkit-transition: all .35s ease-out;
+    -moz-transition: all .35s ease-out;
+    -ms-transition: all .35s ease-out;
+    -o-transition: all .35s ease-out;
+    transition: all .35s ease-out;
+}
+
+.neirong a.neirong-on {
+    color: #aaa;
+}
+
+.content {
+    overflow-x: hidden;
+    left: 0;
+    position: relative;
+}
+
+.content.content-on {
+    left: 120px;
+}
+
+.neirong.neirong-on {
+    left: 0;
+}
+
+.body-on {
+    position: relative;
+    overflow: hidden;
+}
+
+.html-on {
+    overflow: hidden;
+}
+
+.neirong-close {
+    width: 24px;
+    height: 24px;
+    background: url(../images/close.png) no-repeat 7px center;
+    position: absolute;
+    top: 20px;
+    left: 10px;
+    visibility: hidden;
+}
+
+.neirong.neirong-hide {
+    background-color: rgba(0, 0, 0, .8);
+    height: 0;
+    -webkit-transition: background 0.35s linear, height 0.25s ease-in 200ms;
+    -moz-transition: background 0.35s linear, height 0.25s ease-in 200ms;
+    -ms-transition: background 0.35s linear, height 0.25s ease-in 200ms;
+    -o-transition: background 0.35s linear, height 0.25s ease-in 200ms;
+    transition: background 0.35s linear, height 0.25s ease-in 200ms;
+}
+
+.neirong.neirong-show {
+    background-color: #000;
+    height: 100%;
+}
+
+.neirong.neirong-show .neirong-bd, .neirong.neirong-show .neirong-close {
+    visibility: visible;
+}
+
+.neirong.neirong-hide a {
+    opacity: 0;
+    -webkit-transform: scale(1.1) translateY(-24px);
+    -moz-transform: scale(1.1) translateY(-24px);
+    -ms-transform: scale(1.1) translateY(-24px);
+    -o-transform: scale(1.1) translateY(-24px);
+    transform: scale(1.1) translateY(-24px);
+}
+
+.neirong.neirong-show a {
+    opacity: 1;
+    -webkit-transform: none;
+    -moz-transform: none;
+    -ms-transform: none;
+    -o-transform: none;
+    transform: none;
+}
+
+.neirong a:nth-of-type(2) {
+    -webkit-transition-delay: 300ms, 300ms;
+    transition-delay: 300ms, 300ms;
+}
+
+.neirong a:nth-of-type(3) {
+    -webkit-transition-delay: 350ms, 350ms;
+    transition-delay: 350ms, 350ms;
+}
+
+.neirong a:nth-of-type(4) {
+    -webkit-transition-delay: 400ms, 400ms;
+    transition-delay: 400ms, 400ms;
+}
+
+.neirong a:nth-of-type(5) {
+    -webkit-transition-delay: 450ms, 450ms;
+    transition-delay: 450ms, 450ms;
+}
+
+.neirong a:nth-of-type(6) {
+    -webkit-transition-delay: 500ms, 500ms;
+    transition-delay: 500ms, 500ms;
+}
+
+.neirong a:nth-of-type(7) {
+    -webkit-transition-delay: 550ms, 550ms;
+    transition-delay: 550ms, 550ms;
+}
+
+.neirong a:nth-of-type(8) {
+    -webkit-transition-delay: 600ms, 600ms;
+    transition-delay: 600ms, 600ms;
+}
+
+.neirong a:nth-of-type(9) {
+    -webkit-transition-delay: 650ms, 650ms;
+    transition-delay: 650ms, 650ms;
+}
+
+.neirong a:nth-of-type(10) {
+    -webkit-transition-delay: 700ms, 700ms;
+    transition-delay: 700ms, 700ms;
+}
+
+.neirong a:nth-of-type(11) {
+    -webkit-transition-delay: 750ms, 750ms;
+    transition-delay: 750ms, 750ms;
+}
+
+/*手机版头部*/
+
+
+
+.buttonset .show {
+    -webkit-transition: all .25s linear;
+    -moz-transition: all .3s;
+    -ms-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s;
+}
+
+.buttonset-black .buttonpush {
+    background: url("../images/button_black.png") no-repeat center;
+}
+
+.buttonset-black .buttonpush.show {
+    background: rgba(0, 0, 0, .8) url("../images/buttonset.png") no-repeat center;
+    -webkit-transition: all .25s linear;
+    -moz-transition: all .3s;
+    -ms-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s;
+}
+
+/*手机菜单样式结束*/

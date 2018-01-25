@@ -1,0 +1,49 @@
+{% load staticfiles %}
+{% load i18n %}
+<!--phone menu-->
+<div class="neirong neirong-hide">
+    <div class="neirong-bd">
+        {% for cat in menu_list %}
+            <a href="{{ cat.url }}">{{ cat.name }} <i></i></a>
+        {% endfor %}
+    </div>
+    <div class="neirong-close"></div>
+</div>
+<!--phone menu end-->
+<div class="header">
+    <div class="container">
+        <div class="header-logo">
+            <a href="/"><img src="{% static "client/demo/images/logo.jpg"%}" ></a>
+        </div>
+        <section class="buttonset">
+            <i id="showLeftPush" class="iconfont buttonpush">&#xe663;</i>
+        </section>
+        <div class="header-right">
+            <a href="/quote/show/"><i class="iconfont quote-ico">&#xe616;</i>Quote(<a class="top-cart-num-link" href="quote/show/">0</a>)</a>
+        </div>
+    </div>
+</div>
+<div class="menu">
+    <div class="container">
+        <ul>
+            {% for cat in menu_list %}
+            {% if cat.childrens.all %}
+            <li class="li1">
+                {% else %}
+            <li>
+                {% endif %}
+
+                <a href="{{ cat.url }}">{{ cat.name }}</a>
+
+                {% if cat.childrens.all %}
+                <ul class="menu-first-ul">
+                    {% for cat2 in cat.childrens.all %}
+                    <li><a href="{{ cat2.url }}">{{ cat2.name }}</a></li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

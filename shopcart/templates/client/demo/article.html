@@ -1,0 +1,26 @@
+{% extends "client/demo/base.html" %}
+{% block breadcrumbs %}
+<!--crumb-->
+<div class="crumb">
+    <div class="container">
+        <a href="/">Home</a> / <a><span>{{article.title}}</span></a>
+    </div>
+</div>
+{% endblock %}
+{% block main %}
+{% load i18n %}
+{% load staticfiles %}
+
+<div class="product-list">
+    <div class="container">
+        <div class="article">
+            <h1>{{article.title}}</h1>
+            <div>{{article.content|safe}}</div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+{% load staticfiles %}
+{% endblock %}

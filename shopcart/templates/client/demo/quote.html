@@ -1,0 +1,101 @@
+{% extends "client/demo/base.html" %}
+{% block breadcrumbs %}
+<!--crumb-->
+<div class="crumb">
+    <div class="container">
+        <a href="/">Home</a> - <a><span>Quote</span></a>
+    </div>
+</div>
+{% endblock %}
+{% block main %}
+{% load i18n %}
+{% load staticfiles %}
+<div class="container quote">
+    <form id="inquiryForm" action="/quote/add/" method="POST" class="form-horizontal">
+        {% csrf_token %}
+        <div class="table-responsive">
+        <table class="quote-table table ">
+            <tr>
+                <th>Pic</th>
+                <th>Product Name</th>
+                <th>Attributes</th>
+                <th>Item No.</th>
+                <th>Quantity</th>
+                <th>Edit</th>
+            </tr>
+
+            {% for cart_product in cart.cart_products.all %}
+            <tr class="carts-item" id="goods1">
+                <td>
+                    <input name="cart_product_id" type="hidden" value="{{ cart_product.id }}"/>
+                    <a href="{{ cart_product.product.get_url }}">
+                        {% if cart_product.product_attribute.image.thumb %}
+                        <img src="{{ cart_product.product_attribute.image.thumb }}"
+                             alt="{{ cart_product.product.name }}">
+                        {% else %}
+                        <img src="{{ cart_product.product.thumb }}"
+                             alt="{{ cart_product.product.name }}">
+                        {% endif %}
+                    </a>
+                </td>
+                <td><a href="{{ cart_product.product.get_url }}">{{ cart_product.product.name }}</a></td>
+                <td>{{ cart_product.get_short_product_attr }}</td>
+                <td>{{ cart_product.product.item_number }}</td>
+                <td>
+
+                    <input maxlength="999999" class="cart-qty" data-cartid="{{ cart_product.id }}"
+                           id="cartqty-{{ cart_product.id }}" price="price1" type="text"
+                           value="{{ cart_product.quantity }}" autocomplete="off">
+
+                </td>
+                <td><a href="#" class="remove-item" title="Delete" data-cartid="{{cart_product.id}}"><span
+                        class="glyphicon glyphicon-remove cartmoveico" data="goods1"></span></a>
+                </td>
+            </tr>
+            {% endfor %}
+
+        </table>
+        </div>
+        <p>Please Write your message, ask for best price, we will reply you soon, thanks</p>
+
+        <div class="row">
+            <div class="contact-supplier-input col-md-6 col-xs-12">
+                <input name="name" placeholder="Your Name" type="text" value="">
+            </div>
+            <div class="contact-supplier-input col-md-6 col-xs-12">
+                <input name="email" placeholder="Your Email" type="text" value="">
+            </div>
+            <div class="contact-supplier-message col-md-12">
+                <textarea name="message" placeholder="Messages" id="message"></textarea>
+            </div>
+
+            <div class="code col-xs-12">
+                <img style="cursor: pointer" id="check_code_img" src="/create_code/"
+                     onclick="refresh_check_code(this)">
+                <input type="text" name="code">
+            </div>
+            {% if user.id %}
+            <input type="hidden" name="user" value="{{ user.id }}">
+            {% else %}
+            <input type="hidden" name="user" value="1">
+            {% endif %}
+            <input type="hidden" name="type" value="quote">
+        </div>
+        <div class="quote-btn">
+            <button class="contact-supplier-button" type="button"
+                    onclick="javascript:window.location.href='/Products.html'">Keep Shopping
+            </button>
+            <button class="contact-supplier-button" type="button" id="quote-submit">Send Message</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+{% block scripts %}
+{% load staticfiles %}
+<script>
+    function refresh_check_code(ths) {
+        ths.src += '?';
+        //src后面加问好会自动刷新验证码img的src
+    }
+</script>
+{% endblock %}

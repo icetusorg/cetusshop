@@ -1,0 +1,72 @@
+{% extends "client/demo/base.html" %}
+{% block breadcrumbs %}
+<!--crumb-->
+<div class="crumb">
+    <div class="container">
+        <a href="/">Home</a> / <a><span>{{page_name}}</span></a>
+    </div>
+</div>
+<!--crumb end-->
+{% endblock%}
+{% block main %}
+{% load i18n %}
+{% load staticfiles %}
+
+<div class="product-list">
+    <div class="container">
+        <h1>{{page_name}}</h1>
+        <p class="product-list-p">{{page_description}}</p>
+
+
+        <div class="article-list">
+            {% for article in article_list %}
+            <div class="ArticleList-right-one">
+                <a class="ArticleList-right-a" href="{{article.get_url}}"><img src="{{article.get_main_image.get_image_url}}"></a>
+                <div class="ArticleList-right-one-center">
+                    <a class="ArticleList-right-h3" href="{{article.get_url}}"><h3>{{article.title}}</h3></a>
+                    <p class="ArticleList-right-content">{{article.short_desc}}</p>
+                </div>
+                <a class="ArticleList-right-button" href="{{article.get_url}}">
+                    <button>
+                        Read More
+                    </button>
+                </a>
+            </div>
+            {% endfor %}
+
+
+            <div class="pages">
+                {% if article_list.has_previous %}
+                <a name="pageChange" data-tag="Previous" class="pageChage prev"
+                   data-page="{{ article.previous_page_number }}">Prev</a>
+                {% else %}
+                <a class="prev" href="#">Prev</a>
+                {% endif %}
+
+
+                {% for p in page_range %}
+
+                {% ifequal p current_page %}
+                <a class="pageChage current_page" data-page="{{p}}" href="#" title="{{p}}">{{p}}</a>
+                {% else %}
+                <a class="pageChage" data-page="{{p}}" href="#" title="{{p}}">{{p}}</a>
+                {% endifequal %}
+
+                {% endfor %}
+
+
+                {% if article_list.has_next %}
+                <a name="pageChange" class="pageChage next" data-page="{{p}}" data-page-range="{{page_range}}"
+                   data-tag="Next">Next</a>
+                {% else %}
+                <a>Next</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+{% load staticfiles %}
+{% endblock %}

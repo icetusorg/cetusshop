@@ -60,18 +60,18 @@ def init_expresses():
 
 
 def init_system_configs():
-    sys_con = System_Config.objects.create(name='template_name', val='cassie')
+    sys_con = System_Config.objects.create(name='template_name', val='demo')
     sys_con = System_Config.objects.create(name='site_name', val='鲸鱼座商城')
     sys_con = System_Config.objects.create(name='default_welcome_message', val='Hi，欢迎来鲸鱼座商城')
-    sys_con = System_Config.objects.create(name='logo_image', val='http://www.icetuscom/images/logo.png')
-    sys_con = System_Config.objects.create(name='base_url', val='http://localhost:8000/')
+    sys_con = System_Config.objects.create(name='logo_image', val='http://www.icetus.com/images/logo.png')
+    sys_con = System_Config.objects.create(name='base_url', val='http://localhost:8000')
     sys_con = System_Config.objects.create(name='paypal_account', val='demo@icetus.com')
     sys_con = System_Config.objects.create(name='default_currency', val='USD')
     sys_con = System_Config.objects.create(name='paypal_env', val='sandbox')
 
     sys_con = System_Config.objects.create(name='copyright',
-                                           val='Copyright © cassiecomb.com All Rights Reserved. Designed by iCetus')
-    sys_con = System_Config.objects.create(name='service_email', val='info@cassiecomb.com')
+                                           val='Copyright © icetus.com All Rights Reserved. Designed by iCetus')
+    sys_con = System_Config.objects.create(name='service_email', val='info@icetus.com')
     sys_con = System_Config.objects.create(name='contact_address', val='4578 MARMORA ROAD,GLASGOW D04 89 GR')
     sys_con = System_Config.objects.create(name='thumb_width', val='128')
 
@@ -100,11 +100,11 @@ def init_attributes():
     ag_Color = Attribute_Group.objects.create(name='Color', group_type='image', code='Color')
 
     ab_Color_RED = Attribute.objects.create(name='RED', group=ag_Color, position=0,
-                                            thumb='http://aws.imycart.com/media/attribute/Color/RED.jpg')
+                                            thumb='http://localhost:8000/media/attribute/Color/RED.jpg')
     ab_Color_GREEN = Attribute.objects.create(name='GREEN', group=ag_Color, position=1,
-                                              thumb='http://aws.imycart.com/media/attribute/Color/GREEN.jpg')
+                                              thumb='http://localhost:8000/media/attribute/Color/GREEN.jpg')
     ab_Color_BLUE = Attribute.objects.create(name='BLUE', group=ag_Color, position=2,
-                                             thumb='http://aws.imycart.com/media/attribute/Color/BLUE.jpg')
+                                             thumb='http://localhost:8000/media/attribute/Color/BLUE.jpg')
 
 
 def init_products():
@@ -114,20 +114,20 @@ def init_products():
                             static_file_name='', is_publish=True)
     product_brush.description = '<p>This kind hair brush can do many different workmanship, so you can choose what you like. Because its personalized shape and design make it become the most popular hair brush in the world, especially in North America. It is the hottest seller and many surprises wait for you.</p><div>1. Portable, for woman can put it in bag.</div><div>2. The different length of tooth can massage the different surface of hair so can protect your hair from damage and loss.</div><div>3. Can do many cover designs, like figure, scenery and animation.</div><div>4. The unique cone shaped plastic bristles work to separate the hair sideways instead of down, gently unraveling even the toughest tangles</div><div>5. Great for Extensions</div><div>6. Our brush also encourages hair growth. The bristles massage the scalp, which stimulates the capillaries, increasing blood circulation, oxygen and nutrients to the hair follicle.</div>'
     product_brush.save()
-    product_brush.thumb = 'http://aws.imycart.com/media/product/18/003fee96-1d8b-11e6-b3b0-0ab91c1e4bd1-thumb.jpg'
-    product_brush.image = 'http://aws.imycart.com/media/product/18/003fee96-1d8b-11e6-b3b0-0ab91c1e4bd1.jpg'
+    product_brush.thumb = 'http://localhost:8000/media/product/18/003fee96-1d8b-11e6-b3b0-0ab91c1e4bd1-thumb.jpg'
+    product_brush.image = 'http://localhost:8000/media/product/18/003fee96-1d8b-11e6-b3b0-0ab91c1e4bd1.jpg'
     product_brush.save()
 
     image_red = Product_Images()
     image_red.product = product_brush
-    image_red.thumb = 'http://aws.imycart.com/media/product/18/fce1b180-1d8a-11e6-b3b0-0ab91c1e4bd1-thumb.jpg'
-    image_red.image = 'http://aws.imycart.com/media/product/18/fce1b180-1d8a-11e6-b3b0-0ab91c1e4bd1.jpg'
+    image_red.thumb = 'http://localhost:8000/media/product/18/fce1b180-1d8a-11e6-b3b0-0ab91c1e4bd1-thumb.jpg'
+    image_red.image = 'http://localhost:8000/media/product/18/fce1b180-1d8a-11e6-b3b0-0ab91c1e4bd1.jpg'
     image_red.save()
 
     image_black = Product_Images()
     image_black.product = product_brush
-    image_black.thumb = 'http://aws.imycart.com/media/product/18/003fee96-1d8b-11e6-b3b0-0ab91c1e4bd1-thumb.jpg'
-    image_black.image = 'http://aws.imycart.com/media/product/18/003fee96-1d8b-11e6-b3b0-0ab91c1e4bd1.jpg'
+    image_black.thumb = 'http://localhost:8000/media/product/18/003fee96-1d8b-11e6-b3b0-0ab91c1e4bd1-thumb.jpg'
+    image_black.image = 'http://localhost:8000/media/product/18/003fee96-1d8b-11e6-b3b0-0ab91c1e4bd1.jpg'
     image_black.save()
 
     pa_red = Product_Attribute.objects.create(product=product_brush, sub_item_number=1, quantity=500,
@@ -190,27 +190,28 @@ def init_email():
 
 
 def init_cust_url():
-    cust_url = CustomizeURL.objects.create(name='login', url='index-login.html', target_url='/user/login/',
+    cust_url = CustomizeURL.objects.create(name='登陆', url='index-login.html', target_url='/user/login/',
                                            module='shopcart.myuser', function='login', type='MVC', is_customize_tdk='0',
                                            page_name='Login Page', keywords='Keywords of login page',
                                            short_desc='Short desc of login page')
-
-    cust_url = CustomizeURL.objects.create(name='index', url='index.html', target_url='/', module='shopcart.index',
+    cust_url = CustomizeURL.objects.create(name='首页', url='index.html', target_url='/', module='shopcart.index',
                                            function='view_index', type='MVC', is_customize_tdk='1',
                                            page_name='Index Page', keywords='Keywords of index page',
                                            short_desc='Short desc of index page')
-
-    cust_url = CustomizeURL.objects.create(name='blog', url='blog-list.html', target_url='/blog/',
+    cust_url = CustomizeURL.objects.create(name='文章列表', url='blog-list.html', target_url='/blog/',
                                            module='shopcart.article', function='view_blog_list_with_tdk', type='MVC',
                                            is_customize_tdk='1', page_name='Blog Page',
                                            keywords='Keywords of blog page', short_desc='Short desc of blog page')
-
-    cust_url = CustomizeURL.objects.create(name='contact_us', url='Contact-us.html', target_url='/contact/show/',
+    cust_url = CustomizeURL.objects.create(name='联系我们', url='contact-us.html', target_url='/contact/show/',
                                            module='shopcart.views', function='contact_page', type='MVC',
                                            is_customize_tdk='1', page_name='Contact us Page',
                                            keywords='Keywords of contact us page',
-                                           short_desc='Short desc of contact us page')
-
+                                           short_desc='Short desc of contact us page') 
+    cust_url = CustomizeURL.objects.create(name='商品列表', url='products.html', target_url='/product/',
+                                           module='shopcart.product', function='view_list', type='MVC',
+                                           is_customize_tdk='1', page_name='Products Page',
+                                           keywords='Keywords of product page',
+                                           short_desc='Short desc of product page')
 
 def init_oauth():
     pass
@@ -237,4 +238,5 @@ def init_db():
     init_products()
     init_users()
     init_email()
+    init_cust_url()
     return '成功'

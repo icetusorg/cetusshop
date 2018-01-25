@@ -1,0 +1,118 @@
+{% extends "client/demo/base.html" %}
+{% block breadcrumbs %}
+<!--crumb-->
+<div class="crumb">
+    <div class="container">
+        <a href="/">Home</a> > <a><span>{{article.title}}</span></a>
+    </div>
+</div>
+{% endblock %}
+{% block main %}
+{% load i18n %}
+{% load staticfiles %}
+
+<div class="about-us">
+    <div class="container">
+        <div class="row">
+            <div class="about-us-1">
+                <div class="about-us-1-left col-md-6 col-xs-12">
+                    <img src="{% static "client/demo/images/about_01.jpg"%}" alt="">
+                </div>
+                <div class="about-us-1-right col-md-6 col-xs-12">
+                    <h2>WHO WE ARE</h2>
+                    <p>
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                        been the industry's standard dummy text ever since. Lorem Ipsum has been the industry's
+                        standard dummy text ever since. Lorem Ipsum is printing and typesetting simply dummy text.
+                    </p>
+                    <p>
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                        been the industry's standard dummy text ever since. Lorem Ipsum has been the industry. Lorem
+                        Ipsum is simply dummy text of the printing and industry. Lorem Ipsum has been the industry's
+                        standard dummy text ever since. Lorem Ipsum has been the industry.
+                    </p>
+                </div>
+            </div>
+            <div class="about-us-2">
+                <h2>WHY CHOOSE US</h2>
+                <div class="col-md-3 col-xs-6">
+                    <div class="about-us-2-border">
+                        <img src="{% static "client/demo/images/why_01.jpg"%}" alt="">
+                        <h3>Pixel Perfect Design</h3>
+                        <p>Lorem Ipsum is simply text of the printing and typesetting industry. Lorem Ipsum has been
+                            standard dummy.</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-xs-6">
+                    <div class="about-us-2-border">
+                        <img src="{% static "client/demo/images/why_02.jpg"%}" alt="">
+                        <h3>Pixel Perfect Design</h3>
+                        <p>Lorem Ipsum is simply text of the printing and typesetting industry. Lorem Ipsum has been
+                            standard dummy.</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-xs-6">
+                    <div class="about-us-2-border">
+                        <img src="{% static "client/demo/images/why_03.jpg"%}" alt="">
+                        <h3>Pixel Perfect Design</h3>
+                        <p>Lorem Ipsum is simply text of the printing and typesetting industry. Lorem Ipsum has been
+                            standard dummy.</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-xs-6">
+                    <div class="about-us-2-border">
+                        <img src="{% static "client/demo/images/why_04.jpg"%}" alt="">
+                        <h3>Pixel Perfect Design</h3>
+                        <p>Lorem Ipsum is simply text of the printing and typesetting industry. Lorem Ipsum has been
+                            standard dummy.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="about-us-3">
+                <h2>Service</h2>
+                <div class="col-md-3 col-xs-6">
+                    <img src="{% static "client/demo/images/service_01.jpg"%}" alt="">
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                        text...</p>
+                </div>
+                <div class="col-md-3 col-xs-6">
+                    <img src="{% static "client/demo/images/service_02.jpg"%}" alt="">
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                        text...</p>
+                </div>
+                <div class="col-md-3 col-xs-6">
+                    <img src="{% static "client/demo/images/service_03.jpg"%}" alt="">
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                        text...</p>
+                </div>
+                <div class="col-md-3 col-xs-6">
+                    <img src="{% static "client/demo/images/service_04.jpg"%}" alt="">
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                        text...</p>
+                </div>
+            </div>
+            <div class="about-us-4">
+                <h2>Cooperation</h2>
+
+                <div class="col-md-3 col-xs-6">
+                    <img src="{% static "client/demo/images/coop_01.jpg"%}" alt="">
+                </div>
+                <div class="col-md-3 col-xs-6">
+                    <img src="{% static "client/demo/images/coop_02.jpg"%}" alt="">
+                </div>
+                <div class="col-md-3 col-xs-6">
+                    <img src="{% static "client/demo/images/coop_03.jpg"%}" alt="">
+                </div>
+                <div class="col-md-3 col-xs-6">
+                    <img src="{% static "client/demo/images/coop_04.jpg"%}" alt="">
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+{% load staticfiles %}
+{% endblock %}

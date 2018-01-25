@@ -44,7 +44,7 @@ def set_image(request):
                 logger.info(
                     'Can not find article [%s] or picture [%s]. \n Error Message: %s' % (article_id, picture_id, err))
 
-            article.image = picture.thumb
+            article.image = picture.image
             article.save()
             Album.objects.filter(item_id=article_id).update(sort=0)  # 先把所有图的sort设为0
 

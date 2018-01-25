@@ -2,38 +2,318 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="91cd60c5-dbea-4579-97d4-fe20f2991676" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/css/bootstrap.min.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/css/bootstrapValidator.min.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/css/cart.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/css/single.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/css/style.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/fonts/glyphicons-halflings-regular.eot" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/fonts/glyphicons-halflings-regular.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/fonts/glyphicons-halflings-regular.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/fonts/glyphicons-halflings-regular.woff" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/fonts/glyphicons-halflings-regular.woff2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/fonts/opensan.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/09-26/0926 轮播图更换.rar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/09-26/911SIGNAL LOGO.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/09-26/C4-LED-Lighthead.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/09-26/T&amp;X-series-lighthead.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/09-26/X6-strobe-light.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/09-26/轮播图修改.xlsx" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/911SIGNAL LOGO.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/911logo.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/911logo.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/911logo2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/AMBULANCE.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/Ameriaca.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/Awards.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/Become-a-Dealer.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/C4 LED Lighthead.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/C4-D(800-800).jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/C4-STROBE-LIGHT.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/C9(800-800).jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/COMMERCIAL-AND-WORK-VEHICLES.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/F3.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/FD24-LED-BEACON.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/FIRE-TRUCKS.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/FOLLOW-OUR-YOUTUBE-CHANNEL.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/P.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/POLICE-VEHICLES.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/SPECIALS-PRODUCT.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/SUPERVISOR-AND-SKYLINE-LIGHTBAR.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/T &amp; X series lighthead.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/T4.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/T8.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/Why-Choose-Us.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/X6 strobe light.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/X9.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/about-border-line.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/about-border-line2.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/about-img.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/about-us1.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/about-us2.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/about-us3.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/about-us4.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/article_list.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/awards-detail.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/b2.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/b3.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/become-detail.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/bimg1.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/bimg2.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/bimg3.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/bimg4.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/bimg5.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/bimg6.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/cart-top.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/contact.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/delivery-style.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/detangling-hair-brush.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/email-logo.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/f.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/facebook.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/google-plus.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/home-about-left.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/home-about-right.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/home-adv.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/ico/America.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/ico/Chinese.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/ico/cart-top.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/ico/cart-top2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/ico/color1-ico.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/ico/color2-ico.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/ico/color3-ico.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/ico/down.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/ico/facebook-footer.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/ico/facebook.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/ico/google.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/ico/icon_ae.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/ico/icon_discover.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/ico/icon_master.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/ico/icon_master2.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/ico/icon_paypal.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/ico/icon_visa.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/ico/linkedin.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/ico/linkin-footer.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/ico/list-arrow-left.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/ico/list-arrow-left1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/ico/menu-arrow.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/ico/menu-arrow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/ico/pages-next.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/ico/pages-prev.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/ico/pay-load.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/ico/pinterest.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/ico/twitter-footer.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/ico/twitter.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/ico/youtube.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/inde2x.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/index_bottom.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/index_bottom2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/index_png1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/index_png2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/index_png3.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/index_png4.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/index_png5.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/logo.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/paypal-ico.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/pc1.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/pc2.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/prevest.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/product_list.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/products-big.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/products-example.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/products.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/products/hair-brush-ball.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/products/hair-brush-ball2.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/s2.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/s3.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/slider.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/slider1.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/slider2.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/slider3.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/spinner.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/twitter.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/we-see-you.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/wet-brush.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/why-choose-detail.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/why-make-china.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/x18.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/images/轮播图修改.xlsx" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/js/base.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/js/bootstrap.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/js/bootstrapValidator.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/js/imycart.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/js/jquery-1.11.1.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/js/jquery.combo.select.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/js/jquery.cookie.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/js/jquery.jqzoom.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/js/jquery.json.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/js/jquery.spinner.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/911signal/js/main.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/css/bootstrap-touch-slider.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/css/bootstrap.min.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/css/products.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/css/style-phone.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/css/style.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/fonts/AdobeHeitiStd-Regular (v5.010).otf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/fonts/AxureHandwriting-Bold.otf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/fonts/Helvetica_0.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/fonts/OpenSans-Bold.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/fonts/glyphicons-halflings-regular.eot" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/fonts/glyphicons-halflings-regular.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/fonts/glyphicons-halflings-regular.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/fonts/glyphicons-halflings-regular.woff" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/fonts/glyphicons-halflings-regular.woff2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/fonts/iconfont.eot" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/fonts/iconfont.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/fonts/iconfont.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/fonts/iconfont.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/fonts/iconfont.woff" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/fonts/opensans.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/images/News_pic01.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/images/Newslist_pic01.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/images/Newslist_pic02.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/images/Newslist_pic03.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/images/Newslist_pic04.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/images/Newslist_pic05.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/images/aboutUs_pic01.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/images/aboutUs_pic02.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/images/aboutUs_pic03.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/images/aboutUs_pic04.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/images/close.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/images/index_about01.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/images/index_pic01.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/images/index_pic02.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/images/index_pic03.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/images/index_pic04.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/images/index_pic04.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/images/logo.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/images/logo_01.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/images/logo_02.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/images/logo_03.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/images/logo_04.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/images/productList_pic01.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/images/productList_pic02.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/images/product_pic.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/images/product_pic02.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/images/product_pic03.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/images/product_pic_s.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/images/silder_01.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/js/base.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/js/bootstrap-touch-slider.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/js/bootstrap.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/js/icetus.1.0.20.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/js/jq-cook.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/js/jquery-1.11.1.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/js/jquery.jqzoom.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/js/jquery.touchSwipe.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/js/main.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/js/my.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/glass_en/js/zooming.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/css/bootstrap-touch-slider.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/css/bootstrap.min.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/css/products.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/css/style-phone.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/css/style.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/fonts/AdobeHeitiStd-Regular (v5.010).otf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/fonts/AxureHandwriting-Bold.otf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/fonts/OpenSans-Bold.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/fonts/glyphicons-halflings-regular.eot" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/fonts/glyphicons-halflings-regular.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/fonts/glyphicons-halflings-regular.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/fonts/glyphicons-halflings-regular.woff" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/fonts/glyphicons-halflings-regular.woff2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/fonts/iconfont.eot" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/fonts/iconfont.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/fonts/iconfont.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/fonts/iconfont.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/fonts/iconfont.woff" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/fonts/opensans.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/Cate_01.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/Cate_02.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/Cate_03.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/Cate_04.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/Cate_05.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/Cate_11.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/Cate_12.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/Cate_13.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/Cate_14.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/Home_02.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/Home_ce.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/Home_service.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/News_01.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/News_02.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/Profile_img_01.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/Profile_img_02.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/Profile_img_03.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/WhyUs_01.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/WhyUs_02.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/WhyUs_03.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/WhyUs_04.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/WhyUs_05.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/WhyUs_06.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/WhyUs_07.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/WhyUs_08.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/WhyUs_09.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/WhyUs_10.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/WhyUs_11.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/banner.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/certificate.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/close.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/contact_ico.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/contact_ico2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/facebook.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/facebook_icon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/home_cate01.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/home_cate02.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/home_cate03.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/home_cate04.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/home_cate05.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/home_cate06.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/index-product-1.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/index-product-2.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/index-product-3.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/index-product-4.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/index-product-5.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/index-product-6.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/list_pro_01.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/logo.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/logo.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/news_img_01.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/news_img_02.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/pro_img_b.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/pro_img_s.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/silder_01.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/slider.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/images/youtube.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/js/base.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/js/bootstrap-touch-slider-min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/js/bootstrap-touch-slider.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/js/bootstrap.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/js/bootstrapValidator.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/js/iCetus-admin.1.0.1.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/js/icetus.1.0.20.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/js/imycart.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/js/jquery-1.11.1.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/js/jquery.cookie.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/js/jquery.jqzoom.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/js/jquery.json.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/js/jquery.touchSwipe.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/js/main.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/js/script.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/static/client/sanyan/js/vegas.min.js" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/icetus/urls.py" afterPath="$PROJECT_DIR$/icetus/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/all.log" afterPath="$PROJECT_DIR$/logs/all.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/cart.py" afterPath="$PROJECT_DIR$/shopcart/cart.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/article.py" afterPath="$PROJECT_DIR$/shopcart/article.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/forms.py" afterPath="$PROJECT_DIR$/shopcart/forms.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/inquiry.py" afterPath="$PROJECT_DIR$/shopcart/inquiry.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/handler/sendmail.py" afterPath="$PROJECT_DIR$/shopcart/handler/sendmail.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/models.py" afterPath="$PROJECT_DIR$/shopcart/models.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/myadmin/article.py" afterPath="$PROJECT_DIR$/shopcart/myadmin/article.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/myadmin/category.py" afterPath="$PROJECT_DIR$/shopcart/myadmin/category.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/myadmin/file.py" afterPath="$PROJECT_DIR$/shopcart/myadmin/file.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/myadmin/inquiry.py" afterPath="$PROJECT_DIR$/shopcart/myadmin/inquiry.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/myadmin/product.py" afterPath="$PROJECT_DIR$/shopcart/myadmin/product.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/product.py" afterPath="$PROJECT_DIR$/shopcart/product.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/static/admin/default/css/style.css" afterPath="$PROJECT_DIR$/shopcart/static/admin/default/css/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/static/admin/default/js/iCetus-admin.1.17.0928.js" afterPath="$PROJECT_DIR$/shopcart/static/admin/default/js/iCetus-admin.1.17.0928.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/article_busi_category_list.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/article_busi_category_list.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/article_detail.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/article_detail.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/article_list.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/article_list.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/category_detail.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/category_detail.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/category_list.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/category_list.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/edit_menu.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/edit_menu.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/file_upload.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/file_upload.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/inquiry_detail.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/inquiry_detail.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/inquiry_list.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/inquiry_list.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/menu.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/menu.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/plug_list.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/plug_list.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/product_detail.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/product_detail.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/product_list_content.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/product_list_content.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/product_para_detail.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/product_para_detail.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/product_push_list.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/product_push_list.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/product_sku_group_detail.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/product_sku_group_detail.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/slider_list.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/slider_list.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/utils.py" afterPath="$PROJECT_DIR$/shopcart/utils.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/admin/default/product_push_detail.html" afterPath="$PROJECT_DIR$/shopcart/templates/admin/default/product_push_detail.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopcart/templates/client/cassie/blog_list.html" afterPath="$PROJECT_DIR$/shopcart/templates/client/cassie/blog_list.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/admin/default/css/style.css" afterPath="$PROJECT_DIR$/static/admin/default/css/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/admin/default/js/iCetus-admin.1.17.0928.js" afterPath="$PROJECT_DIR$/static/admin/default/js/iCetus-admin.1.17.0928.js" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -51,74 +331,14 @@
   <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
     <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
   </component>
-  <component name="DockManager">
-    <window id="1">
-      <content type="file-editors">
-        <state>
-          <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-            <file leaf-file-name="iCetus-admin.1.17.0928.js" pinned="false" current-in-tab="true">
-              <entry file="file://$PROJECT_DIR$/shopcart/static/admin/default/js/iCetus-admin.1.17.0928.js">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="703">
-                    <caret line="814" column="35" lean-forward="true" selection-start-line="814" selection-start-column="35" selection-end-line="814" selection-end-column="35" />
-                    <folding />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-            <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/icetus/urls.py">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="340">
-                    <caret line="274" column="55" lean-forward="false" selection-start-line="274" selection-start-column="29" selection-end-line="274" selection-end-column="55" />
-                    <folding />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-            <file leaf-file-name="product.py" pinned="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/shopcart/myadmin/product.py">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="16940">
-                    <caret line="784" column="4" lean-forward="false" selection-start-line="784" selection-start-column="4" selection-end-line="784" selection-end-column="4" />
-                    <folding />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-          </leaf>
-        </state>
-      </content>
-    </window>
-  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="product_detail.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/product_detail.html">
+      <file leaf-file-name="style.css" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/static/admin/default/css/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="551">
-              <caret line="501" column="49" lean-forward="true" selection-start-line="501" selection-start-column="49" selection-end-line="501" selection-end-column="49" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="file_upload.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/file_upload.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="704">
-              <caret line="62" column="82" lean-forward="true" selection-start-line="62" selection-start-column="82" selection-end-line="62" selection-end-column="82" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/shopcart/static/admin/default/css/style.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="663">
-              <caret line="5262" column="25" lean-forward="false" selection-start-line="5262" selection-start-column="25" selection-end-line="5262" selection-end-column="25" />
+            <state relative-caret-position="506">
+              <caret line="23" column="9" lean-forward="true" selection-start-line="23" selection-start-column="9" selection-end-line="23" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -136,36 +356,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>/admin/product-sku-delete/clear/</find>
-      <find>product-sku-delete</find>
-      <find>make-sku-list</find>
-      <find>make-sku-</find>
-      <find>product-attribute-submit-btn</find>
-      <find>product-sku-attribute-manage</find>
-      <find>product-detail-info-submit-btn</find>
-      <find>inqur</find>
-      <find>dropdown-item-input</find>
-      <find>btn-popup</find>
-      <find>read_file</find>
-      <find>file-upload/</find>
-      <find>get_thumb_url</find>
-      <find>product-set-image</find>
-      <find>set-picture-attr</find>
-      <find>get_main_image</find>
-      <find>菜单URL</find>
-      <find>message-list-input</find>
-      <find>btn-primary</find>
-      <find>dropdown-menu</find>
-      <find>btn-foursquare</find>
-      <find>inquiry-detail-list</find>
-      <find>qry_field</find>
-      <find>qry_value</find>
-      <find>related-product-list</find>
       <find>admin/related-product-list</find>
       <find>related-products-jump-btn</find>
       <find>推荐</find>
       <find>product-para-sku-btn</find>
       <find>product_para_value_submit</find>
+      <find>Email matching query does not exist</find>
+      <find>signals.inquiry_received.send(sender='Inquiry',inquiry=inquiry)</find>
+      <find>inquiry_received_send_mail</find>
+      <find>通知邮件列表</find>
+      <find>price</find>
+      <find>short</find>
+      <find>sku</find>
+      <find>sku-available</find>
+      <find>attr-img</find>
+      <find>product-attribute-item</find>
+      <find>sku-text-available</find>
+      <find>detail-attr li:first-child</find>
+      <find>attr-text</find>
+      <find>product_list_modal_win_set_btn</find>
+      <find>/admin/related-product-oper</find>
+      <find>admin/related-product-oper</find>
+      <find>article</find>
+      <find>inqu</find>
+      <find>product_push_add_btn</find>
+      <find>common-pop-frame</find>
+      <find>artical_list</find>
+      <find>product</find>
+      <find>demo</find>
+      <find>cassie</find>
+      <find>logo</find>
     </findStrings>
     <replaceStrings>
       <replace>recruit</replace>
@@ -183,6 +403,7 @@
       <replace>dit-menu-detail-submit</replace>
       <replace>edit-menu-detail-submit</replace>
       <replace>菜单</replace>
+      <replace>jike</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -191,22 +412,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/shopcart/static/client/cassie/js/icetus.1.0.21.js" />
-        <option value="$PROJECT_DIR$/shopcart/templates/client/cassie/contact.html" />
-        <option value="$PROJECT_DIR$/shopcart/templates/client/cassie/quote.html" />
-        <option value="$PROJECT_DIR$/shopcart/templates/client/cassie/footer.html" />
-        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/system_site_config.html" />
-        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/system_display_config.html" />
-        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/system_email_config.html" />
-        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/system_email_detail_config.html" />
-        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/index.html" />
-        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/recruit_list.html" />
-        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/recruit_detail.html" />
-        <option value="$PROJECT_DIR$/shopcart/models.py" />
-        <option value="$PROJECT_DIR$/shopcart/templates/client/beautex/index.html" />
-        <option value="$PROJECT_DIR$/shopcart/cart.py" />
-        <option value="$PROJECT_DIR$/shopcart/templates/client/beautex/contact.html" />
-        <option value="$PROJECT_DIR$/shopcart/templates/client/beautex/header.html" />
         <option value="$PROJECT_DIR$/shopcart/templates/client/beautex/base.html" />
         <option value="$PROJECT_DIR$/shopcart/templates/client/cassie/product_detail.html" />
         <option value="$PROJECT_DIR$/shopcart/templates/client/beautex/product_detail.html" />
@@ -217,17 +422,14 @@
         <option value="$PROJECT_DIR$/shopcart/templates/admin/default/product_list_content.html" />
         <option value="$PROJECT_DIR$/shopcart/templates/admin/default/product_sku_group_detail.html" />
         <option value="$PROJECT_DIR$/shopcart/templates/admin/default/category_list.html" />
-        <option value="$PROJECT_DIR$/shopcart/forms.py" />
         <option value="$PROJECT_DIR$/shopcart/templates/admin/default/category_detail.html" />
         <option value="$PROJECT_DIR$/shopcart/myadmin/category.py" />
-        <option value="$PROJECT_DIR$/shopcart/inquiry.py" />
         <option value="$PROJECT_DIR$/icetus/urls.py" />
         <option value="$PROJECT_DIR$/shopcart/myadmin/product.py" />
         <option value="$PROJECT_DIR$/shopcart/static/admin/default/js/iCetus-admin.1.17.0928.js" />
         <option value="$PROJECT_DIR$/shopcart/templates/admin/default/article_detail.html" />
         <option value="$PROJECT_DIR$/shopcart/utils.py" />
         <option value="$PROJECT_DIR$/shopcart/myadmin/file.py" />
-        <option value="$PROJECT_DIR$/shopcart/myadmin/article.py" />
         <option value="$PROJECT_DIR$/shopcart/templates/admin/default/article_list.html" />
         <option value="$PROJECT_DIR$/shopcart/templates/admin/default/article_busi_category_list.html" />
         <option value="$PROJECT_DIR$/shopcart/templates/admin/default/menu.html" />
@@ -236,12 +438,31 @@
         <option value="$PROJECT_DIR$/shopcart/templates/admin/default/plug_list.html" />
         <option value="$PROJECT_DIR$/shopcart/templates/admin/default/slider_list.html" />
         <option value="$PROJECT_DIR$/shopcart/templates/admin/default/product_push_list.html" />
-        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/inquiry_detail.html" />
         <option value="$PROJECT_DIR$/shopcart/myadmin/inquiry.py" />
-        <option value="$PROJECT_DIR$/shopcart/static/admin/default/css/style.css" />
         <option value="$PROJECT_DIR$/shopcart/templates/admin/default/inquiry_list.html" />
         <option value="$PROJECT_DIR$/shopcart/templates/admin/default/product_detail.html" />
         <option value="$PROJECT_DIR$/shopcart/templates/admin/default/file_upload.html" />
+        <option value="$PROJECT_DIR$/shopcart/handler/sendmail.py" />
+        <option value="$PROJECT_DIR$/shopcart/templates/email/default/email_inquiry.html" />
+        <option value="$PROJECT_DIR$/shopcart/myadmin/article.py" />
+        <option value="$PROJECT_DIR$/shopcart/templates/client/cassie/article.html" />
+        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/inquiry_detail.html" />
+        <option value="$PROJECT_DIR$/shopcart/inquiry.py" />
+        <option value="$PROJECT_DIR$/shopcart/models.py" />
+        <option value="$PROJECT_DIR$/shopcart/forms.py" />
+        <option value="$PROJECT_DIR$/shopcart/templates/client/cassie/blog_list.html" />
+        <option value="$PROJECT_DIR$/shopcart/templates/admin/default/product_push_detail.html" />
+        <option value="$PROJECT_DIR$/shopcart/templates/client/jike/list_article.html" />
+        <option value="$PROJECT_DIR$/shopcart/templates/client/jike/show_article.html" />
+        <option value="$PROJECT_DIR$/shopcart/templates/client/jike/index.html" />
+        <option value="$PROJECT_DIR$/shopcart/templates/client/jike/base.html" />
+        <option value="$PROJECT_DIR$/shopcart/templates/client/jike/footer.html" />
+        <option value="$PROJECT_DIR$/shopcart/templates/client/jike/blog_list.html" />
+        <option value="$PROJECT_DIR$/shopcart/templates/client/jike/product_list.html" />
+        <option value="$PROJECT_DIR$/shopcart/templates/client/jike/product_detail.html" />
+        <option value="$PROJECT_DIR$/shopcart/static/client/jike/css/style.css" />
+        <option value="$PROJECT_DIR$/shopcart/templates/client/jike/header.html" />
+        <option value="$PROJECT_DIR$/shopcart/static/admin/default/css/style.css" />
       </list>
     </option>
   </component>
@@ -288,6 +509,38 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cetusshop" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cetusshop" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="shopcart" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cetusshop" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cetusshop" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="shopcart" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -301,16 +554,16 @@
     <property name="ToolWindowEvent Log.ShowToolbar" value="false" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="F:\pythonwork\cetusshop\shopcart\static\client\beautex\js" />
-      <recent name="F:\pythonwork\cetusshop\shopcart\static\client\beautex\fonts" />
-      <recent name="F:\pythonwork\cetusshop\shopcart\static\client\beautex\css" />
-      <recent name="F:\pythonwork\cetusshop\shopcart\templates\client\beautex" />
-      <recent name="F:\pythonwork\cetusshop\shopcart\static\client\beautex" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="F:\pythonwork\cetusshop\shopcart" />
       <recent name="F:\pythonwork\cetusshop\shopcart\static\admin\default\js" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\pythonwork\cetusshop\static\admin\default" />
+      <recent name="F:\pythonwork\cetusshop\shopcart\static\client\jike\fonts" />
+      <recent name="F:\pythonwork\cetusshop\shopcart\static\client\jike\js" />
+      <recent name="F:\pythonwork\cetusshop\shopcart\templates\client\jike" />
+      <recent name="F:\pythonwork\cetusshop\shopcart\static\client\jike" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -640,19 +893,19 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
     <layout>
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11302083" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16084656" sideWeight="0.50208336" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16084656" sideWeight="0.49791667" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16084656" sideWeight="0.49791667" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -699,361 +952,265 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/beautex/product_detail.html" />
-    <entry file="file://$PROJECT_DIR$/shopcart/static/client/beautex/css/style.css" />
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/cassie/quote.html">
+    <entry file="file://$PROJECT_DIR$/shopcart/myadmin/system_config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2156">
-          <caret line="98" column="52" lean-forward="false" selection-start-line="98" selection-start-column="52" selection-end-line="98" selection-end-column="52" />
-          <folding />
+        <state relative-caret-position="264">
+          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/beautex/quote.html" />
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/cassie/header.html">
+    <entry file="file://$PROJECT_DIR$/shopcart/handler/sendmail.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2640">
-          <caret line="120" column="39" lean-forward="false" selection-start-line="120" selection-start-column="39" selection-end-line="120" selection-end-column="39" />
+        <state relative-caret-position="4356">
+          <caret line="200" column="0" lean-forward="false" selection-start-line="200" selection-start-column="0" selection-end-line="200" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/beautex/footer.html" />
-    <entry file="file://$PROJECT_DIR$/shopcart/views.py">
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/cassie/article.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="990">
-          <caret line="59" column="19" lean-forward="false" selection-start-line="59" selection-start-column="19" selection-end-line="59" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/beautex/recruit_detail.html" />
-    <entry file="file://$PROJECT_DIR$/shopcart/product.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-220">
-          <caret line="283" column="42" lean-forward="true" selection-start-line="283" selection-start-column="42" selection-end-line="283" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/cart.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="38" column="0" lean-forward="true" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/product_push_detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-264">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/product_sku_group_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/myadmin/report.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1056">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/myadmin/recruit.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="36" column="37" lean-forward="true" selection-start-line="36" selection-start-column="37" selection-end-line="36" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/check_code.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/myadmin/article_busi_category.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="128" column="4" lean-forward="false" selection-start-line="128" selection-start-column="4" selection-end-line="128" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="208" column="42" lean-forward="true" selection-start-line="208" selection-start-column="42" selection-end-line="208" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/cassie/product_detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="643">
-          <caret line="189" column="12" lean-forward="false" selection-start-line="189" selection-start-column="12" selection-end-line="189" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/category_detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="38" column="57" lean-forward="false" selection-start-line="38" selection-start-column="57" selection-end-line="38" selection-end-column="57" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/myadmin/category.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="819">
-          <caret line="224" column="0" lean-forward="false" selection-start-line="224" selection-start-column="0" selection-end-line="224" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/product_sku_group_detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3212">
-          <caret line="209" column="45" lean-forward="false" selection-start-line="209" selection-start-column="45" selection-end-line="209" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/product_list_content.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="621">
-          <caret line="73" column="38" lean-forward="true" selection-start-line="73" selection-start-column="38" selection-end-line="73" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/article_detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="836">
-          <caret line="305" column="29" lean-forward="false" selection-start-line="305" selection-start-column="29" selection-end-line="318" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/myadmin/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/myadmin/file.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="4" column="95" lean-forward="false" selection-start-line="4" selection-start-column="95" selection-end-line="4" selection-end-column="95" />
+        <state relative-caret-position="352">
+          <caret line="22" column="0" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/shopcart/myadmin/article.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="97">
-          <caret line="26" column="4" lean-forward="false" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="4" />
+        <state relative-caret-position="792">
+          <caret line="81" column="33" lean-forward="true" selection-start-line="81" selection-start-column="33" selection-end-line="81" selection-end-column="33" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/category_list.html">
+    <entry file="file://$PROJECT_DIR$/shopcart/myadmin/inquiry.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1157">
-          <caret line="171" column="52" lean-forward="false" selection-start-line="171" selection-start-column="52" selection-end-line="171" selection-end-column="52" />
-          <folding />
+        <state relative-caret-position="572">
+          <caret line="94" column="42" lean-forward="true" selection-start-line="94" selection-start-column="42" selection-end-line="94" selection-end-column="42" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/article_busi_category_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="880">
-          <caret line="40" column="24" lean-forward="false" selection-start-line="40" selection-start-column="24" selection-end-line="40" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/article_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="83" column="51" lean-forward="false" selection-start-line="83" selection-start-column="51" selection-end-line="83" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/modal_win.html">
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/article_busi_category_detail.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/menu.html">
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/recruit_detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2244">
+          <caret line="135" column="25" lean-forward="true" selection-start-line="135" selection-start-column="25" selection-end-line="135" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/email/default/email_inquiry.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="475">
+          <caret line="113" column="58" lean-forward="true" selection-start-line="113" selection-start-column="58" selection-end-line="113" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/article_detail.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="22">
-          <caret line="36" column="92" lean-forward="false" selection-start-line="36" selection-start-column="92" selection-end-line="36" selection-end-column="92" />
+          <caret line="92" column="0" lean-forward="false" selection-start-line="92" selection-start-column="0" selection-end-line="92" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/shopcart/static/client/cassie/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-594">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="494">
+          <caret line="267" column="0" lean-forward="true" selection-start-line="267" selection-start-column="0" selection-end-line="267" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/product_para_detail.html">
+    <entry file="file://$PROJECT_DIR$/shopcart/static/client/cassie/css/cart.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="29" column="100" lean-forward="false" selection-start-line="29" selection-start-column="83" selection-end-line="29" selection-end-column="100" />
-          <folding />
+        <state relative-caret-position="176">
+          <caret line="8" column="24" lean-forward="false" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/edit_menu.html">
+    <entry file="file://$PROJECT_DIR$/shopcart/static/client/cassie/css/single.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="29" column="61" lean-forward="false" selection-start-line="29" selection-start-column="56" selection-end-line="29" selection-end-column="61" />
-          <folding />
+        <state relative-caret-position="515">
+          <caret line="26" column="0" lean-forward="true" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/myadmin/product.py">
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/cassie/product_detail.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="16940">
-          <caret line="784" column="4" lean-forward="false" selection-start-line="784" selection-start-column="4" selection-end-line="784" selection-end-column="4" />
-          <folding />
+        <state relative-caret-position="533">
+          <caret line="62" column="48" lean-forward="false" selection-start-line="62" selection-start-column="45" selection-end-line="62" selection-end-column="48" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/product_push_list.html">
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/cassie/product_list.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="770">
-          <caret line="82" column="30" lean-forward="true" selection-start-line="82" selection-start-column="30" selection-end-line="82" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/plug_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="43" column="76" lean-forward="false" selection-start-line="43" selection-start-column="76" selection-end-line="43" selection-end-column="76" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/slider_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="49" column="34" lean-forward="false" selection-start-line="49" selection-start-column="34" selection-end-line="49" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/inquiry.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="335">
-          <caret line="134" column="25" lean-forward="true" selection-start-line="134" selection-start-column="25" selection-end-line="134" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/inquiry_detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2376">
-          <caret line="108" column="35" lean-forward="true" selection-start-line="108" selection-start-column="35" selection-end-line="108" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/myadmin/inquiry.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="641">
-          <caret line="90" column="0" lean-forward="true" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
-          <caret line="101" column="6" lean-forward="false" selection-start-line="101" selection-start-column="6" selection-end-line="101" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/index.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="858">
-          <caret line="52" column="0" lean-forward="true" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2203">
-          <caret line="139" column="4" lean-forward="false" selection-start-line="139" selection-start-column="4" selection-end-line="139" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/myadmin/index.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="511">
-          <caret line="74" column="0" lean-forward="true" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/static/admin/default/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="5262" column="25" lean-forward="false" selection-start-line="5262" selection-start-column="25" selection-end-line="5262" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/inquiry_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="880">
-          <caret line="40" column="53" lean-forward="true" selection-start-line="40" selection-start-column="53" selection-end-line="40" selection-end-column="53" />
-          <folding />
+        <state relative-caret-position="440">
+          <caret line="20" column="34" lean-forward="false" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="34" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/icetus/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="274" column="55" lean-forward="false" selection-start-line="274" selection-start-column="29" selection-end-line="274" selection-end-column="55" />
-          <folding />
+        <state relative-caret-position="582">
+          <caret line="287" column="95" lean-forward="true" selection-start-line="287" selection-start-column="95" selection-end-line="287" selection-end-column="95" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/myadmin/product.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="13310">
+          <caret line="619" column="57" lean-forward="false" selection-start-line="619" selection-start-column="57" selection-end-line="619" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/cassie/quote.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="13" column="57" lean-forward="false" selection-start-line="13" selection-start-column="57" selection-end-line="13" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/cassie/inquiry_view.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/static/client/demo/css/style.css" />
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/demo/article.html" />
+    <entry file="file://$PROJECT_DIR$/shopcart/inquiry.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="106" column="12" lean-forward="true" selection-start-line="106" selection-start-column="12" selection-end-line="106" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/python/Lib/site-packages/django/forms/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="305">
+          <caret line="461" column="6" lean-forward="false" selection-start-line="461" selection-start-column="6" selection-end-line="461" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="559">
+          <caret line="247" column="49" lean-forward="true" selection-start-line="247" selection-start-column="49" selection-end-line="247" selection-end-column="49" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/shopcart/static/admin/default/js/iCetus-admin.1.17.0928.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="703">
-          <caret line="814" column="35" lean-forward="true" selection-start-line="814" selection-start-column="35" selection-end-line="814" selection-end-column="35" />
+        <state relative-caret-position="352">
+          <caret line="136" column="24" lean-forward="false" selection-start-line="136" selection-start-column="8" selection-end-line="136" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/product_push_list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-44">
+          <caret line="42" column="37" lean-forward="true" selection-start-line="42" selection-start-column="37" selection-end-line="42" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/common_pop_win.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="52" lean-forward="false" selection-start-line="2" selection-start-column="36" selection-end-line="2" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/product_push_detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="511">
+          <caret line="92" column="123" lean-forward="false" selection-start-line="92" selection-start-column="123" selection-end-line="92" selection-end-column="123" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/article_list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-814">
+          <caret line="83" column="51" lean-forward="false" selection-start-line="83" selection-start-column="51" selection-end-line="83" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="173">
+          <caret line="105" column="4" lean-forward="false" selection-start-line="105" selection-start-column="4" selection-end-line="105" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/article.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4510">
+          <caret line="216" column="0" lean-forward="false" selection-start-line="216" selection-start-column="0" selection-end-line="216" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/inquiry_detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="665">
+          <caret line="66" column="78" lean-forward="false" selection-start-line="66" selection-start-column="48" selection-end-line="66" selection-end-column="78" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/static/client/jike/js/main.js" />
+    <entry file="file://$PROJECT_DIR$/shopcart/static/client/jike/js/jquery.cookie.js" />
+    <entry file="file://$PROJECT_DIR$/shopcart/static/client/jike/images/8DDD9D34-8976-4E88-8477-4C24E38B77B5@1x.png" />
+    <entry file="file://$PROJECT_DIR$/shopcart/static/client/jike/images/8A504FC5-4FF3-426B-941C-EFB363B65CBE@1x.png" />
+    <entry file="file://$PROJECT_DIR$/shopcart/static/client/jike/images/6B60C05A-82DB-4C02-BCEB-55C0FEA81934@1x.png" />
+    <entry file="file://$PROJECT_DIR$/shopcart/static/client/jike/images/4A424C01-655A-45C3-962D-8144A1B57967@1x.png" />
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/jike/footer.html" />
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/jike/base.html" />
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/jike/index.html" />
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/jike/product_list.html" />
+    <entry file="file://$PROJECT_DIR$/shopcart/static/client/jike/fonts/style.css" />
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/jike/product_detail.html" />
+    <entry file="file://$PROJECT_DIR$/shopcart/static/client/jike/css/style.css" />
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/cassie/header.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2882">
+          <caret line="131" column="14" lean-forward="false" selection-start-line="131" selection-start-column="14" selection-end-line="131" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/jike/header.html" />
+    <entry file="file://$PROJECT_DIR$/shopcart/templates/client/cassie/blog_list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="550">
+          <caret line="40" column="54" lean-forward="true" selection-start-line="40" selection-start-column="54" selection-end-line="40" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:////Seagate-41ECA8/share/01项目管理/网站/201706002 三炎家居用品网站改版项目/20180123 三炎修改/宁波三炎家居用品有限公司3D/tour.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="17" column="13" lean-forward="true" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="226" column="67" lean-forward="false" selection-start-line="226" selection-start-column="67" selection-end-line="226" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopcart/static/admin/default/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="35">
+          <caret line="5363" column="0" lean-forward="false" selection-start-line="5363" selection-start-column="0" selection-end-line="5363" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/file_upload.html">
+    <entry file="file://$PROJECT_DIR$/static/admin/default/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="704">
-          <caret line="62" column="82" lean-forward="true" selection-start-line="62" selection-start-column="82" selection-end-line="62" selection-end-column="82" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopcart/templates/admin/default/product_detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="551">
-          <caret line="501" column="49" lean-forward="true" selection-start-line="501" selection-start-column="49" selection-end-line="501" selection-end-column="49" />
+        <state relative-caret-position="506">
+          <caret line="23" column="9" lean-forward="true" selection-start-line="23" selection-start-column="9" selection-end-line="23" selection-end-column="9" />
           <folding />
         </state>
       </provider>

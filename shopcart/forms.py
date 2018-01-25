@@ -219,7 +219,7 @@ class category_form(forms.ModelForm):
     class Meta:
         model = Category
         fields = (
-            'name',  'page_title', 'keywords', 'short_desc', 'sort_order', 'description', 'detail_template',
+            'name', 'page_title', 'keywords', 'short_desc', 'sort_order', 'description', 'detail_template',
             'category_template', 'static_file_name')
 
 
@@ -241,10 +241,11 @@ class inquiry_form(forms.ModelForm):
     product = forms.CharField(required=False)
     quantity = forms.CharField(required=False)
     title = forms.CharField(required=False)
+    country = forms.CharField(required=False)
 
     class Meta:
         model = Inquiry
-        fields = ('name', 'company', 'email', 'message', 'product', 'quantity', 'title', 'user')
+        fields = ('name', 'company', 'email', 'message', 'product', 'quantity', 'title', 'user', 'country')
 
 
 class email_inquiry_form(forms.ModelForm):
@@ -275,7 +276,7 @@ class recruit_basic_info_form(forms.ModelForm):
         model = Recruit
         fields = (
             'title', 'sort_order', 'keywords', 'content', 'number', 'pay', 'phone', 'site', 'type',
-            'static_file_name','page_title','short_desc')
+            'static_file_name', 'page_title', 'short_desc')
 
 
 # class recruit_detail_info_form(forms.ModelForm):

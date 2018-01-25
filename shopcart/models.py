@@ -1249,6 +1249,7 @@ class Inquiry(models.Model):
     update_time = models.DateTimeField(auto_now=True, verbose_name='更新日期')
     user = models.ForeignKey(MyUser, null=True, related_name='inquiry', verbose_name='用户')
     type = models.CharField(max_length=100, null=True, verbose_name='询盘类型')
+    country = models.CharField(max_length=100, null=True, verbose_name='国家')
 
     def __str__(self):
         return self.name

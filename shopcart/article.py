@@ -167,7 +167,7 @@ def view_blog_list(request, category_id=None, tdk=None):
         blog_list_page_size = 12
 
     if request.method == 'GET':
-        template = 'blog_list.html'
+        template = 'product_list.html'
         if 'sort_by' in request.GET:
             if 'direction' in request.GET:
                 if 'desc' == request.GET['direction']:

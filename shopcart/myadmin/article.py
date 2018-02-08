@@ -50,8 +50,6 @@ def set_image(request):
 
             Album.objects.filter(id=picture_id).update(sort=-1)  # 需要设为首图的Sort设为1
 
-
-
             result['success'] = True
             result['message'] = '文章图片信息保存成功'
             return JsonResponse(result)
@@ -407,3 +405,77 @@ def list_view(request):
         return TemplateResponse(request, System_Config.get_template_name('admin') + '/article_list.html', ctx)
     else:
         raise Http404
+
+
+# 文章推荐
+@staff_member_required
+@transaction.atomic()
+def push_article_list(request):
+    ctx = {}
+    ctx['page_name'] = '推送文章管理'
+    if request.method == 'GET':
+        push_id = request.GET.get('push_id', '')
+        ctx['host_id'] = push_id
+        ctx['type'] = 'push_article'
+
+        # 加载文章分类树信息
+
+        from shopcart.myadmin.article_busi_category import get_all_category
+        busi_category_list = get_all_category()
+        logger.debug('busi_category_list : %s' % busi_category_list)
+        ctx['busi_category_list'] = busi_category_list
+
+        ctx = get_article_list(request, ctx)
+        return TemplateResponse(request, System_Config.get_template_name('admin') + '/article_list_modal_win.html', ctx)
+
+
+def get_article_list(request, ctx, exclude_id=None):
+    query_item = request.GET.get('query_item', '')
+    item_value = request.GET.get('item_value', '')
+    query_category = request.GET.get('query_busi_category', '')
+
+    from django.db.models import Q
+    if query_item == 'title':
+        article_list = Article.objects.filter(Q(title__icontains=item_value))
+    else:
+        article_list = Article.objects.all().order_by('-sort_order')
+    # icontains是大小写不敏感的，contains是大小写敏感的
+
+    cat = None
+    try:
+        cat = ArticleBusiCategory.objects.get(id=query_category)
+        ctx['query_category'] = cat.id
+        ctx['query_category_name'] = cat.name
+    except Exception as err:
+        logger.info('Can not find category %s .\n Error Message: %s' % (query_category, err))
+
+    if cat:
+        article_list = article_list.filter(busi_category__id=query_category).order_by('-sort_order')
+    else:
+        article_list = article_list.order_by('-sort_order')
+
+    logger.debug('exclude_id:%s' % exclude_id)
+    if exclude_id:
+        article_list = article_list.exclude(id=exclude_id)
+
+    if 'page_size' in request.GET:
+        page_size = request.GET['page_size']
+    else:
+        try:
+            page_size = int(System_Config.objects.get(name='admin_product_list_page_size').val)
+        except:
+            page_size = 6
+
+    count = len(article_list)
+
+    article_list, page_range, current_page = my_pagination(request=request, queryset=article_list,
+                                                           display_amount=page_size)
+
+    ctx['article_list'] = article_list
+    ctx['page_range'] = page_range
+    ctx['item_count'] = count
+    ctx['page_size'] = page_size
+    ctx['query_item'] = query_item
+    ctx['current_page'] = current_page
+    ctx['item_value'] = item_value
+    return ctx

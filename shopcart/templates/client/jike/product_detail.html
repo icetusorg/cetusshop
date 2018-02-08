@@ -1,0 +1,91 @@
+{% extends "client/jike/base.html" %}
+{% block head_extra %}
+    {% load staticfiles %}
+{% endblock %}
+
+{% block main %}
+    {% load i18n %}
+    <div class="article-body col-md-8 col-xs-12">
+
+        <div class="article-body-bc">
+            <h1>{{ product.name }}</h1>
+            <div class="index-content-left-body-des-bottom">
+                <div class="index-content-left-body-des-bottom-3 index-content-left-body-des-bottom-phone">
+                    <img src="{% static "client/jike/images/column.png" %}" alt="">
+
+                    {% for c in product.get_one_category.get_leveled_parents %}
+                        <p><a href="{{ c.get_url }}">{{ c.name }}</a></p>
+                    {% endfor %}
+
+                </div>
+                <div class="index-content-left-body-des-bottom-1 index-content-left-body-des-bottom-phone">
+                    {{ product.item_number }} · {{ product.create_time|date:"Y-m-d" }}
+                </div>
+            </div>
+            <div class="article-body-content">
+                {{ product.description|safe }}
+            </div>
+            <div class="article-body-content-copyright">
+                <p>本文由@ {{ product.item_number }}，原创发表至集客营销学。</p>
+                <p>原文地址：<a href="{{ product.get_url }}">{{ product.get_url }}</a>
+                </p>
+            </div>
+            <div class="article-body-content-share">
+                <div class="article-body-content-share-weibo">
+                    <i class="iconfont">&#xe699;</i>
+                    <a onmouseover="weiboShare()" id="shareBtn" target="_blank">分享到微博</a>
+                </div>
+                <div class="article-body-content-share-weixin">
+
+                </div>
+            </div>
+        </div>
+
+
+        {% if product.related_products.all %}
+            <div class="article-body-recommended">
+                <h2>推荐阅读</h2>
+                <div class="row">
+
+                    {% for p in product.related_products.all %}
+                        <div class="article-body-recommended-list col-md-4 col-xs-12">
+                            <a href="{{p.get_url}}"><img src="{{p.image}}"></a>
+                            <p>{{p.name}}</p>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        {% endif %}
+        {% if product.related_products.all %}
+            <div class="article-body-recommended-phone">
+                <h5>相关阅读</h5>
+
+
+                {% for p in product.related_products.all %}
+                    <div class="index-content-left-body">
+                        <div class="index-content-left-body-img">
+                            <a href="{{p.get_url}}"><img src="{{p.image}}"></a>
+                        </div>
+                        <div class="index-content-left-body-des">
+                            <a href="{{p.get_url}}"><h2>{{p.name}}</h2></a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+{% block scripts %}
+    {% load staticfiles %}
+    <script>
+        function weiboShare() {
+            var wb_shareBtn = document.getElementById("shareBtn");
+            wb_url = document.URL, //获取当前页面地址，也可自定义例：wb_url = "http://www.jikemarketing.com",用户分享成功后会显示这个url,一般用于回显原网址
+                wb_appkey = "3763405146",
+                wb_title = "凌科分享会", wb_ralateUid = "3763405146",
+                wb_pic = "<%=basePath%>images/photo/photo1.png", wb_language = "zh_cn";
+            wb_shareBtn.setAttribute("href", "http://service.weibo.com/share/share.php?url=" + wb_url + "&appkey=" + wb_appkey + "&title=" + wb_title + "&pic=" + wb_pic + "&ralateUid=" + wb_ralateUid + "&language=" + wb_language + "");
+        }
+    </script>
+{% endblock %}

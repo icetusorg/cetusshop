@@ -2,7 +2,7 @@
 from django import forms
 from shopcart.models import MyUser, Address, Product, Inquiry, OrderShippment, Email, Article, Express, ExpressType, \
     Category, CustomizeURL, ArticleBusiCategory, ProductParaGroup, Attribute_Group, Slider, Promotion, ProductPushGroup, \
-    Recruit, Menu
+    Recruit, Menu,ArticlePushGroup
 from captcha.fields import CaptchaField
 from django.utils.translation import ugettext as _
 from django.core.exceptions import ValidationError
@@ -13,6 +13,14 @@ class push_group_detail_form(forms.ModelForm):
 
     class Meta:
         model = ProductPushGroup
+        fields = ('name', 'code')
+
+# 文章推荐表单验证
+class article_push_group_detail_form(forms.ModelForm):
+    name = forms.CharField(required=False)
+
+    class Meta:
+        model = ArticlePushGroup
         fields = ('name', 'code')
 
 

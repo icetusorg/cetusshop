@@ -1,0 +1,145 @@
+{% extends "admin/default/content_base.html" %}
+
+{% block main %}
+    {% load i18n %}
+
+    {% load staticfiles %}
+    {% load shopcart_extras %}
+    <!--content -->
+    <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+    <div class="product-related">
+        <div class=" xy-search product-related-alter">
+            <h1 class="add-product-h1 related-product-h1">请选择文章</h1>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div>
+                            <form>
+
+                                <div class="btn-group normal product-button-search product-button-name">
+                                    <button type="button" class="btn btn-default inputBtn"><span
+                                            class="selected-text">{{ query_item|is_equal:"title"|yesno:"标题,标题," }}</span>
+                                    </button>
+                                    <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn"
+                                            data-toggle="dropdown">
+                                        <span class="caret"></span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <ul class="dropdown-menu related-product-dropdown-1" role="menu" id="selectOption2">
+                                        <li class="dropdown-item" data-value="title">标题</li>
+                                    </ul>
+                                    <input type="hidden" class="dropdown-item-input" name="query_item"
+                                           value="{{ query_item|default:"title" }}">
+                                </div>
+                                <div class="btn-group normal product-button-search">
+                                    <button type="button" class="btn btn-default inputBtn"><span
+                                            class="selected-text">{{ query_category_name|default:"请选择分类" }}</span>
+                                    </button>
+                                    <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn"
+                                            data-toggle="dropdown">
+                                        <span class="caret"></span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <ul class="dropdown-menu related-product-dropdown-2" role="menu" id="selectOption2">
+                                        <li class="dropdown-item" data-value="">全部分类</li>
+                                        {% for cat in busi_category_list %}
+                                            <li class="dropdown-item" data-value="{{ cat.id }}">{{ cat.name }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                    <input type="hidden" class="dropdown-item-input" name="query_busi_category"
+                                           value="{{ query_busi_category_id|default:"" }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" name="item_value" value="{{ item_value }}"
+                                           class="form-control product-list-search-input">
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">查询</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="box product-related-content">
+            <div class="box-body no-padding">
+                <form id="product_relation_set_form">
+                    <table class="table table-striped related-article-table">
+                        <tbody>
+                        <tr>
+                            <th>选择</th>
+                            <th>图片</th>
+                            <th>名称</th>
+                            <!--<th>分类</th>-->
+                        </tr>
+                        {% for article in article_list %}
+                            <tr>
+                                <td><input type="checkbox" name="is_oper" value="{{ article.id }}"></td>
+                                <td><a href="#"><img src="{{ article.image }}"></a></td>
+                                <td>{{ article.title }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <input type="hidden" name="host_id" value="{{ host_id }}"/>
+                </form>
+            </div>
+            <div class="box-footer clearfix">
+                <div class="xy-box-select">
+                    <button id="article_list_modal_win_set_btn" data-host-type="{{ type }}" type="button"
+                            class="btn btn-primary related-products-jump-btn">确定
+                    </button>
+                </div>
+                <div class="xy-pages-jump related-products-jump">
+                    <button type="button" class="btn btn-primary page-jump related-products-jump-btn">跳转</button>
+                    <input type="text" name="page_number_to_jump" class="form-control">
+                    <p>跳转到：</p>
+
+                    <ul class="pagination pagination-sm no-margin pull-right">
+                        {% if article_list.has_previous %}
+                            <li><a name="pageChange" data-tag="Previous" class="pageChage prev"
+                                   data-page="{{ product_list.previous_page_number }}">&lt;</a></li>
+                        {% else %}
+                            <li><a>&lt;</a></li>
+                        {% endif %}
+
+                        {% for p in page_range %}
+                            {% ifequal p current_page %}
+                                <li><a class="pageChage current_page" data-page="{{ p }}" href="#"
+                                       title="{{ p }}">{{ p }}</a></li>
+                            {% else %}
+                                <li><a class="pageChage" data-page="{{ p }}" href="#" title="{{ p }}">{{ p }}</a></li>
+                            {% endifequal %}
+                        {% endfor %}
+                        {% if article_list.has_next %}
+                            <li><a name="pageChange" class="pageChage next" data-page="{{ p }}"
+                                   data-page-range="{{ page_range }}" data-tag="Next">&gt;</a></li>
+                        {% else %}
+                            <li><a>&gt;</a></li>
+                        {% endif %}
+                    </ul>
+
+                    <p>共{{ item_count }}条记录 , 共{{ page_range|last }}页，每页显示：{{ page_size }}条</p>
+                </div>
+            </div>
+        </div><!-- /.box -->
+    </div>
+
+{% endblock %}
+{% block scripts %}
+    {% load staticfiles %}
+    <script>
+
+        function reload_related_product_list() {
+            window.parent.reload_related_product_list();
+        };
+
+        $(document).ready(function ($) {
+            //点击确定按钮
+
+        });
+    </script>
+{% endblock %}

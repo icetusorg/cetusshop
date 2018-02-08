@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ page_name }} | {{ system_para.site_name }}</title>
+    <meta name="keywords" content="{{ page_key_words }}">
+    <meta name="description" content="{{ page_description }}">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    {% load staticfiles %}
+
+    <link rel="stylesheet" href="{% static "client/jike/css/bootstrap.min.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "client/jike/css/style.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "client/jike/css/style2.css" %}" type="text/css"/>
+
+    {% block head_extra %}
+    {% endblock %}
+</head>
+<body>
+<!--header-->
+<!--phone menu-->
+{% include 'client/jike/header.html' %}
+<!--header end-->
+
+<!--content-->
+<div class="index-content">
+    <div class="container">
+        <div class="row">
+            {% block main %}
+
+            {% endblock %}
+            <!--add csrftoken-->
+            {% csrf_token %}
+            <div class="index-content-right col-md-4 col-xs-12">
+                <div class="index-content-right-body-bc">
+                    <h2>关注我们</h2>
+                    <div class="index-content-right-body">
+                        <img src="{% static "client/jike/images/left-logo@1x.png" %}">
+                        <img src="{% static "client/jike/images/left-code@2x.png" %}">
+                    </div>
+                </div>
+                <div class="index-content-right-body-2">
+                    <img src="{% static "client/jike/images/B3899C4A-BB34-4D99-A172-9E9C96C66943@2x.png" %}">
+                </div>
+                <div class="index-content-right-body-bc index-content-right-body-bc2">
+                    <h2>热门文章</h2>
+                    <div class=" index-content-right-body2" id="index-hot">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--content end-->
+<!--footer-->
+{% include 'client/jike/footer.html' %}
+<!--footer end-->
+<script src="{% static 'client/jike/js/jquery-1.11.1.min.js' %}"></script>
+<script src="{% static 'client/jike/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'client/jike/js/main.js' %}"></script>
+<script src="{% static 'client/jike/js/jquery.cookie.js' %}"></script>
+<script src="{% static 'client/jike/js/jquery.json.min.js' %}"></script>
+<script src="{% static 'client/jike/js/icetus.1.0.21.js' %}"></script>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: '/common/get-push-product/?type=index-hot',
+            data: null,
+            async: false,
+            error: function (request) {
+            },
+            success: function (data) {
+                if (data.success == true) {
+                    var innerHtml = "";
+                    var i = 1;
+                    $.each(data.products, function (index, p) {
+                        console.log('product:' + this);
+
+                        var tmp = '<div class="index-content-right-body-content">'
+                            + '<span class="index-content-right-body-content-num" id="num' + i + '">' + i + '</span>'
+                            + '<span><a href="' + this.url + '">' + this.name + '</a></span>'
+                            + '</div>';
+
+                        innerHtml = innerHtml + tmp;
+                        i = i +1;
+                    });
+                    console.log('innerHtml:' + innerHtml);
+                    $("#index-hot").html(innerHtml)
+                }
+            }
+        });
+
+    });
+</script>
+{% block scripts %}
+{% endblock %}
+</body>
+</html>

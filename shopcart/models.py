@@ -1428,6 +1428,49 @@ class ProductPush(models.Model):
         verbose_name_plural = '商品推荐'
 
 
+# 文章推荐
+@python_2_unicode_compatible
+class ArticlePushGroup(models.Model):
+    name = models.CharField(max_length=100, null=True, verbose_name='推送组名称')
+    code = models.CharField(max_length=100, null=True, verbose_name='推送组代码')
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建日期')
+    update_time = models.DateTimeField(auto_now=True, verbose_name='更新日期')
+
+    def __str__(self):
+        return '%s' % (self.name)
+
+    class Meta:
+        verbose_name = '文章推荐组'
+        verbose_name_plural = '文章推荐组'
+
+
+@python_2_unicode_compatible
+class ArticlePush(models.Model):
+    group = models.ForeignKey(ArticlePushGroup, null=True, blank=True, related_name='article')
+    article = models.ForeignKey(Article, null=True, blank=True, related_name='push_channels')
+    sort_order = models.IntegerField(default=0, verbose_name='排序序号')
+    title = models.CharField(max_length=254, null=True, default='', verbose_name='定制的标题')
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建日期')
+    update_time = models.DateTimeField(auto_now=True, verbose_name='更新日期')
+
+    def __str__(self):
+        return '%s : %s' % (self.group, self.article)
+
+    def serialization(self):
+        p = {}
+        p['name'] = self.article.title
+        p['title'] = self.title
+        p['url'] = self.article.get_url()
+        p['des'] = self.article.short_desc
+        image = self.article.get_main_image()
+        p['image'] = image.get_image_url()
+        return p
+
+    class Meta:
+        verbose_name = '文章推荐'
+        verbose_name_plural = '文章推荐'
+
+
 @python_2_unicode_compatible
 class CustomizeVar(models.Model):
     name = models.CharField(max_length=64, null=True, default='', verbose_name='变量名称')

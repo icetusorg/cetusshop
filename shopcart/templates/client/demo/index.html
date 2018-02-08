@@ -1,295 +1,331 @@
 {% extends "client/demo/base.html" %}
 {% block main %}
-{% load i18n %}
-{% load staticfiles %}
-<!--slider-->
-<div class="index-slider ">
-    <div id="bootstrap-touch-slider" class="carousel bs-slider slide  control-round indicators-line"
-         data-ride="carousel" data-pause="hover" data-interval="5000">
-        <!-- Indicators -->
-        <div class="carousel-inner" role="listbox" id="index-slider">
+    {% load i18n %}
+    {% load staticfiles %}
+    <!--slider-->
+    <div class="index-slider ">
+        <div id="bootstrap-touch-slider" class="carousel bs-slider slide  control-round indicators-line"
+             data-ride="carousel" data-pause="hover" data-interval="5000">
+            <!-- Indicators -->
+            <div class="carousel-inner" role="listbox" id="index-slider">
 
-        </div>
-        <a class="left carousel-control" href="#bootstrap-touch-slider" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#bootstrap-touch-slider" role="button" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
-</div>
-<!--slider end-->
-
-<!--index product-->
-<div class="index-product-list">
-    <div class="container">
-        <h1>FEATURE PRODUCTS</h1>
-        <div class="row" id="index-product">
-
+            </div>
+            <a class="left carousel-control" href="#bootstrap-touch-slider" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#bootstrap-touch-slider" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
     </div>
-</div>
-<!--index product end-->
-<div class="about-us index-about-us">
-    <div class="container">
-        <div class="row">
-            <div class="about-us-1">
-                <div class="about-us-1-left col-md-6 col-xs-12">
-                    <img src="{% static "client/demo/images/about_01.jpg"%}" alt="">
-                </div>
-                <div class="about-us-1-right col-md-6 col-xs-12">
-                    <h2>WHO WE ARE</h2>
-                    <p>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                        been the industry's standard dummy text ever since. Lorem Ipsum has been the industry's
-                        standard dummy text ever since. Lorem Ipsum is printing and typesetting simply dummy text.
-                    </p>
-                    <p>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                        been the industry's standard dummy text ever since. Lorem Ipsum has been the industry. Lorem
-                        Ipsum is simply dummy text of the printing and industry. Lorem Ipsum has been the industry's
-                        standard dummy text ever since. Lorem Ipsum has been the industry.
-                    </p>
-                </div>
-            </div>
-            <div class="about-us-2">
-                <h2>WHY CHOOSE US</h2>
-                <div class="col-md-3 col-xs-6">
-                    <div class="about-us-2-border">
-                        <img src="{% static "client/demo/images/why_01.jpg"%}" alt="">
-                        <h3>Pixel Perfect Design</h3>
-                        <p>Lorem Ipsum is simply text of the printing and typesetting industry. Lorem Ipsum has been
-                            standard dummy.</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-xs-6">
-                    <div class="about-us-2-border">
-                        <img src="{% static "client/demo/images/why_02.jpg"%}" alt="">
-                        <h3>Pixel Perfect Design</h3>
-                        <p>Lorem Ipsum is simply text of the printing and typesetting industry. Lorem Ipsum has been
-                            standard dummy.</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-xs-6">
-                    <div class="about-us-2-border">
-                        <img src="{% static "client/demo/images/why_03.jpg"%}" alt="">
-                        <h3>Pixel Perfect Design</h3>
-                        <p>Lorem Ipsum is simply text of the printing and typesetting industry. Lorem Ipsum has been
-                            standard dummy.</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-xs-6">
-                    <div class="about-us-2-border">
-                        <img src="{% static "client/demo/images/why_04.jpg"%}" alt="">
-                        <h3>Pixel Perfect Design</h3>
-                        <p>Lorem Ipsum is simply text of the printing and typesetting industry. Lorem Ipsum has been
-                            standard dummy.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="about-us-3">
-                <h2>Service</h2>
-                <div class="col-md-3 col-xs-6">
-                    <img src="{% static "client/demo/images/service_01.jpg"%}" alt="">
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-                        text...</p>
-                </div>
-                <div class="col-md-3 col-xs-6">
-                    <img src="{% static "client/demo/images/service_02.jpg"%}" alt="">
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-                        text...</p>
-                </div>
-                <div class="col-md-3 col-xs-6">
-                    <img src="{% static "client/demo/images/service_03.jpg"%}" alt="">
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-                        text...</p>
-                </div>
-                <div class="col-md-3 col-xs-6">
-                    <img src="{% static "client/demo/images/service_04.jpg"%}" alt="">
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-                        text...</p>
-                </div>
-            </div>
-            <div class="about-us-4">
-                <h2>Cooperation</h2>
+    <!--slider end-->
 
-                <div class="col-md-3 col-xs-6">
-                    <img src="{% static "client/demo/images/coop_01.jpg"%}" alt="">
-                </div>
-                <div class="col-md-3 col-xs-6">
-                    <img src="{% static "client/demo/images/coop_02.jpg"%}" alt="">
-                </div>
-                <div class="col-md-3 col-xs-6">
-                    <img src="{% static "client/demo/images/coop_03.jpg"%}" alt="">
-                </div>
-                <div class="col-md-3 col-xs-6">
-                    <img src="{% static "client/demo/images/coop_04.jpg"%}" alt="">
-                </div>
+    <!--index product-->
+    <div class="index-product-list">
+        <div class="container">
+            <h1>FEATURE PRODUCTS</h1>
+            <div class="row" id="index-product">
 
             </div>
         </div>
     </div>
-</div>
+    <!--index product end-->
+    <div class="about-us index-about-us">
+        <div class="container">
+            <div class="row">
+                <div class="about-us-1">
+                    <div class="about-us-1-left col-md-6 col-xs-12">
+                        <img src="{% static "client/demo/images/about_01.jpg" %}" alt="">
+                    </div>
+                    <div class="about-us-1-right col-md-6 col-xs-12">
+                        <h2>WHO WE ARE</h2>
+                        <p>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                            been the industry's standard dummy text ever since. Lorem Ipsum has been the industry's
+                            standard dummy text ever since. Lorem Ipsum is printing and typesetting simply dummy text.
+                        </p>
+                        <p>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                            been the industry's standard dummy text ever since. Lorem Ipsum has been the industry. Lorem
+                            Ipsum is simply dummy text of the printing and industry. Lorem Ipsum has been the industry's
+                            standard dummy text ever since. Lorem Ipsum has been the industry.
+                        </p>
+                    </div>
+                </div>
+                <div class="about-us-2">
+                    <h2>WHY CHOOSE US</h2>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="about-us-2-border">
+                            <img src="{% static "client/demo/images/why_01.jpg" %}" alt="">
+                            <h3>Pixel Perfect Design</h3>
+                            <p>Lorem Ipsum is simply text of the printing and typesetting industry. Lorem Ipsum has been
+                                standard dummy.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="about-us-2-border">
+                            <img src="{% static "client/demo/images/why_02.jpg" %}" alt="">
+                            <h3>Pixel Perfect Design</h3>
+                            <p>Lorem Ipsum is simply text of the printing and typesetting industry. Lorem Ipsum has been
+                                standard dummy.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="about-us-2-border">
+                            <img src="{% static "client/demo/images/why_03.jpg" %}" alt="">
+                            <h3>Pixel Perfect Design</h3>
+                            <p>Lorem Ipsum is simply text of the printing and typesetting industry. Lorem Ipsum has been
+                                standard dummy.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="about-us-2-border">
+                            <img src="{% static "client/demo/images/why_04.jpg" %}" alt="">
+                            <h3>Pixel Perfect Design</h3>
+                            <p>Lorem Ipsum is simply text of the printing and typesetting industry. Lorem Ipsum has been
+                                standard dummy.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-us-3">
+                    <h2>Service</h2>
+                    <div class="col-md-3 col-xs-6">
+                        <img src="{% static "client/demo/images/service_01.jpg" %}" alt="">
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                            text...</p>
+                    </div>
+                    <div class="col-md-3 col-xs-6">
+                        <img src="{% static "client/demo/images/service_02.jpg" %}" alt="">
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                            text...</p>
+                    </div>
+                    <div class="col-md-3 col-xs-6">
+                        <img src="{% static "client/demo/images/service_03.jpg" %}" alt="">
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                            text...</p>
+                    </div>
+                    <div class="col-md-3 col-xs-6">
+                        <img src="{% static "client/demo/images/service_04.jpg" %}" alt="">
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                            text...</p>
+                    </div>
+                </div>
+                <div class="about-us-4">
+                    <h2>Cooperation</h2>
 
-<!--contact-->
-<div class="container quote">
-    <form id="inquiryForm" action="/quote/add/" method="POST" class="form-horizontal">
-        <div class="row">
-            <div class="contact-supplier-input col-md-6 col-xs-12">
-                <input name="email" placeholder="Your Name" type="text" value="">
+                    <div class="col-md-3 col-xs-6">
+                        <img src="{% static "client/demo/images/coop_01.jpg" %}" alt="">
+                    </div>
+                    <div class="col-md-3 col-xs-6">
+                        <img src="{% static "client/demo/images/coop_02.jpg" %}" alt="">
+                    </div>
+                    <div class="col-md-3 col-xs-6">
+                        <img src="{% static "client/demo/images/coop_03.jpg" %}" alt="">
+                    </div>
+                    <div class="col-md-3 col-xs-6">
+                        <img src="{% static "client/demo/images/coop_04.jpg" %}" alt="">
+                    </div>
+
+                </div>
+
+                <div id="article-index">
+                    <div class="about-us-3">
+                        <h2>Blog</h2>
+
+                    </div>
+                </div>
             </div>
-            <div class="contact-supplier-input col-md-6 col-xs-12">
-                <input name="email" placeholder="Your Email" type="text" value="">
-            </div>
-            <div class="contact-supplier-message col-md-12">
-                <textarea name="message" placeholder="Messages" id="message"></textarea>
-            </div>
-            <div class="code col-xs-12">
-                <img style="cursor: pointer" id="check_code_img" src="/create_code/"
-                     onclick="refresh_check_code(this)">
-                <input type="text" name="code">
-            </div>
-            {% if user.id %}
-            <input type="hidden" name="user" value="{{ user.id }}">
-            {% else %}
-            <input type="hidden" name="user" value="1">
-            {% endif %}
-            <input type="hidden" name="type" value="quote">
         </div>
-        <div class="quote-btn index-quote-btn">
-            <button class="contact-supplier-button" type="button" id="inquiry-submit">Quote Now</button>
-        </div>
-    </form>
-</div>
-<!--contact end-->
+    </div>
+
+    <!--contact-->
+    <div class="container quote">
+        <form id="inquiryForm" action="/quote/add/" method="POST" class="form-horizontal">
+            <div class="row">
+                <div class="contact-supplier-input col-md-6 col-xs-12">
+                    <input name="email" placeholder="Your Name" type="text" value="">
+                </div>
+                <div class="contact-supplier-input col-md-6 col-xs-12">
+                    <input name="email" placeholder="Your Email" type="text" value="">
+                </div>
+                <div class="contact-supplier-message col-md-12">
+                    <textarea name="message" placeholder="Messages" id="message"></textarea>
+                </div>
+                <div class="code col-xs-12">
+                    <img style="cursor: pointer" id="check_code_img" src="/create_code/"
+                         onclick="refresh_check_code(this)">
+                    <input type="text" name="code">
+                </div>
+                {% if user.id %}
+                    <input type="hidden" name="user" value="{{ user.id }}">
+                {% else %}
+                    <input type="hidden" name="user" value="1">
+                {% endif %}
+                <input type="hidden" name="type" value="quote">
+            </div>
+            <div class="quote-btn index-quote-btn">
+                <button class="contact-supplier-button" type="button" id="inquiry-submit">Quote Now</button>
+            </div>
+        </form>
+    </div>
+    <!--contact end-->
 {% endblock %}
 {% block scripts %}
-{% load staticfiles %}
-<script>
-    $(document).ready(function () {
+    {% load staticfiles %}
+    <script>
+        $(document).ready(function () {
 
 //        PC-slider
-        $.ajax({
-            cache: false,
-            type: "GET",
-            url: '/common/get-slider-images/?slider_name=index',
-            data: null,
-            async: false,
-            error: function (request) {
-            },
-            success: function (data) {
-                if (data.success == true) {
-                    var innerHtml = " ";
-                    $.each(data.image_list, function (index, id) {
-                        console.log('image:' + this + "index:" + index);
-                        active = "";
-                        if (index == 0) {
-                            active = "active";
-                        }
-                        var imgsrc = this.image;
-                        var imghref = this.href;
-                        var imgalt = this.alt;
-                        if (imghref == "http://") {
-                            imghref = "#0"
-                        }
-                        console.log("imghref:" + imghref)
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: '/common/get-slider-images/?slider_name=index',
+                data: null,
+                async: false,
+                error: function (request) {
+                },
+                success: function (data) {
+                    if (data.success == true) {
+                        var innerHtml = " ";
+                        $.each(data.image_list, function (index, id) {
+                            console.log('image:' + this + "index:" + index);
+                            active = "";
+                            if (index == 0) {
+                                active = "active";
+                            }
+                            var imgsrc = this.image;
+                            var imghref = this.href;
+                            var imgalt = this.alt;
+                            if (imghref == "http://") {
+                                imghref = "#0"
+                            }
+                            console.log("imghref:" + imghref)
 
-                        var tmp = '<div class="item ' + active + '">'
-                            + '<a href="' + imghref + '"><img class="slide-image" src=' + imgsrc + ' style="width:100%" data-src="" alt="' + imgalt + '"></a>'
-                            + '</div>';
-                        innerHtml = innerHtml + tmp;
-                    });
-                    console.log('innerHtml:' + innerHtml);
-                    $("#index-slider").html(innerHtml)
+                            var tmp = '<div class="item ' + active + '">'
+                                + '<a href="' + imghref + '"><img class="slide-image" src=' + imgsrc + ' style="width:100%" data-src="" alt="' + imgalt + '"></a>'
+                                + '</div>';
+                            innerHtml = innerHtml + tmp;
+                        });
+                        console.log('innerHtml:' + innerHtml);
+                        $("#index-slider").html(innerHtml)
+                    }
                 }
-            }
-        });
+            });
 
 
 //        phone-slider
-        $.ajax({
-            cache: false,
-            type: "GET",
-            url: '/common/get-slider-images/?slider_name=index-slider-phone',
-            data: null,
-            async: false,
-            error: function (request) {
-            },
-            success: function (data) {
-                if (data.success == true) {
-                    var innerHtml = " ";
-                    $.each(data.image_list, function (index, id) {
-                        console.log('image:' + this + "index:" + index);
-                        active = "";
-                        if (index == 0) {
-                            active = "active";
-                        }
-                        var imgsrc = this.image;
-                        var imghref = this.href;
-                        var imgalt = this.alt;
-                        if (imghref == "http://") {
-                            imghref = "#0"
-                        }
-                        console.log("imghref:" + imghref)
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: '/common/get-slider-images/?slider_name=index-slider-phone',
+                data: null,
+                async: false,
+                error: function (request) {
+                },
+                success: function (data) {
+                    if (data.success == true) {
+                        var innerHtml = " ";
+                        $.each(data.image_list, function (index, id) {
+                            console.log('image:' + this + "index:" + index);
+                            active = "";
+                            if (index == 0) {
+                                active = "active";
+                            }
+                            var imgsrc = this.image;
+                            var imghref = this.href;
+                            var imgalt = this.alt;
+                            if (imghref == "http://") {
+                                imghref = "#0"
+                            }
+                            console.log("imghref:" + imghref)
 
-                        var tmp = '<div class="item ' + active + '">'
-                            + '<a href="' + imghref + '"><img src=' + imgsrc + ' style="width=100%" data-src="" alt="' + imgalt + '"></a>'
-                            + '</div>';
-                        innerHtml = innerHtml + tmp;
-                    });
-                    console.log('innerHtml:' + innerHtml);
-                    $("#index-slider-phone").html(innerHtml)
+                            var tmp = '<div class="item ' + active + '">'
+                                + '<a href="' + imghref + '"><img src=' + imgsrc + ' style="width=100%" data-src="" alt="' + imgalt + '"></a>'
+                                + '</div>';
+                            innerHtml = innerHtml + tmp;
+                        });
+                        console.log('innerHtml:' + innerHtml);
+                        $("#index-slider-phone").html(innerHtml)
+                    }
                 }
-            }
-        });
+            });
 
 
 //        首页产品
-        $.ajax({
-            cache: false,
-            type: "GET",
-            url: '/common/get-push-product/?type=index-product',
-            data: null,
-            async: false,
-            error: function (request) {
-            },
-            success: function (data) {
-                if (data.success == true) {
-                    var innerHtml = "";
-                    $.each(data.products, function (index, p) {
-                        console.log('product:' + this);
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: '/common/get-push-product/?type=index',
+                data: null,
+                async: false,
+                error: function (request) {
+                },
+                success: function (data) {
+                    if (data.success == true) {
+                        var innerHtml = "";
+                        $.each(data.products, function (index, p) {
+                            console.log('product:' + this);
 
-                        var tmp = '<div class="col-md-3 col-xs-6">'
-                            + '<div class="product-list-block">'
-                            + '<a href="' + this.url + '"><img src=' + this.image + '  alt="' + this.name + '">'
-                            + '<p>' + this.name + '</p></a>'
-                            + '<a class="product-list-add-quote" href="' + this.url + '">ADD TO QUOTE LIST</a>'
-                            + '</div>'
-                            + '</div>';
+                            var tmp = '<div class="col-md-3 col-xs-6">'
+                                + '<div class="product-list-block">'
+                                + '<a href="' + this.url + '"><img src=' + this.image + '  alt="' + this.name + '">'
+                                + '<p>' + this.name + '</p></a>'
+                                + '<a class="product-list-add-quote" href="' + this.url + '">ADD TO QUOTE LIST</a>'
+                                + '</div>'
+                                + '</div>';
 
-                        innerHtml = innerHtml + tmp;
-                    });
-                    console.log('innerHtml:' + innerHtml);
-                    $("#index-product").html(innerHtml)
+                            innerHtml = innerHtml + tmp;
+                        });
+                        console.log('innerHtml:' + innerHtml);
+                        $("#index-product").html(innerHtml)
+                    }
                 }
-            }
+            });
+
+            //        首页文章
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: '/common/get-push-article/?type=index',
+                data: null,
+                async: false,
+                error: function (request) {
+                },
+                success: function (data) {
+                    if (data.success == true) {
+                        var innerHtml = "";
+                        $.each(data.article, function (index, p) {
+                            console.log('article:' + this);
+
+                            var tmp = '<div class="col-md-3 col-xs-6">'
+                                + '<a href="' + this.url + '"><img style="width:100%" src=' + this.image + '  alt="' + this.name + '">'
+                                + '<p>' + this.name + '</p></a>'
+                                + '</div>';
+
+                            innerHtml = innerHtml + tmp;
+                        });
+                        console.log('innerHtml:' + innerHtml);
+                        $("#article-index").html(innerHtml)
+                    }
+                }
+            });
+
         });
-    });
-</script>
-<script type="text/javascript" src="{% static 'client/demo/js/jquery.touchSwipe.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'client/demo/js/bootstrap-touch-slider.js' %}"></script>
-<script type="text/javascript">
-    $('#bootstrap-touch-slider').bsTouchSlider();
-</script>
-<script>
-    function refresh_check_code(ths) {
-        ths.src += '?';
-        //src后面加问好会自动刷新验证码img的src
-    }
-</script>
-<!--<script type="text/javascript">-->
-<!--$('#bootstrap-touch-slider2').bsTouchSlider();-->
-<!--</script>-->
+    </script>
+    <script type="text/javascript" src="{% static 'client/demo/js/jquery.touchSwipe.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'client/demo/js/bootstrap-touch-slider.js' %}"></script>
+    <script type="text/javascript">
+        $('#bootstrap-touch-slider').bsTouchSlider();
+    </script>
+    <script>
+        function refresh_check_code(ths) {
+            ths.src += '?';
+            //src后面加问好会自动刷新验证码img的src
+        }
+    </script>
+    <!--<script type="text/javascript">-->
+    <!--$('#bootstrap-touch-slider2').bsTouchSlider();-->
+    <!--</script>-->
 {% endblock %}

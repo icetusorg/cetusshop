@@ -95,11 +95,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'icetus',
-        'USER': 'icetus',
-        'PASSWORD': 'icetus',
-        # 'HOST':'192.168.137.129',
+        'USER': 'root',
+        'PASSWORD': 'root',
         'HOST': 'localhost',
-        # 'HOST':'www.imycart.com',
         'PORT': '3306',
     }
 }

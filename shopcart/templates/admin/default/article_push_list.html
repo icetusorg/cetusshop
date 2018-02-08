@@ -1,0 +1,92 @@
+{% extends "admin/default/content_base.html" %}
+{% block breadcrumbs %}
+    {% load shopcart_extras %}
+    <section class="content-header">
+        <h1>推荐文章 <span class="box-subtitle">插件管理</span></h1>
+    </section>
+{% endblock %}
+
+
+{% block main %}
+    {% load i18n %}
+    {% load staticfiles %}
+    {% load shopcart_extras %}
+    <script>
+        document.body.style.backgroundColor = "#f0f0f0";
+    </script>
+    <section class="content ">
+        <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box xy-list page-list-content ">
+                    <div class="box-header with-border">
+                        <h3 class="box-title page-list-title "><b>推荐文章列表</b></h3>
+                    </div>
+                    <div class="box-body product-table">
+                        <table class="table plug-in-slider-table">
+                            <tbody>
+                            <tr>
+                                <th>推荐文章位代码</th>
+                                <th>推荐文章位备注</th>
+                                <th>创建时间</th>
+                                <th>操作</th>
+                            </tr>
+                            {% for push in push_list %}
+                                <tr>
+                                    <td><a href="/admin/article-push-edit/?id={{ push.id }}">{{ push.code }}</a></td>
+                                    <td>{{ push.name }}</td>
+                                    <td>{{ push.create_time|date:"Y-m-d H:i:s" }}</td>
+                                    <td><a href="/admin/article-push-edit/?id={{ push.id }}">编辑</a>
+{#                                        | <a class="deleteCategory message-delete product-push-group-batch-oper" data-method="delete" data-id="{{ push.id }}">删除</a>#}
+                                    </td>
+
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="box-footer clearfix">
+{#                        <div class="xy-box-select">#}
+{#                            <a href="/admin/product-push-edit/" class="btn btn-primary page-list-content-btn">新增</a>#}
+{#                        </div>#}
+                        <div class="xy-pages-jump">
+                            <button type="button" class="btn btn-primary page-jump">跳转</button>
+                            <input type="text" name="page_number_to_jump" class="form-control">
+                            <p>跳转到：</p>
+
+
+                            <ul class="pagination pagination-sm no-margin pull-right">
+                                {% if push_list.has_previous %}
+                                    <li><a name="pageChange" data-tag="Previous" class="pageChage prev"
+                                           data-page="{{ push_list.previous_page_number }}">&lt;</a></li>
+                                {% else %}
+                                    <li><a>&lt;</a></li>
+                                {% endif %}
+
+                                {% for p in page_range %}
+                                    {% ifequal p current_page %}
+                                        <li><a class="pageChage current_page" data-page="{{ p }}" href="#"
+                                               title="{{ p }}">{{ p }}</a></li>
+                                    {% else %}
+                                        <li><a class="pageChage" data-page="{{ p }}" href="#"
+                                               title="{{ p }}">{{ p }}</a></li>
+                                    {% endifequal %}
+                                {% endfor %}
+                                {% if push_list.has_next %}
+                                    <li><a name="pageChange" class="pageChage next" data-page="{{ p }}"
+                                           data-page-range="{{ page_range }}" data-tag="Next">&gt;</a></li>
+                                {% else %}
+                                    <li><a>&gt;</a></li>
+                                {% endif %}
+                            </ul>
+                            <p>共 {{ item_count }} 条记录 , 共 {{ page_range|last }} 页，每页显示： {{ page_size }} 条</p>
+                        </div>
+                    </div>
+                </div><!-- /.box -->
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block scripts %}
+    {% load staticfiles %}
+{% endblock %}

@@ -2416,6 +2416,7 @@ iframe {
     float: left;
 }
 
+/*产品推荐*/
 .plug-in-product-detail-sort input {
     width: 3% !important;
 }
@@ -2513,6 +2514,99 @@ iframe {
 }
 
 .plug-in-product-table-recommend-checkbox {
+    margin-left: 25px !important;
+}
+
+/*文章推荐*/
+.plug-in-article-table-recommend th:nth-child(1), .plug-in-article-table-recommend tr td:nth-child(1) {
+    width: 5% !important;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.plug-in-article-table-recommend th:nth-child(2), .plug-in-article-table-recommend tr td:nth-child(2) {
+    width: 10% !important;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.plug-in-article-table-recommend th:nth-child(3), .plug-in-article-table-recommend tr td:nth-child(3) {
+    width: 10% !important;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.plug-in-article-table-recommend th:nth-child(4), .plug-in-article-table-recommend tr td:nth-child(4) {
+    width: 10% !important;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.plug-in-article-table-recommend th:nth-child(5), .plug-in-article-table-recommend tr td:nth-child(5) {
+    width: 35% !important;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.plug-in-article-table-recommend th:nth-child(6), .plug-in-article-table-recommend tr td:nth-child(6) {
+    width: 10% !important;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.plug-in-article-table-recommend th:nth-child(7), .plug-in-article-table-recommend tr td:nth-child(7) {
+    width: 10% !important;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.plug-in-article-table-recommend th:nth-child(8), .plug-in-article-table-recommend tr td:nth-child(8) {
+    width: 10% !important;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.plug-in-article-table-recommend tr td:nth-child(1) input {
+    text-align: center;
+    float: none !important;
+    vertical-align: middle;
+}
+
+.plug-in-article-table-recommend tr td:nth-child(2) input {
+    width: 30% !important;
+    text-align: center;
+    vertical-align: middle;
+    float: none !important;
+    border: 1px solid #CCCCCC;
+    height: 30px;
+}
+
+.plug-in-article-table-recommend tr td:nth-child(3) input {
+    width: 100% !important;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #CCCCCC;
+    height: 30px;
+}
+
+.plug-in-article-table-recommend tr {
+    height: 100px;
+    border-bottom: 1px solid #CCCCCC;
+}
+
+.plug-in-article-table-recommend tr:first-child {
+    height: 30px;
+}
+
+.plug-in-article-table-recommend-checkbox {
+    width: auto !important;
+}
+
+.plug-in-article-table-recommend {
+    margin-top: 30px;
+}
+
+.plug-in-article-table-recommend-checkbox {
     margin-left: 25px !important;
 }
 
@@ -4656,6 +4750,7 @@ a {
     line-height: 24px;
 }
 
+/*推荐产品弹出框*/
 .related-products-table > tbody > tr:nth-of-type(odd) {
     background-color: #fcfcfc;
 }
@@ -4700,6 +4795,40 @@ a {
     width: 60px;
     height: 30px;
     padding: 0 !important;
+}
+
+/*推荐文章弹出框*/
+.related-article-table > tbody > tr:nth-of-type(odd) {
+    background-color: #fcfcfc;
+}
+
+.related-article-table > tbody > tr:first-child {
+    background-color: #fff;
+}
+
+.related-article-table > tbody > tr > td, .related-article-table > tbody > tr > th {
+    vertical-align: middle;
+    border-bottom: 1px solid #CCCCCC;
+}
+
+.related-article-table > tbody > tr > td:nth-child(1), .related-article-table > tbody > tr > th:nth-child(1) {
+    width: 5%;
+    text-align: center;
+}
+
+.related-article-table > tbody > tr > td:nth-child(2), .related-article-table > tbody > tr > th:nth-child(2) {
+    width: 20%;
+    text-align: center;
+}
+
+.related-article-table > tbody > tr > td:nth-child(3), .related-article-table > tbody > tr > th:nth-child(3) {
+    width: 75%;
+    text-align: left;
+}
+
+.related-article-table img {
+    width: 40px;
+    height: 40px;
 }
 
 .para-list-content {
@@ -5247,12 +5376,15 @@ a {
 .inquiry-detail-title2 {
     border-bottom: none !important;
 }
+
 .inquiry-list-search .inputBtn {
-    min-width: 80px!important;
+    min-width: 80px !important;
 }
-.inquiry-list-search .dropdown-menu  {
-    min-width: 80px!important;
+
+.inquiry-list-search .dropdown-menu {
+    min-width: 80px !important;
 }
+
 .inquiry-list-search .dropdown-menu li {
     padding: 0px 12px;
     font-size: 12px;
@@ -5260,9 +5392,11 @@ a {
     cursor: pointer;
     min-width: 80px;
 }
-.inquiry-list-input input{
-    width:350px!important;
+
+.inquiry-list-input input {
+    width: 350px !important;
 }
+
 .message-detail-table-content {
     margin-top: 20px;
 }

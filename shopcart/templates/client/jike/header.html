@@ -1,0 +1,67 @@
+{% load staticfiles %}
+{% load i18n %}
+<!--手机菜单栏-->
+<div class="neirong neirong-hide">
+    <div class="neirong-bd">
+        <a href="/">首页</a>
+
+
+        {% for cat in menu_list %}
+        <a href="{{ cat.url }}">{{ cat.name }}<i></i></a>
+        {% endfor %}
+    </div>
+    <div class="neirong-close"></div>
+</div>
+<!--header-->
+<div class="header">
+    <div class="container">
+        <div class="header-left">
+            <img src="{% static "client/jike/images/index-logo1.png"%}" alt="logo">
+            <p>外贸人该学的<br>网络营销及IT知识</p>
+        </div>
+        <div class="header-right">
+            <ul>
+                <li><a href="/">首页</a></li>
+                <li class="li1">
+                    <a href="###">文章</a>
+                    <div class="row">
+
+
+                        <ul class="menu-first-ul">
+
+                            {% for cat in menu_list %}
+                            <li class="menu-first-li">
+                                <a href="{{ cat.url }}">{{ cat.name }}</a>
+                            </li>
+                            {% endfor %}
+
+                        </ul>
+
+
+
+
+                    </div>
+                </li>
+                <li><a href="###">资源</a></li>
+                <li><a href="###">联系</a></li>
+                <li><a href="###" class="plus3"><span class="glyphicon glyphicon-search"></span></a></li>
+            </ul>
+            <section class="phone-search">
+                <a href="###"><span class="glyphicon glyphicon-search"></span></a>
+            </section>
+            <section class="buttonset">
+                <span class="glyphicon glyphicon-align-justify buttonpush" id="showLeftPush"></span>
+            </section>
+        </div>
+    </div>
+    <div class="header-search">
+        <div class="container">
+            <form method="GET" action="/query/product/">
+                <input class="header-search-input" placeholder='输入关键词' type="text" name="query" id="q"
+                   value=""/>
+                <button class="header-search-search" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+            </form>
+        </div>
+    </div>
+</div>
+<!--header end-->

@@ -1188,7 +1188,7 @@ jQuery("#product_sku_group_detail_submit").click(function (event) {
             $("#infoMessage").html(data.message);
             $('#myModal').on('hidden.bs.modal', function (e) {
                 var newurl = location.href;
-                    location.href = newurl;
+                location.href = newurl;
             });
 
             $("#myModal").modal('toggle');
@@ -1475,6 +1475,100 @@ jQuery("#product_push_detail_submit_btn").click(function (event) {
             $("#infoMessage").html(data.message);
             $('#myModal').on('hidden.bs.modal', function (e) {
                 location.href = changeURLArg(url, "id", data.data.push_group_id);
+            });
+            $("#myModal").modal('toggle');
+
+        }
+    });
+});
+
+//关联文章关系设置
+jQuery("#article_list_modal_win_set_btn").click(function (event) {
+    event.preventDefault();
+    var host_type = $(this).data("host-type");
+    var url = "/admin/article-push-oper/?method=" + 'set_relation';
+
+    console.log("11111");
+
+    $.ajax({
+        cache: false,
+        type: "POST",
+        url: url,
+        data: $("#product_relation_set_form").serialize(),
+        async: false,
+        error: function (request) {
+            alert("System error");
+        },
+        success: function (data) {
+            $("#infoMessage").html(data.message);
+            $('#myModal').on('hidden.bs.modal', function (e) {
+                reload_related_product_list();
+            });
+            $("#myModal").modal('toggle');
+
+        }
+    });
+});
+//推荐文章具体文章的批量操作
+jQuery(".article-push-detail-batch-save").click(function (event) {
+    event.preventDefault();
+    var url = "/admin/article-push-oper/";
+    var method = $(this).data("method");
+    url = url + "?method=" + method;
+    var id = $(this).data("id");
+    var sort_order = $(this).parent().parent().find('input[name=sort_order]').val();
+    var title = $(this).parent().parent().find('input[name=title]').val();
+
+    console.log("id:" + id + " sort_order:" + sort_order + " title:" + title);
+
+    var postdata = {"id": id, "sort_order": sort_order, "title": title};
+
+
+    $.ajax({
+        cache: false,
+        type: "POST",
+        url: url,
+        data: postdata,
+        async: false,
+        error: function (request) {
+            alert("System error");
+        },
+        success: function (data) {
+            $("#infoMessage").html(data.message);
+            $('#myModal').on('hidden.bs.modal', function (e) {
+                //location.reload(true);
+            });
+            $("#myModal").modal('toggle');
+
+        }
+    });
+});
+//推荐文章具体文章的批量操作
+jQuery(".article-push-detail-batch-oper").click(function (event) {
+    event.preventDefault();
+    var url = "/admin/article-push-oper/";
+    var method = $(this).data("method");
+    url = url + "?method=" + method;
+
+    var id = $(this).data("id");
+    if (id != undefined) {
+        $("#checkbox_" + id).prop("checked", true);
+    }
+
+
+    $.ajax({
+        cache: false,
+        type: "POST",
+        url: url,
+        data: $("#product_push_products_form").serialize(),
+        async: false,
+        error: function (request) {
+            alert("System error");
+        },
+        success: function (data) {
+            $("#infoMessage").html(data.message);
+            $('#myModal').on('hidden.bs.modal', function (e) {
+                location.reload(true);
             });
             $("#myModal").modal('toggle');
 

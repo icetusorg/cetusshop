@@ -1,0 +1,72 @@
+{% extends "client/jike/base.html" %}
+{%block head_extra%}
+{% load staticfiles %}
+{%endblock%}
+{% block main %}
+{% load i18n %}
+<!--content-->
+<div class="index-content-left col-md-8 col-xs-12">
+    <h1>{{category_title}}</h1>
+
+    {% for product in product_list %}
+    <div class="index-content-left-body">
+        <div class="index-content-left-body-img">
+            <a href="{{product.get_url}}"><img src="{{product.get_main_image.get_image_url}}"></a>
+        </div>
+        <div class="index-content-left-body-des">
+            <a href="{{product.get_url}}"><h2>{{product.name}}</h2></a>
+            <p class="index-content-left-body-des-p">{{product.short_desc}}</p>
+            <div class="index-content-left-body-des-bottom">
+                <div class="index-content-left-body-des-bottom-1">
+                    {{product.item_number}} · {{product.create_time|date:"Y-m-d"}}
+                </div>
+                <div class="index-content-left-body-des-bottom-3">
+                    <img src="{% static "client/jike/images/column.png"%}" alt="">
+                    {% for c in category.get_leveled_parents %}
+                    <p><a href="{{c.get_url}}">{{c.name}}</a></p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+         <p class="search-none" style="margin-top: 30px">
+        没有相关文章
+    </p>
+    {% endfor %}
+
+
+    <div class="index-skip">
+        {% if product_list.has_previous %}
+        <a name="pageChange" data-tag="Previous" class="pageChage prev"
+           data-page="{{ product_list.previous_page_number }}">上一页</a>
+        {% else %}
+        <a class="prev" href="#">上一页</a>
+        {% endif %}
+
+
+        {% for p in page_range %}
+
+        {% ifequal p current_page %}
+        <a class="pageChage current_page" data-page="{{p}}" href="#" title="{{p}}">{{p}}</a>
+        {% else %}
+        <a class="pageChage" data-page="{{p}}" href="#" title="{{p}}">{{p}}</a>
+        {% endifequal %}
+
+        {% endfor %}
+
+
+        {% if product_list.has_next %}
+        <a name="pageChange" class="pageChage next" data-page="{{p}}" data-page-range="{{page_range}}"
+           data-tag="Next">下一页</a>
+        {% else %}
+        <a>下一页</a>
+        {% endif %}
+    </div>
+
+</div>
+<!--content end-->
+{% endblock %}
+{% block scripts %}
+{% load staticfiles %}
+{% endblock %}

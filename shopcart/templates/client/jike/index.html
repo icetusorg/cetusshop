@@ -1,0 +1,58 @@
+{% extends "client/jike/base.html" %}
+{% block main %}
+    {% load i18n %}
+    {% load staticfiles %}
+    <!--content-->
+    <div class="index-content-left col-md-8 col-xs-12">
+        <h1>最新文章</h1>
+        <div id="index-blog">
+
+        </div>
+    </div>
+    <!--content end-->
+{% endblock %}
+{% block scripts %}
+    {% load staticfiles %}
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: '/common/get-push-product/?type=index',
+                data: null,
+                async: false,
+                error: function (request) {
+                },
+                success: function (data) {
+                    if (data.success == true) {
+                        var innerHtml = "";
+                        $.each(data.products, function (index, p) {
+                            console.log('product:' + this);
+
+                            var tmp = '<div class="index-content-left-body">'
+                                + '<div class="index-content-left-body-img">'
+                                + '<a href="' + this.url + '"><img src="' + this.image + '"></a>'
+                                + '</div>'
+                                + '<div class="index-content-left-body-des">'
+                                + '<a href="' + this.url + '"><h2>' + this.name + '</h2></a>'
+                                + '<p class="index-content-left-body-des-p">' + this.short_desc + '</p>'
+                                + '<div class="index-content-left-body-des-bottom">'
+                                + '<div class="index-content-left-body-des-bottom-1">' + this.item_number + ' · ' + this.create_time + '</div>'
+                                + '<div class="index-content-left-body-des-bottom-3">'
+                                + '<img src="{% static "client/jike/images/column.png"%}">'
+                                + '<p><a href="' + this.cate_url + '">' + this.cate + '</a></p></div>'
+                                + '</div>'
+                                + '</div>'
+                                + '</div>'
+                                + '</div>';
+                            innerHtml = innerHtml + tmp;
+                        });
+                        console.log('innerHtml:' + innerHtml);
+                        $("#index-blog").html(innerHtml)
+                    }
+                }
+            });
+
+        });
+    </script>
+{% endblock %}

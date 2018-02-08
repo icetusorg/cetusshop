@@ -1,0 +1,116 @@
+{% extends "admin/default/content_base.html" %}
+{% block breadcrumbs %}
+    {% load shopcart_extras %}
+    <section class="content-header">
+        <h1>推荐产品 <span class="box-subtitle">插件管理</span></h1>
+    </section>
+{% endblock %}
+
+
+{% block main %}
+    {% load i18n %}
+    {% load staticfiles %}
+    {% load shopcart_extras %}
+    <script>
+        document.body.style.backgroundColor = "#f0f0f0";
+    </script>
+    <section class="content">
+        <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+        <div class="col-md-12 add-product plug-in-slider-detail">
+            <h1 class="add-product-h1">推荐文章</h1>
+            <div class="add-content active">
+                <form id="product_push_detail_form">
+                    <div class="item item2">
+                        <label>推荐文章位名称</label>
+                        <input disabled="disabled" type="text" class="form-control" name="code" value="{{ push.code }}">
+                    </div>
+                    <div class="item item2">
+                        <label>推荐文章位备注</label>
+                        <input type="text" class="form-control" name="name" value="{{ push.name }}">
+                    </div>
+                    <div class="item add-product-tree article-add-title plug-in-slider-detail-save">
+                        <input name="id" type="hidden" value="{{ push.id }}"/>
+                        <label></label>
+                        <button id="product_push_detail_submit_btn" type="button"
+                                class="btn btn-primary product-push-add-btn">保存
+                        </button>
+                    </div>
+                </form>
+                <div class="item product-images plug-in-slider-detail-img">
+                    <div class="box xy-list page-list-content product-correlation ">
+                        <h1 class="add-product-h1 product-push-title">相关文章列表</h1>
+                        <form id="product_push_products_form">
+                            <table id="main-content-table"
+                                   class="table table-striped page-table-list plug-in-article-table-recommend ">
+                                <tbody>
+                                <tr>
+                                    <th>选择</th>
+                                    <th>排序</th>
+                                    <th>自定义标题</th>
+                                    <th>文章图片</th>
+                                    <th>文章名称</th>
+                                    <th>分类</th>
+                                    <th>操作</th>
+                                </tr>
+                                {% for p in push_list %}
+                                    <tr>
+                                        <td><input name="is_oper" id="checkbox_{{ p.id }}" value="{{ p.id }}"
+                                                   type="checkbox"></td>
+                                        <td><input type="text" name="sort_order" value="{{ p.sort_order }}"></td>
+                                        <td><input type="text" name="title" value="{{ p.title }}"></td>
+                                        <td><a href="/admin/article-edit/?id={{ p.article_id }}"><img
+                                                src="{{ p.article.image }}"></a></td>
+                                        <td>
+                                            <a href="/admin/article-edit/?id={{ p.article_id }}">{{ p.article.title }}</a>
+                                        </td>
+                                        <td>
+                                            {{ p.article.busi_category }}
+                                        </td>
+                                        <td><a href="#" class="article-push-detail-batch-save" data-id="{{ p.id }}"
+                                               data-method="save_content">保存</a> | <a data-id="{{ p.id }}"
+                                                                                      data-method="del_relation"
+                                                                                      class="deleteCategory message-delete article-push-detail-batch-oper">删除</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </form>
+                        <div class="box-footer clearfix">
+                            <div class="xy-box-select">
+                                <input type="checkbox" id="main-content-checkbox-all"
+                                       class="plug-in-product-table-recommend-checkbox">
+                                <a id="main-content-btn-all" href="#">全选</a>
+
+                                <button id="product_push_add_btn" type="button"
+                                        class="btn btn-primary common-popup-trigger"
+                                        data-target-url="/admin/article-push-detail-list/?push_id={{ push.id }}&page_size=6"
+                                        data-id="{{ push.id }}" data-reject-no-host="true">新增
+                                </button>
+
+                                <button type="button" data-method="del_relation"
+                                        class="btn btn-danger article-push-detail-batch-oper">删除
+                                </button>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--弹出-->
+    {% include 'admin/default/common_pop_win.html' %}
+
+{% endblock %}
+{% block scripts %}
+    {% load staticfiles %}
+    <script>
+        function reload_related_product_list() {
+            var url = location.href;
+            location.href = url;
+        };
+    </script>
+{% endblock %}

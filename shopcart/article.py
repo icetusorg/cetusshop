@@ -1,7 +1,7 @@
 # coding=utf-8
 from django.shortcuts import render
 from django.template.loader import render_to_string
-from shopcart.models import System_Config, Article, ArticleBusiCategory, Menu
+from shopcart.models import System_Config, Article, ArticleBusiCategory, Menu, ArticlePushGroup, ArticlePush
 from shopcart.utils import my_pagination, get_system_parameters, customize_tdk
 import json, os
 from django.http import JsonResponse
@@ -167,7 +167,7 @@ def view_blog_list(request, category_id=None, tdk=None):
         blog_list_page_size = 12
 
     if request.method == 'GET':
-        template = 'product_list.html'
+        template = 'blog_list.html'
         if 'sort_by' in request.GET:
             if 'direction' in request.GET:
                 if 'desc' == request.GET['direction']:
@@ -214,3 +214,22 @@ def view_blog_list(request, category_id=None, tdk=None):
         ctx['current_page'] = current_page
         logger.info('template : ' + template)
         return TemplateResponse(request, System_Config.get_template_name() + '/' + template, ctx)
+
+
+def get_push_article(request):
+    type = request.GET.get('type', '')
+    result_dict = {}
+    try:
+        group = ArticlePushGroup.objects.get(code=type)
+    except Exception as err:
+        article = []
+        return JsonResponse(result_dict)
+
+    article_list = ArticlePush.objects.filter(group=group).order_by('-sort_order')
+    article = []
+    for p in article_list:
+        article.append(p.serialization())
+
+    result_dict['success'] = True
+    result_dict['article'] = article
+    return JsonResponse(result_dict)

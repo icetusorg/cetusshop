@@ -10,10 +10,9 @@ from django.core.exceptions import ValidationError
 
 class push_group_detail_form(forms.ModelForm):
     name = forms.CharField(required=False)
-
     class Meta:
         model = ProductPushGroup
-        fields = ('name', 'code')
+        fields = ('name', )
 
 # 文章推荐表单验证
 class article_push_group_detail_form(forms.ModelForm):
@@ -21,7 +20,7 @@ class article_push_group_detail_form(forms.ModelForm):
 
     class Meta:
         model = ArticlePushGroup
-        fields = ('name', 'code')
+        fields = ('name',)
 
 
 class promotion_detail_form(forms.ModelForm):

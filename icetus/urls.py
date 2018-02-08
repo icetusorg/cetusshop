@@ -297,6 +297,8 @@ urlpatterns = patterns("",
                            name='admin_promotion_push_list'),
                        url('^admin/product-push-edit/$', 'shopcart.myadmin.product_push.detail',
                            name='admin_promotion_push_detail'),
+                       url('^admin/article-push-edit/$', 'shopcart.myadmin.article_push.detail',
+                           name='admin_article_push_detail'),
                        url('^admin/product-push-detail-list/$', 'shopcart.myadmin.product.push_product_list',
                            name='admin_push_product_list'),
 

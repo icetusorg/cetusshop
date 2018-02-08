@@ -168,7 +168,7 @@ def detail(request):
         except Exception as err:
             push = None
             form = push_group_detail_form(request.POST)
-
+        logger.info('监测点1')
         if form.is_valid():
             push = form.save()
         else:

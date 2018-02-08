@@ -1575,6 +1575,31 @@ jQuery(".article-push-detail-batch-oper").click(function (event) {
         }
     });
 });
+//推荐文章保存
+jQuery("#article_push_detail_submit_btn").click(function (event) {
+    event.preventDefault();
+    var url = "/admin/article-push-edit/";
+
+    $.ajax({
+        cache: false,
+        type: "POST",
+        url: url,
+        data: $("#article_push_detail_form").serialize(),
+        async: false,
+        error: function (request) {
+            alert("System error");
+        },
+        success: function (data) {
+            $("#infoMessage").html(data.message);
+            $('#myModal').on('hidden.bs.modal', function (e) {
+                // location.href = changeURLArg(url, "id", data.data.push_group_id);
+                 location.reload(true);
+            });
+            $("#myModal").modal('toggle');
+
+        }
+    });
+});
 
 
 //优惠码详情保存

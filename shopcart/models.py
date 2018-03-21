@@ -1101,6 +1101,7 @@ class Article(models.Model):
     detail_template = models.CharField(max_length=254, default='', blank=True, verbose_name='详情页指定模板')
     create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建日期')
     update_time = models.DateTimeField(auto_now=True, verbose_name='更新日期')
+    products = models.ManyToManyField(Product, verbose_name='相关产品', related_name="products")
 
     def __str__(self):
         return self.title
@@ -1177,6 +1178,19 @@ class Article(models.Model):
     class Meta:
         verbose_name = '文章'
         verbose_name_plural = '文章'
+
+
+# @python_2_unicode_compatible
+# class Article_Products(models.Model):
+#     product_id = models.IntegerField(default=0, unique=True, verbose_name='商品ID')
+#     article = models.ForeignKey(Article, null=True, related_name='Article_Products')
+#
+#     def __str__(self):
+#         return self.name
+#
+#     class Meta:
+#         verbose_name = '文章商品'
+#         verbose_name_plural = '文章商品'
 
 
 class Album(models.Model):

@@ -17,13 +17,13 @@
     <section class="content">
         <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
         <div class="col-md-12 add-product ">
-            {#            <ul class="tag">#}
-            {#                <li class="active" data="tag_basic_info">基本信息</li>#}
-            {#                <li data="tag_detail_info">详细信息</li>#}
-            {#            </ul>#}
+            <ul class="tag">
+                <li class="active" data="tag_basic_info">基本信息</li>
+                <li data="tag_detail_info">相关产品</li>
+            </ul>
 
 
-            <div class="add-content active">
+            <div class="add-content active" id="tag_basic_info">
                 <h1 class="add-product-h1 add-product-seo-h1">基本信息</h1>
                 <div class="product-content">
                     <form id="article-basic-info-form">
@@ -165,7 +165,8 @@
                                         <p class="attachment-picture-title">{{ image.file_name }}</p>
                                     </a>
                                     <div class="image-operaion">
-                                        <a href="#" class="set-picture-attr-delete set-picture-attr attachment-picture"
+                                        <a href="#"
+                                           class="set-picture-attr-delete set-picture-attr attachment-picture"
                                            data-method="delete"
                                            data-id="{{ image.id }}"
                                            data-article-id="{{ article.id }}" data-image-type="article">删除 </a>
@@ -219,14 +220,68 @@
                 </div>
                 </form>
             </div>
+            <div class="add-content " id="tag_detail_info">
+                <div class="box xy-list page-list-content product-correlation">
+                    <div class="box-body no-padding">
+                        <form id="related_product_form">
+                            <h1 class="add-product-h1 related-product-h1">相关产品列表</h1>
+                            <table id="related-product-table"
+                                   class="table table-striped page-table-list related-product">
+                                <tbody>
+                                <tr>
+                                    <th>选择</th>
+                                    <th>产品图片</th>
+                                    <th>编号</th>
+                                    <th>产品名称</th>
+                                    <th>分类</th>
+                                    <th>操作</th>
+                                </tr>
+                                {% for p in article_product %}
+                                    <tr>
+                                        <td><input name="is_oper" id="rp_checkbox_{{ p.id }}" value="{{ p.id }}"
+                                                   type="checkbox"></td>
+                                        <td><a href="/admin/product-edit/?id={{ p.id }}"><img
+                                                src="{{ p.get_main_image.get_thumb_url }}"></a></td>
+                                        <td>{{ p.item_number }}</td>
+                                        <td><a href="/admin/product-edit/?id={{ p.id }}">{{ p.name }}</a></td>
+                                        <td>
+                                            <ul>
+                                                {% for cat in p.categorys.all %}
+                                                    <li>{{ cat.name }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        </td>
+                                        <td><a class="deleteCategory message-delete article-related-product-batch-oper"
+                                               data-method="delete" data-id="{{ p.id }}">删除</a></td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <input name="host_id" type="hidden" value="{{ article.id }}"/>
+                        </form>
+                    </div>
+                    <div class="box-footer clearfix">
+                        <div class="xy-box-select related-product-checkbox">
+                            <input type="checkbox" id="related-content-checkbox-all">
+                            <a id="related-content-btn-all" href="#">全选</a>
+                            <button id="related_product_add_btn" type="button"
+                                    class="btn btn-primary common-popup-trigger"
+                                    data-target-url="/admin/article-related-product-list/?host_id={{ article.id }}&page_size=6"
+                                    data-id="{{ article.id }}" data-reject-no-host="true">新增
+                            </button>
+                            <button type="button" data-method="delete"
+                                    class="btn btn-danger article-related-product-batch-oper">删除
+                            </button>
+                        </div>
 
-            {#            <div class="add-content" id="tag_detail_info">#}
-            {##}
-            {#            </div>#}
+                    </div>
+                </div>
+            </div>
         </div>
+
     </section>
     {% include 'admin/default/album_modal_win.html' %}
-
+    {% include 'admin/default/common_pop_win.html' %}
 
 {% endblock %}
 {% block scripts %}
@@ -303,22 +358,22 @@
                                 + '</div>'
                                 + '</div>';
                         });
-{#                        var tmpHtml2 = "";#}
-{#                        $.each(data.image_attachment, function (key, val) {#}
-{#                            console.log(key, val, this);#}
-{#                            console.log(this.image);#}
-{##}
-{#                            tmpHtml2 = tmpHtml2#}
-{#                                + '<div class="images col-md-1 accessory-images-list2">'#}
-{#                                + '<a href="' + this.image + '" target="_blank"><img src="' + this.thumb + '" alt="' + this.alt + '"><p class="attachment-picture-title">' + this.file_name + '</p></a>'#}
-{#                                + '<div class="image-operaion">'#}
-{#                                + '<a href="#" class="set-picture-attr-delete set-picture-attr attachment-picture" data-method="delete" data-id="' + this.id + '" data-article-id="' + this.article_id + '" data-image-type="article">删除 </a> '#}
-{##}
-{#                                + '</div>'#}
-{#                                + '</div>';#}
-{#                        });#}
+                        {#                        var tmpHtml2 = "";#}
+                        {#                        $.each(data.image_attachment, function (key, val) {#}
+                        {#                            console.log(key, val, this);#}
+                        {#                            console.log(this.image);#}
+                        {##}
+                        {#                            tmpHtml2 = tmpHtml2#}
+                        {#                                + '<div class="images col-md-1 accessory-images-list2">'#}
+                        {#                                + '<a href="' + this.image + '" target="_blank"><img src="' + this.thumb + '" alt="' + this.alt + '"><p class="attachment-picture-title">' + this.file_name + '</p></a>'#}
+                        {#                                + '<div class="image-operaion">'#}
+                        {#                                + '<a href="#" class="set-picture-attr-delete set-picture-attr attachment-picture" data-method="delete" data-id="' + this.id + '" data-article-id="' + this.article_id + '" data-image-type="article">删除 </a> '#}
+                        {##}
+                        {#                                + '</div>'#}
+                        {#                                + '</div>';#}
+                        {#                        });#}
                         $("#article_main_picture_show").html(tmpHtml);
-{#                        $("#article_main_picture_show2").html(tmpHtml2);#}
+                        {#                        $("#article_main_picture_show2").html(tmpHtml2);#}
                     }
                 }
             });
@@ -329,10 +384,16 @@
 
         };
         {#        附件列表刷新#}
+
         function reload_picture_list_attachment(extra) {
             //从服务器查询图片列表
             console.log('本页面进行附件列表刷新');
         };
 
+        function reload_related_product_list() {
+            var url = location.href;
+            var newurl = changeURLArg(url, "tab_name", "tag_detail_info");
+            location.href = newurl;
+        };
     </script>
 {% endblock %}

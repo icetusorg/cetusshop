@@ -1,0 +1,30 @@
+{% extends "client/911/base.html" %}
+{% block breadcrumbs %}
+    {% load staticfiles %}
+    <img class="page-slider" src="{% static "client/911/images/new-slider.png" %}">
+
+    <!--crumb-->
+    <div class="crumb">
+        <div class="container">
+            <a href="/">Home</a> > <a><span>{{ article.title }}</span></a>
+        </div>
+    </div>
+    <!--crumb end-->
+{% endblock %}
+{% block main %}
+    {% load i18n %}
+    <div class="new-detail">
+        <div class="container">
+            <h1>{{ article.title }}</h1>
+            <span></span>
+            <h2>{{ article.create_time|date:"Y-m-d" }}</h2>
+            <div class="new-detail-des">
+                {{ article.content|safe }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {% load staticfiles %}
+{% endblock %}

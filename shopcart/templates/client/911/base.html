@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ page_name }} | {{ system_para.site_name }}</title>
+    <meta name="keywords" content="{{ page_key_words }}">
+    <meta name="description" content="{{ page_description }}">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static "client/911/css/bootstrap.min.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "client/911/css/style.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "client/911/css/style-phone.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "client/911/css/bootstrap-touch-slider.css" %}" type="text/css"/>
+    {% block head_extra %}
+    {% endblock %}
+
+</head>
+<body>
+<!--header-->
+<!--phone menu-->
+{% include 'client/911/header.html' %}
+<!--header end-->
+<!--body-->
+<div class="body">
+    <!-- Breadcrumbs -->
+    {% block breadcrumbs %}
+    {% endblock %}
+    <!-- Breadcrumbs End -->
+    {% block main %}
+    {% endblock %}
+    <!-- Social -->
+    {% include 'client/911/social.html' %}
+    <!--add csrftoken-->
+    {% csrf_token %}
+</div>
+{% include 'client/911/modal_win.html' %}
+<!--footer-->
+{% include 'client/911/footer.html' %}
+<!--footer end-->
+<script src="{% static 'client/911/js/jquery-1.11.1.min.js' %}"></script>
+<script src="{% static 'client/911/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'client/911/js/jquery.touchSwipe.min.js' %}"></script>
+<script src="{% static 'client/911/js/bootstrap-touch-slider.js' %}"></script>
+<script src="{% static 'client/911/js/main.js' %}"></script>
+<script src="{% static 'client/911/js/jquery.cookie.js' %}"></script>
+<script src="{% static 'client/911/js/jquery.json.min.js' %}"></script>
+<script src="{% static 'client/911/js/icetus.1.0.21.js' %}"></script>
+{% block scripts %}
+{% endblock %}
+</body>
+
+</html>

@@ -585,14 +585,11 @@
                 $("#" + tab_name).addClass("active");
             }
             ;
-
             $(".url_advise_btn").click(function () {
                 title = $("input[name=name]").val();
-
                 arr = new Array();
                 arr = title.split(" ");
                 url = "";
-
                 $.each(arr, function (idx, item) {
                     if (item.trim() != "") {
                         url = url + item + "-";
@@ -604,7 +601,6 @@
                 }
                 $("input[name=static_file_name]").val(url);
             });
-
             CKEDITOR.replace('product_desc_editor', {
                 filebrowserUploadUrl: '{{upload_url}}'
             });
@@ -615,9 +611,7 @@
                 console.log("skuid:" + extra.extra_info);
                 var sku_id = extra.extra_info;
                 var id = extra.img_id;
-
                 var url = "/admin/product-set-image/";
-
                 var postdata = {
                     "sku_id": sku_id,
                     "picture_id": id,
@@ -640,12 +634,9 @@
                         }
                     }
                 });
-
-
             } else {
                 var url = "/product/get-product-images/main/";
                 var postdata = {"id":{{product.id|default:"0"}}};
-
                 $.ajax({
                     cache: false,
                     type: "POST",
@@ -677,7 +668,6 @@
                 });
             }
         };
-
         {#        附件列表刷新#}
         function reload_picture_list_attachment(extra) {
             //从服务器查询附件列表
@@ -702,7 +692,6 @@
                             //console.log( key, val, this );
                             console.log(this.image);
                             tmpHtml = tmpHtml
-
                                 + '<div class="accessory-images-list col-md-1">'
                                 + '<a href="' + this.image + '" target="_blank"><img src="' + this.thumb + '" alt="' + this.alt + '">' + this.file_name + '</a>'
                                 + '<div class="image-operaion">'
@@ -715,32 +704,23 @@
                 }
             });
         };
-
         function reload_related_product_list() {
             var url = location.href;
             var newurl = changeURLArg(url, "tab_name", "tag_correlation");
             location.href = newurl;
         };
-
         function album_dblclick_callback(id) {
             var type = 'product';
             var sku_id = $("#album_trigger_sku_id").val();
-
-
             var method = "set_sku";
             var trigger = $("#open_file_upload_trigger").val();
-
-
             if (trigger == 'main') {
                 var method = "set_main";
             }
-
             if (trigger == 'sku') {
                 var method = "set_sku";
             }
-
             console.log("type:" + type + " method:" + method + " trigger:" + trigger);
-
             var url = "";
             if (type == "product") {
                 url = "/admin/product-set-image/";
@@ -748,7 +728,6 @@
             if (type == 'attachment') {
                 url = "/product/get-product-images-pdf/";
             }
-
             var postdata = {"sku_id": sku_id, "picture_id": id, "item_id":{{product.id|default:"0"}}, "method": method};
             $.ajax({
                 cache: false,
@@ -764,7 +743,6 @@
                         if (trigger == 'main') {
                             reload_picture_list();
                         }
-
                         if (trigger == 'sku') {
                             $("#img_" + sku_id).attr("src", data.thumb);
                         }
@@ -772,10 +750,7 @@
                     }
                 }
             });
-
-
         };
-
     </script>
 
 {% endblock %}

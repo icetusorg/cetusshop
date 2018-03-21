@@ -81,6 +81,7 @@ function imycartAjaxCall(url, object, is_show_message_box, message) {
         }
     });
 };
+
 //带回调函数的ajax请求通用方法
 function imycartAjaxCallWithCallback(url, object, callback, triggerControl, extraInfo) {
     var encodedata = $.toJSON(object);
@@ -1188,7 +1189,7 @@ jQuery("#product_sku_group_detail_submit").click(function (event) {
             $("#infoMessage").html(data.message);
             $('#myModal').on('hidden.bs.modal', function (e) {
                 var newurl = location.href;
-                    location.href = newurl;
+                location.href = newurl;
             });
 
             $("#myModal").modal('toggle');
@@ -1322,6 +1323,39 @@ jQuery(".related-product-batch-oper").click(function (event) {
     });
 });
 
+//文章关联商品批量操作
+jQuery(".article-related-product-batch-oper").click(function (event) {
+    event.preventDefault();
+    var method = $(this).data("method");
+    var url = "/admin/article-related-product-oper/?method=" + method;
+
+    id = $(this).data("id");
+    if (id != undefined) {
+        $("#rp_checkbox_" + id).prop("checked", true);
+    }
+
+    $.ajax({
+        cache: false,
+        type: "POST",
+        url: url,
+        data: $("#related_product_form").serialize(),
+        async: false,
+        error: function (request) {
+            alert("System error");
+        },
+        success: function (data) {
+            $("#infoMessage").html(data.message);
+            $('#myModal').on('hidden.bs.modal', function (e) {
+                var url = location.href;
+                var newurl = changeURLArg(url, "tab_name", "tag_detail_info");
+                location.href = newurl;
+            });
+            $("#myModal").modal('toggle');
+
+        }
+    });
+});
+
 //关联商品关系设置
 jQuery("#product_list_modal_win_set_btn").click(function (event) {
     event.preventDefault();
@@ -1352,7 +1386,31 @@ jQuery("#product_list_modal_win_set_btn").click(function (event) {
         }
     });
 });
+jQuery("#article_product_list_modal_win_set_btn").click(function (event) {
+    event.preventDefault();
+    var host_type = $(this).data("host-type");
 
+    var url = "/admin/article-related-product-oper/?method=" + 'set_relation';
+
+    $.ajax({
+        cache: false,
+        type: "POST",
+        url: url,
+        data: $("#product_relation_set_form").serialize(),
+        async: false,
+        error: function (request) {
+            alert("System error");
+        },
+        success: function (data) {
+            $("#infoMessage").html(data.message);
+            $('#myModal').on('hidden.bs.modal', function (e) {
+                reload_related_product_list();
+            });
+            $("#myModal").modal('toggle');
+
+        }
+    });
+});
 
 //推荐商品种具体商品的批量操作
 jQuery(".product-push-detail-batch-oper").click(function (event) {

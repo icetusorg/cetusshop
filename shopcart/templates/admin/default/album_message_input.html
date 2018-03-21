@@ -1,0 +1,39 @@
+{% extends "admin/default/content_base.html" %}
+
+{% block main %}
+    {% load i18n %}
+
+    {% load staticfiles %}
+    {% load shopcart_extras %}
+    <div class="ablum-message-content ">
+
+        {# <h1>确认删除</h1>  {#删除#}
+
+        {# <h1>Alt值</h1>  {#Alt值#}
+
+        {# <h1>重命名</h1>  {#重命名#}
+
+        <h1>复制链接</h1> {#复制链接#}
+
+
+        {# <p class="ablum-message-content-delete">请问是否要删除所选分类，删除后原分类的图片自动进入未分类组</p>  {#删除分类提醒#}
+
+        {# <p class="ablum-message-content-delete">请问是否要删除所选文件，删除后不可恢复</p>  {#删除文件提醒#}
+
+        {# <input class="ablum-message-input" type="text">#}
+
+        <p class="ablum-message-content-url">
+            //sc02.alicdn.com/kf/HTB13dEuaXkoBKNjSZFEq6zrEVXav/221771064/HTB13dEuaXkoBKNjSZFEq6zrEVXav.jpg</p>{#复制URL#}
+
+        {# <p class="ablum-message-content-des">有利于SEO搜索</p>  {#Alt值提醒#}
+
+        {# <p class="ablum-message-content-des">若名称与上传文件名相同，若与资料库中重复，系统将随机命名</p>  {#重命名#}
+
+        <button class="btn btn-primary ablum-message-btn">确定</button>
+        <button class="btn btn-danger ablum-message-btn cd-popup-close ">取消</button>
+    </div>
+
+{% endblock %}
+{% block scripts %}
+    {% load staticfiles %}
+{% endblock %}

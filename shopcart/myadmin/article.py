@@ -1,6 +1,6 @@
 # coding=utf-8
 from django.shortcuts import render, redirect
-from shopcart.models import Article, System_Config, Album, ArticleBusiCategory
+from shopcart.models import Product, Article, System_Config, Album, ArticleBusiCategory,Category
 from shopcart.forms import article_basic_info_form, article_detail_info_form
 from shopcart.utils import my_pagination, get_serial_number, get_system_parameters
 from django.http import HttpResponse, JsonResponse, Http404
@@ -49,8 +49,6 @@ def set_image(request):
             Album.objects.filter(item_id=article_id).update(sort=0)  # 先把所有图的sort设为0
 
             Album.objects.filter(id=picture_id).update(sort=-1)  # 需要设为首图的Sort设为1
-
-
 
             result['success'] = True
             result['message'] = '文章图片信息保存成功'
@@ -174,8 +172,13 @@ def article_basic_edit(request):
         if id != '':
             try:
                 article = Article.objects.get(id=id)
+
                 ctx['article'] = article
 
+                article_product = []
+                for ap in article.products.all():
+                    article_product.append(ap)
+                ctx['article_product'] = article_product
                 # 图片处理URL
                 ctx['upload_url'] = '/admin/file-upload/article/%s/' % id
                 logger.debug('upload_url:%s' % ctx['upload_url'])
@@ -405,5 +408,138 @@ def list_view(request):
         ctx['current_page'] = current_page
         ctx['article_count'] = count
         return TemplateResponse(request, System_Config.get_template_name('admin') + '/article_list.html', ctx)
+    else:
+        raise Http404
+
+
+def get_product_list(request, ctx, exclude_id=None):
+    query_item = request.GET.get('query_item', '')
+    item_value = request.GET.get('item_value', '')
+    query_category = request.GET.get('query_category', '')
+
+    from django.db.models import Q
+    if query_item == 'item_name':
+        product_list = Product.objects.filter(Q(name__icontains=item_value))
+    elif query_item == 'item_number':
+        product_list = Product.objects.filter(Q(item_number__icontains=item_value))
+    else:
+        # product_list = Product.objects.all().order_by('update_time')
+        product_list = Product.objects.all().order_by('-sort_order')
+    # icontains是大小写不敏感的，contains是大小写敏感的
+
+    cat = None
+    try:
+        cat = Category.objects.get(id=query_category)
+        ctx['query_category'] = cat.id
+        ctx['query_category_name'] = cat.name
+    except Exception as err:
+        logger.info('Can not find category %s .\n Error Message: %s' % (query_category, err))
+
+    if cat:
+        # product_list = product_list.filter(categorys__id=query_category).order_by('update_time').reverse()
+        product_list = product_list.filter(categorys__id=query_category).order_by('-sort_order')
+    else:
+        # product_list = product_list.order_by('update_time').reverse()
+        product_list = product_list.order_by('-sort_order')
+
+    logger.debug('exclude_id:%s' % exclude_id)
+    if exclude_id:
+        product_list = product_list.exclude(id=exclude_id)
+
+    if 'page_size' in request.GET:
+        page_size = request.GET['page_size']
+    else:
+        try:
+            page_size = int(System_Config.objects.get(name='admin_product_list_page_size').val)
+        except:
+            page_size = 12
+
+    count = len(product_list)
+
+    product_list, page_range, current_page = my_pagination(request=request, queryset=product_list,
+                                                           display_amount=page_size)
+    ctx['product_list'] = product_list
+    ctx['page_range'] = page_range
+    ctx['item_count'] = count
+    ctx['page_size'] = page_size
+    ctx['query_item'] = query_item
+    ctx['current_page'] = current_page
+    ctx['item_value'] = item_value
+    return ctx
+
+
+@staff_member_required
+@transaction.atomic()
+def article_related_product_list(request):
+    ctx = {}
+    ctx['page_name'] = '关联商品管理'
+    if request.method == 'GET':
+        host_id = request.GET.get('host_id', '')
+        ctx['host_id'] = host_id
+        ctx['type'] = 'related_product'
+
+        # 加载分类树信息
+        from shopcart.category import get_orgnized_category_list
+        cat_list = get_orgnized_category_list
+        ctx['cat_list'] = cat_list
+
+        ctx = get_product_list(request, ctx)
+        return TemplateResponse(request,
+                                System_Config.get_template_name('admin') + '/article_product_list_modal_win.html', ctx)
+
+
+@staff_member_required
+@transaction.atomic()
+def article_related_product_oper(request):
+    if request.method == 'POST':
+        result = {}
+        result['success'] = False
+        result['message'] = '关联商品保存失败'
+        method = request.GET.get('method', '')
+
+        logger.info('文章产品推荐method:%s' % method)
+
+        if method == 'delete':
+            host_id = request.POST.get('host_id', '')
+            try:
+                article = Article.objects.get(id=host_id)
+            except Exception as err:
+                logger.error(
+                    'Can not find product %s when delete related products.\n Error Message:%s' % (host_id, err))
+                result['success'] = False
+                result['message'] = '关联商品删除失败，原商品找不到，可能已经被删除了。'
+                return JsonResponse(result)
+
+            related_p_list = request.POST.getlist('is_oper')
+            rp_list = Product.objects.filter(id__in=related_p_list)
+            for rp in rp_list:
+                article.products.remove(rp)
+            result['success'] = True
+            result['message'] = '关联商品删除成功'
+            return JsonResponse(result)
+        elif method == 'set_relation':
+            host_id = request.POST.get('host_id', '')
+            try:
+                article = Article.objects.get(id=host_id)
+            except Exception as err:
+                logger.error(
+                    'Can not find product %s when delete related products.\n Error Message:%s' % (host_id, err))
+                result['success'] = False
+                result['message'] = '关联商品设置失败，原商品找不到，可能已经被删除了。'
+                return JsonResponse(result)
+
+            # 获取前台选择的产品ID
+            related_p_list = request.POST.getlist('is_oper')
+            # 找到对应的产品
+            rp_list = Product.objects.filter(id__in=related_p_list)
+            for rp in rp_list:
+                article.products.add(rp)
+            result['success'] = True
+            result['message'] = '关联商品设置成功'
+            return JsonResponse(result)
+
+        else:
+            raise Http404
+
     else:
         raise Http404

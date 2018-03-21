@@ -1,0 +1,89 @@
+{% extends "client/911/base.html" %}
+{% block breadcrumbs %}
+    {% load staticfiles %}
+    <img class="page-slider" src="{% static "client/911/images/video-slider.jpg" %}">
+
+    <!--crumb-->
+    <div class="crumb">
+        <div class="container">
+            <a href="/">Home</a> > <a><span>{{ category_title }}</span></a>
+        </div>
+    </div>
+    <!--crumb end-->
+{% endblock %}
+{% block main %}
+    {% load i18n %}
+    <div class="product-list">
+        <div class="container">
+            <div class="product-list-title">
+                <span class="red-line"></span>
+                <h2>{{ category_title }}</h2>
+            </div>
+            <div class="product-list-body">
+
+                <div class="row ">
+
+                    {% for product in product_list %}
+                        <div class="product-list-content col-md-3 col-xs-6">
+                            <img src="{{ product.get_main_image.get_image_url }}">
+                            <a href="{{ product.get_url }}"><h2
+                                    class="product-list-content-h2">{{ product.name }}<span></span>
+                            </h2></a>
+
+                            <p class="product-list-content-p">{{ product.short_desc }}</p>
+
+                            <a class="product-list-content-a" href="{{ product.get_url }}">READ MORE <span>></span></a>
+
+                            <div class="product-list-content-bg">
+                                <h2>{{ product.name }}</h2>
+                                <p>{{ product.short_desc }}</p>
+                                <a class="product-list-content-a product-list-content-bg-a"
+                                   href="{{ product.get_url }}">READ MORE
+                                    <span>></span></a>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <p class="search-none col-md-12">
+                            Your search returns no results.
+                        </p>
+                    {% endfor %}
+
+                </div>
+            </div>
+            <div class="pages">
+
+                {% if product_list.has_previous %}
+                    <a name="pageChange" data-tag="Previous" class="pageChage prev"
+                       data-page="{{ product_list.previous_page_number }}">Prev</a>
+                {% else %}
+                    <a class="prev" href="#">Prev</a>
+                {% endif %}
+
+
+                {% for p in page_range %}
+
+                    {% ifequal p current_page %}
+                        <a class="pageChage current_page" data-page="{{ p }}" href="#" title="{{ p }}">{{ p }}</a>
+                    {% else %}
+                        <a class="pageChage" data-page="{{ p }}" href="#" title="{{ p }}">{{ p }}</a>
+                    {% endifequal %}
+
+                {% endfor %}
+
+
+                {% if product_list.has_next %}
+                    <a name="pageChange" class="pageChage next" data-page="{{ p }}" data-page-range="{{ page_range }}"
+                       data-tag="Next">Next</a>
+                {% else %}
+                    <a>Next</a>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    {% load staticfiles %}
+{% endblock %}

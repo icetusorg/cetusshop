@@ -1,0 +1,193 @@
+{% extends "client/911/base.html" %}
+<!--body-->
+{% block breadcrumbs %}
+    {% load staticfiles %}
+    <div class="new">
+    <img src="{% static "client/911/images/contact-slider.jpg" %}">
+
+    <!--crumb-->
+    <div class="crumb">
+        <div class="container">
+            <a href="/">Home</a> > <a><span>Contact Us</span></a>
+        </div>
+    </div>
+    <!--crumb end-->
+{% endblock %}
+{% block main %}
+    {% load i18n %}
+
+
+    <div class="contact container">
+        <div class="contact-center">
+            <span class="red-line"></span>
+            <h1>CONTACT TO COMPANY</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div id="map"></div>
+            </div>
+            <div class="contact-right col-md-6">
+
+                <div class="contact-right-top">
+                    <h3>CN-office</h3>
+                    <p>Address: Room 701-702,Heng Wei Building,No.258,Tian Gao Lane,Shounan
+                        subdistrict,Yinzhou Area,Ningbo City,Zhejiang,China.</p>
+
+                    <ul>
+                        <li>Tel: +86-574-82822561 88325181</li>
+                        <li>Fax: +86-574-82822560</li>
+                        <li>M.T.: +86-138 8446 5342</li>
+                        <li>400: 400-6757-911</li>
+                        <li>E-MAIL: <a href="mailto:sm@911signal.com">sm@911signal.com</a>; <a
+                                href="mailto:ceo@911signal.com">ceo@911signal.com</a></li>
+                    </ul>
+                </div>
+
+                <div class="contact-right-bottom">
+                    <div class="row">
+                        <div class="contact-right-bottom-left col-xs-6">
+                            <h3>EU-office</h3>
+                            <p>Address: La Grande Arche de la Défense,92044 Paris La Défense, FRANCE</p>
+                            <ul>
+                                <li>Tel: +33(0)140903068</li>
+                                <li>Fax: +33(0)140903101</li>
+                                <li>M.T.: +33(0)659163209</li>
+                                <li>400: 400-6757-911</li>
+                                <li>
+                                    E-MAIL: <a href="mailto:euoffice@911signalgroup.com">euoffice@911signalgroup.com</a>;
+                                </li>
+                                <li><a href="http://www.911signal.com">www.911signal.com</a></li>
+                            </ul>
+                        </div>
+                        <div class="contact-right-bottom-right col-xs-6">
+                            <h3>911 Signal USA</h3>
+                            <p>Address: 1410 Park Lane South Suite #3 Jupiter, Florida 33458 USA./p>
+
+                            <ul>
+                                <li>Tel: 1-800-765-6921</li>
+                                <li>Fax: 561-427-0979</li>
+                                <li>E-MAIL: <a href="mailto:customerservice@911signalusa.com">customerservice@911signalusa.com</a>
+                                </li>
+                                <li><a href="http://www.911signal.com">www.911signal.com</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="contact-bottom">
+            <h2>Dear Sir/Madam:</h2>
+            <p class="contact-bottom-des">Welcome to 911 Signal website! Please feel free to send your enquiry to us by
+                the following form,We
+                will contact you as soon as possible and offer you the corresponding services. Our
+                working time : AM8:00-PM17:00 (Beijing time area). </p>
+            <form id="inquiryForm" action="/inquiry/add/" method="POST" class="form-horizontal">
+                <div class="row contact-bottom-input">
+
+                    <div class="col-md-6">
+                        <p>Your Name<span class="red"> *</span></p>
+                        <input type="text" name="name" id="name" placeholder="Add your name">
+                    </div>
+                    <div class="col-md-6">
+                        <p>Phone</p>
+                        <input type="text" name="company" id="company" placeholder="Add your phone number">
+                    </div>
+                    <div class="col-md-6">
+                        <p>Email<span class="red"> *</span></p>
+                        <input type="text" name="email" id="email" placeholder="Add a valid address">
+                    </div>
+                    <div class="col-md-6">
+                        <p>Country<span class="red"> *</span></p>
+                        <input type="text" name="country" id="country" placeholder="Add your country">
+                    </div>
+                    <div class="col-md-12">
+                        <p>Message <span class="red">*</span></p>
+                        <textarea name="message" id="message" type="text"></textarea>
+                    </div>
+                </div>
+                <div class="code">
+                    <img style="cursor: pointer" id="check_code_img" src="/create_code/"
+                         onclick="refresh_check_code(this)">
+                    <input type="text" name="code">
+                </div>
+                {% if user.id %}
+                    <input type="hidden" name="user" value="{{ user.id }}">
+                {% else %}
+                    <input type="hidden" name="user" value="1">
+                {% endif %}
+                <input type="hidden" name="type" value="contact">
+                <div class="contact-bottom-input-btn">
+                    <button type="button" id="inquiry-submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    {% load staticfiles %}
+    <script type="text/javascript" src="{% static 'client/911/js/bootstrapValidator.js' %}"></script>
+    <script type="text/javascript">
+        $('#inquiryForm').bootstrapValidator({
+//        live: 'disabled',
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                name: {
+                    validators: {
+                        notEmpty: {
+                            message: 'This is a required field.'
+                        },
+                    }
+                },
+                email: {
+                    validators: {
+                        notEmpty: {
+                            message: 'This is a required field.'
+                        },
+                        emailAddress: {
+                            message: 'The input is not a valid email address.'
+                        }
+                    }
+                },
+                message: {
+                    validators: {
+                        notEmpty: {
+                            message: 'This is a required field.'
+                        },
+                    }
+                },
+            }
+        });
+    </script>
+    <script>
+        function refresh_check_code(ths) {
+            ths.src += '?';
+            //src后面加问好会自动刷新验证码img的src
+        }
+    </script>
+    <script type="text/javascript">
+
+        function initMap() {
+            var myLatLng = {lat: 29.8040318707, lng: 121.5480488316};
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 15,
+                center: myLatLng
+            });
+
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: '911Signal'
+            });
+        }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBAD4V7OLhs-097iPNhYneZvCDbOVSzZvk&callback=initMap">
+    </script>
+{% endblock %}

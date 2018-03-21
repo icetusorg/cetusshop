@@ -2058,7 +2058,6 @@ iframe {
 
 .cd-popup-container iframe {
     width: 100%;
-    height: 550px !important;
     display: block;
 }
 
@@ -3481,7 +3480,7 @@ iframe {
 
 .tab-pane iframe {
     width: 100%;
-    height: 500px;
+    height: 550px;
 }
 
 .tab-pane-footer p {
@@ -5247,12 +5246,15 @@ a {
 .inquiry-detail-title2 {
     border-bottom: none !important;
 }
+
 .inquiry-list-search .inputBtn {
-    min-width: 80px!important;
+    min-width: 80px !important;
 }
-.inquiry-list-search .dropdown-menu  {
-    min-width: 80px!important;
+
+.inquiry-list-search .dropdown-menu {
+    min-width: 80px !important;
 }
+
 .inquiry-list-search .dropdown-menu li {
     padding: 0px 12px;
     font-size: 12px;
@@ -5260,9 +5262,11 @@ a {
     cursor: pointer;
     min-width: 80px;
 }
-.inquiry-list-input input{
-    width:350px!important;
+
+.inquiry-list-input input {
+    width: 350px !important;
 }
+
 .message-detail-table-content {
     margin-top: 20px;
 }
@@ -5392,4 +5396,247 @@ a {
 
 #email_detail_config_form {
     padding-left: 70px;
+}
+
+#file_upload_div {
+    padding: 0 15px;
+    margin-top: 16px;
+}
+
+.file-upload-selected {
+    width: 226px;
+}
+
+.file-upload-selected .inputBtn {
+    min-width: 200px !important;
+}
+
+.file-upload-selected-dropdown {
+    min-width: 200px !important;
+    line-height: 32px;
+    font-size: 12px;
+}
+
+.file-upload-submit {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.file-upload-submit button {
+    width: 100px;
+    height: 40px;
+    font-size: 16px;
+}
+
+.file-upload-des {
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+
+.file-upload-img .col-md-2:nth-child(6n+1) {
+    clear: left;
+}
+
+.file-upload-img img {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+.file-upload-img {
+    margin-bottom: 30px;
+}
+
+.file-upload-img {
+    padding: 0 15px;
+}
+
+.file-upload-button {
+    margin-right: 15px;
+}
+
+#file-upload-checkbox {
+    margin: 0 5px 0 20px;
+}
+
+#file-upload-btn-checkbox {
+    color: #000;
+}
+
+.file-upload-img-delete {
+    font-size: 12px;
+    text-align: center;
+    display: block;
+    margin-top: 6px;
+}
+
+.album-file-upload {
+    float: left;
+    margin-right: 20px;
+}
+
+.xy-list-album-frame {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.50);
+    padding-bottom: 30px;
+}
+
+.album-add-btn {
+    background: #2196F3 !important;
+    width: 100px !important;
+    height: 40px !important;
+    font-size: 16px !important;
+    margin-right: 20px;
+}
+
+.album-frame {
+    padding: 35px 30px 0 30px;
+}
+
+.album-img-list {
+    margin-top: 45px;
+}
+
+/*.album-img {*/
+/*text-align: center;*/
+/*position: relative;*/
+/*}*/
+
+.album-img-body p {
+    word-wrap: break-word;
+    font-size: 12px;
+    color: #4A4A4A;
+    text-align: left;
+}
+
+.album-list-check {
+    text-align: left;
+}
+
+.album-list-check span {
+    font-size: 12px;
+    color: #FF0000;
+    font-style: italic;
+}
+
+.album-img-bg-delete {
+    color: #FF0000;
+}
+
+.album-img-bg {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.8);
+    position: absolute;
+    top: 0px;
+    height: 100%;
+    opacity: 0;
+    width: 100%;
+    -webkit-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+    -moz-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+    transition: opacity 0.3s 0s, visibility 0s 0.3s;
+}
+
+.album-img:hover .album-img-bg {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s 0s, visibility 0s 0s;
+}
+
+.album-img-bg ul {
+    line-height: 23px;
+    font-size: 12px;
+}
+
+.album-img-body {
+    width: 118px;
+    height: 118px;
+    margin-right: 25px;
+    margin-bottom: 70px;
+    float: left;
+    border: 1px solid #DAE2ED;
+    position: relative;
+
+}
+
+.album-img {
+    width: 118px;
+    height: 118px;
+    text-align: center;
+    padding: 0;
+    font-size: 0;
+}
+
+.album-img img {
+    margin: 0;
+    display: inline-block;
+    max-width: 118px;
+    max-height: 98px;
+    padding: 0;
+}
+
+.pin-fix {
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.cd-popup-message-container {
+    max-width: 350px;
+}
+
+.ablum-message-input {
+    width: 90%;
+    margin-bottom: 10px;
+    height: 34px;
+    border: 1px solid #ccc;
+}
+
+.ablum-message-content {
+    text-align: left;
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+.ablum-message-content h1 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.ablum-message-btn {
+    margin-right: 15px;
+    padding: 4px 15px !important;
+}
+
+.album-list-input-checkbox-all {
+    margin: 8px 8px 0 20px !important;
+}
+
+.album-pages-jump p {
+    float: right;
+    line-height: 30px;
+    margin-left: 15px;
+    margin-right: 3px;
+}
+
+.album-pages-jump button {
+    padding: 4px 15px !important;
+}
+
+.ablum-message-content-delete {
+    margin-bottom: 20px;
+}
+
+.ablum-message-content-des {
+    margin-bottom: 20px;
+    font-size: 12px;
+}
+
+.ablum-message-content-url {
+    word-wrap: break-word;
+    font-size: 12px;
+    color: #4A4A4A;
+    padding-right: 20px;
+}
+
+.common-pop-win iframe {
+    height: 580px;
 }

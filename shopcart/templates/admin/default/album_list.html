@@ -1,0 +1,900 @@
+{% extends "admin/default/content_base.html" %}
+
+{% block breadcrumbs %}
+    <section class="content-header">
+        <h1>相册附件 <span class="box-subtitle">附件列表</span></h1>
+    </section>
+{% endblock %}
+
+{% block main %}
+    {% load i18n %}
+    {% load shopcart_extras %}
+    {% load staticfiles %}
+    <script>
+        document.body.style.backgroundColor = "#f0f0f0";
+    </script>
+    <section class="content">
+        <!-- 每个row 就是一行的块区，可以是1到多个个块区，看下面的col-md-x -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box xy-search product-list-content">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><b>图片附件查询</b></h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12 product-search">
+                                <div>
+                                    <form>
+                                        <div class="btn-group normal album-file-upload file-upload-selected">
+                                            <button type="button" class="btn btn-default inputBtn "><span
+                                                    class="selected-text">选择分类</span>
+                                            </button>
+                                            <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn"
+                                                    data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <ul class="dropdown-menu file-upload-selected-dropdown" role="menu"
+                                                id="selectOption2">
+                                                <li class="dropdown-item" data-value=" ">分类1</li>
+                                                <li class="dropdown-item" data-value=" ">分类2</li>
+                                                <li class="dropdown-item" data-value=" ">分类3</li>
+                                            </ul>
+                                            <input type="hidden" class="dropdown-item-input" name="query_item"
+                                                   value="{{ query_item|default:" " }}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="text" name="item_value" value="{{ item_value }}"
+                                                   class="form-control product-list-search-input">
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary">查询</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 ">
+                <div class="box xy-list-album-frame">
+                    <div class="box-body album-frame">
+                        <button type="button" class="btn btn-primary cd-popup-trigger album-add-btn ">
+                            上传文件
+                        </button>
+                        <a href="#">添加分类</a>
+                        <div class=" album-img-list">
+                            <div class="album-img-body">
+                                <div class="album-img">
+                                    <img src="{% static "client/911/images/1.jpg" %}">
+                                    <span class="pin-fix"></span>
+                                    <div class="album-img-bg">
+                                        <ul>
+                                            {#新窗口弹出当前图片#}
+                                            <li><a target="_blank" href="#">查看</a></li>
+                                            <li><a class="album-img-bg-delete cd-popup-message" >删除</a></li>
+                                            {#弹出框，输入框填写图片名#}
+                                            <li><a class="cd-popup-message" >重命名</a></li>
+                                            {#弹出框，输入框填写Alt#}
+                                            <li><a class="cd-popup-message" >Alt值</a></li>
+                                            {#弹出框，当前图片URL#}
+                                            <li><a class="cd-popup-message" >复制链接</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <p>Longxing_New_89911_font_22222.jpg</p>
+
+                                <div class="album-list-check">
+                                    <input class="" type="checkbox">
+                                    <span>已引用</span>
+                                </div>
+
+                            </div>
+                            <div class="album-img-body">
+                                <div class="album-img">
+                                    <img src="{% static "client/911/images/2.jpg" %}">
+                                    <span class="pin-fix"></span>
+                                    <div class="album-img-bg">
+                                        <ul>
+                                            {#新窗口弹出当前图片#}
+                                            <li><a target="_blank" href="#">查看</a></li>
+                                            <li><a class="album-img-bg-delete cd-popup-message" href="#">删除</a></li>
+                                            {#弹出框，输入框填写图片名#}
+                                            <li><a class="cd-popup-message" href="#">重命名</a></li>
+                                            {#弹出框，输入框填写Alt#}
+                                            <li><a class="cd-popup-message" href="#">Alt值</a></li>
+                                            {#弹出框，当前图片URL#}
+                                            <li><a class="cd-popup-message" href="#">复制链接</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <p>Longxing_New_89911_font_22222.jpg</p>
+
+                                <div class="album-list-check">
+                                    <input class="" type="checkbox">
+                                    <span>已引用</span>
+                                </div>
+
+                            </div>
+                            <div class="album-img-body">
+                                <div class="album-img">
+                                    <img src="{% static "client/911/images/3.jpg" %}">
+                                    <span class="pin-fix"></span>
+                                    <div class="album-img-bg">
+                                        <ul>
+                                            {#新窗口弹出当前图片#}
+                                            <li><a target="_blank" href="#">查看</a></li>
+                                            <li><a class="album-img-bg-delete cd-popup-message" href="#">删除</a></li>
+                                            {#弹出框，输入框填写图片名#}
+                                            <li><a class="cd-popup-message" href="#">重命名</a></li>
+                                            {#弹出框，输入框填写Alt#}
+                                            <li><a class="cd-popup-message" href="#">Alt值</a></li>
+                                            {#弹出框，当前图片URL#}
+                                            <li><a class="cd-popup-message" href="#">复制链接</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <p>Longxing_New_89911_font_22222.jpg</p>
+
+                                <div class="album-list-check">
+                                    <input class="" type="checkbox">
+                                    <span>已引用</span>
+                                </div>
+
+                            </div>
+                            <div class="album-img-body">
+                                <div class="album-img">
+                                    <img src="{% static "client/911/images/1.jpg" %}">
+                                    <span class="pin-fix"></span>
+                                    <div class="album-img-bg">
+                                        <ul>
+                                            {#新窗口弹出当前图片#}
+                                            <li><a target="_blank" href="#">查看</a></li>
+                                            <li><a class="album-img-bg-delete cd-popup-message" href="#">删除</a></li>
+                                            {#弹出框，输入框填写图片名#}
+                                            <li><a class="cd-popup-message" href="#">重命名</a></li>
+                                            {#弹出框，输入框填写Alt#}
+                                            <li><a class="cd-popup-message" href="#">Alt值</a></li>
+                                            {#弹出框，当前图片URL#}
+                                            <li><a class="cd-popup-message" href="#">复制链接</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <p>Longxing_New_89911_font_22222.jpg</p>
+
+                                <div class="album-list-check">
+                                    <input class="" type="checkbox">
+                                    <span>已引用</span>
+                                </div>
+
+                            </div>
+                            <div class="album-img-body">
+                                <div class="album-img">
+                                    <img src="{% static "client/911/images/3.jpg" %}">
+                                    <span class="pin-fix"></span>
+                                    <div class="album-img-bg">
+                                        <ul>
+                                            {#新窗口弹出当前图片#}
+                                            <li><a target="_blank" href="#">查看</a></li>
+                                            <li><a class="album-img-bg-delete cd-popup-message" href="#">删除</a></li>
+                                            {#弹出框，输入框填写图片名#}
+                                            <li><a class="cd-popup-message" href="#">重命名</a></li>
+                                            {#弹出框，输入框填写Alt#}
+                                            <li><a class="cd-popup-message" href="#">Alt值</a></li>
+                                            {#弹出框，当前图片URL#}
+                                            <li><a class="cd-popup-message" href="#">复制链接</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <p>Longxing_New_89911_font_22222.jpg</p>
+
+                                <div class="album-list-check">
+                                    <input class="" type="checkbox">
+                                    <span>已引用</span>
+                                </div>
+
+                            </div>
+                            <div class="album-img-body">
+                                <div class="album-img">
+                                    <img src="{% static "client/911/images/2.jpg" %}">
+                                    <span class="pin-fix"></span>
+                                    <div class="album-img-bg">
+                                        <ul>
+                                            {#新窗口弹出当前图片#}
+                                            <li><a target="_blank" href="#">查看</a></li>
+                                            <li><a class="album-img-bg-delete cd-popup-message" href="#">删除</a></li>
+                                            {#弹出框，输入框填写图片名#}
+                                            <li><a class="cd-popup-message" href="#">重命名</a></li>
+                                            {#弹出框，输入框填写Alt#}
+                                            <li><a class="cd-popup-message" href="#">Alt值</a></li>
+                                            {#弹出框，当前图片URL#}
+                                            <li><a class="cd-popup-message" href="#">复制链接</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <p>Longxing_New_89911_font_22222.jpg</p>
+
+                                <div class="album-list-check">
+                                    <input class="" type="checkbox">
+                                    <span>已引用</span>
+                                </div>
+
+                            </div>
+                            <div class="album-img-body">
+                                <div class="album-img">
+                                    <img src="{% static "client/911/images/1.jpg" %}">
+                                    <span class="pin-fix"></span>
+                                    <div class="album-img-bg">
+                                        <ul>
+                                            {#新窗口弹出当前图片#}
+                                            <li><a target="_blank" href="#">查看</a></li>
+                                            <li><a class="album-img-bg-delete cd-popup-message" href="#">删除</a></li>
+                                            {#弹出框，输入框填写图片名#}
+                                            <li><a class="cd-popup-message" href="#">重命名</a></li>
+                                            {#弹出框，输入框填写Alt#}
+                                            <li><a class="cd-popup-message" href="#">Alt值</a></li>
+                                            {#弹出框，当前图片URL#}
+                                            <li><a class="cd-popup-message" href="#">复制链接</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <p>Longxing_New_89911_font_22222.jpg</p>
+
+                                <div class="album-list-check">
+                                    <input class="" type="checkbox">
+                                    <span>已引用</span>
+                                </div>
+
+                            </div>
+                            <div class="album-img-body">
+                                <div class="album-img">
+                                    <img src="{% static "client/911/images/3.jpg" %}">
+                                    <span class="pin-fix"></span>
+                                    <div class="album-img-bg">
+                                        <ul>
+                                            {#新窗口弹出当前图片#}
+                                            <li><a target="_blank" href="#">查看</a></li>
+                                            <li><a class="album-img-bg-delete cd-popup-message" href="#">删除</a></li>
+                                            {#弹出框，输入框填写图片名#}
+                                            <li><a class="cd-popup-message" href="#">重命名</a></li>
+                                            {#弹出框，输入框填写Alt#}
+                                            <li><a class="cd-popup-message" href="#">Alt值</a></li>
+                                            {#弹出框，当前图片URL#}
+                                            <li><a class="cd-popup-message" href="#">复制链接</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <p>Longxing_New_89911_font_22222.jpg</p>
+
+                                <div class="album-list-check">
+                                    <input class="" type="checkbox">
+                                    <span>已引用</span>
+                                </div>
+
+                            </div>
+                            <div class="album-img-body">
+                                <div class="album-img">
+                                    <img src="{% static "client/911/images/4.jpg" %}">
+                                    <span class="pin-fix"></span>
+                                    <div class="album-img-bg">
+                                        <ul>
+                                            {#新窗口弹出当前图片#}
+                                            <li><a target="_blank" href="#">查看</a></li>
+                                            <li><a class="album-img-bg-delete cd-popup-message" href="#">删除</a></li>
+                                            {#弹出框，输入框填写图片名#}
+                                            <li><a class="cd-popup-message" href="#">重命名</a></li>
+                                            {#弹出框，输入框填写Alt#}
+                                            <li><a class="cd-popup-message" href="#">Alt值</a></li>
+                                            {#弹出框，当前图片URL#}
+                                            <li><a class="cd-popup-message" href="#">复制链接</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <p>Longxing_New_89911_font_22222.jpg</p>
+
+                                <div class="album-list-check">
+                                    <input class="" type="checkbox">
+                                    <span>已引用</span>
+                                </div>
+
+                            </div>
+                            <div class="album-img-body">
+                                <div class="album-img">
+                                    <img src="{% static "client/911/images/2.jpg" %}">
+                                    <span class="pin-fix"></span>
+                                    <div class="album-img-bg">
+                                        <ul>
+                                            {#新窗口弹出当前图片#}
+                                            <li><a target="_blank" href="#">查看</a></li>
+                                            <li><a class="album-img-bg-delete cd-popup-message" href="#">删除</a></li>
+                                            {#弹出框，输入框填写图片名#}
+                                            <li><a class="cd-popup-message" href="#">重命名</a></li>
+                                            {#弹出框，输入框填写Alt#}
+                                            <li><a class="cd-popup-message" href="#">Alt值</a></li>
+                                            {#弹出框，当前图片URL#}
+                                            <li><a class="cd-popup-message" href="#">复制链接</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <p>Longxing_New_89911_font_22222.jpg</p>
+
+                                <div class="album-list-check">
+                                    <input class="" type="checkbox">
+                                    <span>已引用</span>
+                                </div>
+
+                            </div>
+                            <div class="album-img-body">
+                                <div class="album-img">
+                                    <img src="{% static "client/911/images/1.jpg" %}">
+                                    <span class="pin-fix"></span>
+                                    <div class="album-img-bg">
+                                        <ul>
+                                            {#新窗口弹出当前图片#}
+                                            <li><a target="_blank" href="#">查看</a></li>
+                                            <li><a class="album-img-bg-delete cd-popup-message" href="#">删除</a></li>
+                                            {#弹出框，输入框填写图片名#}
+                                            <li><a class="cd-popup-message" href="#">重命名</a></li>
+                                            {#弹出框，输入框填写Alt#}
+                                            <li><a class="cd-popup-message" href="#">Alt值</a></li>
+                                            {#弹出框，当前图片URL#}
+                                            <li><a class="cd-popup-message" href="#">复制链接</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <p>Longxing_New_89911_font_22222.jpg</p>
+
+                                <div class="album-list-check">
+                                    <input class="" type="checkbox">
+                                    <span>已引用</span>
+                                </div>
+
+                            </div>
+                            <div class="album-img-body">
+                                <div class="album-img">
+                                    <img src="{% static "client/911/images/2.jpg" %}">
+                                    <span class="pin-fix"></span>
+                                    <div class="album-img-bg">
+                                        <ul>
+                                            {#新窗口弹出当前图片#}
+                                            <li><a target="_blank" href="#">查看</a></li>
+                                            <li><a class="album-img-bg-delete cd-popup-message" href="#">删除</a></li>
+                                            {#弹出框，输入框填写图片名#}
+                                            <li><a class="cd-popup-message" href="#">重命名</a></li>
+                                            {#弹出框，输入框填写Alt#}
+                                            <li><a class="cd-popup-message" href="#">Alt值</a></li>
+                                            {#弹出框，当前图片URL#}
+                                            <li><a class="cd-popup-message" href="#">复制链接</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <p>Longxing_New_89911_font_22222.jpg</p>
+
+                                <div class="album-list-check">
+                                    <input class="" type="checkbox">
+                                    <span>已引用</span>
+                                </div>
+
+                            </div>
+                            <div class="album-img-body">
+                                <div class="album-img">
+                                    <img src="{% static "client/911/images/1.jpg" %}">
+                                    <span class="pin-fix"></span>
+                                    <div class="album-img-bg">
+                                        <ul>
+                                            {#新窗口弹出当前图片#}
+                                            <li><a target="_blank" href="#">查看</a></li>
+                                            <li><a class="album-img-bg-delete cd-popup-message" href="#">删除</a></li>
+                                            {#弹出框，输入框填写图片名#}
+                                            <li><a class="cd-popup-message" href="#">重命名</a></li>
+                                            {#弹出框，输入框填写Alt#}
+                                            <li><a class="cd-popup-message" href="#">Alt值</a></li>
+                                            {#弹出框，当前图片URL#}
+                                            <li><a class="cd-popup-message" href="#">复制链接</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <p>Longxing_New_89911_font_22222.jpg</p>
+
+                                <div class="album-list-check">
+                                    <input class="" type="checkbox">
+                                    <span>已引用</span>
+                                </div>
+
+                            </div>
+                            <div class="album-img-body">
+                                <div class="album-img">
+                                    <img src="{% static "client/911/images/2.jpg" %}">
+                                    <span class="pin-fix"></span>
+                                    <div class="album-img-bg">
+                                        <ul>
+                                            {#新窗口弹出当前图片#}
+                                            <li><a target="_blank" href="#">查看</a></li>
+                                            <li><a class="album-img-bg-delete cd-popup-message" href="#">删除</a></li>
+                                            {#弹出框，输入框填写图片名#}
+                                            <li><a class="cd-popup-message" href="#">重命名</a></li>
+                                            {#弹出框，输入框填写Alt#}
+                                            <li><a class="cd-popup-message" href="#">Alt值</a></li>
+                                            {#弹出框，当前图片URL#}
+                                            <li><a class="cd-popup-message" href="#">复制链接</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <p>Longxing_New_89911_font_22222.jpg</p>
+
+                                <div class="album-list-check">
+                                    <input class="" type="checkbox">
+                                    <span>已引用</span>
+                                </div>
+
+                            </div>
+                            <div class="album-img-body">
+                                <div class="album-img">
+                                    <img src="{% static "client/911/images/1.jpg" %}">
+                                    <span class="pin-fix"></span>
+                                    <div class="album-img-bg">
+                                        <ul>
+                                            {#新窗口弹出当前图片#}
+                                            <li><a target="_blank" href="#">查看</a></li>
+                                            <li><a class="album-img-bg-delete cd-popup-message" href="#">删除</a></li>
+                                            {#弹出框，输入框填写图片名#}
+                                            <li><a class="cd-popup-message" href="#">重命名</a></li>
+                                            {#弹出框，输入框填写Alt#}
+                                            <li><a class="cd-popup-message" href="#">Alt值</a></li>
+                                            {#弹出框，当前图片URL#}
+                                            <li><a class="cd-popup-message" href="#">复制链接</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <p>Longxing_New_89911_font_22222.jpg</p>
+
+                                <div class="album-list-check">
+                                    <input class="" type="checkbox">
+                                    <span>已引用</span>
+                                </div>
+
+                            </div>
+                            <div class="album-img-body">
+                                <div class="album-img">
+                                    <img src="{% static "client/911/images/2.jpg" %}">
+                                    <span class="pin-fix"></span>
+                                    <div class="album-img-bg">
+                                        <ul>
+                                            {#新窗口弹出当前图片#}
+                                            <li><a target="_blank" href="#">查看</a></li>
+                                            <li><a class="album-img-bg-delete cd-popup-message" href="#">删除</a></li>
+                                            {#弹出框，输入框填写图片名#}
+                                            <li><a class="cd-popup-message" href="#">重命名</a></li>
+                                            {#弹出框，输入框填写Alt#}
+                                            <li><a class="cd-popup-message" href="#">Alt值</a></li>
+                                            {#弹出框，当前图片URL#}
+                                            <li><a class="cd-popup-message" href="#">复制链接</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <p>Longxing_New_89911_font_22222.jpg</p>
+
+                                <div class="album-list-check">
+                                    <input class="" type="checkbox">
+                                    <span>已引用</span>
+                                </div>
+
+                            </div>
+                            <div class="album-img-body">
+                                <div class="album-img">
+                                    <img src="{% static "client/911/images/3.jpg" %}">
+                                    <span class="pin-fix"></span>
+                                    <div class="album-img-bg">
+                                        <ul>
+                                            {#新窗口弹出当前图片#}
+                                            <li><a target="_blank" href="#">查看</a></li>
+                                            <li><a class="album-img-bg-delete cd-popup-message" href="#">删除</a></li>
+                                            {#弹出框，输入框填写图片名#}
+                                            <li><a class="cd-popup-message" href="#">重命名</a></li>
+                                            {#弹出框，输入框填写Alt#}
+                                            <li><a class="cd-popup-message" href="#">Alt值</a></li>
+                                            {#弹出框，当前图片URL#}
+                                            <li><a class="cd-popup-message" href="#">复制链接</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <p>Longxing_New_89911_font_22222.jpg</p>
+
+                                <div class="album-list-check">
+                                    <input class="" type="checkbox">
+                                    <span>已引用</span>
+                                </div>
+
+                            </div>
+                            <div class="album-img-body">
+                                <div class="album-img">
+                                    <img src="{% static "client/911/images/1.jpg" %}">
+                                    <span class="pin-fix"></span>
+                                    <div class="album-img-bg">
+                                        <ul>
+                                            {#新窗口弹出当前图片#}
+                                            <li><a target="_blank" href="#">查看</a></li>
+                                            <li><a class="album-img-bg-delete cd-popup-message" href="#">删除</a></li>
+                                            {#弹出框，输入框填写图片名#}
+                                            <li><a class="cd-popup-message" href="#">重命名</a></li>
+                                            {#弹出框，输入框填写Alt#}
+                                            <li><a class="cd-popup-message" href="#">Alt值</a></li>
+                                            {#弹出框，当前图片URL#}
+                                            <li><a class="cd-popup-message" href="#">复制链接</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <p>Longxing_New_89911_font_22222.jpg</p>
+
+                                <div class="album-list-check">
+                                    <input class="" type="checkbox">
+                                    <span>已引用</span>
+                                </div>
+
+                            </div>
+                            <div class="album-img-body">
+                                <div class="album-img">
+                                    <img src="{% static "client/911/images/3.jpg" %}">
+                                    <span class="pin-fix"></span>
+                                    <div class="album-img-bg">
+                                        <ul>
+                                            {#新窗口弹出当前图片#}
+                                            <li><a target="_blank" href="#">查看</a></li>
+                                            <li><a class="album-img-bg-delete cd-popup-message" href="#">删除</a></li>
+                                            {#弹出框，输入框填写图片名#}
+                                            <li><a class="cd-popup-message" href="#">重命名</a></li>
+                                            {#弹出框，输入框填写Alt#}
+                                            <li><a class="cd-popup-message" href="#">Alt值</a></li>
+                                            {#弹出框，当前图片URL#}
+                                            <li><a class="cd-popup-message" href="#">复制链接</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <p>Longxing_New_89911_font_22222.jpg</p>
+
+                                <div class="album-list-check">
+                                    <input class="" type="checkbox">
+                                    <span>已引用</span>
+                                </div>
+
+                            </div>
+                            <div class="album-img-body">
+                                <div class="album-img">
+                                    <img src="{% static "client/911/images/2.jpg" %}">
+                                    <span class="pin-fix"></span>
+                                    <div class="album-img-bg">
+                                        <ul>
+                                            {#新窗口弹出当前图片#}
+                                            <li><a target="_blank" href="#">查看</a></li>
+                                            <li><a class="album-img-bg-delete cd-popup-message" href="#">删除</a></li>
+                                            {#弹出框，输入框填写图片名#}
+                                            <li><a class="cd-popup-message" href="#">重命名</a></li>
+                                            {#弹出框，输入框填写Alt#}
+                                            <li><a class="cd-popup-message" href="#">Alt值</a></li>
+                                            {#弹出框，当前图片URL#}
+                                            <li><a class="cd-popup-message" href="#">复制链接</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <p>Longxing_New_89911_font_22222.jpg</p>
+
+                                <div class="album-list-check">
+                                    <input class="" type="checkbox">
+                                    <span>已引用</span>
+                                </div>
+
+                            </div>
+                            <div class="album-img-body">
+                                <div class="album-img">
+                                    <img src="{% static "client/911/images/1.jpg" %}">
+                                    <span class="pin-fix"></span>
+                                    <div class="album-img-bg">
+                                        <ul>
+                                            {#新窗口弹出当前图片#}
+                                            <li><a target="_blank" href="#">查看</a></li>
+                                            <li><a class="album-img-bg-delete cd-popup-message" href="#">删除</a></li>
+                                            {#弹出框，输入框填写图片名#}
+                                            <li><a class="cd-popup-message" href="#">重命名</a></li>
+                                            {#弹出框，输入框填写Alt#}
+                                            <li><a class="cd-popup-message" href="#">Alt值</a></li>
+                                            {#弹出框，当前图片URL#}
+                                            <li><a class="cd-popup-message" href="#">复制链接</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <p>Longxing_New_89911_font_22222.jpg</p>
+
+                                <div class="album-list-check">
+                                    <input class="" type="checkbox">
+                                    <span>已引用</span>
+                                </div>
+
+                            </div>
+                            <div class="album-img-body">
+                                <div class="album-img">
+                                    <img src="{% static "client/911/images/3.jpg" %}">
+                                    <span class="pin-fix"></span>
+                                    <div class="album-img-bg">
+                                        <ul>
+                                            {#新窗口弹出当前图片#}
+                                            <li><a target="_blank" href="#">查看</a></li>
+                                            <li><a class="album-img-bg-delete cd-popup-message" href="#">删除</a></li>
+                                            {#弹出框，输入框填写图片名#}
+                                            <li><a class="cd-popup-message" href="#">重命名</a></li>
+                                            {#弹出框，输入框填写Alt#}
+                                            <li><a class="cd-popup-message" href="#">Alt值</a></li>
+                                            {#弹出框，当前图片URL#}
+                                            <li><a class="cd-popup-message" href="#">复制链接</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <p>Longxing_New_89911_font_22222.jpg</p>
+
+                                <div class="album-list-check">
+                                    <input class="" type="checkbox">
+                                    <span>已引用</span>
+                                </div>
+
+                            </div>
+                            <div class="album-img-body">
+                                <div class="album-img">
+                                    <img src="{% static "client/911/images/4.jpg" %}">
+                                    <span class="pin-fix"></span>
+                                    <div class="album-img-bg">
+                                        <ul>
+                                            {#新窗口弹出当前图片#}
+                                            <li><a target="_blank" href="#">查看</a></li>
+                                            <li><a class="album-img-bg-delete cd-popup-message" href="#">删除</a></li>
+                                            {#弹出框，输入框填写图片名#}
+                                            <li><a class="cd-popup-message" href="#">重命名</a></li>
+                                            {#弹出框，输入框填写Alt#}
+                                            <li><a class="cd-popup-message" href="#">Alt值</a></li>
+                                            {#弹出框，当前图片URL#}
+                                            <li><a class="cd-popup-message" href="#">复制链接</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <p>Longxing_New_89911_font_22222.jpg</p>
+
+                                <div class="album-list-check">
+                                    <input class="" type="checkbox">
+                                    <span>已引用</span>
+                                </div>
+
+                            </div>
+                            <div class="album-img-body">
+                                <div class="album-img">
+                                    <img src="{% static "client/911/images/2.jpg" %}">
+                                    <span class="pin-fix"></span>
+                                    <div class="album-img-bg">
+                                        <ul>
+                                            {#新窗口弹出当前图片#}
+                                            <li><a target="_blank" href="#">查看</a></li>
+                                            <li><a class="album-img-bg-delete cd-popup-message" href="#">删除</a></li>
+                                            {#弹出框，输入框填写图片名#}
+                                            <li><a class="cd-popup-message" href="#">重命名</a></li>
+                                            {#弹出框，输入框填写Alt#}
+                                            <li><a class="cd-popup-message" href="#">Alt值</a></li>
+                                            {#弹出框，当前图片URL#}
+                                            <li><a class="cd-popup-message" href="#">复制链接</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <p>Longxing_New_89911_font_22222.jpg</p>
+
+                                <div class="album-list-check">
+                                    <input class="" type="checkbox">
+                                    <span>已引用</span>
+                                </div>
+
+                            </div>
+                            <div class="album-img-body">
+                                <div class="album-img">
+                                    <img src="{% static "client/911/images/1.jpg" %}">
+                                    <span class="pin-fix"></span>
+                                    <div class="album-img-bg">
+                                        <ul>
+                                            {#新窗口弹出当前图片#}
+                                            <li><a target="_blank" href="#">查看</a></li>
+                                            <li><a class="album-img-bg-delete cd-popup-message" href="#">删除</a></li>
+                                            {#弹出框，输入框填写图片名#}
+                                            <li><a class="cd-popup-message" href="#">重命名</a></li>
+                                            {#弹出框，输入框填写Alt#}
+                                            <li><a class="cd-popup-message" href="#">Alt值</a></li>
+                                            {#弹出框，当前图片URL#}
+                                            <li><a class="cd-popup-message" href="#">复制链接</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <p>Longxing_New_89911_font_22222.jpg</p>
+
+                                <div class="album-list-check">
+                                    <input class="" type="checkbox">
+                                    <span>已引用</span>
+                                </div>
+
+                            </div>
+                            <div class="album-img-body">
+                                <div class="album-img">
+                                    <img src="{% static "client/911/images/2.jpg" %}">
+                                    <span class="pin-fix"></span>
+                                    <div class="album-img-bg">
+                                        <ul>
+                                            {#新窗口弹出当前图片#}
+                                            <li><a target="_blank" href="#">查看</a></li>
+                                            <li><a class="album-img-bg-delete cd-popup-message" href="#">删除</a></li>
+                                            {#弹出框，输入框填写图片名#}
+                                            <li><a class="cd-popup-message" href="#">重命名</a></li>
+                                            {#弹出框，输入框填写Alt#}
+                                            <li><a class="cd-popup-message" href="#">Alt值</a></li>
+                                            {#弹出框，当前图片URL#}
+                                            <li><a class="cd-popup-message" href="#">复制链接</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <p>Longxing_New_89911_font_22222.jpg</p>
+
+                                <div class="album-list-check">
+                                    <input class="" type="checkbox">
+                                    <span>已引用</span>
+                                </div>
+
+                            </div>
+                            <div class="album-img-body">
+                                <div class="album-img">
+                                    <img src="{% static "client/911/images/1.jpg" %}">
+                                    <span class="pin-fix"></span>
+                                    <div class="album-img-bg">
+                                        <ul>
+                                            {#新窗口弹出当前图片#}
+                                            <li><a target="_blank" href="#">查看</a></li>
+                                            <li><a class="album-img-bg-delete cd-popup-message" href="#">删除</a></li>
+                                            {#弹出框，输入框填写图片名#}
+                                            <li><a class="cd-popup-message" href="#">重命名</a></li>
+                                            {#弹出框，输入框填写Alt#}
+                                            <li><a class="cd-popup-message" href="#">Alt值</a></li>
+                                            {#弹出框，当前图片URL#}
+                                            <li><a class="cd-popup-message" href="#">复制链接</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <p>Longxing_New_89911_font_22222.jpg</p>
+
+                                <div class="album-list-check">
+                                    <input class="" type="checkbox">
+                                    <span>已引用</span>
+                                </div>
+
+                            </div>
+                            <div class="album-img-body">
+                                <div class="album-img">
+                                    <img src="{% static "client/911/images/2.jpg" %}">
+                                    <span class="pin-fix"></span>
+                                    <div class="album-img-bg">
+                                        <ul>
+                                            {#新窗口弹出当前图片#}
+                                            <li><a target="_blank" href="#">查看</a></li>
+                                            <li><a class="album-img-bg-delete cd-popup-message" href="#">删除</a></li>
+                                            {#弹出框，输入框填写图片名#}
+                                            <li><a class="cd-popup-message" href="#">重命名</a></li>
+                                            {#弹出框，输入框填写Alt#}
+                                            <li><a class="cd-popup-message" href="#">Alt值</a></li>
+                                            {#弹出框，当前图片URL#}
+                                            <li><a class="cd-popup-message" href="#">复制链接</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <p>Longxing_New_89911_font_22222.jpg</p>
+
+                                <div class="album-list-check">
+                                    <input class="" type="checkbox">
+                                    <span>已引用</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer clearfix">
+                        <div class="xy-box-select">
+                            <input class="album-list-input-checkbox-all" type="checkbox"
+                                   id="main-content-checkbox-all">
+                            <a id="main-content-btn-all" href="#">全选</a>
+                            <button type="button" data-product-id="batch" class="btn btn-danger ablum-message-btn">
+                                删除
+                            </button>
+                            <button type="button" class="btn btn-primary ablum-message-btn">移动</button>
+
+
+                        </div>
+
+                        <div class="xy-pages-jump album-pages-jump">
+                            <button type="button" class="btn btn-primary page-jump ">跳转</button>
+                            <input type="text" name="page_number_to_jump" class="form-control">
+                            <p>跳转到：</p>
+
+                            <ul class="pagination pagination-sm no-margin pull-right">
+                                {% if product_list.has_previous %}
+                                    <li><a name="pageChange" data-tag="Previous" class="pageChage prev"
+                                           data-page="{{ product_list.previous_page_number }}">&lt;</a></li>
+                                {% else %}
+                                    <li><a>&lt;</a></li>
+                                {% endif %}
+
+                                {% for p in page_range %}
+                                    {% ifequal p current_page %}
+                                        <li><a class="pageChage current_page" data-page="{{ p }}" href="#"
+                                               title="{{ p }}">{{ p }}</a></li>
+                                    {% else %}
+                                        <li><a class="pageChage" data-page="{{ p }}" href="#"
+                                               title="{{ p }}">{{ p }}</a></li>
+                                    {% endifequal %}
+                                {% endfor %}
+
+                                {% if product_list.has_next %}
+                                    <li><a name="pageChange" class="pageChage next" data-page="{{ p }}"
+                                           data-page-range="{{ page_range }}" data-tag="Next">&gt;</a></li>
+                                {% else %}
+                                    <li><a>&gt;</a></li>
+                                {% endif %}
+                            </ul>
+                            <p>共{{ item_count }}条记录 , 共{{ page_range|last }}页，每页显示：{{ page_size }}条</p>
+                        </div>
+                    </div>
+                </div><!-- /.box -->
+            </div>
+        </div>
+    </section>
+    <!--弹出-->
+    {% include 'admin/default/album_modal_win.html' %}
+    {% include 'admin/default/album_message.html' %}
+{% endblock %}
+
+{% block scripts %}
+    {% load staticfiles %}
+    <script>
+        jQuery(document).ready(function ($) {
+            //open popup
+            $('.cd-popup-trigger').on('click', function (event) {
+                $("#file_upload_iframe").attr("src", '/admin/file_upload/');
+
+                $('.cd-popup.album-modal-win').addClass('is-visible');
+            });
+            $('.cd-popup-message').on('click', function (event) {
+                $('.cd-popup.album-message-modal-win').addClass('is-visible');
+            });
+        });
+    </script>
+
+{% endblock %}

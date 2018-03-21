@@ -1,0 +1,69 @@
+{% extends "client/911/base.html" %}
+{% block breadcrumbs %}
+    {% load staticfiles %}
+    <img class="page-slider" src="{% static "client/911/images/faq-slider.jpg"%}">
+
+    <!--crumb-->
+    <div class="crumb">
+        <div class="container">
+            <a href="/">Home</a> > <a><span>FAQ</span></a>
+        </div>
+    </div>
+    <!--crumb end-->
+{% endblock %}
+{% block main %}
+    {% load i18n %}
+
+    <div class="faq">
+        <div class="container">
+            <h1>{{ article.title }}</h1>
+            <span class="red-line"></span>
+
+            <div class="faq-list">
+                <h2 class="question">1. How we charge freight cost?</h2>
+                <p class="answer">There are many different ways to ship 911Signal goods to customers, it could be by
+                    express courier
+                    service if you didn't order much, by sea shipment if you there are a lot of goods
+                    in one shipment, and air cargo. In case of express delivery, we'll charge you upfront the freight
+                    cost, and make it clear on the invoice. The amount is calculated based on many
+                    previous actual packaging datas, so it's very reliable and accurate, therefore no need to worry if
+                    would overpay for express freight. Or if you have a courier account yourself, then
+                    you can inform it and in this case we'll not charge you again for the freight cost.</p>
+            </div>
+            <div class="faq-list">
+                <h2 class="question">2. How about price list?</h2>
+                <p class="answer">The price is negotiable. It can be changed according to your quantity or package. When
+                    you are making
+                    an inquiry, please let us know the quantity you want. There are different
+                    configuration on different products, it is better to provide us with your detailed requirements, so
+                    that we can offer a proper and best price.</p>
+            </div>
+            <div class="faq-list">
+                <h2 class="question">3. What is your warranty policy?</h2>
+                <p class="answer">We are very confident in our products, and we pack them very well, so usually you will
+                    receive your
+                    order in good condition. But due to long time shipment there will maybe some
+                    damage for the products. Any quality issue, we will deal with it immediately. Besides, it depends on
+                    the items, 2 years for lightheads & beacons, 1 year for lightbar & siren system.</p>
+            </div>
+
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block scripts %}
+    {% load staticfiles %}
+    <script>
+        $(".question").click(function () {
+            if ($(this).parent().hasClass("opened")) {
+                $(this).next(".answer").slideUp();
+                $(this).parent().removeClass("opened");
+            } else {
+                $(this).next(".answer").slideDown();
+                $(this).parent().addClass("opened");
+            }
+        });
+    </script>
+{% endblock %}

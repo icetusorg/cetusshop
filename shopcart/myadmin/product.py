@@ -553,6 +553,7 @@ def related_product_list(request):
     ctx = {}
     ctx['page_name'] = '关联商品管理'
     if request.method == 'GET':
+        logging.info('进入产品相关产品处理函数')
         host_id = request.GET.get('host_id', '')
         ctx['host_id'] = host_id
         ctx['type'] = 'related_product'
@@ -984,7 +985,6 @@ def product_basic_edit(request):
 
                 # ctx['file_delete_url'] = '/file-delete/product'
 
-
                 try:
                     ctx['image_list'] = Product_Images.objects.filter(product=product).filter(
                         is_show_in_product_detail=True).order_by('create_time').reverse()
@@ -1008,8 +1008,9 @@ def product_basic_edit(request):
             logger.info('New product to store.')
 
         if form.is_valid():
-
+            logger.info('---------------------------1')
             product = form.save()
+            logger.info('---------------------------2')
             # 处理商品分段价格
             # if is_new:
             #     logger.debug('New product.Create price list.')

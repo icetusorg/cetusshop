@@ -1,0 +1,106 @@
+{% load staticfiles %}
+{% load i18n %}
+
+<!--phone menu-->
+<div class="neirong neirong-hide">
+    <div class="neirong-bd">
+        <a href="/">Home</a>
+        <a href="/">About Us<i></i></a>
+        <a href="/products.html">Products<i></i></a>
+        <a href="/blog-list.html">News<i></i></a>
+        <a href="#">Service<i></i></a>
+        <a href="/contact-us.html">Contact Us<i></i></a>
+    </div>
+    <div class="neirong-close"></div>
+</div>
+<!--phone menu end-->
+
+<!--header-->
+<div class="header">
+    <div class="container">
+        <div class="header-logo">
+            <a href="#"><img src="{% static "client/911/images/logo.jpg" %}" alt="logo"></a>
+        </div>
+        <section class="buttonset">
+            <i id="showLeftPush" class="iconfont buttonpush red">&#xe663;</i>
+        </section>
+        <div class="header-right">
+            <div class="header-right-top">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li>|</li>
+                    <li><a href="#">Careers</a></li>
+                    <li>|</li>
+                    <li><a href="/quote/show/">Quote(<span class="red"><a class="top-cart-num-link"
+                                                                          href="quote/show/">0</a></span>)</a></li>
+                    <li>|</li>
+                    <li class="header-right-top-li">
+                        <form method="GET" action="/query/product/">
+                            <input class="header-right-top-input header-search-input" type="text" name="query" id="q"
+                                   value="">
+                            <button class="header-search-search" type="submit"><i class="iconfont">&#xe600;</i></button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+            <div class="header-right-bottom">
+                <ul>
+                    <li class="li2">
+                        <a href="#">ABOUT 911</a>
+                        <ul class="menu-first-ul">
+                            <li class="menu-first-ul-li"><a href="/"><span>></span> Company Profile</a></li>
+                            <li class="menu-first-ul-li"><a href="/"><span>></span> Certification</a></li>
+                            <li class="menu-first-ul-li"><a href="/"><span>></span> Careers</a></li>
+                        </ul>
+                    </li>
+                    <li>|</li>
+                    <li class="li1">
+                        <a href="/products.html">PRODUCTS</a>
+                    </li>
+                    <li>|</li>
+                    <li><a href="#">SUPPORT</a></li>
+                    <li>|</li>
+                    <li><a href="#">VIDEO</a></li>
+                    <li>|</li>
+                    <li><a href="/blog-list.html">NEWS CENTER</a></li>
+                    <li>|</li>
+                    <li><a href="/contact-us.html">CONTACT US</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="index-drop-down">
+        <div class="container ">
+            <ul>
+                <li><a href="/New-Products.html"><img src="{% static "client/911/images/index-menu-1.jpg" %}">New
+                    Products</a></li>
+                <li><a href="/LED-Visor-Lights.html"><img src="{% static "client/911/images/index-menu-2.jpg" %}">LED
+                    Visor Lights</a></li>
+                <li><a href="/LED-Lightbars.html"><img src="{% static "client/911/images/index-menu-3.jpg" %}">LED
+                    Lightbars</a></li>
+                <li><a href="/Siren-Speaker-Solutions.html"><img
+                        src="{% static "client/911/images/index-menu-1.jpg" %}">Siren Speaker Solutions</a></li>
+
+                <li><a href="/LED-Lightheads.html"><img src="{% static "client/911/images/index-menu-5.jpg" %}">LED
+                    Lightheads</a></li>
+                <li><a href="/Hideaway-Lights.html"><img src="{% static "client/911/images/index-menu-6.jpg" %}">Hideaway
+                    Lights</a></li>
+                <li><a href="/Beacons.html"><img src="{% static "client/911/images/index-menu-7.jpg" %}">Beacons</a>
+                </li>
+                <li><a href="/Warning-Lights-Accessories.html"><img
+                        src="{% static "client/911/images/index-menu-5.jpg" %}">Warning Lights Accessories</a></li>
+
+                <li><a href="/LED-Warning-Lightbars.html"><img src="{% static "client/911/images/index-menu-7.jpg" %}">LED
+                    Warning Lightbars</a></li>
+                <li><a href="/Cigarette-Plugs.html"><img src="{% static "client/911/images/index-menu-8.jpg" %}">Cigarette
+                    Plugs</a></li>
+                <li><a href="/Switch-Panels-Boxes.html"><img src="{% static "client/911/images/index-menu-10.jpg" %}">Switch
+                    Panels Boxes</a></li>
+                <li><a href="/Worklights.html"><img
+                        src="{% static "client/911/images/index-menu-7.jpg" %}">Worklights</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--header end-->

@@ -1,0 +1,173 @@
+{% extends "client/911/base.html" %}
+{% block head_extra %}
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static "client/911/css/products.css" %}" type="text/css"/>
+{% endblock %}
+{% block breadcrumbs %}
+    <img class="page-slider" src="{% static "client/911/images/product-detail-banner.jpg" %}">
+
+    <!--crumb-->
+    <div class="crumb">
+        <div class="container">
+            <a href="/">Home</a>
+
+            {% for c in product.get_one_category.get_leveled_parents %}
+                > <a href="{{ c.get_url }}"><span>{{ c.name }}</span></a>
+            {% endfor %}
+            > <a href="#0"><span>{{ product.name }}</span></a>
+
+        </div>
+    </div>
+    <!--crumb end-->
+{% endblock %}
+{% block main %}
+    {% load i18n %}
+    <div class="product-detail">
+        <div class="container">
+            <div class="product-left">
+                <div id="preview" class="spec-preview">
+                            <span class="jqzoom">
+                                <img alt="{{ product.name }}" jqimg="{{ product.get_main_image.get_image_url }}"
+                                     src="{{ product.get_main_image.get_image_url }}">
+                            </span>
+                </div>
+                <div class="spec-scroll">
+
+                    <div class="items">
+                        <ul>
+                            {% for image in product.get_product_detail_images %}
+                                <li><img src="{{ image.get_image_url }}" bimg="{{ image.get_image_url }}"
+                                         onmousemove="preview(this);" alt="{{ image.alt_value }}"></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="product-right">
+                <h1>{{ product.name }}</h1>
+                <h2>Item No.{{ product.item_number }}</h2>
+                <span class="red-line"></span>
+                <h3>FEATURE</h3>
+                <div class="product-right-des">
+                    {{ product.description|safe }}
+                </div>
+                <input type="hidden" class="small-quality" id="qty" name="qty" placeholder="1" value="1">
+                <button id="addToCartBtn" data-product-id="{{ product.id }}"
+                        class="detail-add-btn delay contact-supplier-button">Ask For Quote
+                </button>
+            </div>
+
+            <div class="product-tab-content">
+                <ul class="nav nav-tabs product-tab" id="myTab">
+                    <li class="active"><a href="#Specification">SPECIFICATION</a></li>
+                    <li><a href="#Description">DESCRIPTION</a></li>
+                    <li><a href="#Video">VIDEO</a></li>
+                    <li><a href="#Download">DOWNLOAD</a></li>
+                </ul>
+                <div class="tab-content tab-content-content">
+                    <div class="tab-pane active" id="Specification">
+                        <div class="table-responsive">
+                            <div class="table">
+                                {{ product.description_2|safe }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="Description">
+                        {{ product.description_3|safe }}
+                    </div>
+                    <div class="tab-pane" id="Video">
+                        {{ product.youtube | safe }}
+
+                        {{ product.youtube_2 | safe }}
+
+                        {{ product.youtube_3 | safe }}
+                    </div>
+                    <div class="tab-pane" id="Download">
+                        <div class="row">
+
+                            {% for image in product.get_main_image_list_attachment_pdf %}
+                                <div class="tab-pane-download col-md-2 col-xs-4">
+                                    <div class="tab-pane-download-right">
+                                        <p>{{ image.file_name|cut:".pdf" }}</p>
+                                        <a href="{{ image.get_image_url }}" target="_blank"><img
+                                                src="{% static "client/911/images/download-1.png" %}">Download</a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+
+                            {% for image in product.get_main_image_list_attachment_rar %}
+                                <div class="tab-pane-download col-md-2 col-xs-4">
+                                    <div class="tab-pane-download-right">
+                                        <p>{{ image.file_name|cut:".pdf" }}</p>
+                                        <a href="{{ image.get_image_url }}" target="_blank"><img
+                                                src="{% static "client/911/images/download-1.png" %}">Download</a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="product-quote">
+            <div class="container">
+                <span class="red-line"></span>
+                <h2>ASK FOR QUOTE</h2>
+                <p class="quote-des">Please Write your message, ask for best price, we will reply you soon, thanks</p>
+                <form id="inquiryForm" action="/inquiry/add/" method="POST" class="form-horizontal">
+                    <div class="row">
+                        <div class="contact-supplier-input col-md-6 col-xs-12">
+                            <input name="name" placeholder="Your Name" type="text" value="">
+                        </div>
+                        <div class="contact-supplier-input col-md-6 col-xs-12">
+                            <input name="email" placeholder="Your Email" type="text" value="">
+                        </div>
+                        <div class="contact-supplier-message col-md-12">
+                            <textarea name="message" placeholder="Messages" id="message"></textarea>
+                        </div>
+                        <div class="code col-xs-12">
+                            <img style="cursor: pointer" id="check_code_img" src="/create_code/"
+                                 onclick="refresh_check_code(this)"/>
+                            <input type="text" name="code">
+                        </div>
+                        <input name="product" value="{{ product.id }}" type="hidden">
+                        <input name="name" value=" " type="hidden">
+                        <input type="hidden" name="type" value="quote">
+                        {% if user.id %}
+                            <input type="hidden" name="user" value="{{ user.id }}">
+                        {% else %}
+                            <input type="hidden" name="user" value="1">
+                        {% endif %}
+                    </div>
+                    <div class="quote-btn">
+                        <button style="display: none;" class="contact-supplier-button contact-supplier-button-view"
+                                type="button">Keep Shopping
+                        </button>
+                        <button class="contact-supplier-button" type="button" id="inquiry-submit">Quote Now</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    {% load staticfiles %}
+    <script>
+        $('#myTab a').hover(function (e) {
+            e.preventDefault();
+            $(this).tab('show')
+        })
+    </script>
+    <script type="text/javascript" src="{% static 'client/911/js/base.js' %}"></script>
+    <script type="text/javascript" src="{% static 'client/911/js/jquery.jqzoom.js' %}"></script>
+
+    <script>
+        function refresh_check_code(ths) {
+            ths.src += '?';
+            //src后面加问好会自动刷新验证码img的src
+        }
+    </script>
+{% endblock %}

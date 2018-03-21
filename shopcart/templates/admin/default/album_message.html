@@ -1,0 +1,25 @@
+<div class="cd-popup album-message-modal-win" role="alert">
+    <div class="cd-popup-container cd-popup-message-container">
+        <div class="popup-content">
+            <div class="popup-content-uploading ">
+                <!--iframe-->
+                <iframe frameborder="0" id="album_message" src="/admin/album_message_input/" scrolling="yes" onload="this.height=100"></iframe>
+                <!--iframe end-->
+            </div>
+        </div>
+        <a href="#0" class="cd-popup-close img-replace">Close</a>
+    </div>
+</div>
+<script type="text/javascript">
+    function reinitIframe() {
+        var iframe = document.getElementById("album_message");
+        try {
+            var bHeight = iframe.contentWindow.document.body.scrollHeight;
+            var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
+            var height = Math.max(bHeight, dHeight);
+            iframe.height = height;
+        } catch (ex) {
+        }
+    }
+    window.setInterval("reinitIframe()");
+</script>

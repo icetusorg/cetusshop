@@ -1,0 +1,129 @@
+{% extends "admin/default/content_base.html" %}
+
+{% block main %}
+    {% load i18n %}
+
+    {% load staticfiles %}
+    {% load shopcart_extras %}
+
+    {% if result_message %}
+        <div id="result_message_div">
+            {{ result_message }}
+            <a href="#" data-extra-info="{{ result_extra }}" class="btn primary file_uploaded">确定</a>
+        </div>
+
+
+    {% else %}
+        <div id="file_upload_div">
+            <div class="btn-group normal file-upload-selected">
+                <button type="button" class="btn btn-default inputBtn "><span
+                        class="selected-text">选择分类</span>
+                </button>
+                <button type="button" class="btn btn-foursquare dropdown-toggle selectBtn"
+                        data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu file-upload-selected-dropdown" role="menu"
+                    id="selectOption2">
+                    <li class="dropdown-item" data-value=" ">分类1</li>
+                    <li class="dropdown-item" data-value=" ">分类2</li>
+                    <li class="dropdown-item" data-value=" ">分类3</li>
+                </ul>
+                <input type="hidden" class="dropdown-item-input" name="query_item"
+                       value="{{ query_item|default:" " }}">
+            </div>
+            <div class="form-group file-upload-submit">
+                <button type="submit" class="btn btn-primary">浏览</button>
+            </div>
+            <p class="file-upload-des">单个文件大小不超过10M，图片建议不超过300k，尺寸800*800，若名称与上传文件名相同，若与资料库中重复，系统将随机命名</p>
+            <div class="file-upload-img">
+                <div class="row ">
+                    <div class="col-md-2 file-upload-img">
+                        <img src="{% static "client/911/images/1.jpg" %}">
+                        <a class="file-upload-img-dele">删除</a>
+                    </div>
+                    <div class="col-md-2 file-upload-img">
+                        <img src="{% static "client/911/images/1.jpg" %}">
+                        <a class="file-upload-img-dele">删除</a>
+                    </div>
+                    <div class="col-md-2 file-upload-img">
+                        <img src="{% static "client/911/images/1.jpg" %}">
+                        <a class="file-upload-img-dele">删除</a>
+                    </div>
+                    <div class="col-md-2 file-upload-img">
+                        <img src="{% static "client/911/images/1.jpg" %}">
+                        <a class="file-upload-img-dele">删除</a>
+                    </div>
+                    <div class="col-md-2 file-upload-img">
+                        <img src="{% static "client/911/images/1.jpg" %}">
+                        <a class="file-upload-img-dele">删除</a>
+                    </div>
+                    <div class="col-md-2 file-upload-img">
+                        <img src="{% static "client/911/images/1.jpg" %}">
+
+                    </div>
+                    <div class="col-md-2 file-upload-img">
+                        <img src="{% static "client/911/images/1.jpg" %}">
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary file-upload-button">
+                    确认
+                </button>
+                <button type="button" class="btn btn-danger">
+                    取消
+                </button>
+                <input id="file-upload-checkbox" type="checkbox">
+                <a id="file-upload-btn-checkbox">给图片加水印</a>
+            </div>
+
+        </div>
+    {% endif %}
+
+{% endblock %}
+{% block scripts %}
+    {% load staticfiles %}
+    <script>
+        $(document).ready(function ($) {
+            $(".file_uploaded").click(function (event) {
+                event.preventDefault();
+                //刷新列表页
+                var extra = $(this).data("extra-info");
+                console.log('extra_info:' + extra.img_id);
+                reload_picture_list(extra);
+                location.href = "{{action_url}}";
+            });
+
+
+            $("input[name=upload]").change(function (e) {
+                filename = $(this).val();
+                console.log("filename:" + filename);
+                $("#filename_to_upload").text(" : " + filename);
+            });
+            $("input[name=upload2]").change(function (e) {
+                filename = $(this).val();
+                console.log("filename:" + filename);
+                $("#filename_to_upload2").text(" : " + filename);
+            });
+        });
+
+        function reload_picture_list(extra) {
+            window.parent.document.getElementById("picture_album_iframe").contentWindow.reload_myself();
+            window.parent.reload_picture_list(extra);
+            window.parent.reload_picture_list_attachment(extra);
+        }
+        ;
+    </script>
+    {#                文字点击链接checkbox#}
+    <script>
+        jQuery("#file-upload-btn-checkbox").click(function (event) {
+            event.preventDefault();
+            if ($("#file-upload-checkbox").is(":checked")) {
+                $("#file-upload-checkbox").prop("checked", false);
+            } else {
+                $("#file-upload-checkbox").prop("checked", true);
+            }
+            $("#file-upload-checkbox").trigger("change");
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends "client/911/base.html" %}
+{% block breadcrumbs %}
+    {% load staticfiles %}
+    <img class="page-slider" src="{% static "client/911/images/quote-slider.jpg"%}">
+
+    <!--crumb-->
+    <div class="crumb">
+        <div class="container">
+            <a href="/">Home</a> > <a><span>Quote</span></a>
+        </div>
+    </div>
+    <!--crumb end-->
+{% endblock %}
+{% block main %}
+    {% load i18n %}
+    <div class="quote">
+        <div class="container">
+            <form id="inquiryForm" action="/quote/add/" method="POST" class="form-horizontal">
+                {% csrf_token %}
+                <div class="career-table quote-table">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr>
+                                <th>PIC</th>
+                                <th>PRODUCT NAME</th>
+                                <th>ATTRIBUTES</th>
+                                <th>ITEM NO.</th>
+                                <th>QUANTITYTH</th>
+                                <th>EDIT</th>
+                            </tr>
+
+
+                            {% for cart_product in cart.cart_products.all %}
+
+                                <tr id="goods1">
+                                    <td>
+                                        <input name="cart_product_id" type="hidden" value="{{ cart_product.id }}"/>
+                                        <a href="{{ cart_product.product.get_url }}">
+                                            {% if cart_product.product_attribute.image.thumb %}
+                                                <img src="{{ cart_product.product_attribute.image.thumb }}"
+                                                     alt="{{ cart_product.product.name }}">
+                                            {% else %}
+                                                <img src="{{ cart_product.product.thumb }}"
+                                                     alt="{{ cart_product.product.name }}">
+                                            {% endif %}
+                                        </a>
+                                    </td>
+                                    <td><a href="{{ cart_product.product.get_url }}">{{ cart_product.product.name }}</a>
+                                    </td>
+                                    <td>{{ cart_product.get_short_product_attr }}</td>
+                                    <td>{{ cart_product.product.item_number }}</td>
+                                    <td>
+                                        <input maxlength="999999" class="cart-qty" data-cartid="{{ cart_product.id }}"
+                                               id="cartqty-{{ cart_product.id }}" price="price1" type="text"
+                                               value="{{ cart_product.quantity }}" autocomplete="off">
+                                    </td>
+                                    <td>
+                                        <a href="#" class="remove-item" title="Delete"
+                                           data-cartid="{{ cart_product.id }}">
+                                            <img src="{% static "client/911/images/quote-close.jpg" %}">
+                                        </a>
+                                    </td>
+                                </tr>
+
+                            {% endfor %}
+
+                        </table>
+                    </div>
+                    <h1>ASK FOR QUOTE</h1>
+                    <p class="quote-des">Please Write your message, ask for best price, we will reply you soon,
+                        thanks</p>
+                    <div class="row">
+                        <div class="contact-supplier-input col-md-6 col-xs-12">
+                            <input name="email" placeholder="Your Name" type="text" value="">
+                        </div>
+                        <div class="contact-supplier-input col-md-6 col-xs-12">
+                            <input name="email" placeholder="Your Email" type="text" value="">
+                        </div>
+                        <div class="contact-supplier-message col-md-12">
+                            <textarea name="message" placeholder="Messages" id="message"></textarea>
+                        </div>
+                        <div class="code col-xs-12">
+                            <img style="cursor: pointer" id="check_code_img" src="/create_code/"
+                                 onclick="refresh_check_code(this)">
+                            <input type="text" name="code">
+                        </div>
+                        <input name="product" value="{{ product.id }}" type="hidden">
+                        <input name="name" value=" " type="hidden">
+                        <input type="hidden" name="type" value="quote">
+                        {% if user.id %}
+                            <input type="hidden" name="user" value="{{ user.id }}">
+                        {% else %}
+                            <input type="hidden" name="user" value="1">
+                        {% endif %}
+                        <input type="hidden" name="type" value="quote">
+                    </div>
+                    <div class="quote-btn">
+                        <button class="contact-supplier-button contact-supplier-button-view" type="button"
+                                onclick="javascript:window.location.href='/products.html'">Keep Shopping
+                        </button>
+                        <button class="contact-supplier-button" type="button" id="quote-submit">Quote Now</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
+{% block scripts %}
+    {% load staticfiles %}
+    <script>
+        function refresh_check_code(ths) {
+            ths.src += '?';
+            //src后面加问好会自动刷新验证码img的src
+        }
+    </script>
+{% endblock %}

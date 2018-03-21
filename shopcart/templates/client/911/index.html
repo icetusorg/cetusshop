@@ -1,0 +1,371 @@
+{% extends "client/911/base.html" %}
+{% block main %}
+    {% load i18n %}
+    {% load staticfiles %}
+    <!--body-->
+    <div class="body">
+        <!--slider-->
+        <div class="index-slider ">
+            <div id="bootstrap-touch-slider" class="carousel bs-slider slide  control-round indicators-line"
+                 data-ride="carousel" data-pause="hover" data-interval="5000">
+                <!-- Indicators -->
+                <div class="carousel-inner" role="listbox" id="index-slider">
+
+                </div>
+                <a class="left carousel-control" href="#bootstrap-touch-slider" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#bootstrap-touch-slider" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+        <!--slider end-->
+
+        <!--index product-->
+        <div class="index-product">
+            <div class="container">
+                <ul class="nav nav-tabs index-tab" id="myTab">
+                    <li class="active"><a href="#LIGHTBAR">LIGHTBAR</a></li>
+                    <li><a href="#LIGHTHEAD">LIGHTHEAD</a></li>
+                    <li><a href="#VISOR">VISOR/DASH LIGHT</a></li>
+                    <li><a href="#MORE">MORE ></a></li>
+                </ul>
+                <div class="tab-content tab-content-content">
+                    <div class="tab-pane active" id="LIGHTBAR">
+                        <div class="row">
+                            <div class="col-md-4 col-xs-12">
+                                <div class="index-product-list">
+                                    <span></span>
+                                    <a href="#"><h5>New Lighthead Panorama -- L271</h5>
+                                        <img src="{% static "client/911/images/index-prodcut-1.jpg"%}"></a>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-xs-12">
+                                <div class="index-product-list">
+                                    <span></span>
+                                    <a href="#"><h5>X8T--Tri color & 180°</h5>
+                                        <img src="{% static "client/911/images/index-prodcut-2.jpg"%}"></a>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-xs-12">
+                                <div class="index-product-list">
+                                    <span></span>
+                                    <a href="#"><h5>L200 -- perfect combination of work light and warning light </h5>
+                                        <img src="{% static "client/911/images/index-prodcut-3.jpg"%}"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane " id="LIGHTHEAD">
+                        <div class="row">
+                            <div class="col-md-4 col-xs-12">
+                                <div class="index-product-list">
+                                    <span></span>
+                                    <a href="#"><h5>New Lighthead Panorama -- L272</h5>
+                                        <img src="images/index-prodcut-1.jpg"></a>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-xs-12">
+                                <div class="index-product-list">
+                                    <span></span>
+                                    <a href="#"><h5>X8T--Tri color & 180°</h5>
+                                        <img src="images/index-prodcut-2.jpg"></a>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-xs-12">
+                                <div class="index-product-list">
+                                    <span></span>
+                                    <a href="#"><h5>L200 -- perfect combination of work light and warning light </h5>
+                                        <img src="images/index-prodcut-3.jpg"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="VISOR">
+                        <div class="row">
+                            <div class="col-md-4 col-xs-12">
+                                <div class="index-product-list">
+                                    <span></span>
+                                    <a href="#"><h5>New Lighthead Panorama -- L274</h5>
+                                        <img src="images/index-prodcut-1.jpg"></a>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-xs-12">
+                                <div class="index-product-list">
+                                    <span></span>
+                                    <a href="#"><h5>X8T--Tri color & 180°</h5>
+                                        <img src="images/index-prodcut-2.jpg"></a>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-xs-12">
+                                <div class="index-product-list">
+                                    <span></span>
+                                    <a href="#"><h5>L200 -- perfect combination of work light and warning light </h5>
+                                        <img src="images/index-prodcut-3.jpg"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="MORE">
+                        <div class="row">
+                            <div class="col-md-4 col-xs-12">
+                                <div class="index-product-list">
+                                    <span></span>
+                                    <a href="#"><h5>New Lighthead Panorama -- L275</h5>
+                                        <img src="images/index-prodcut-1.jpg"></a>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-xs-12">
+                                <div class="index-product-list">
+                                    <span></span>
+                                    <a href="#"><h5>X8T--Tri color & 180°</h5>
+                                        <img src="images/index-prodcut-2.jpg"></a>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-xs-12">
+                                <div class="index-product-list">
+                                    <span></span>
+                                    <a href="#"><h5>L200 -- perfect combination of work light and warning light </h5>
+                                        <img src="images/index-prodcut-3.jpg"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--index product end-->
+
+        <!--index blog-->
+        <div class="index-blog container">
+            <div class="index-blog-left">
+                <div class="index-blog-left-contant">
+                    <h2>France SARR – Le Mans Visit</h2>
+                    <span></span>
+                    <p>On Nov 27th, 911Signal team visited SARR
+                        headquarter in Le Mans, France. SARR is
+                        911Signal’s exclusive dealer in France, taking
+                        full charge of sales services ...</p>
+
+                    <button>READ MORE</button>
+                </div>
+            </div>
+            <div class="index-blog-right">
+                <div class="index-blog-right-contant">
+                    <h2>24 Hours of Le Mans with 911Signal Skyline Air</h2>
+                    <p>24 Hours of Le Mans with 911Signal Lightbar Skyline Air.A battle for the race
+                        honours, a test of performance and endurance for both man and machine ....</p>
+                    <div class="index-blog-right-contant-bottom">
+                        <span class="index-blog-right-contant-time">Jan 11 2018</span>
+                        <span><img src="{% static "client/911/images/arrow.png"%}"><a href="#">READ MORE</a></span>
+                    </div>
+                </div>
+                <div class="index-blog-right-contant">
+                    <h2>24 Hours of Le Mans with 911Signal Skyline Air</h2>
+                    <p>24 Hours of Le Mans with 911Signal Lightbar Skyline Air.A battle for the race
+                        honours, a test of performance and endurance for both man and machine ....</p>
+                    <div class="index-blog-right-contant-bottom">
+                        <span class="index-blog-right-contant-time">Jan 11 2018</span>
+                        <span><img src="{% static "client/911/images/arrow.png"%}"><a href="#">READ MORE</a></span>
+                    </div>
+                </div>
+                <div class="index-blog-right-contant">
+                    <h2>24 Hours of Le Mans with 911Signal Skyline Air</h2>
+                    <p>24 Hours of Le Mans with 911Signal Lightbar Skyline Air.A battle for the race
+                        honours, a test of performance and endurance for both man and machine ....</p>
+                    <div class="index-blog-right-contant-bottom">
+                        <span class="index-blog-right-contant-time">Jan 11 2018</span>
+                        <span><img src="{% static "client/911/images/arrow.png"%}"><a href="#">READ MORE</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--index blog end-->
+
+        <!--index video-->
+        <div class="index-video container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h2>CORE PRODUCT VIDEO</h2>
+                    <a href="#"><img src="{% static "client/911/images/index-video-1.jpg"%}"></a>
+                    <h3>New LED Police vehicle Lightbar - IntelComm(012001)</h3>
+                    <p>Be it under shiny daylight or dark night sky, IntelComm adjusts the
+                        lightness automatically, ensuring a safe journey from beginning
+                        to end!</p>
+                    <a class="index-video-a" href="#">MORE ></a>
+                </div>
+                <div class="col-md-4">
+                    <h2>PURCHASE CHANNELS</h2>
+                    <a href="#"><img src="{% static "client/911/images/index-video-2.jpg"%}"></a>
+                    <h3>New LED Police vehicle Lightbar - IntelComm(012001)</h3>
+                    <p>Be it under shiny daylight or dark night sky, IntelComm adjusts the
+                        lightness automatically, ensuring a safe journey from beginning
+                        to end!</p>
+                    <a class="index-video-a" href="#">MORE ></a>
+                </div>
+                <div class="col-md-4">
+                    <h2>CERTIFICATION</h2>
+                    <a href="#"><img src="{% static "client/911/images/index-video-3.jpg"%}"></a>
+                    <h3>New LED Police vehicle Lightbar - IntelComm(012001)</h3>
+                    <p>Be it under shiny daylight or dark night sky, IntelComm adjusts the
+                        lightness automatically, ensuring a safe journey from beginning
+                        to end!</p>
+                    <a class="index-video-a" href="#">MORE ></a>
+                </div>
+            </div>
+        </div>
+        <!--index video end-->
+
+        <!--index contact-->
+        <div class="index-contact">
+            <div class="index-contact-body">
+                <h2>Your Innovative and Reliable Partner</h2>
+                <h3>Subscribe our Newsletter and Get Catalog</h3>
+                <form id="email_inquiryForm" action="/inquiry/email-add/" method="POST" class="form-horizontal">
+                    {% csrf_token %}
+                    <input type="text" name="email" id="email">
+                    <input type="hidden" name="type" value="subscribe">
+                    <button type="button" id="email-inquiry-submit">JOIN</button>
+                </form>
+            </div>
+        </div>
+        <!--index contact end-->
+
+    </div>
+    <!--body end-->
+{% endblock %}
+{% block scripts %}
+    {% load staticfiles %}
+
+    <script>
+        $('#myTab a').hover(function (e) {
+            e.preventDefault();
+            $(this).tab('show')
+        })
+    </script>
+    <script>
+        $(document).ready(function () {
+
+//        PC-slider
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: '/common/get-slider-images/?slider_name=index',
+                data: null,
+                async: false,
+                error: function (request) {
+                },
+                success: function (data) {
+                    if (data.success == true) {
+                        var innerHtml = " ";
+                        $.each(data.image_list, function (index, id) {
+                            console.log('image:' + this + "index:" + index);
+                            active = "";
+                            if (index == 0) {
+                                active = "active";
+                            }
+                            var imgsrc = this.image;
+                            var imghref = this.href;
+                            var imgalt = this.alt;
+                            if (imghref == "http://") {
+                                imghref = "#0"
+                            }
+                            console.log("imghref:" + imghref)
+
+                            var tmp = '<div class="item ' + active + '">'
+                                + '<a href="' + imghref + '"><img class="slide-image" src=' + imgsrc + ' style="width:100%" data-src="" alt="' + imgalt + '"></a>'
+                                + '</div>';
+                            innerHtml = innerHtml + tmp;
+                        });
+                        console.log('innerHtml:' + innerHtml);
+                        $("#index-slider").html(innerHtml)
+                    }
+                }
+            });
+
+
+//        phone-slider
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: '/common/get-slider-images/?slider_name=index-slider-phone',
+                data: null,
+                async: false,
+                error: function (request) {
+                },
+                success: function (data) {
+                    if (data.success == true) {
+                        var innerHtml = " ";
+                        $.each(data.image_list, function (index, id) {
+                            console.log('image:' + this + "index:" + index);
+                            active = "";
+                            if (index == 0) {
+                                active = "active";
+                            }
+                            var imgsrc = this.image;
+                            var imghref = this.href;
+                            var imgalt = this.alt;
+                            if (imghref == "http://") {
+                                imghref = "#0"
+                            }
+                            console.log("imghref:" + imghref)
+
+                            var tmp = '<div class="item ' + active + '">'
+                                + '<a href="' + imghref + '"><img src=' + imgsrc + ' style="width=100%" data-src="" alt="' + imgalt + '"></a>'
+                                + '</div>';
+                            innerHtml = innerHtml + tmp;
+                        });
+                        console.log('innerHtml:' + innerHtml);
+                        $("#index-slider-phone").html(innerHtml)
+                    }
+                }
+            });
+
+
+//        首页分类
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: '/common/get-slider-images/?slider_name=index-category',
+                data: null,
+                async: false,
+                error: function (request) {
+                },
+                success: function (data) {
+                    if (data.success == true) {
+                        var innerHtml = " ";
+                        $.each(data.image_list, function (index, id) {
+                            console.log('image:' + this + "index:" + index);
+                            var imgsrc = this.image;
+                            var imghref = this.href;
+                            var imgalt = this.alt;
+                            console.log("imghref:" + imghref);
+                            if (imghref == "http://") {
+                                imghref = "#0"
+                            }
+                            var tmp = '<div class="product-list col-md-4 col-xs-6">'
+                                + '<a href="' + imghref + '"><img src="' + imgsrc + '"  alt="' + imgalt + '">'
+                                + '<p>' + imgalt + '</p></a>'
+                                + '</div>';
+                            innerHtml = innerHtml + tmp;
+                        });
+                        console.log('innerHtml:' + innerHtml);
+                        $("#index-category").html(innerHtml)
+                    }
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript" src="{% static 'client/911/js/jquery.touchSwipe.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'client/911/js/bootstrap-touch-slider.js' %}"></script>
+    <script type="text/javascript">
+        $('#bootstrap-touch-slider').bsTouchSlider();
+    </script>
+{% endblock %}

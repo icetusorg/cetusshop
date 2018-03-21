@@ -1,26 +1,31 @@
 {% extends "client/demo/base.html" %}
 {% block breadcrumbs %}
-<!--crumb-->
-<div class="crumb">
-    <div class="container">
-        <a href="/">Home</a> / <a><span>{{article.title}}</span></a>
-    </div>
-</div>
-{% endblock %}
-{% block main %}
-{% load i18n %}
-{% load staticfiles %}
-
-<div class="product-list">
-    <div class="container">
-        <div class="article">
-            <h1>{{article.title}}</h1>
-            <div>{{article.content|safe}}</div>
+    <!--crumb-->
+    <div class="crumb">
+        <div class="container">
+            <a href="/">Home</a> / <a><span>{{ article.title }}</span></a>
         </div>
     </div>
-</div>
+{% endblock %}
+{% block main %}
+    {% load i18n %}
+    {% load staticfiles %}
+
+    <div class="product-list">
+        <div class="container">
+            <div class="article">
+                <h1>{{ article.title }}</h1>
+                <div>{{ article.content|safe }}</div>
+
+                {% for p in article_product %}
+                    <img src="{{ p.get_main_image.get_thumb_url }}">
+                    <a href="{{p.get_url}}">{{ p.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
 {% block scripts %}
-{% load staticfiles %}
+    {% load staticfiles %}
 {% endblock %}

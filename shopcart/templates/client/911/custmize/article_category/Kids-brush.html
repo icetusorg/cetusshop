@@ -1,0 +1,56 @@
+{% extends "client/cassie/base.html" %}	
+{% block breadcrumbs %}
+<div class="crumb main">
+    <div class="container">
+        <div class="row">
+           <a href="/">Home</a> &gt; {{category}}
+        </div>
+    </div>
+</div>
+{% endblock%}
+{% block main %}
+{% load i18n %}
+<div class="products main">
+    <div class="container">
+        <div class="row">
+          <h1>这里是Kids-Brush专用分类页面</h1>
+          <p class="products-des">Make a chance for your hair as well as your pocket</p>
+          <div class="row products-main">
+			{% for product in product_list %}
+				<div class="col-md-3 col-xs-6">
+					<a href="{{product.get_url}}"><img src="{{product.image}}" alt="{{product.name}}"></a>
+						<h2><a href="{{product.get_url}}">{{product.name}}</a></h2>
+						<p>${{product.price}}</p>
+				</div>
+			{% endfor %}
+
+			<div class="artical-pages">
+				{% if product_list.has_previous %}
+					<a name="pageChange" data-tag="Previous" class="pageChage prev" data-page="{{ product_list.previous_page_number }}"></a>
+				{% else %}
+					<a class="prev"></a>
+				{% endif %}
+				
+				
+				 {% for p in page_range %}
+					{% ifequal p objects.number %}
+						<span>{{p}}</span>
+					{% else %}
+					  <a class="pageChage"  data-page = "{{p}}" href="#" title="{{p}}">{{p}}</a>
+					{% endifequal %}
+				 {% endfor %}
+				 {% if product_list.has_next %}
+					<a name="pageChange" class="pageChage next" data-page = "{{p}}" data-page-range="{{page_range}}" data-tag="Next"></a>
+				 {% else %}
+					<a class="next"></a>
+				 {% endif %}
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+	{% load staticfiles %}
+{% endblock %}
+

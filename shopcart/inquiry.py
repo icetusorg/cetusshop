@@ -207,4 +207,5 @@ def inquiry_detail(request, id):
             raise Http404
 
         ctx['inquiry'] = inquiry
+
         return TemplateResponse(request, System_Config.get_template_name() + '/inquiry_view.html', ctx)
